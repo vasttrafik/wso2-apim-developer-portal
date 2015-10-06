@@ -17,56 +17,214 @@
     </style>
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="css/AdminLTE.min.css">
-    <link rel="stylesheet" href="css/vendor/skins/skin-blue.min.css">
+    <link rel="stylesheet" href="css/skins/skin-blue.css">
     <link rel="stylesheet" href="css/main.css">
 
     <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    <style type="text/css">
+        .navbar-inverse {
+            margin-bottom:0;
+        }
+
+        .navbar-inverse {
+          background-color:#00AAEB;
+          border-color:#0085B8;
+        }
+
+        .navbar-fixed-top {
+          border-width:0 0 1px;
+          top:0;
+        }
+
+        .navbar {
+          border:1px solid transparent;
+          margin-bottom:25px;
+          min-height:50px;
+          position:relative;
+           background-color:#00AAEB;
+        }
+        .text-center {
+            text-align:center;
+        }
+
+    </style>
 </head>
 <body class="skin-blue">
 
     <div header></div>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Project name</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <form class="navbar-form navbar-right" role="form">
+                    <div class="form-group">
+                        <input type="text" placeholder="Email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Password" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-success">Sign in</button>
+                </form>
+            </div><!--/.navbar-collapse -->
+        </div>
+    </nav>
+
 
     <!-- Main content info + img -->
     <!-- END: Main content info + img -->
 
     <div class="container">
+        <div class="row">
+            <div class="col-sm-7">
+                <h1>Utveckla tillsammans.</h1>
+                <p>Genom att registrera dig i klubben för utvecklare kan du få del av våra API:er och du får även möjlighet att diskutera utveckling med andra medlemmar.</p>
+                <button class="text-uppercase btn btn-primary">
+                    Skapa konto
+                </button>
+            </div>
+            <div class="hero-image hidden-xs col-sm-5">
+                <img class="img-responsive" src="./Start - labs.vasttrafik.se_files/hero.png" alt="..." />
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
         <!-- Example row of columns -->
         <div class="row">
-            <div class="col-md-3">
-                <h2>Heading</h2>
-                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            <div class="col-md-3 col-sm-6 text-center">
+                <a href="#" title="...">
+                    <div>
+                        Image<br />
+                        <h3>Kom igång</h3>
+                    </div>
+                </a>
+                <p>Här är en kort beskrivande text om vad man hittar om man klickar här.</p>
             </div>
-            <div class="col-md-3">
-                <h2>Heading</h2>
-                <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+
+            <div class="col-md-3 col-sm-6 text-center">
+                <a href="#" title="...">
+                    <div>
+                        Image<br />
+                        <h3>API:er</h3>
+                    </div>
+                </a>
+                <p>Här är en kort beskrivande text om vad man hittar om man klickar här.</p>
             </div>
-            <div class="col-md-3">
-                <h2>Heading</h2>
-                <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+
+            <div class="col-md-3 col-sm-6 text-center">
+                <a href="#">
+                    <div>
+                        Image<br />
+                        <h3>Guider</h3>
+                    </div>
+                </a>
+                <p>Här är en kort beskrivande text om vad man hittar om man klickar här.</p>
             </div>
-            <div class="col-md-3">
-                <h2>Heading</h2>
-                <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+
+            <div class="col-md-3 col-sm-6 text-center">
+                <a href="#">
+                    <div>
+                        Image<br />
+                        <h3>Statistik</h3>
+                    </div>
+                </a>
+                <p>Här är en kort beskrivande text om vad man hittar om man klickar här.</p>
             </div>
 
         </div>
 
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="feed">
+                        <h3>Nyheter</h3>
+                        <ul class="list-unstyled truncate">
+                            <li>
+                                <a href="#" title="...">Detta är en nyhetsrubriklänk</a>
+                            </li>
+                            <li>
+                                <a href="#" title="...">Detta är en nyhetsrubriklänk</a>
+                            </li>
+                            <li>
+                                <a href="#" title="...">Detta är en nyhetsrubriklänk</a>
+                            </li>
+                            <li>
+                                <a href="#" title="...">Detta är en nyhetsrubriklänk</a>
+                            </li>
+                        </ul>
+                        <p>
+                            <a class="" href="#" title="...">Fler nyheter</a><br />
+                        </p>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="feed">
+                        <h3>Nyheter2</h3>
+                        <ul class="list-unstyled truncate">
+                            <li>
+                                <a href="#" title="...">Detta är en nyhetsrubriklänk</a>
+                            </li>
+                            <li>
+                                <a href="#" title="...">Detta är en nyhetsrubriklänk</a>
+                            </li>
+                            <li>
+                                <a href="#" title="...">Detta är en nyhetsrubriklänk</a>
+                            </li>
+                            <li>
+                                <a href="#" title="...">Detta är en nyhetsrubriklänk</a>
+                            </li>
+                        </ul>
+                        <p>
+                            <a class="" href="#" title="...">Fler nyheter</a><br />
+                        </p>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="feed">
+                        <h3>Nyheter3</h3>
+                        <ul class="list-unstyled truncate">
+                            <li>
+                                <a href="#" title="...">Detta är en nyhetsrubriklänk</a>
+                            </li>
+                            <li>
+                                <a href="#" title="...">Detta är en nyhetsrubriklänk</a>
+                            </li>
+                            <li>
+                                <a href="#" title="...">Detta är en nyhetsrubriklänk</a>
+                            </li>
+                            <li>
+                                <a href="#" title="...">Detta är en nyhetsrubriklänk</a>
+                            </li>
+                        </ul>
+                        <p>
+                            <a class="" href="#" title="...">Fler nyheter</a><br />
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
         <hr>
         <div footer></div>
 
     </div> <!-- /container -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
 
-    <script src="js/vendor/bootstrap.min.js"></script>
-    <script src="js/vendor/angular.min.js"></script>
-    <script src="js/vendor/app.js"></script>
+    
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
 
-    <script src="js/main.js"></script>
-    <script src="js/app.js"></script>
+        <script src="js/vendor/bootstrap.min.js"></script>
+        <script src="js/vendor/angular.min.js"></script>
+        <script src="js/vendor/app.js"></script>
+
+        <script src="js/main.js"></script>
+        <script src="js/app.js"></script>
 </body>
 </html>
