@@ -8,12 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-    <style>
-        body {
-            padding-top: 0;
-            padding-bottom: 20px;
-        }
-    </style>
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="css/AdminLTE.min.css">
     <link rel="stylesheet" href="css/skins/skin-blue.css">
@@ -21,97 +15,107 @@
     <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
 
 </head>
-<body ng-app="vtPortal" class="">
-
+<body class="">
     <div header></div>
-    <!--
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Project name</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <form class="navbar-form navbar-right" role="form">
-                <div class="form-group">
-                    <input type="text" placeholder="Email" class="form-control">
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                    <a class="navbar-brand logo" href="#">
+                        <span class="barrel hidden-xs">Utvecklarportalen</span>
+                    </a>
                 </div>
-                <div class="form-group">
-                    <input type="password" placeholder="Password" class="form-control">
+                <div id="navbar" class="navbar-collapse collapse">
+                    <form class="navbar-form navbar-right" role="form">
+                        <div class="form-group">
+                            <input type="text" placeholder="Email" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" placeholder="Password" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-success">Sign in</button>
+                    </form>
                 </div>
-                <button type="submit" class="btn btn-success">Sign in</button>
-            </form>
+            </nav>
         </div>
-    </nav>-->
+    </div>
 
-
-    <!-- Main content info + img -->
-    <!-- END: Main content info + img -->
-
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-7">
-                <h1>Utveckla tillsammans.</h1>
-                <p>Genom att registrera dig i klubben för utvecklare kan du få del av våra API:er och du får även möjlighet att diskutera utveckling med andra medlemmar.</p>
-                <button class="text-uppercase btn btn-primary">
-                    Skapa konto
-                </button>
-            </div>
-            <div class="hero-image hidden-xs col-sm-5">
-                <img class="img-responsive" src="./Start - labs.vasttrafik.se_files/hero.png" alt="..." />
+    <div class="container-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-7">
+                    <h1>Utveckla tillsammans.</h1>
+                    <p>Genom att registrera dig i klubben för utvecklare kan du få del av våra API:er och du får även möjlighet att diskutera utveckling med andra medlemmar.</p>
+                    <button class="text-uppercase btn btn-primary">
+                        Skapa konto
+                    </button>
+                </div>
+                <div class="hidden-xs col-sm-5">
+                    <img class="img-responsive" src="img/png/hero.png" alt="Be a hero..." />
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="container">
-        <!-- Example row of columns -->
-        <div class="row">
-            <div class="col-md-3 col-sm-6 text-center">
-                <a href="#" title="...">
-                    <div>
-                        Image<br />
+    <div class="container-fluid blueRow">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6 text-center">
+                    <a href="#" title="...">
+                        <div class="area">
+                            <span class="glyphicon glyphicon-plane deg45" aria-hidden="true"></span>
+                        </div>
+
                         <h3>Kom igång</h3>
-                    </div>
-                </a>
-                <p>Här är en kort beskrivande text om vad man hittar om man klickar här.</p>
-            </div>
+                    </a>
+                    <p>Här är en kort beskrivande text om vad man hittar om man klickar här.</p>
+                </div>
 
-            <div class="col-md-3 col-sm-6 text-center">
-                <a href="#" title="...">
-                    <div>
-                        Image<br />
+                <div class="col-md-3 col-sm-6 text-center">
+                    <a href="#" title="...">
+                        <div class="area">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        </div>
                         <h3>API:er</h3>
-                    </div>
-                </a>
-                <p>Här är en kort beskrivande text om vad man hittar om man klickar här.</p>
-            </div>
+                    </a>
+                    <p>Här är en kort beskrivande text om vad man hittar om man klickar här.</p>
+                </div>
 
-            <div class="col-md-3 col-sm-6 text-center">
-                <a href="#">
-                    <div>
-                        Image<br />
+                <div class="col-md-3 col-sm-6 text-center">
+                    <a href="#">
+                        <div class="area">
+                            <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+                        </div>
                         <h3>Guider</h3>
-                    </div>
-                </a>
-                <p>Här är en kort beskrivande text om vad man hittar om man klickar här.</p>
-            </div>
+                    </a>
+                    <p>Här är en kort beskrivande text om vad man hittar om man klickar här.</p>
+                </div>
 
-            <div class="col-md-3 col-sm-6 text-center">
-                <a href="#">
-                    <div>
-                        Image<br />
+                <div class="col-md-3 col-sm-6 text-center">
+                    <a href="#">
+                        <div class="area">
+                            <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                        </div>
                         <h3>Statistik</h3>
-                    </div>
-                </a>
-                <p>Här är en kort beskrivande text om vad man hittar om man klickar här.</p>
+                    </a>
+                    <p>Här är en kort beskrivande text om vad man hittar om man klickar här.</p>
+                </div>
             </div>
-
         </div>
+        <hr>
+        <div footer></div>
 
+    </div> 
+
+    <div class="container-fluid">
         <div class="container">
             <div class="row">
                 <div class="col-sm-4">
@@ -138,7 +142,7 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="feed">
-                        <h3>Nyheter2</h3>
+                        <h3>Blogg</h3>
                         <ul class="list-unstyled truncate">
                             <li>
                                 <a href="#" title="...">Detta är en nyhetsrubriklänk</a>
@@ -160,7 +164,7 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="feed">
-                        <h3>Nyheter3</h3>
+                        <h3>Kalender</h3>
                         <ul class="list-unstyled truncate">
                             <li>
                                 <a href="#" title="...">Detta är en nyhetsrubriklänk</a>
@@ -182,15 +186,17 @@
                 </div>
             </div>
         </div>
-        <hr>
-        <div footer></div>
+    </div>
 
-    </div> <!-- /container -->
+    <div class="container-fluid">
+        <div class="container">
 
+
+        </div>
+    </div>
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
-
     <script src="js/vendor/bootstrap.min.js"></script>
     <script src="js/vendor/angular.min.js"></script>
     <script src="js/vendor/app.js"></script>

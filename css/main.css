@@ -3,6 +3,17 @@
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+body {
+  color:#3C4650;
+  font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size:28px;
+  line-height:1.42857;
+}
+
+.container {
+    padding-bottom:20px;
+    padding-top:20px;
+}
 
 .navbar-inverse {
   background-color:#00AAEB;
@@ -18,7 +29,72 @@
 
 .navbar {
   border:1px solid transparent;
-  margin-bottom:25px;
+  margin-bottom:0;
   min-height:50px;
   position:relative;
+}
+
+.navbar-inverse > .container {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.navbar-inverse .navbar-brand {
+    color: white;
+}
+
+.navbar-brand, a.logo {
+    font-size:32px;
+    font-weight:600;
+    color:white;
+    background:url(../img/png/logo_start.png) no-repeat;
+    padding-left: 230px;
+}
+
+.barrel {
+    border-left: 4px solid white;
+    height: 40px;
+    margin-right: 20px;
+    padding-left: 20px;
+}
+
+/* Startpage areas */
+.area {
+    width:80px;
+    height: 80px;
+    border-radius: 40px;
+    background-color: #00AAFD;
+    margin:0 auto;
+    padding:inherit;
+    color: white;
+    text-align: center;
+   }
+
+.blueRow{
+    background-color:#EBF7F7;
+}
+
+.deg45 {
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+
+div .area {
+    margin-top: 20px;
+}
+
+.glyphicon.glyphicon-stats,
+.glyphicon.glyphicon-plane,
+.glyphicon.glyphicon-book,
+.glyphicon.glyphicon-cog {
+    font-size: 35px;
+}
+
+.area span{
+    line-height:80px;
 }
