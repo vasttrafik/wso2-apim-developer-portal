@@ -1,0 +1,20 @@
+FontName (Univers-CondensedLightOblique)
+FullName (Univers 47 Condensed Light Oblique)
+AppleName (Univers 47 CondensedLightObl)
+AppleFONDID 14877
+FamilyName (Univers)
+version (001.002)
+isFixedPitch false
+CharacterSet (isoadobe+euro.cs)
+Encoding (StandardEncoding)
+ItalicAngle -12
+CapHeight 722
+UnderlinePosition -100
+UnderlineThickness 50
+StemWidth 60
+Serif false
+Pi false
+SuperiorBaseline 434
+MSMenuName (Univers 47 CondensedLight)
+VPStyle (I)
+PCFileNamePrefix (UVCLO)

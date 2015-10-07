@@ -1,0 +1,20 @@
+FontName (Univers-BlackOblique)
+FullName (Univers 75 Black Oblique)
+AppleName (Univers 75 BlackOblique)
+AppleFONDID 14879
+FamilyName (Univers)
+version (001.004)
+isFixedPitch false
+CharacterSet (isoadobe+euro.cs)
+Encoding (StandardEncoding)
+ItalicAngle -12
+CapHeight 720
+UnderlinePosition -100
+UnderlineThickness 50
+StemWidth 200
+Serif false
+Pi false
+SuperiorBaseline 283
+MSMenuName (Univers 55)
+VPStyle (T)
+PCFileNamePrefix (UVBLO)
