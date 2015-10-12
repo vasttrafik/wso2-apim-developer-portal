@@ -13,48 +13,94 @@
     <link rel="stylesheet" href="css/AdminLTE.min.css">
     <link rel="stylesheet" href="css/skins/skin-blue.css">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/slidemenu.css" />
+    <link rel="stylesheet" href="css/bootsnipp.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
     <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
 
 </head>
 <body class="">
-    <div header></div>
+    <!--Menu Test -->
+    <div id="menu_left" class="container sidebar sidebar-left" style="top:90px">
+        <div class="nav-side-menu" data-side="left">
+            <div class="brand"><i class="fa fa-home fa-lg"></i> Start</div>
+            <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
+
+            <div class="menu-list">
+                <ul id="menu-content" class="menu-content collapse out">
+                    <li data-toggle="collapse" data-target="#api" class="collapsed">
+                        <a href="#">API<span class="arrow"></span></a>
+                    </li>
+
+                    <ul class="sub-menu collapse" id="api" style="height: 0;">
+                        <li><a href="#">Nedladdningspaket</a></li>
+                        <li><a href="#">Osv...</a></li>
+                    </ul>
+
+
+                    <li data-toggle="collapse" data-target="#showcase" data-parent="#menu-content" class="collapsed">
+                        <a href="#">Showcase<span class="arrow"></span></a>
+                    </li>
+                    <ul class="sub-menu collapse" id="showcase" style="height: 0;">
+                        <li><a href="#">Showcase 1</a></li>
+                        <li><a href="#">Showcase 2</a></li>
+                        <li><a href="#">Showcase 3</a></li>
+                    </ul>
+
+                    <li data-toggle="collapse" data-target="#aktuellt" class="collapsed">
+                        <a class="accordion-toggle" href="#">Aktuellt<span class="arrow"></span></a>
+                    </li>
+                    <ul class="sub-menu collapse" id="aktuellt" style="height: 0;">
+                        <li><a href="#">Aktuellt 1</a></li>
+                        <li><a href="#">Aktuellt 2</a></li>
+                        <li><a href="#">Aktuellt 3</a></li>
+                    </ul>
+
+                    <li>
+                        <a href="#">Support</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- END Menu content TEST-->
 
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
+            <!--<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">-->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
 
-                    <a class="navbar-brand logo" href="#">
-                        <span class="barrel hidden-xs">Utvecklarportalen</span>
-                    </a>
-                </div>
-                <div id="navbar" class="navbar-collapse collapse">
-                    <form class="navbar-form navbar-right" role="form">
-                        <div class="form-group">
-                            <input type="text" placeholder="Email" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" placeholder="Password" class="form-control">
-                        </div>
-                        <button type="submit" class="btn btn-success">Sign in</button>
-                    </form>
-                </div>
-            </nav>
+                <a class="navbar-brand logo" href="#">
+                    <span class="barrel hidden-xs">Utvecklarportalen</span>
+                </a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <form class="navbar-form navbar-right" role="form">
+                    <div class="form-group">
+                        <input type="text" placeholder="Email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Password" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-success">Sign in</button>
+                </form>
+            </div>
+            <!--</nav>-->
         </div>
     </div>
 
+    
     <!-- Hero -->
     <div class="container-fluid">
         <div class="container">
-            <div class="row">
+            <div class="row hero">
                 <div class="col-sm-7">
                     <h1>Utveckla tillsammans.</h1>
                     <p>Genom att registrera dig i klubben för utvecklare kan du få del av våra API:er och du får även möjlighet att diskutera utveckling med andra medlemmar.</p>
@@ -252,7 +298,7 @@
                     <div class="showcase panel panel-default">
                         <a href="#" title="Västtrafik - JustInTime">
                             <div class="panel-body">
-                                <img class="img-responsive" src="img/png/justintime.png" alt=""/>
+                                <img class="img-responsive" src="img/png/justintime.png" alt="" />
                                 <div class="text-center">
                                     <br>
                                     <p><strong>Västtrafik - JustInTime</strong></p>
@@ -266,7 +312,7 @@
                     <div class="showcase panel panel-default">
                         <a href="#" title="På Språng för Västtrafik">
                             <div class="panel-body">
-                                <img class="img-responsive" src="img/png/onthemove.png" alt=""/>
+                                <img class="img-responsive" src="img/png/onthemove.png" alt="" />
                                 <div class="text-center">
                                     <br>
                                     <p><strong>På Språng för Västtrafik</strong></p>
@@ -280,7 +326,7 @@
                     <div class="showcase panel panel-default">
                         <a href="#" title="Tidtabellen Väst">
                             <div class="panel-body">
-                                <img class="img-responsive" src="img/png/timetablewest.png" alt=""/>
+                                <img class="img-responsive" src="img/png/timetablewest.png" alt="" />
                                 <div class="text-center">
                                     <br>
                                     <p><strong>Tidtabellen Väst</strong></p>
@@ -297,21 +343,25 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
     <script src="js/vendor/bootstrap.min.js"></script>
+    <script src="js/vendor/BootSideMenu.js"></script>
     <script src="js/vendor/angular.min.js"></script>
     <script src="js/vendor/app.js"></script>
     <script src="js/main.js"></script>
     <script src="js/app.js"></script>
 
     <script type="text/javascript">
-        $(function () {
+
+        $(document).ready(function () {
+            $('#menu_left').BootSideMenu({ side: "left", autoClose: false });
 
             $('.a-cog').hover(function () {
                 $('.fa.fa-cog.fa-2x').addClass("fa-spin");
             }, function () {
                 $('.fa.fa-cog.fa-2x').removeClass("fa-spin");
-            }
-            );
+            });
         });
+
+
     </script>
 </body>
 </html>
