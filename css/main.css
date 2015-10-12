@@ -1,5 +1,19 @@
 
 
 /* ==========================================================================
-   Author's custom styles
-   ========================================================================== */
+Author's custom styles
+========================================================================== */
+
+.navbar-collapse{background-color:black;padding-top:3px;padding-bottom:3px !important}
+.dropdown-menu{width: 500px;border-top:0px;margin-top:3px;}
+.dropdown-menu .col-sm-12,.dropdown-menu .col-sm-6{margin-bottom:7px;}
+.dropdown-menu:after{
+  content: '';
+  display: inline-block;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #ffffff;
+  position: absolute;
+  top: -6px;
+  right: 10px;
+}
