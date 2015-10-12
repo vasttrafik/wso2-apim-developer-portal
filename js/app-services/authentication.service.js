@@ -8,8 +8,8 @@ Handles authentication of the user.
   .module('vtPortal')
   .factory('AuthenticationService', AuthenticationService);
 
-  AuthenticationService.$inject = ['$http', '$location', '$rootScope', '$timeout', 'AlertService', 'UserService', '$q', '$httpParamSerializer'];
-  function AuthenticationService($http, $location, $rootScope, $timeout, AlertService, UserService,  $q, $httpParamSerializer) {
+  AuthenticationService.$inject = ['$http', '$location', 'UserService', '$httpParamSerializer'];
+  function AuthenticationService($http, $location, UserService, $httpParamSerializer) {
     var service = {};
     var apiClient = new API.Client.DefaultApi($http, null, $httpParamSerializer);
 
@@ -23,7 +23,7 @@ Handles authentication of the user.
 
       var action = 'login';
 
-      if(refreshToken != null) {
+      if(refreshToken !== null) {
         action = 'refreshToken';
       }
 
@@ -65,7 +65,7 @@ Handles authentication of the user.
       apiClient.securityPost('logout', null, null)
       .then(function (apiResponse) {
         if(apiResponse.status === 204 || apiResponse.status === 200) {
-          response = { success: true }
+          response = { success: true };
           UserService.ClearUser();
         } else {
           response = { success: false, message: apiResponse.data.message };
@@ -73,7 +73,7 @@ Handles authentication of the user.
 
         $location.path('/');
 
-        if(callback != null) {
+        if(callback !== null) {
           callback(response);
         }
       });

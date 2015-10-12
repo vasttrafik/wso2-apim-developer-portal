@@ -8,8 +8,8 @@ Handles authentication of the user.
   .module('vtPortal')
   .factory('APIService', APIService);
 
-  APIService.$inject = ['$http', '$location', 'AuthenticationService', 'AlertService', '$q', '$httpParamSerializer'];
-  function APIService($http, $location, AuthenticationService, AlertService, $q, $httpParamSerializer) {
+  APIService.$inject = ['$http', 'AuthenticationService', 'AlertService', '$q', '$httpParamSerializer'];
+  function APIService($http, AuthenticationService, AlertService, $q, $httpParamSerializer) {
     var service = {};
     var apiClient = new API.Client.DefaultApi($http, null, $httpParamSerializer);
 

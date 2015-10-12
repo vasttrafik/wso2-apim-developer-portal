@@ -1,3 +1,7 @@
+/*
+  Main Angular module and controller for vtPortal.
+*/
+
 (function () {
   'use strict';
 
@@ -5,10 +9,10 @@
   .module('vtPortal', ['ngRoute', 'ngSanitize'])
   .config(config)
   .run(run)
-  .controller('MainController', MainController)
+  .controller('MainController', MainController);
 
-  config.$inject = ['$routeProvider', '$locationProvider'];
-  function config($routeProvider, $locationProvider) {
+  config.$inject = ['$routeProvider'];
+  function config($routeProvider) {
 
     $routeProvider
 
@@ -22,7 +26,7 @@
       controller: 'ProfileController',
       templateUrl: 'js/profile/profile.view.html',
       controllerAs: 'vm'
-    })
+    });
 
   }
 
@@ -45,7 +49,7 @@
           }
         };
 
-        $http.defaults.headers.common['Authorization'] = 'Bearer ' + user.token.token;
+        $http.defaults.headers.common.Authorization = 'Bearer ' + user.token.token;
       } else {
         $rootScope.user.loggedIn = false;
       }
@@ -65,8 +69,8 @@
 
   }
 
-  MainController.$inject = ['$rootScope', '$location', 'AuthenticationService', 'AlertService'];
-  function MainController($rootScope, $location, AuthenticationService, AlertService) {
+  MainController.$inject = ['$rootScope', 'AuthenticationService', 'AlertService'];
+  function MainController($rootScope, AuthenticationService, AlertService) {
     var vm = this;
 
     vm.login = login;
@@ -94,7 +98,7 @@
       function logout() {
         $rootScope.user.loggedIn = false;
         AuthenticationService.Logout();
-      };
+      }
 
       function register() {
         vm.dataLoading = true;
@@ -115,7 +119,7 @@
         vm.dataLoading = false;
         $rootScope.user.register = !$rootScope.user.register;
         delete $rootScope.alert;
-      };
+      }
     }
 
   })();

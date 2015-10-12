@@ -10,16 +10,16 @@
   .factory('AlertService', AlertService);
 
   AlertService.$inject = ['$rootScope'];
-  function AlertService($rootScope, $sce) {
+  function AlertService($rootScope) {
     var service = {};
 
     service.Success = Success;
     service.Error = Error;
-    service.clearAlertMessage = clearAlertMessage;
+    service.ClearAlertMessage = ClearAlertMessage;
 
     return service;
 
-    function clearAlertMessage() {
+    function ClearAlertMessage() {
       var alert = $rootScope.alert;
       if (alert) {
           $rootScope.$apply(function () {
