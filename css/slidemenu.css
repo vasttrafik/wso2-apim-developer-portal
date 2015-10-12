@@ -1,0 +1,116 @@
+.sidebar {
+    z-index: 999999;
+    position: fixed;
+    top: -1px;
+    bottom: -1px;
+    padding: 0;
+    width: auto;
+    background-color: #3c4650;
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, .15);
+    -webkit-box-shadow: 0 6px 6px rgba(0, 0, 0, .175);
+    box-shadow: 0 6px 6px rgba(0, 0, 0, .175);
+   
+}
+
+/*.sidebar > .row > .col-xs-12, 
+.sidebar > .row > .col-sm-12, 
+.sidebar > .row > .col-md-12, 
+.sidebar > .row > .col-lg-12{
+      padding:0;
+      position: absolute;
+      bottom: 0;
+      top: 0;
+      /*overflow-y:hidden;
+}*/
+
+.sidebar.sidebar-left{
+      left:0;
+      right:20px;
+}
+
+@media (min-width: 400) {
+    #menu_left{margin-left:0;}
+}
+@media (min-width: 528px) {
+    .sidebar {
+        width: 260px;
+    }
+    .sidebar.sidebar-left{
+        left:0;
+        right: auto;
+    }
+    .container { margin-right:auto; }
+}
+@media (min-width: 768px) {
+    .sidebar {
+        width: 260px;
+    }
+    .sidebar.sidebar-left{
+        left:0;
+        right:auto;
+    }
+}
+
+@media (max-width: 767px){
+    .sidebar{
+        width: 260px;
+        left:0;
+        right:20px;
+    }
+}
+@media (min-width: 992px) {
+    .sidebar {
+        width: 260px;
+    }
+    .sidebar.sidebar-left{
+        left:0;
+        right:auto;
+    }
+
+}
+@media (min-width: 1200) {
+
+    .sidebar {
+        width: 260px;
+    }
+    .sidebar.sidebar-left{
+        left:0;
+        right:auto;
+    }
+}
+.toggler {
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding-box;
+    background-clip: padding-box;
+    width: 40px;
+    height: 48px;
+    position: absolute;
+    top: 0;
+    left:270px;
+    cursor: pointer;
+    background-color: transparent;
+    color: #00AAEB;
+}
+.sidebar-left > .toggler{
+    right: 20px;
+} 
+
+.sidebar-left > .toggler > span {
+    margin:15px 2px;
+}
+
+.sidebar-left > .toggler > .glyphicon-chevron-right{
+      display:none;
+}
+
+.sidebar .list-group-item{
+      padding: 5px;
+      border: 1px solid #DDD;
+      border-left: 0;
+      border-right: 0;
+      margin-bottom: 0;
+      margin-top: -1px;
+}

@@ -56,11 +56,10 @@ a:focus {
   margin-bottom:0;
 }
 
-.navbar-fixed-top {
-  border-width:0 0 1px;
-  top:0;
+.navbar-inverse .navbar-brand {
+    color: white;
 }
-
+/*
 .navbar {
   border:1px solid transparent;
   margin-bottom:0;
@@ -73,9 +72,7 @@ a:focus {
     padding-bottom: 20px;
 }
 
-.navbar-inverse .navbar-brand {
-    color: white;
-}
+*/
 
 
 .navbar-brand, a.logo {
@@ -92,7 +89,21 @@ a:focus {
     margin-right: 20px;
     padding-left: 20px;
 }
+/* Hero */
+.hero {
+    padding-top:90px;
+}
 
+.hero h1 {
+    font-size: 81px;
+    line-height: 0.875;
+    margin-top: 0;
+}
+
+.hero p {
+    font-size: 26px;
+    margin:0 0 12.5px;
+}
 /* Startpage areas */
 .area {
     width:90px;
