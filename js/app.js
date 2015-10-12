@@ -7,8 +7,8 @@
   .run(run)
   .controller('MainController', MainController)
 
-  config.$inject = ['$compileProvider', '$routeProvider', '$locationProvider'];
-  function config($compileProvider, $routeProvider, $locationProvider) {
+  config.$inject = ['$routeProvider', '$locationProvider'];
+  function config($routeProvider, $locationProvider) {
 
     $routeProvider
 
