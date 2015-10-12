@@ -1,147 +1,152 @@
 (function () {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('vtPortal')
-        .factory('AuthenticationService', AuthenticationService);
+  angular
+  .module('vtPortal')
+  .factory('AuthenticationService', AuthenticationService);
 
-    AuthenticationService.$inject = ['$http', '$cookieStore', '$rootScope', '$timeout', 'UserService'];
-    function AuthenticationService($http, $cookieStore, $rootScope, $timeout, UserService) {
-        var service = {};
+  AuthenticationService.$inject = ['$http', '$location', '$rootScope', '$timeout', 'FlashService', '$q', '$httpParamSerializer'];
+  function AuthenticationService($http, $location, $rootScope, $timeout, FlashService, $q, $httpParamSerializer) {
+    var service = {};
+    var apiClient = new API.Client.DefaultApi($http, null, $httpParamSerializer);
 
-        service.Login = Login;
-        service.SetCredentials = SetCredentials;
-        service.ClearCredentials = ClearCredentials;
+    service.Login = Login;
+    service.Logout = Logout;
+    service.Register = Register;
+    service.PreEmptivelyAuthenticate = PreEmptivelyAuthenticate;
+    service.SetCredentials = SetCredentials;
+    service.GetCredentials = GetCredentials;
+    service.ClearCredentials = ClearCredentials;
 
-        return service;
+    return service;
 
-        function Login(username, password, callback) {
+    function Login(username, password, callback, refreshToken) {
 
-            /* Dummy authentication for testing, uses $timeout to simulate api call
-             ----------------------------------------------*/
-            $timeout(function () {
-                var response;
-                UserService.GetByUsername(username)
-                    .then(function (user) {
-                        if (user !== null && user.password === password) {
-                            response = { success: true };
-                        } else {
-                            response = { success: false, message: 'Username or password is incorrect' };
-                        }
-                        callback(response);
-                    });
-            }, 1000);
+      FlashService.clearFlashMessage();
 
-            /* Use this for real authentication
-             ----------------------------------------------*/
-            //$http.post('/api/authenticate', { username: username, password: password })
-            //    .success(function (response) {
-            //        callback(response);
-            //    });
+      var action = 'login';
 
-        }
+      if(refreshToken != null) {
+        action = 'refreshToken';
+      }
 
-        function SetCredentials(username, password) {
-            var authdata = Base64.encode(username + ':' + password);
+        var response;
+        apiClient.securityPost(action, refreshToken, {userName:	username, credential: password})
+        .then(function (authenticatedUserObject) {
+          if(authenticatedUserObject.status === 200 || authenticatedUserObject.status === 201) {
+            response = { success: true, user: authenticatedUserObject.data };
 
-            $rootScope.globals = {
-                currentUser: {
-                    username: username,
-                    authdata: authdata
-                }
-            };
+          } else {
+            response = { success: false, message: authenticatedUserObject.data.message };
+          }
+          callback(response);
+        });
 
-            $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint ignore:line
-            $cookieStore.put('globals', $rootScope.globals);
-        }
-
-        function ClearCredentials() {
-            $rootScope.globals = {};
-            $cookieStore.remove('globals');
-            $http.defaults.headers.common.Authorization = 'Basic ';
-        }
     }
 
-    // Base64 encoding service used by AuthenticationService
-    var Base64 = {
+    function Register(username, password, email, callback) {
 
-        keyStr: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=',
+      FlashService.clearFlashMessage();
 
-        encode: function (input) {
-            var output = "";
-            var chr1, chr2, chr3 = "";
-            var enc1, enc2, enc3, enc4 = "";
-            var i = 0;
+        var response;
+        apiClient.usersPost({userName: username, credential: password, claims: [{claimURI: "email", value: email }]})
+        .then(function (userAccountObject) {
+          if(userAccountObject.status === 201) {
+            response = { success: true, user: userAccountObject.data };
 
-            do {
-                chr1 = input.charCodeAt(i++);
-                chr2 = input.charCodeAt(i++);
-                chr3 = input.charCodeAt(i++);
+          } else {
+            response = { success: false, message: userAccountObject.data.message };
+          }
+          callback(response);
+        });
 
-                enc1 = chr1 >> 2;
-                enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
-                enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
-                enc4 = chr3 & 63;
+    }
 
-                if (isNaN(chr2)) {
-                    enc3 = enc4 = 64;
-                } else if (isNaN(chr3)) {
-                    enc4 = 64;
-                }
+    function Logout(callback) {
 
-                output = output +
-                    this.keyStr.charAt(enc1) +
-                    this.keyStr.charAt(enc2) +
-                    this.keyStr.charAt(enc3) +
-                    this.keyStr.charAt(enc4);
-                chr1 = chr2 = chr3 = "";
-                enc1 = enc2 = enc3 = enc4 = "";
-            } while (i < input.length);
+        var response;
+        apiClient.securityPost('logout', null, null)
+        .then(function (apiResponse) {
+          if(apiResponse.status === 204 || apiResponse.status === 200) {
+            response = { success: true }
+            ClearCredentials();
+          } else {
+            response = { success: false, message: apiResponse.data.message };
+          }
 
-            return output;
-        },
+          $location.path('/');
 
-        decode: function (input) {
-            var output = "";
-            var chr1, chr2, chr3 = "";
-            var enc1, enc2, enc3, enc4 = "";
-            var i = 0;
+          if(callback != null) {
+            callback(response);
+          }
+        });
 
-            // remove all characters that are not A-Z, a-z, 0-9, +, /, or =
-            var base64test = /[^A-Za-z0-9\+\/\=]/g;
-            if (base64test.exec(input)) {
-                window.alert("There were invalid base64 characters in the input text.\n" +
-                    "Valid base64 characters are A-Z, a-z, 0-9, '+', '/',and '='\n" +
-                    "Expect errors in decoding.");
-            }
-            input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+    }
 
-            do {
-                enc1 = this.keyStr.indexOf(input.charAt(i++));
-                enc2 = this.keyStr.indexOf(input.charAt(i++));
-                enc3 = this.keyStr.indexOf(input.charAt(i++));
-                enc4 = this.keyStr.indexOf(input.charAt(i++));
+    function PreEmptivelyAuthenticate(callback) {
 
-                chr1 = (enc1 << 2) | (enc2 >> 4);
-                chr2 = ((enc2 & 15) << 4) | (enc3 >> 2);
-                chr3 = ((enc3 & 3) << 6) | enc4;
+      var authResponse;
+      /*
+      Currently not supporting this refreshToken handling.
+      if((Math.abs((new Date() - new Date(localStorage.tokenGrantedTime)) / 1000) > JSON.parse(localStorage.user).token.expiresIn)) {
 
-                output = output + String.fromCharCode(chr1);
+        console.log("Our token has expired, need to retrieve a new one");
 
-                if (enc3 != 64) {
-                    output = output + String.fromCharCode(chr2);
-                }
-                if (enc4 != 64) {
-                    output = output + String.fromCharCode(chr3);
-                }
+        Login(null, null, function(response) {
+          if(response.success) {
+              authResponse = {success: true};
+              console.log("Retrieved new token");
+              SetCredentials(response.user);
+          }
+          else {
+            authResponse = {success: false, message: response.message};
+            console.log("Failed to retrieved new token");
+          }
 
-                chr1 = chr2 = chr3 = "";
-                enc1 = enc2 = enc3 = enc4 = "";
+          callback(authResponse);
 
-            } while (i < input.length);
+        }, JSON.parse(localStorage.user).token.refreshToken);
+      } else {
+        console.log("No need to retrieve new token");
+        callback({success: true});
+      }
+      */
+      callback({success: true});
 
-            return output;
+    }
+
+    function SetCredentials(user) {
+      var deferred = $q.defer();
+      $http.defaults.headers.common['Authorization'] = 'Bearer ' + user.token.token; // jshint ignore:line
+      localStorage.user = JSON.stringify(user);
+      localStorage.tokenGrantedTime = new Date();
+      deferred.resolve({ success: true });
+
+      $rootScope.globals = {
+        currentUser: {
+          userName: user.userName
         }
-    };
+      };
+
+      return deferred.promise;
+    }
+
+    function GetCredentials() {
+      var deferred = $q.defer();
+      if(!localStorage.user){
+        localStorage.user = JSON.stringify([]);
+      }
+
+      deferred.resolve(JSON.parse(localStorage.user));
+      return deferred.promise;
+    }
+
+    function ClearCredentials() {
+      $rootScope.globals = {};
+      localStorage.user = [];
+      $rootScope.user.loggedIn = false;
+      $http.defaults.headers.common.Authorization = 'Bearer ';
+    }
+  }
 
 })();
