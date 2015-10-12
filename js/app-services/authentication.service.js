@@ -1,3 +1,6 @@
+/*
+  Handles authentication of the user.
+*/
 (function () {
   'use strict';
 
@@ -5,8 +8,8 @@
   .module('vtPortal')
   .factory('AuthenticationService', AuthenticationService);
 
-  AuthenticationService.$inject = ['$http', '$location', '$rootScope', '$timeout', 'FlashService', 'UserService', '$q', '$httpParamSerializer'];
-  function AuthenticationService($http, $location, $rootScope, $timeout, FlashService, UserService, $q, $httpParamSerializer) {
+  AuthenticationService.$inject = ['$http', '$location', '$rootScope', '$timeout', 'AlertService', 'UserService', '$q', '$httpParamSerializer'];
+  function AuthenticationService($http, $location, $rootScope, $timeout, AlertService, UserService, $q, $httpParamSerializer) {
     var service = {};
     var apiClient = new API.Client.DefaultApi($http, null, $httpParamSerializer);
 
@@ -19,8 +22,6 @@
 
     function Login(username, password, callback, refreshToken) {
 
-      FlashService.clearFlashMessage();
-
       var action = 'login';
 
       if(refreshToken != null) {
@@ -32,7 +33,7 @@
         .then(function (authenticatedUserObject) {
           if(authenticatedUserObject.status === 200 || authenticatedUserObject.status === 201) {
             response = { success: true, user: authenticatedUserObject.data };
-            UserService.SetCredentials(response.user);
+            UserService.SetUser(response.user);
 
           } else {
             response = { success: false, message: authenticatedUserObject.data.message };
@@ -43,8 +44,6 @@
     }
 
     function Register(username, password, email, callback) {
-
-      FlashService.clearFlashMessage();
 
         var response;
         apiClient.usersPost({userName: username, credential: password, claims: [{claimURI: "email", value: email }]})
@@ -67,7 +66,7 @@
         .then(function (apiResponse) {
           if(apiResponse.status === 204 || apiResponse.status === 200) {
             response = { success: true }
-            UserService.ClearCredentials();
+            UserService.ClearUser();
           } else {
             response = { success: false, message: apiResponse.data.message };
           }
@@ -95,7 +94,7 @@
           if(response.success) {
               authResponse = {success: true};
               console.log("Retrieved new token");
-              SetCredentials(response.user);
+              SetUser(response.user);
           }
           else {
             authResponse = {success: false, message: response.message};

@@ -5,10 +5,7 @@
   .module('vtPortal', ['ngRoute', 'ngSanitize'])
   .config(config)
   .run(run)
-  .controller('FlashController', FlashController)
-  .controller('LoginController', LoginController)
-  .controller('LogoutController', LogoutController)
-  .controller('RegisterController', RegisterController);
+  .controller('MainController', MainController)
 
   config.$inject = ['$compileProvider', '$routeProvider', '$locationProvider'];
   function config($compileProvider, $routeProvider, $locationProvider) {
@@ -33,9 +30,10 @@
   function run($rootScope, $location, $http, UserService) {
 
     $rootScope.user = {};
+    $rootScope.user.register = false;
 
     // keep user logged in after page refresh
-    UserService.GetCredentials()
+    UserService.GetUser()
     .then(function (user) {
 
       if (!$.isEmptyObject(user)) {
@@ -67,24 +65,15 @@
 
   }
 
-  FlashController.$inject = ['$rootScope','FlashService'];
-  function FlashController($rootScope, FlashService) {
-    var vm = this;
-
-    vm.clearFlashMessage = clearFlashMessage;
-
-    function clearFlashMessage() {
-      FlashService.clearFlashMessage();
-    }
-
-  }
-
-  LoginController.$inject = ['$rootScope', '$location', 'AuthenticationService', 'FlashService'];
-  function LoginController($rootScope, $location, AuthenticationService, FlashService) {
+  MainController.$inject = ['$rootScope', '$location', 'AuthenticationService', 'AlertService'];
+  function MainController($rootScope, $location, AuthenticationService, AlertService) {
     var vm = this;
 
     vm.login = login;
+    vm.logout = logout;
+    vm.register = register;
     vm.toggleRegister = toggleRegister;
+    vm.clearAlertMessage = AlertService.clearAlertMessage;
 
     function login() {
 
@@ -95,56 +84,38 @@
           $rootScope.user.loggedIn = true;
           vm.dataLoading = false;
         } else {
-          FlashService.Error(response.message);
+          AlertService.Error(response.message);
           vm.dataLoading = false;
         }
       });
-    };
 
-    function toggleRegister() {
-      vm.dataLoading = false;
-      $rootScope.user.register = true;
-      FlashService.clearFlashMessage();
-
-    };
-  }
-
-  LogoutController.$inject = ['$rootScope', '$location', 'AuthenticationService', 'FlashService'];
-  function LogoutController($rootScope, $location, AuthenticationService, UserService, FlashService) {
-    var vm = this;
-
-    vm.logout = logout;
-
-    function logout() {
-      $rootScope.user.loggedIn = false;
-      AuthenticationService.Logout();
-    };
-  }
-
-  RegisterController.$inject = ['AuthenticationService', '$location', '$rootScope', 'FlashService'];
-  function RegisterController(AuthenticationService, $location, $rootScope, FlashService) {
-    var vm = this;
-
-    vm.register = register;
-    vm.toggleRegister = toggleRegister;
-
-    function register() {
-      vm.dataLoading = true;
-      AuthenticationService.Register(username, password, email, function(response) {
-        if (response.success) {
-          FlashService.Success('Registration successful');
-          $rootScope.user.register = false;
-        } else {
-          FlashService.Error(response.message);
-          vm.dataLoading = false;
-        }
-      });
     }
-    function toggleRegister() {
-      vm.dataLoading = false;
-      $rootScope.user.register = false;
-      FlashService.clearFlashMessage();
-    };
-  }
 
-})();
+      function logout() {
+        $rootScope.user.loggedIn = false;
+        AuthenticationService.Logout();
+      };
+
+      function register() {
+        vm.dataLoading = true;
+        AuthenticationService.Register(username, password, email, function(response) {
+          if (response.success) {
+            AlertService.Success('Registration successful');
+            $rootScope.user.register = false;
+            vm.dataLoading = false;
+          } else {
+            AlertService.Error(response.message);
+            vm.dataLoading = false;
+          }
+        });
+
+      }
+
+      function toggleRegister() {
+        vm.dataLoading = false;
+        $rootScope.user.register = !$rootScope.user.register;
+        delete $rootScope.alert;
+      };
+    }
+
+  })();

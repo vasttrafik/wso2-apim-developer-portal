@@ -5,8 +5,8 @@
   .module('vtPortal')
   .controller('ProfileController', ProfileController);
 
-  ProfileController.$inject = ['$rootScope', 'AuthenticationService', 'FlashService', '$http', '$httpParamSerializer'];
-  function ProfileController($rootScope, AuthenticationService, FlashService, $http, $httpParamSerializer) {
+  ProfileController.$inject = ['$rootScope', 'AuthenticationService', 'AlertService', '$http', '$httpParamSerializer'];
+  function ProfileController($rootScope, AuthenticationService, AlertService, $http, $httpParamSerializer) {
     var vm = this;
 
     var apiClient = new API.Client.DefaultApi($http, null, $httpParamSerializer);
@@ -18,16 +18,16 @@
           if(response.status === 200) {
             vm.applications = response.data.list;
           } else {
-            FlashService.Error("Problem retrieving application list", false);
+            AlertService.Error("Problem retrieving application list", false);
           }
         }, function(response) {
           if(response.status === 401) {
-            FlashService.Error("User not authenticated", false);
+            AlertService.Error("User not authenticated", false);
             AuthenticationService.Logout();
           }
         });
       } else {
-        FlashService.Error("Problem authenticating: " + response.message, false);
+        AlertService.Error("Problem authenticating: " + response.message, false);
       }
     });
 

@@ -1,3 +1,18 @@
+/*
+  Handles user object stored in local storage.
+
+  {
+  "userId": "string",
+  "userName": "string",
+  "token": {
+    "token": "string",
+    "refreshToken": "string",
+    "expiresIn": number
+  }
+}
+
+*/
+
 (function () {
   'use strict';
 
@@ -9,15 +24,15 @@
   function UserService($http, $location, $rootScope, $q) {
     var service = {};
 
-    service.SetCredentials = SetCredentials;
-    service.GetCredentials = GetCredentials;
-    service.ClearCredentials = ClearCredentials;
+    service.SetUser = SetUser;
+    service.GetUser = GetUser;
+    service.ClearUser = ClearUser;
 
     return service;
 
-    function SetCredentials(user) {
+    function SetUser(user) {
       var deferred = $q.defer();
-      $http.defaults.headers.common['Authorization'] = 'Bearer ' + user.token.token; // jshint ignore:line
+      $http.defaults.headers.common['Authorization'] = 'Bearer ' + user.token.token;
       localStorage.user = JSON.stringify(user);
       localStorage.tokenGrantedTime = new Date();
       deferred.resolve({ success: true });
@@ -31,7 +46,7 @@
       return deferred.promise;
     }
 
-    function GetCredentials() {
+    function GetUser() {
       var deferred = $q.defer();
       if(!localStorage.user){
         localStorage.user = JSON.stringify([]);
@@ -41,10 +56,10 @@
       return deferred.promise;
     }
 
-    function ClearCredentials() {
+    function ClearUser() {
       $rootScope.globals = {};
-      localStorage.user = [];
       $rootScope.user.loggedIn = false;
+      localStorage.user = [];
       $http.defaults.headers.common.Authorization = 'Bearer ';
     }
   }
