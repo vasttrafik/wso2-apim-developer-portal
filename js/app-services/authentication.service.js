@@ -5,8 +5,8 @@
   .module('vtPortal')
   .factory('AuthenticationService', AuthenticationService);
 
-  AuthenticationService.$inject = ['$http', '$location', '$rootScope', '$timeout', 'FlashService', '$q', '$httpParamSerializer'];
-  function AuthenticationService($http, $location, $rootScope, $timeout, FlashService, $q, $httpParamSerializer) {
+  AuthenticationService.$inject = ['$http', '$location', '$rootScope', '$timeout', 'FlashService', 'UserService', '$q', '$httpParamSerializer'];
+  function AuthenticationService($http, $location, $rootScope, $timeout, FlashService, UserService, $q, $httpParamSerializer) {
     var service = {};
     var apiClient = new API.Client.DefaultApi($http, null, $httpParamSerializer);
 
@@ -14,9 +14,6 @@
     service.Logout = Logout;
     service.Register = Register;
     service.PreEmptivelyAuthenticate = PreEmptivelyAuthenticate;
-    service.SetCredentials = SetCredentials;
-    service.GetCredentials = GetCredentials;
-    service.ClearCredentials = ClearCredentials;
 
     return service;
 
@@ -35,6 +32,7 @@
         .then(function (authenticatedUserObject) {
           if(authenticatedUserObject.status === 200 || authenticatedUserObject.status === 201) {
             response = { success: true, user: authenticatedUserObject.data };
+            UserService.SetCredentials(response.user);
 
           } else {
             response = { success: false, message: authenticatedUserObject.data.message };
@@ -69,7 +67,7 @@
         .then(function (apiResponse) {
           if(apiResponse.status === 204 || apiResponse.status === 200) {
             response = { success: true }
-            ClearCredentials();
+            UserService.ClearCredentials();
           } else {
             response = { success: false, message: apiResponse.data.message };
           }
@@ -88,6 +86,7 @@
       var authResponse;
       /*
       Currently not supporting this refreshToken handling.
+
       if((Math.abs((new Date() - new Date(localStorage.tokenGrantedTime)) / 1000) > JSON.parse(localStorage.user).token.expiresIn)) {
 
         console.log("Our token has expired, need to retrieve a new one");
@@ -113,39 +112,6 @@
       */
       callback({success: true});
 
-    }
-
-    function SetCredentials(user) {
-      var deferred = $q.defer();
-      $http.defaults.headers.common['Authorization'] = 'Bearer ' + user.token.token; // jshint ignore:line
-      localStorage.user = JSON.stringify(user);
-      localStorage.tokenGrantedTime = new Date();
-      deferred.resolve({ success: true });
-
-      $rootScope.globals = {
-        currentUser: {
-          userName: user.userName
-        }
-      };
-
-      return deferred.promise;
-    }
-
-    function GetCredentials() {
-      var deferred = $q.defer();
-      if(!localStorage.user){
-        localStorage.user = JSON.stringify([]);
-      }
-
-      deferred.resolve(JSON.parse(localStorage.user));
-      return deferred.promise;
-    }
-
-    function ClearCredentials() {
-      $rootScope.globals = {};
-      localStorage.user = [];
-      $rootScope.user.loggedIn = false;
-      $http.defaults.headers.common.Authorization = 'Bearer ';
     }
   }
 

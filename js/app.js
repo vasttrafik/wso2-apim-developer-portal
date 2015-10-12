@@ -29,13 +29,13 @@
 
   }
 
-  run.$inject = ['$rootScope', '$location', '$http', 'AuthenticationService'];
-  function run($rootScope, $location, $http, AuthenticationService) {
+  run.$inject = ['$rootScope', '$location', '$http', 'UserService'];
+  function run($rootScope, $location, $http, UserService) {
 
     $rootScope.user = {};
 
     // keep user logged in after page refresh
-    AuthenticationService.GetCredentials()
+    UserService.GetCredentials()
     .then(function (user) {
 
       if (!$.isEmptyObject(user)) {
@@ -92,7 +92,6 @@
       AuthenticationService.Login(vm.username, vm.password, function (response) {
 
         if (response.success) {
-          AuthenticationService.SetCredentials(response.user);
           $rootScope.user.loggedIn = true;
           vm.dataLoading = false;
         } else {
@@ -133,7 +132,7 @@
       vm.dataLoading = true;
       AuthenticationService.Register(username, password, email, function(response) {
         if (response.success) {
-          FlashService.Success('Registration successful', true);
+          FlashService.Success('Registration successful');
           $rootScope.user.register = false;
         } else {
           FlashService.Error(response.message);
