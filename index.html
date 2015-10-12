@@ -1,94 +1,318 @@
-<!doctype html>
-<html ng-app="vtPortal" class="no-js" lang="">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+﻿<!doctype html>
+<!--<html ng-app="vtPortal" ng-controller="AppCtrl" class="no-js" lang="">-->
+<html class="no-js" lang="">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/AdminLTE.min.css">
+    <link rel="stylesheet" href="css/skins/skin-blue.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <style>
-            body {
-                padding-top: 50px;
-                padding-bottom: 20px;
-            }
-        </style>
-        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="css/AdminLTE.min.css">
-        <link rel="stylesheet" href="css/skins/skin-blue.min.css">
-        <link rel="stylesheet" href="css/main.css">
+    <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
 
-        <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-    </head>
-    <body class="skin-blue">
+</head>
+<body class="">
+    <div header></div>
 
-    <div vtheader></div>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
 
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
-
-
-      <div class="container">
-        <h1>Hello, world!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
-      </div>
+                    <a class="navbar-brand logo" href="#">
+                        <span class="barrel hidden-xs">Utvecklarportalen</span>
+                    </a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <form class="navbar-form navbar-right" role="form">
+                        <div class="form-group">
+                            <input type="text" placeholder="Email" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" placeholder="Password" class="form-control">
+                        </div>
+                        <button type="submit" class="btn btn-success">Sign in</button>
+                    </form>
+                </div>
+            </nav>
+        </div>
     </div>
 
-    <div class="container">
-      <!-- Example row of columns -->
-      <div class="row">
-        <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+    <!-- Hero -->
+    <div class="container-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-7">
+                    <h1>Utveckla tillsammans.</h1>
+                    <p>Genom att registrera dig i klubben för utvecklare kan du få del av våra API:er och du får även möjlighet att diskutera utveckling med andra medlemmar.</p>
+                    <button class="text-uppercase btn btn-primary">
+                        Skapa konto
+                    </button>
+                </div>
+                <div class="hidden-xs col-sm-5">
+                    <img class="img-responsive" src="img/png/hero.png" alt="Be a hero..." />
+                </div>
+            </div>
         </div>
-        <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-       </div>
-        <div class="col-md-4">
-          <h2>Heading</h2>
-          <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-          <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+    </div>
+
+    <!-- Areas -->
+    <div class="container-fluid blueRow">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6 text-center">
+                    <a href="#" title="Kom igång">
+                        <div class="area">
+                            <span class="fa fa-rocket fa-2x" aria-hidden="true"></span>
+                        </div>
+
+                        <h3>Kom igång</h3>
+                    </a>
+                    <p>Här är en kort beskrivande text om vad man hittar om man klickar här.</p>
+                </div>
+
+                <div class="col-md-3 col-sm-6 text-center">
+                    <a class="a-cog" href="#" title="Våra API:er">
+                        <div class="area">
+                            <span class="fa fa-cog fa-2x" aria-hidden="true"></span>
+                        </div>
+                        <h3>API:er</h3>
+                    </a>
+                    <p>Här är en kort beskrivande text om vad man hittar om man klickar här.</p>
+                </div>
+
+                <div class="col-md-3 col-sm-6 text-center">
+                    <a href="#" title="Guider och manualer">
+                        <div class="area">
+                            <span class="fa fa-file-text fa-2x" aria-hidden="true"></span>
+                        </div>
+                        <h3>Guider</h3>
+                    </a>
+                    <p>Här är en kort beskrivande text om vad man hittar om man klickar här.</p>
+                </div>
+
+                <div class="col-md-3 col-sm-6 text-center">
+                    <a href="#">
+                        <div class="area">
+                            <span class="fa fa-bar-chart fa-2x" aria-hidden="true"></span>
+                        </div>
+                        <h3>Statistik</h3>
+                    </a>
+                    <p>Här är en kort beskrivande text om vad man hittar om man klickar här.</p>
+                </div>
+            </div>
         </div>
-      </div>
+    </div>
 
-      <hr>
+    <!-- News -->
+    <div class="container-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="feed">
+                        <h3>Nyheter</h3>
+                        <ul class="list-unstyled truncate">
+                            <li>
+                                <a href="#" title="...">Detta är en nyhetsrubriklänk</a>
+                            </li>
+                            <li>
+                                <a href="#" title="...">Detta är en nyhetsrubriklänk</a>
+                            </li>
+                            <li>
+                                <a href="#" title="...">Detta är en nyhetsrubriklänk</a>
+                            </li>
+                            <li>
+                                <a href="#" title="...">Detta är en nyhetsrubriklänk</a>
+                            </li>
+                        </ul>
+                        <p>
+                            <a class="" href="#" title="...">Fler nyheter</a><br />
+                        </p>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="feed">
+                        <h3>Blogg</h3>
+                        <ul class="list-unstyled truncate">
+                            <li>
+                                <a href="#" title="...">Detta är en nyhetsrubriklänk</a>
+                            </li>
+                            <li>
+                                <a href="#" title="...">Detta är en nyhetsrubriklänk</a>
+                            </li>
+                            <li>
+                                <a href="#" title="...">Detta är en nyhetsrubriklänk</a>
+                            </li>
+                            <li>
+                                <a href="#" title="...">Detta är en nyhetsrubriklänk</a>
+                            </li>
+                        </ul>
+                        <p>
+                            <a class="" href="#" title="...">Fler nyheter</a><br />
+                        </p>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="feed">
+                        <h3>Kalender</h3>
+                        <ul class="list-unstyled truncate">
+                            <li>
+                                <span class="label label-info date-short">15 jun</span>
+                                <a href="#" title="...">Detta är en nyhetsrubriklänk</a>
+                            </li>
+                            <li>
+                                <span class="label label-info date-short">20 jun</span>
+                                <a href="#" title="...">Detta är en nyhetsrubriklänk</a>
+                            </li>
 
-      <footer>
-        <p>&copy; Company 2015</p>
-      </footer>
-    </div> <!-- /container -->
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+                            <li>
+                                <span class="label label-info date-short">25 aug</span>
+                                <a href="#" title="...">Detta är en nyhetsrubriklänk</a>
+                            </li>
+                            <li>
+                                <span class="label label-info date-short">22 sep</span>
+                                <a href="#" title="...">Detta är en nyhetsrubriklänk</a>
+                            </li>
+                        </ul>
+                        <p>
+                            <a class="" href="#" title="...">Fler nyheter</a><br />
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <script src="js/vendor/bootstrap.min.js"></script>
-        <script src="js/vendor/angular.min.js"></script>
-        <script src="js/vendor/angular-route.min.js"></script>
-        <script src="js/vendor/angular-cookies.min.js"></script>
-        <script src="js/vendor/app.js"></script>
+    <!-- Showcases -->
+    <div class="container-fluid blueRow">
+        <div class="container">
+            <div class="no-row clearfix">
+                <h3 class="">
+                    Showcase
+                    <a class="pull-right" href="#" title="...">Visa alla</a>
+                </h3>
+            </div>
+            <div class="row">
+                <div class="col-xs-4 col-sm-4 col-md-2">
+                    <div class="showcase panel panel-default">
+                        <a href="#" title="DamnBus">
+                            <div class="panel-body">
+                                <img class="img-responsive" src="img/png/8min.png" alt="DamnBus" />
+                                <div class="text-center">
+                                    <br>
+                                    <p><strong>DamnBus</strong></p>
+                                    <div class="author hidden-sm">Amin Asadi</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-2">
+                    <div class="showcase panel panel-default">
+                        <a href="#" title="Bästa tur - Västtrafik">
+                            <div class="panel-body">
+                                <img class="img-responsive" src="img/png/bestroute.png" alt="" />
+                                <div class="text-center">
+                                    <br>
+                                    <p><strong>Bästa tur - Västtrafik</strong></p>
+                                    <div class="author hidden-sm">Bellison</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-2">
+                    <div class="showcase panel panel-default">
+                        <a href="#" title="GoWest - Västtrafik">
+                            <div class="panel-body">
+                                <img class="img-responsive" src="img/png/gowest.png" alt="" />
+                                <div class="text-center">
+                                    <br>
+                                    <p><strong>GoWest - Västtrafik</strong></p>
+                                    <div class="author hidden-sm">Niclas Lundgren</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-2">
+                    <div class="showcase panel panel-default">
+                        <a href="#" title="Västtrafik - JustInTime">
+                            <div class="panel-body">
+                                <img class="img-responsive" src="img/png/justintime.png" alt=""/>
+                                <div class="text-center">
+                                    <br>
+                                    <p><strong>Västtrafik - JustInTime</strong></p>
+                                    <div class="author hidden-sm">Anders Ekvall</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-2">
+                    <div class="showcase panel panel-default">
+                        <a href="#" title="På Språng för Västtrafik">
+                            <div class="panel-body">
+                                <img class="img-responsive" src="img/png/onthemove.png" alt=""/>
+                                <div class="text-center">
+                                    <br>
+                                    <p><strong>På Språng för Västtrafik</strong></p>
+                                    <div class="author hidden-sm">Anders Ekvall</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-xs-4 col-sm-4 col-md-2">
+                    <div class="showcase panel panel-default">
+                        <a href="#" title="Tidtabellen Väst">
+                            <div class="panel-body">
+                                <img class="img-responsive" src="img/png/timetablewest.png" alt=""/>
+                                <div class="text-center">
+                                    <br>
+                                    <p><strong>Tidtabellen Väst</strong></p>
+                                    <div class="author hidden-sm">acreations</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <script src="js/main.js"></script>
-        <script src="js/app.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+    <script src="js/vendor/angular.min.js"></script>
+    <script src="js/vendor/app.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/app.js"></script>
 
-        <script src="js/app-services/authentication.service.js"></script>
-        <script src="js/app-services/flash.service.js"></script>
+    <script type="text/javascript">
+        $(function () {
 
-        <!-- Real user service that uses an api -->
-        <!-- <script src="app-services/user.service.js"></script> -->
-
-        <!-- Fake user service for demo that uses local storage -->
-        <script src="js/app-services/user.service.local-storage.js"></script>
-
-                <script src="js/home/home.controller.js"></script>
-                <script src="js/login/login.controller.js"></script>
-                <script src="js/register/register.controller.js"></script>
-
-
-
-    </body>
+            $('.a-cog').hover(function () {
+                $('.fa.fa-cog.fa-2x').addClass("fa-spin");
+            }, function () {
+                $('.fa.fa-cog.fa-2x').removeClass("fa-spin");
+            }
+            );
+        });
+    </script>
+</body>
 </html>
+
