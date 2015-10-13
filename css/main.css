@@ -80,14 +80,14 @@ a:focus {
     font-weight:600;
     color:white;
     background:url(../img/png/logo_start.png) no-repeat;
-    padding-left: 230px;
+    padding-left: 0;
 }
 
 .barrel {
     border-left: 4px solid white;
-    height: 40px;
     margin-right: 20px;
-    padding-left: 20px;
+    padding-left: 15px;
+    margin-left: 230px;
 }
 
 /* Jumbotron */
