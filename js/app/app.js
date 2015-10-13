@@ -100,6 +100,7 @@
 
     function logout() {
       $rootScope.user.loggedIn = false;
+      $rootScope.user.register = false;
       AuthenticationService.Logout();
     }
 

@@ -5,8 +5,8 @@
       <div class="col-sm-7">
         <h1>Utveckla tillsammans.</h1>
         <p>Genom att registrera dig i klubben för utvecklare kan du få del av våra API:er och du får även möjlighet att diskutera utveckling med andra medlemmar.</p>
-        <button class="text-uppercase btn btn-primary">
-          Skapa konto
+        <button id="register-button" class="text-uppercase btn btn-primary">
+          Registrera konto
         </button>
       </div>
       <div class="hidden-xs col-sm-5">
@@ -259,7 +259,7 @@
 <script>
   $(document).ready(function() {
 
-    $('.btn-primary').on('click', function(e) {
+    $('#register-button').on('click', function(e) {
       e.stopPropagation();
 
       var element = angular.element(document.body);
