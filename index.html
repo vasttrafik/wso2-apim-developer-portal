@@ -28,7 +28,7 @@
             <div class="menu-list">
                 <ul id="menu-content" class="menu-content collapse out">
                     <li data-toggle="collapse" data-target="#api" class="collapsed">
-                        <a href="#">API<span class="arrow"></span></a>
+                        <a href="#/apis">API<span class="arrow"></span></a>
                     </li>
 
                     <ul class="sub-menu collapse" id="api" style="height: 0;">
@@ -82,7 +82,7 @@
                     <span class="icon-bar"></span>
                 </button>
 
-                <a class="navbar-brand logo" href="#">
+                <a class="navbar-brand logo" href="#/">
                     <span class="barrel hidden-xs">Utvecklarportalen</span>
                 </a>
             </div>
@@ -93,15 +93,22 @@
                     Inloggad som {{globals.currentUser.userName}}
                     <span class="caret"></span>
                   </button>
-                  <div class="dropdown-menu" style="padding: 20px;">
-                    <div class="col-md-6 col-md-offset-3">
-                      <form name="form" ng-submit="vm.logout()" role="form">
-                        <div class="form-actions noclick">
-                          <button type="submit" class="btn btn-primary">Logga ut</button>
-                        </div>
-                      </form>
+                  <div class="dropdown-menu" style="padding: 20px; min-width: 400px;">
+                      <div class="row">
+                          <div class="col-md-8">
+                              <a href="#/profile">Min profil</a>
+                          </div>
+                          <div class="col-md-4">
+                            <form name="form" ng-submit="vm.logout()" role="form">
+                              <div class="form-actions noclick">
+                                <button type="submit" class="btn btn-primary">Logga ut</button>
+                              </div>
+                            </form>
 
-                    </div>
+                          </div>
+                      </div>
+
+
                   </div>
 
                 </div>
@@ -267,6 +274,8 @@
 
     <script src="js/app/controllers/home.controller.js"></script>
     <script src="js/app/controllers/profile.controller.js"></script>
+    <script src="js/app/controllers/apis.controller.js"></script>
+
     <script>
         $(document).ready(function () {
 

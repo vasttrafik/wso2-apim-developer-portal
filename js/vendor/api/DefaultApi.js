@@ -21,12 +21,11 @@ var API;
                 var headerParams = {};
 
                 // verify required parameter 'limit' is set
-                if (!limit) {
+                if (limit == null) {
                     throw new Client.Error('Missing required parameter limit when calling apisGet');
                 }
-
                 // verify required parameter 'offset' is set
-                if (!offset) {
+                if (offset == null) {
                     throw new Client.Error('Missing required parameter offset when calling apisGet');
                 }
 
@@ -61,7 +60,6 @@ var API;
                         }
                     }
                 }
-
                 return this.$http(httpRequestParams);
             };
 

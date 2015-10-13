@@ -89,6 +89,12 @@ a:focus {
     margin-right: 20px;
     padding-left: 20px;
 }
+
+/* Jumbotron */
+.jumbotron {
+    padding-top:120px;
+}
+
 /* Hero */
 .hero {
     padding-top:150px;
