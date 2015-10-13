@@ -13,15 +13,16 @@
 
 */
 
-(function () {
+(function() {
   'use strict';
 
   angular
-  .module('vtPortal')
-  .factory('UserService', UserService);
+    .module('vtPortal')
+    .factory('UserService', UserService);
 
-  UserService.$inject = ['$http', '$location', '$rootScope', '$q'];
-  function UserService($http, $location, $rootScope, $q) {
+  UserService.$inject = ['$http', '$rootScope', '$q'];
+
+  function UserService($http, $rootScope, $q) {
     var service = {};
 
     service.SetUser = SetUser;
@@ -32,10 +33,12 @@
 
     function SetUser(user) {
       var deferred = $q.defer();
-      $http.defaults.headers.common['Authorization'] = 'Bearer ' + user.token.token;
+      $http.defaults.headers.common.Authorization = 'Bearer ' + user.token.token;
       localStorage.user = JSON.stringify(user);
       localStorage.tokenGrantedTime = new Date();
-      deferred.resolve({ success: true });
+      deferred.resolve({
+        success: true
+      });
 
       $rootScope.globals = {
         currentUser: {
@@ -48,7 +51,7 @@
 
     function GetUser() {
       var deferred = $q.defer();
-      if(!localStorage.user){
+      if (!localStorage.user) {
         localStorage.user = JSON.stringify([]);
       }
 

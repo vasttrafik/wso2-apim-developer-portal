@@ -209,8 +209,6 @@ var API;
             DefaultApi.prototype.applicationsGet = function (limit, offset, query, accept, ifNoneMatch, extraHttpRequestParams) {
                 var path = this.basePath + '/applications';
 
-                console.log("limit: " + limit + " " + !limit);
-
                 var queryParameters = {};
                 var headerParams = {};
 
