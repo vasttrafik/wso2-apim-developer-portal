@@ -118,9 +118,14 @@
 
     }
 
-    function toggleRegister() {
+    function toggleRegister(register) {
       vm.dataLoading = false;
-      $rootScope.user.register = !$rootScope.user.register;
+
+      if(register != null) { // jshint ignore:line
+        $rootScope.user.register = register;
+      } else {
+        $rootScope.user.register = !$rootScope.user.register;
+      }
       delete $rootScope.alert;
     }
   }
