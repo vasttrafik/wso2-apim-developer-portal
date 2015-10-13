@@ -91,7 +91,8 @@ a:focus {
 }
 /* Hero */
 .hero {
-    padding-top:90px;
+    padding-top:150px;
+    padding-bottom:150px;
 }
 
 .hero h1 {
