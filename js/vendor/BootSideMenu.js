@@ -7,7 +7,7 @@
             newCode = "",
             settings = $.extend({
                 side: "left",
-                autoClose: true
+                autoClose: false
             }, options),
             autoClose = settings.autoClose,
             side = settings.side;

@@ -3,7 +3,7 @@
 /* ==========================================================================
    ========================================================================== */
 
-.navbar-collapse{background-color:black;padding-top:3px;padding-bottom:3px !important}
+/*.navbar-collapse{background-color:black;padding-top:3px;padding-bottom:3px !important}
 .dropdown-menu{width: 500px;border-top:0px;margin-top:3px;}
 .dropdown-menu .col-sm-12,.dropdown-menu .col-sm-6{margin-bottom:7px;}
 .dropdown-menu:after{
@@ -15,7 +15,7 @@
   position: absolute;
   top: -6px;
   right: 10px;
-}
+}*/
 @font-face {
     font-family: 'FoundersGroteskWeb-Regular';
     src: url('../fonts/Founders/FoundersGroteskWeb-Regular.eot') format('embedded-opentype');
@@ -259,3 +259,42 @@ ul.list-unstyled.truncate,
 ul.list-unstyled.ellipsis {
   line-height: 1.64;
 }
+
+/* Footer */
+
+footer {
+  background-color: #00394d;
+}
+footer h1,
+footer .h1,
+footer h2,
+footer .h2,
+footer h3,
+footer .h3,
+footer .copyright {
+  color: #aaaaaa;
+}
+footer a,
+footer .logo {
+  color: white;
+}
+footer a:hover,
+footer a:focus {
+  color: #00aaeb;
+}
+footer,
+footer .info {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+footer .info {
+  line-height: 2;
+}
+footer .info .logo {
+  float: right;
+  padding-top: 20px;
+}
+footer .info .logo .icon {
+  font-size: 54px;
+}
+/* End Footer */

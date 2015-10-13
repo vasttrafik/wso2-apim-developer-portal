@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html ng-app="vtPortal" class="no-js" lang="">
 <head>
   <meta charset="utf-8">
@@ -17,7 +17,7 @@
 </head>
 <body id="body" ng-controller="MainController as vm">
 
-  <div ng-class="{ 'alert': alert, 'alert-success': alert.type === 'success', 'alert-danger': alert.type === 'error' }" ng-show="alert" style="margin-bottom: 0px; border-radius: 0px">
+  <div ng-class="{ 'alert': alert, 'alert-success': alert.type === 'success', 'alert-danger': alert.type === 'error' }" ng-show="alert" style="margin-bottom: 0; border-radius: 0">
     <span ng-show="alert" ng-bind="alert.message"></span><button type="button" class="close" data-dismiss="alert" ng-show="alert">×</button>
   </div>
 
