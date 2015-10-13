@@ -1,5 +1,6 @@
-﻿<!doctype html>
+<!doctype html>
 <html ng-app="vtPortal" class="no-js" lang="">
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -15,23 +16,26 @@
 
   <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
 </head>
+
 <body id="body" ng-controller="MainController as vm">
 
-  <div ng-class="{ 'alert': alert, 'alert-success': alert.type === 'success', 'alert-danger': alert.type === 'error' }" ng-show="alert" style="margin-bottom: 0; border-radius: 0">
-    <span ng-show="alert" ng-bind="alert.message"></span><button type="button" class="close" data-dismiss="alert" ng-show="alert">×</button>
+  <div ng-class="{ 'alert': alert, 'alert-success': alert.type === 'success', 'alert-danger': alert.type === 'error' }" ng-show="alert" style="margin-bottom: 0px; border-radius: 0px">
+    <span ng-show="alert" ng-bind="alert.message"></span>
+    <button type="button" class="close" data-dismiss="alert" ng-show="alert">×</button>
   </div>
 
   <div class="navbar-collapse collapse">
     <div class="navbar-right">
       <div class="btn-group" ng-show="user.loggedIn">
         <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-          Inloggad som {{globals.currentUser.userName}} <span class="caret"></span>
+          Inloggad som {{globals.currentUser.userName}}
+          <span class="caret"></span>
         </button>
         <div class="dropdown-menu" style="padding: 20px;">
           <div class="col-md-6 col-md-offset-3">
             <form name="form" ng-submit="vm.logout()" role="form">
               <div class="form-actions noclick">
-                <button type="submit"class="btn btn-primary">Logga ut</button>
+                <button type="submit" class="btn btn-primary">Logga ut</button>
               </div>
             </form>
 
@@ -42,7 +46,9 @@
 
       <div class="btn-group" ng-show="!user.loggedIn">
         <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-          <span ng-if="!user.register">Logga in</span><span ng-if="user.register">Registrera</span> <span class="caret"></span>
+          <span ng-if="!user.register">Logga in</span>
+          <span ng-if="user.register">Registrera</span>
+          <span class="caret"></span>
         </button>
         <div class="dropdown-menu" style="padding: 20px;">
           <div class="col-md-12">
@@ -61,7 +67,8 @@
                 </div>
                 <div class="form-actions noclick">
                   <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Logga in</button>
-                  <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                  <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                  />
                   <span ng-click="vm.toggleRegister()" class="btn btn-link">Registrera</span>
                 </div>
               </div>
@@ -71,7 +78,7 @@
                   <input type="text" name="username" id="username" class="form-control" ng-model="vm.user.username" required />
                   <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Användarnamn är obligatoriskt</span>
                 </div>
-                <div class="form-group" ng-class="{ 'has-error': form.register-password.$dirty && form.register-password.$error.required }">
+                <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
                   <label for="password">Lösenord</label>
                   <input type="password" name="password" id="password" class="form-control" ng-model="vm.user.password" required />
                   <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Lösenord är obligatoriskt</span>
@@ -83,7 +90,8 @@
                 </div>
                 <div class="form-actions noclick">
                   <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Registrera</button>
-                  <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                  <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                  />
                   <span ng-click="vm.toggleRegister()" class="btn btn-link">Ångra</span>
                 </div>
               </div>
@@ -102,7 +110,9 @@
 
   <!-- /container -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-  <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+  <script>
+    window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')
+  </script>
 
   <script src="js/vendor/bootstrap.min.js"></script>
   <script src="js/vendor/angular.min.js"></script>
@@ -125,11 +135,12 @@
   <script src="js/api/User.js"></script>
   <script src="js/api/Error.js"></script>
   <script src="js/api/ErrorListItem.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/app.module.js"></script>
 
   <script src="js/app-services/authentication.service.js"></script>
   <script src="js/app-services/alert.service.js"></script>
   <script src="js/app-services/user.service.js"></script>
+  <script src="js/app-services/api.service.js"></script>
 
 
   <script src="js/home/home.controller.js"></script>
@@ -137,20 +148,20 @@
 
 
   <script>
+    $(document).ready(function() {
 
-  $( document ).ready(function() {
+      $(function() {
+        $('.dropdown-menu, .dropdown-menu input, .noclick').click(function(event) {
+          event.stopPropagation();
+        });
+      });
 
-    $(function(){
-      $('.dropdown-menu, .dropdown-menu input, .noclick').click(function (event) {
-        event.stopPropagation();
+      $('.close').click(function(event) {
+        angular.element(document.body).controller().ClearAlertMessage();
       });
     });
-
-    $('.close').click(function(event){
-      angular.element(document.body).controller().clearAlertMessage();
-    });
-  });
   </script>
 
 </body>
+
 </html>
