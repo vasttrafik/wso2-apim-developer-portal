@@ -101,7 +101,7 @@ Handles authentication of the user.
 
           $location.path('/');
 
-          if (callback !== null) {
+          if (callback != null) { // jshint ignore:line
             callback(response);
           }
         });

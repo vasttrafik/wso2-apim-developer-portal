@@ -78,23 +78,90 @@
                     <span class="barrel hidden-xs">Utvecklarportalen</span>
                 </a>
             </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <form class="navbar-form navbar-right" role="form">
-                    <div class="form-group">
-                        <input type="text" placeholder="Email" class="form-control">
+            <div class="navbar-collapse collapse">
+              <div class="navbar-right">
+                <div class="btn-group" ng-show="user.loggedIn">
+                  <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                    Inloggad som {{globals.currentUser.userName}}
+                    <span class="caret"></span>
+                  </button>
+                  <div class="dropdown-menu" style="padding: 20px;">
+                    <div class="col-md-6 col-md-offset-3">
+                      <form name="form" ng-submit="vm.logout()" role="form">
+                        <div class="form-actions noclick">
+                          <button type="submit" class="btn btn-primary">Logga ut</button>
+                        </div>
+                      </form>
+
                     </div>
-                    <div class="form-group">
-                        <input type="password" placeholder="Password" class="form-control">
+                  </div>
+
+                </div>
+
+                <div class="btn-group" ng-show="!user.loggedIn">
+                  <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                    <span ng-if="!user.register">Logga in</span>
+                    <span ng-if="user.register">Registrera</span>
+                    <span class="caret"></span>
+                  </button>
+                  <div class="dropdown-menu" style="padding: 20px; min-width: 400px;">
+                    <div class="col-md-12">
+                      <form name="form" ng-submit="user.register ? vm.register() : vm.login()" role="form">
+
+                        <div ng-if="!user.register">
+                          <div class="form-group" ng-class="{ 'has-error': login-form.username.$dirty && login-form.username.$error.required }">
+                            <label for="username">Användarnamn</label>
+                            <input type="text" name="username" id="username" class="form-control" ng-model="vm.username" required />
+                            <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Användarnamn är obligatoriskt</span>
+                          </div>
+                          <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+                            <label for="password">Lösenord</label>
+                            <input type="password" name="password" id="password" class="form-control" ng-model="vm.password" required />
+                            <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Lösenord är obligatoriskt</span>
+                          </div>
+                          <div class="form-actions noclick">
+                            <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Logga in</button>
+                            <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                            />
+                            <span ng-click="vm.toggleRegister()" class="btn btn-link">Registrera</span>
+                          </div>
+                        </div>
+                        <div ng-if="user.register">
+                          <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+                            <label for="username">Användarnamn</label>
+                            <input type="text" name="username" id="username" class="form-control" ng-model="vm.user.username" required />
+                            <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Användarnamn är obligatoriskt</span>
+                          </div>
+                          <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+                            <label for="password">Lösenord</label>
+                            <input type="password" name="password" id="password" class="form-control" ng-model="vm.user.password" required />
+                            <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Lösenord är obligatoriskt</span>
+                          </div>
+                          <div class="form-group" ng-class="{ 'has-error': form.email.$dirty && form.email.$error.required }">
+                            <label for="email">E-post</label>
+                            <input type="text" name="email" id="email" class="form-control" ng-model="vm.user.email" required />
+                            <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">E-Post är obligatoriskt</span>
+                          </div>
+                          <div class="form-actions noclick">
+                            <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Registrera</button>
+                            <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                            />
+                            <span ng-click="vm.toggleRegister()" class="btn btn-link">Ångra</span>
+                          </div>
+                        </div>
+                      </form>
                     </div>
-                    <button type="submit" class="btn btn-success">Sign in</button>
-                </form>
+                  </div>
+
+                </div>
+              </div>
             </div>
             <!--</nav>-->
         </div>
     </div>
 
     <div ng-view></div>
-   
+
     <footer class="bs-docs-footer" role="contentinfo">
         <div class="container">
             <div class="row row-centered">
