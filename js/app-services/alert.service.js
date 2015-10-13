@@ -2,14 +2,15 @@
   Handles alerts shown to the user.
 */
 
-(function () {
+(function() {
   'use strict';
 
   angular
-  .module('vtPortal')
-  .factory('AlertService', AlertService);
+    .module('vtPortal')
+    .factory('AlertService', AlertService);
 
   AlertService.$inject = ['$rootScope'];
+
   function AlertService($rootScope) {
     var service = {};
 
@@ -22,9 +23,9 @@
     function ClearAlertMessage() {
       var alert = $rootScope.alert;
       if (alert) {
-          $rootScope.$apply(function () {
-            delete $rootScope.alert;
-          });
+        $rootScope.$apply(function() {
+          delete $rootScope.alert;
+        });
       }
     }
 
@@ -35,7 +36,7 @@
       };
     }
 
-    function Error(message) {
+    function Error(message) { // jshint ignore:line
       $rootScope.alert = {
         message: message,
         type: 'error'

@@ -1,14 +1,15 @@
 /*
 Handles authentication of the user.
 */
-(function () {
+(function() {
   'use strict';
 
   angular
-  .module('vtPortal')
-  .factory('APIService', APIService);
+    .module('vtPortal')
+    .factory('APIService', APIService);
 
   APIService.$inject = ['$http', 'AuthenticationService', 'AlertService', '$q', '$httpParamSerializer'];
+
   function APIService($http, AuthenticationService, AlertService, $q, $httpParamSerializer) {
     var service = {};
     var apiClient = new API.Client.DefaultApi($http, null, $httpParamSerializer);
@@ -17,30 +18,30 @@ Handles authentication of the user.
 
     return service;
 
-/*
-  Wrapper function for calls towards backend API
-*/
+    /*
+      Wrapper function for calls towards backend API
+    */
     function Call(funcName, args) {
       var deferred = $q.defer();
 
       apiClient[funcName].apply(apiClient, args)
-      .then(function(response) {
-
-        deferred.resolve(response);
-
-      },function(response) {
-        if(response.status === 401) {
-
-          AuthenticationService.Logout();
-          AlertService.Error("User not authenticated", false);
-          deferred.reject('User not authenticated');
-
-        } else {
+        .then(function(response) {
 
           deferred.resolve(response);
 
-        }
-      });
+        }, function(response) {
+          if (response.status === 401) {
+
+            AuthenticationService.Logout();
+            AlertService.Error("User not authenticated", false);
+            deferred.reject('User not authenticated');
+
+          } else {
+
+            deferred.resolve(response);
+
+          }
+        });
 
       return deferred.promise;
 
@@ -71,7 +72,7 @@ callback({success: true});
 }
 */
 
-}
-}
+    }
+  }
 
 })();

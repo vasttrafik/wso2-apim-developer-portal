@@ -2,21 +2,22 @@
   Main Angular module and controller for vtPortal.
 */
 
-(function () {
+(function() {
   'use strict';
 
   angular
-  .module('vtPortal', ['ngRoute', 'ngSanitize'])
-  .config(config)
-  .run(run)
-  .controller('MainController', MainController);
+    .module('vtPortal', ['ngRoute', 'ngSanitize'])
+    .config(config)
+    .run(run)
+    .controller('MainController', MainController);
 
   config.$inject = ['$routeProvider'];
+
   function config($routeProvider) {
 
     $routeProvider
 
-    .when('/', {
+      .when('/', {
       controller: 'HomeController',
       templateUrl: 'js/home/home.view.html',
       controllerAs: 'vm'
@@ -31,6 +32,7 @@
   }
 
   run.$inject = ['$rootScope', '$location', '$http', 'UserService'];
+
   function run($rootScope, $location, $http, UserService) {
 
     $rootScope.user = {};
@@ -38,25 +40,25 @@
 
     // keep user logged in after page refresh
     UserService.GetUser()
-    .then(function (user) {
+      .then(function(user) {
 
-      if (!$.isEmptyObject(user)) {
-        $rootScope.user.loggedIn = true;
+        if (!$.isEmptyObject(user)) {
+          $rootScope.user.loggedIn = true;
 
-        $rootScope.globals = {
-          currentUser: {
-            userName: user.userName
-          }
-        };
+          $rootScope.globals = {
+            currentUser: {
+              userName: user.userName
+            }
+          };
 
-        $http.defaults.headers.common.Authorization = 'Bearer ' + user.token.token;
-      } else {
-        $rootScope.user.loggedIn = false;
-      }
-    });
+          $http.defaults.headers.common.Authorization = 'Bearer ' + user.token.token;
+        } else {
+          $rootScope.user.loggedIn = false;
+        }
+      });
 
 
-    $rootScope.$on('$locationChangeStart', function (event, next, current) {
+    $rootScope.$on('$locationChangeStart', function(event, next, current) {
 
       // redirect to startpage page if not logged in and trying to access a restricted page
       var restrictedPage = $.inArray($location.path(), ['/']) === -1;
@@ -70,6 +72,7 @@
   }
 
   MainController.$inject = ['$rootScope', 'AuthenticationService', 'AlertService'];
+
   function MainController($rootScope, AuthenticationService, AlertService) {
     var vm = this;
 
@@ -82,7 +85,7 @@
     function login() {
 
       vm.dataLoading = true;
-      AuthenticationService.Login(vm.username, vm.password, function (response) {
+      AuthenticationService.Login(vm.username, vm.password, function(response) {
 
         if (response.success) {
           $rootScope.user.loggedIn = true;
@@ -95,31 +98,31 @@
 
     }
 
-      function logout() {
-        $rootScope.user.loggedIn = false;
-        AuthenticationService.Logout();
-      }
-
-      function register() {
-        vm.dataLoading = true;
-        AuthenticationService.Register(username, password, email, function(response) {
-          if (response.success) {
-            AlertService.Success('Registration successful');
-            $rootScope.user.register = false;
-            vm.dataLoading = false;
-          } else {
-            AlertService.Error(response.message);
-            vm.dataLoading = false;
-          }
-        });
-
-      }
-
-      function toggleRegister() {
-        vm.dataLoading = false;
-        $rootScope.user.register = !$rootScope.user.register;
-        delete $rootScope.alert;
-      }
+    function logout() {
+      $rootScope.user.loggedIn = false;
+      AuthenticationService.Logout();
     }
 
-  })();
+    function register() {
+      vm.dataLoading = true;
+      AuthenticationService.Register(username, password, email, function(response) {
+        if (response.success) {
+          AlertService.Success('Registration successful');
+          $rootScope.user.register = false;
+          vm.dataLoading = false;
+        } else {
+          AlertService.Error(response.message);
+          vm.dataLoading = false;
+        }
+      });
+
+    }
+
+    function toggleRegister() {
+      vm.dataLoading = false;
+      $rootScope.user.register = !$rootScope.user.register;
+      delete $rootScope.alert;
+    }
+  }
+
+})();
