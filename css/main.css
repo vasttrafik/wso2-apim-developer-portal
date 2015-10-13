@@ -298,3 +298,61 @@ footer .info .logo .icon {
   font-size: 54px;
 }
 /* End Footer */
+
+
+/* Button styles */
+button.btn {
+    border: 1px solid transparent;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+.hero a, .hero button {
+    font-size: 18px;
+}
+.btn-primary {
+    background-color: #00aaeb;
+    border-color: #0098d2;
+    color: #ffffff;
+}
+.btn {
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 0;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 18px;
+    font-weight: normal;
+    line-height: 1.42857;
+    margin-bottom: 0;
+    padding: 6px 12px;
+    text-align: center;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+.text-uppercase {
+    text-transform: uppercase;
+}
+a, button, a .icon, a .panel-body {
+    -moz-transition: color 500ms ease-out 0s, background-color 500ms ease-out 0s, box-shadow 500ms ease-out 0s, opacity 500ms linear 0s, transform 500ms ease-in-out 0s;
+    -o-transition: color 500ms ease-out 0s, background-color 500ms ease-out 0s, box-shadow 500ms ease-out 0s, opacity 500ms linear 0s, transform 500ms ease-in-out 0s;
+    -webkit-transition: color 500ms ease-out 0s, background-color 500ms ease-out 0s, box-shadow 500ms ease-out 0s, opacity 500ms linear 0s, transform 500ms ease-in-out 0s;
+    transition: color 500ms ease-out 0s, background-color 500ms ease-out 0s, box-shadow 500ms ease-out 0s, opacity 500ms linear 0s, transform 500ms ease-in-out 0s;
+}
+input, button, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+button, html input[type="button"], input[type="reset"], input[type="submit"] {
+    cursor: pointer;
+}
+button, select {
+    text-transform: none;
+}
+button {
+    overflow: visible;
+}
