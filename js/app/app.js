@@ -9,7 +9,7 @@
     .module('vtPortal', ['ngRoute', 'ngSanitize'])
     .config(config)
     .run(run)
-    .controller('MainController', MainController);
+    .controller('MainCtrl', MainCtrl);
 
   config.$inject = ['$routeProvider'];
 
@@ -18,14 +18,14 @@
     $routeProvider
 
       .when('/', {
-      controller: 'HomeController',
-      templateUrl: 'js/home/home.view.html',
+      controller: 'HomeCtrl',
+      templateUrl: 'js/app/views/home.view.html',
       controllerAs: 'vm'
     })
 
     .when('/profile', {
-      controller: 'ProfileController',
-      templateUrl: 'js/profile/profile.view.html',
+      controller: 'ProfileCtrl',
+      templateUrl: 'js/app/views/profile.view.html',
       controllerAs: 'vm'
     });
 
@@ -71,9 +71,9 @@
 
   }
 
-  MainController.$inject = ['$rootScope', 'AuthenticationService', 'AlertService'];
+  MainCtrl.$inject = ['$rootScope', 'AuthenticationService', 'AlertService'];
 
-  function MainController($rootScope, AuthenticationService, AlertService) {
+  function MainCtrl($rootScope, AuthenticationService, AlertService) {
     var vm = this;
 
     vm.login = login;

@@ -9,7 +9,6 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="css/skins/skin-blue.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/slidemenu.css" />
     <link rel="stylesheet" href="css/bootsnipp.css" />
@@ -18,7 +17,7 @@
     <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
 
 </head>
-<body id="body" ng-controller="MainController as vm">
+<body id="body" ng-controller="MainCtrl as vm">
 
     <div id="menu_left" class="container sidebar sidebar-left">
         <div class="nav-side-menu" data-side="left">
@@ -258,15 +257,15 @@
     <script src="js/vendor/api/Error.js"></script>
     <script src="js/vendor/api/ErrorListItem.js"></script>
 
-    <script src="js/app.module.js"></script>
+    <script src="js/app/app.js"></script>
 
-    <script src="js/app-services/authentication.service.js"></script>
-    <script src="js/app-services/alert.service.js"></script>
-    <script src="js/app-services/user.service.js"></script>
-    <script src="js/app-services/api.service.js"></script>
+    <script src="js/app/services/authentication.service.js"></script>
+    <script src="js/app/services/alert.service.js"></script>
+    <script src="js/app/services/user.service.js"></script>
+    <script src="js/app/services/api.service.js"></script>
 
-    <script src="js/home/home.controller.js"></script>
-    <script src="js/profile/profile.controller.js"></script>
+    <script src="js/app/controllers/home.controller.js"></script>
+    <script src="js/app/controllers/profile.controller.js"></script>
     <script>
         $(document).ready(function () {
 

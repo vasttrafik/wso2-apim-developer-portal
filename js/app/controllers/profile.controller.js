@@ -3,11 +3,11 @@
 
   angular
     .module('vtPortal')
-    .controller('ProfileController', ProfileController);
+    .controller('ProfileCtrl', ProfileCtrl);
 
-  ProfileController.$inject = ['APIService', 'AlertService', '$http', '$httpParamSerializer'];
+  ProfileCtrl.$inject = ['$http', '$httpParamSerializer', 'APIService', 'AlertService'];
 
-  function ProfileController(APIService, AlertService, $http, $httpParamSerializer) {
+  function ProfileCtrl($http, $httpParamSerializer, APIService, AlertService) {
     var vm = this;
 
     APIService.Call('applicationsGet', [0.0, 0.0])
