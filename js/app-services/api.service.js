@@ -1,6 +1,7 @@
 /*
-Handles authentication of the user.
+Handles calls towards backend api.
 */
+
 (function() {
   'use strict';
 

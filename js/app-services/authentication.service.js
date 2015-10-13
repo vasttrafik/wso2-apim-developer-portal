@@ -1,6 +1,7 @@
 /*
 Handles authentication of the user.
 */
+
 (function() {
   'use strict';
 

@@ -80,7 +80,7 @@
     vm.logout = logout;
     vm.register = register;
     vm.toggleRegister = toggleRegister;
-    vm.clearAlertMessage = AlertService.clearAlertMessage;
+    vm.clearAlertMessage = AlertService.ClearAlertMessage;
 
     function login() {
 
