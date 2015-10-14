@@ -90,17 +90,16 @@
     function login() {
 
       vm.dataLoading = true;
-      AuthenticationService.login(vm.username, vm.password, function(response) {
-
-        if (response.success) {
+      AuthenticationService.login(vm.username, vm.password).then(
+      function(response) {
           $rootScope.user.loggedIn = true;
           vm.dataLoading = false;
           AlertService.clearAlertMessage();
-        } else {
+      }, function(response) {
           AlertService.error("Problem att logga in: " + response.message);
           vm.dataLoading = false;
         }
-      });
+      );
 
     }
 
@@ -112,16 +111,15 @@
 
     function create() {
       vm.dataLoading = true;
-      AuthenticationService.create(username, password, email, function(response) {
-        if (response.success) {
+      AuthenticationService.create(vm.user.username, vm.user.password, vm.user.email, vm.user.firstname, vm.user.lastname).then( function(response) {
           AlertService.success('Skapade kontot!');
           $rootScope.user.create = false;
           vm.dataLoading = false;
-        } else {
+        }, function(response){
           AlertService.error(response.message);
           vm.dataLoading = false;
         }
-      });
+      );
 
     }
 

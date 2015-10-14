@@ -9,9 +9,9 @@ Handles authentication of the user.
     .module('vtPortal')
     .factory('AuthenticationService', AuthenticationService);
 
-  AuthenticationService.$inject = ['$http', '$location', 'UserService', '$httpParamSerializer'];
+  AuthenticationService.$inject = ['$http', '$location', 'UserService', '$httpParamSerializer', '$q'];
 
-  function AuthenticationService($http, $location, UserService, $httpParamSerializer) {
+  function AuthenticationService($http, $location, UserService, $httpParamSerializer, $q) {
     var service = {};
     var apiClient = new API.Client.DefaultApi($http, null, $httpParamSerializer);
 
@@ -21,7 +21,8 @@ Handles authentication of the user.
 
     return service;
 
-    function login(username, password, callback, refreshToken) {
+    function login(username, password, refreshToken) {
+      var deferred = $q.defer();
 
       var action = 'login';
 
@@ -38,37 +39,36 @@ Handles authentication of the user.
         .then(function(authenticatedUserObject) {
           if (authenticatedUserObject.status === 200 || authenticatedUserObject.status === 201) {
             response = {
-              success: true,
               user: authenticatedUserObject.data
             };
-
-            // Retrieve further user information based on userId from login response
-            apiClient.usersUserIdGet(authenticatedUserObject.data.userId)
-              .then(function(userAccountObject) {
-                if (userAccountObject.status === 200) {
-                  response.user.claims = userAccountObject.data.claims;
-                  UserService.SetUser(response.user);
-                  callback(response);
-                }
-              }, function(apiResponse) {
-                response = {
-                  success: false,
-                  message: apiResponse.data.message
-                };
-                callback(response);
-              });
           }
-        }, function(apiResponse) {
+        }).then(function() {
+          // Retrieve further user information based on userId from login response
+          apiClient.usersUserIdGet(response.user.userId)
+            .then(function(userAccountObject) {
+              if (userAccountObject.status === 200) {
+                response.user.claims = userAccountObject.data.claims;
+                UserService.SetUser(response.user);
+                deferred.resolve(response);
+              }
+            }).catch(function(apiResponse) {
+              response = {
+                message: apiResponse.data.message
+              };
+              deferred.reject(response);
+            });
+        }).catch(function(apiResponse) {
           response = {
-            success: false,
             message: apiResponse.data.message
           };
-          callback(response);
+          deferred.reject(response);
         });
 
+      return deferred.promise;
     }
 
-    function create(username, password, email, callback) {
+    function create(username, password, email, firstname, lastname) {
+      var deferred = $q.defer();
 
       var response;
       apiClient.usersPost({
@@ -88,45 +88,42 @@ Handles authentication of the user.
         .then(function(userAccountObject) {
           if (userAccountObject.status === 201) {
             response = {
-              success: true,
               user: userAccountObject.data
             };
+            deferred.resolve(response);
 
           } else {
             response = {
-              success: false,
               message: userAccountObject.data.message
             };
+            deferred.reject(response);
           }
-          callback(response);
         });
 
+      return deferred.promise;
     }
 
-    function logout(callback) {
+    function logout() {
+      var deferred = $q.defer();
 
       var response;
       apiClient.securityPost('logout', null, null)
         .then(function(apiResponse) {
           if (apiResponse.status === 204 || apiResponse.status === 200) {
-            response = {
-              success: true
-            };
             UserService.ClearUser();
+            deferred.resolve();
           } else {
             response = {
-              success: false,
               message: apiResponse.data.message
             };
+            deferred.reject(response);
           }
 
           $location.path('/');
 
-          if (callback != null) { // jshint ignore:line
-            callback(response);
-          }
         });
 
+      return deferred.promise;
     }
 
   }
