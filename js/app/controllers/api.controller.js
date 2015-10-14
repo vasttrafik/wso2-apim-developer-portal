@@ -3,11 +3,11 @@
 
   angular
     .module('vtPortal')
-    .controller('ApisCtrl', ApisCtrl);
+    .controller('ApiCtrl', ApiCtrl);
 
-  ApisCtrl.$inject = ['$http', '$httpParamSerializer', 'APIService', 'AlertService'];
+  ApiCtrl.$inject = ['$http', '$httpParamSerializer', 'APIService', 'AlertService'];
 
-  function ApisCtrl($http, $httpParamSerializer, APIService, AlertService) {
+  function ApiCtrl($http, $httpParamSerializer, APIService, AlertService) {
     var vm = this;
 
     APIService.call('apisGet', [0.0, 0.0])

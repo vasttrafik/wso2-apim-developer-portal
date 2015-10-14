@@ -29,9 +29,9 @@
       controllerAs: 'vm'
     })
 
-    .when('/apis', {
-      controller: 'ApisCtrl',
-      templateUrl: 'js/app/views/apis.view.html',
+    .when('/api', {
+      controller: 'ApiCtrl',
+      templateUrl: 'js/app/views/api.view.html',
       controllerAs: 'vm'
     })
 
