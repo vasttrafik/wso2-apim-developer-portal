@@ -90,7 +90,7 @@
               <div class="navbar-right">
                 <div class="btn-group" ng-show="user.loggedIn">
                   <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                    Inloggad som {{globals.currentUser.userName}}
+                    {{globals.currentUser.firstName + ' ' + globals.currentUser.lastName}}
                     <span class="caret"></span>
                   </button>
                   <div class="dropdown-menu" style="padding: 20px; min-width: 400px;">

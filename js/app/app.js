@@ -35,7 +35,9 @@
       controllerAs: 'vm'
     })
 
-    .otherwise({redirectTo: '/'});
+    .otherwise({
+      redirectTo: '/'
+    });
 
   }
 
@@ -52,12 +54,7 @@
 
         if (!$.isEmptyObject(user)) {
           $rootScope.user.loggedIn = true;
-
-          $rootScope.globals = {
-            currentUser: {
-              userName: user.userName
-            }
-          };
+          UserService.SetUser(user); // Since this also sets the user scope
 
           $http.defaults.headers.common.Authorization = 'Bearer ' + user.token.token;
         } else {
@@ -130,7 +127,7 @@
     function toggleCreate(create) {
       vm.dataLoading = false;
 
-      if(create != null) { // jshint ignore:line
+      if (create != null) { // jshint ignore:line
         $rootScope.user.create = create;
       } else {
         $rootScope.user.create = !$rootScope.user.create;

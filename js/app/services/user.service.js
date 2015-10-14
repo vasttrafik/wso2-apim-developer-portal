@@ -8,8 +8,22 @@
     "token": "string",
     "refreshToken": "string",
     "expiresIn": number
+  },
+  "claims" : [
+    {
+	   "claimURI" : "http://wso2.org/claims/givenname",
+	   "value" : "string"
+    },
+    {
+	   "claimURI" : "http://wso2.org/claims/lastname",
+	   "value" : "string"
+    },
+    {
+	   "claimURI" : "http://wso2.org/claims/emailaddress",
+	   "value" : "string"
+    }
+  ]
   }
-}
 
 */
 
@@ -36,15 +50,25 @@
       $http.defaults.headers.common.Authorization = 'Bearer ' + user.token.token;
       localStorage.user = JSON.stringify(user);
       localStorage.tokenGrantedTime = new Date();
-      deferred.resolve({
-        success: true
-      });
 
       $rootScope.globals = {
         currentUser: {
-          userName: user.userName
+          userName: user.userName,
+          email: user.claims.filter(function(el){
+            return el.claimURI === "http://wso2.org/claims/emailaddress";
+          })[0].value,
+          firstName: user.claims.filter(function(el){
+            return el.claimURI === "http://wso2.org/claims/givenname";
+          })[0].value,
+          lastName: user.claims.filter(function(el){
+            return el.claimURI === "http://wso2.org/claims/lastname";
+          })[0].value,
         }
       };
+
+      deferred.resolve({
+        success: true
+      });
 
       return deferred.promise;
     }

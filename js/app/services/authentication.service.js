@@ -41,7 +41,15 @@ Handles authentication of the user.
               success: true,
               user: authenticatedUserObject.data
             };
-            UserService.SetUser(response.user);
+
+            apiClient.usersUserIdGet(authenticatedUserObject.data.userId)
+            .then(function(userAccountObject) {
+              if(userAccountObject.status === 200) {
+                response.user.claims = userAccountObject.data.claims;
+                UserService.SetUser(response.user);
+              }
+
+            });
 
           } else {
             response = {
@@ -61,8 +69,16 @@ Handles authentication of the user.
           userName: username,
           credential: password,
           claims: [{
-            claimURI: "email",
+            claimURI: "http://wso2.org/claims/emailaddress",
             value: email
+          },
+          {
+            claimURI: "http://wso2.org/claims/givenname",
+            value: firstname
+          },
+          {
+            claimURI: "http://wso2.org/claims/lastname",
+            value: lastname
           }]
         })
         .then(function(userAccountObject) {
