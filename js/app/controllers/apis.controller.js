@@ -10,14 +10,14 @@
   function ApisCtrl($http, $httpParamSerializer, APIService, AlertService) {
     var vm = this;
 
-    APIService.Call('apisGet', [0.0, 0.0])
+    APIService.call('apisGet', [0.0, 0.0])
       .then(APIsGetResponse);
 
     function APIsGetResponse(response) {
       if (response.status === 200) {
         vm.apis = response.data.list;
       } else {
-        AlertService.Error("Problem retrieving application list", false);
+        AlertService.error("Problem retrieving application list", false);
       }
     }
 

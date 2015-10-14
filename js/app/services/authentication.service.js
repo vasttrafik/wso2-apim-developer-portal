@@ -15,17 +15,17 @@ Handles authentication of the user.
     var service = {};
     var apiClient = new API.Client.DefaultApi($http, null, $httpParamSerializer);
 
-    service.Login = Login;
-    service.Logout = Logout;
-    service.Create = Create;
+    service.login = login;
+    service.logout = logout;
+    service.create = create;
 
     return service;
 
-    function Login(username, password, callback, refreshToken) {
+    function login(username, password, callback, refreshToken) {
 
       var action = 'login';
 
-      if (refreshToken !== null) {
+      if (refreshToken != null) { // jshint ignore:line
         action = 'refreshToken';
       }
 
@@ -42,27 +42,33 @@ Handles authentication of the user.
               user: authenticatedUserObject.data
             };
 
+            // Retrieve further user information based on userId from login response
             apiClient.usersUserIdGet(authenticatedUserObject.data.userId)
-            .then(function(userAccountObject) {
-              if(userAccountObject.status === 200) {
-                response.user.claims = userAccountObject.data.claims;
-                UserService.SetUser(response.user);
-              }
-
-            });
-
-          } else {
-            response = {
-              success: false,
-              message: authenticatedUserObject.data.message
-            };
+              .then(function(userAccountObject) {
+                if (userAccountObject.status === 200) {
+                  response.user.claims = userAccountObject.data.claims;
+                  UserService.SetUser(response.user);
+                  callback(response);
+                }
+              }, function(apiResponse) {
+                response = {
+                  success: false,
+                  message: apiResponse.data.message
+                };
+                callback(response);
+              });
           }
+        }, function(apiResponse) {
+          response = {
+            success: false,
+            message: apiResponse.data.message
+          };
           callback(response);
         });
 
     }
 
-    function Create(username, password, email, callback) {
+    function create(username, password, email, callback) {
 
       var response;
       apiClient.usersPost({
@@ -71,12 +77,10 @@ Handles authentication of the user.
           claims: [{
             claimURI: "http://wso2.org/claims/emailaddress",
             value: email
-          },
-          {
+          }, {
             claimURI: "http://wso2.org/claims/givenname",
             value: firstname
-          },
-          {
+          }, {
             claimURI: "http://wso2.org/claims/lastname",
             value: lastname
           }]
@@ -99,7 +103,7 @@ Handles authentication of the user.
 
     }
 
-    function Logout(callback) {
+    function logout(callback) {
 
       var response;
       apiClient.securityPost('logout', null, null)

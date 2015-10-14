@@ -14,29 +14,37 @@
   function AlertService($rootScope) {
     var service = {};
 
-    service.Success = Success;
-    service.Error = Error;
-    service.ClearAlertMessage = ClearAlertMessage;
+    service.success = success;
+    service.error = error;
+    service.clearAlertMessage = clearAlertMessage;
+    service.clearAlertMessageAndDigest = clearAlertMessageAndDigest;
 
     return service;
 
-    function ClearAlertMessage() {
+    function clearAlertMessage() {
+      var alert = $rootScope.alert;
+      if (alert) {
+          delete $rootScope.alert;
+        }
+    }
+
+    function clearAlertMessageAndDigest() {
       var alert = $rootScope.alert;
       if (alert) {
         $rootScope.$apply(function() {
-          delete $rootScope.alert;
+          clearAlertMessage();
         });
       }
     }
 
-    function Success(message) {
+    function success(message) {
       $rootScope.alert = {
         message: message,
         type: 'success'
       };
     }
 
-    function Error(message) { // jshint ignore:line
+    function error(message) { // jshint ignore:line
       $rootScope.alert = {
         message: message,
         type: 'error'

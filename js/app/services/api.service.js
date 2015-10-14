@@ -15,14 +15,14 @@ Handles calls towards backend api.
     var service = {};
     var apiClient = new API.Client.DefaultApi($http, null, $httpParamSerializer);
 
-    service.Call = Call;
+    service.call = call;
 
     return service;
 
     /*
       Wrapper function for calls towards backend API
     */
-    function Call(funcName, args) {
+    function call(funcName, args) {
       var deferred = $q.defer();
 
       apiClient[funcName].apply(apiClient, args)
@@ -34,7 +34,7 @@ Handles calls towards backend api.
           if (response.status === 401) {
 
             AuthenticationService.Logout();
-            AlertService.Error("User not authenticated", false);
+            AlertService.error("User not authenticated", false);
             deferred.reject('User not authenticated');
 
           } else {

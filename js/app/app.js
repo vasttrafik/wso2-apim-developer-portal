@@ -85,18 +85,19 @@
     vm.logout = logout;
     vm.create = create;
     vm.toggleCreate = toggleCreate;
-    vm.clearAlertMessage = AlertService.ClearAlertMessage;
+    vm.clearAlertMessage = AlertService.clearAlertMessageAndDigest;
 
     function login() {
 
       vm.dataLoading = true;
-      AuthenticationService.Login(vm.username, vm.password, function(response) {
+      AuthenticationService.login(vm.username, vm.password, function(response) {
 
         if (response.success) {
           $rootScope.user.loggedIn = true;
           vm.dataLoading = false;
+          AlertService.clearAlertMessage();
         } else {
-          AlertService.Error(response.message);
+          AlertService.error("Problem att logga in: " + response.message);
           vm.dataLoading = false;
         }
       });
@@ -106,18 +107,18 @@
     function logout() {
       $rootScope.user.loggedIn = false;
       $rootScope.user.create = false;
-      AuthenticationService.Logout();
+      AuthenticationService.logout();
     }
 
     function create() {
       vm.dataLoading = true;
-      AuthenticationService.Create(username, password, email, function(response) {
+      AuthenticationService.create(username, password, email, function(response) {
         if (response.success) {
-          AlertService.Success('Skapade kontot!');
+          AlertService.success('Skapade kontot!');
           $rootScope.user.create = false;
           vm.dataLoading = false;
         } else {
-          AlertService.Error(response.message);
+          AlertService.error(response.message);
           vm.dataLoading = false;
         }
       });

@@ -1,5 +1,6 @@
 /*
   Handles user object stored in local storage.
+  It's a combination of a UserAccountObject and an AuthenticatedUserObject.
 
   {
   "userId": "string",
