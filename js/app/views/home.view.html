@@ -3,9 +3,11 @@
   <div class="container">
     <div class="row hero">
       <div class="col-sm-7">
-        <h1>Utveckla tillsammans.</h1>
-        <p>Genom att skapa ett konto i klubben för utvecklare kan du få del av våra API:er och du får även möjlighet att diskutera utveckling med andra medlemmar.</p>
-        <button id="create-button" class="text-uppercase btn btn-primary">
+        <h1 ng-show="!user.loggedIn">Utveckla tillsammans.</h1>
+        <h1 ng-show="user.loggedIn">Utveckling tillsammans.</h1>
+        <p ng-show="!user.loggedIn">Genom att skapa ett konto i klubben för utvecklare kan du få del av våra API:er och du får även möjlighet att diskutera utveckling med andra medlemmar.</p>
+        <p ng-show="user.loggedIn">Tack för att du skapat ett konto i klubben för utvecklare. Här får du del av våra API:er och du får även möjlighet att diskutera utveckling med andra medlemmar.</p>
+        <button id="create-button" class="text-uppercase btn btn-primary" ng-show="!user.loggedIn">
           Skapa konto
         </button>
       </div>
