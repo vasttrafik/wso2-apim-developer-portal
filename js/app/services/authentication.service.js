@@ -17,7 +17,7 @@ Handles authentication of the user.
 
     service.Login = Login;
     service.Logout = Logout;
-    service.Register = Register;
+    service.Create = Create;
 
     return service;
 
@@ -54,7 +54,7 @@ Handles authentication of the user.
 
     }
 
-    function Register(username, password, email, callback) {
+    function Create(username, password, email, callback) {
 
       var response;
       apiClient.usersPost({

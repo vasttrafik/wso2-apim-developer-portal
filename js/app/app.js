@@ -6,7 +6,7 @@
   'use strict';
 
   angular
-    .module('vtPortal', ['ngRoute', 'ngSanitize'])
+    .module('vtPortal', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ngPasswordStrength', 'ui.validate'])
     .config(config)
     .run(run)
     .controller('MainCtrl', MainCtrl);
@@ -44,7 +44,7 @@
   function run($rootScope, $location, $http, UserService) {
 
     $rootScope.user = {};
-    $rootScope.user.register = false;
+    $rootScope.user.create = false;
 
     // keep user logged in after page refresh
     UserService.GetUser()
@@ -86,8 +86,8 @@
 
     vm.login = login;
     vm.logout = logout;
-    vm.register = register;
-    vm.toggleRegister = toggleRegister;
+    vm.create = create;
+    vm.toggleCreate = toggleCreate;
     vm.clearAlertMessage = AlertService.ClearAlertMessage;
 
     function login() {
@@ -108,16 +108,16 @@
 
     function logout() {
       $rootScope.user.loggedIn = false;
-      $rootScope.user.register = false;
+      $rootScope.user.create = false;
       AuthenticationService.Logout();
     }
 
-    function register() {
+    function create() {
       vm.dataLoading = true;
-      AuthenticationService.Register(username, password, email, function(response) {
+      AuthenticationService.Create(username, password, email, function(response) {
         if (response.success) {
-          AlertService.Success('Registration successful');
-          $rootScope.user.register = false;
+          AlertService.Success('Skapade kontot!');
+          $rootScope.user.create = false;
           vm.dataLoading = false;
         } else {
           AlertService.Error(response.message);
@@ -127,13 +127,13 @@
 
     }
 
-    function toggleRegister(register) {
+    function toggleCreate(create) {
       vm.dataLoading = false;
 
-      if(register != null) { // jshint ignore:line
-        $rootScope.user.register = register;
+      if(create != null) { // jshint ignore:line
+        $rootScope.user.create = create;
       } else {
-        $rootScope.user.register = !$rootScope.user.register;
+        $rootScope.user.create = !$rootScope.user.create;
       }
       delete $rootScope.alert;
     }

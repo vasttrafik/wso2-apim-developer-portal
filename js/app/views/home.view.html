@@ -4,9 +4,9 @@
     <div class="row hero">
       <div class="col-sm-7">
         <h1>Utveckla tillsammans.</h1>
-        <p>Genom att registrera dig i klubben för utvecklare kan du få del av våra API:er och du får även möjlighet att diskutera utveckling med andra medlemmar.</p>
-        <button id="register-button" class="text-uppercase btn btn-primary">
-          Registrera konto
+        <p>Genom att skapa ett konto i klubben för utvecklare kan du få del av våra API:er och du får även möjlighet att diskutera utveckling med andra medlemmar.</p>
+        <button id="create-button" class="text-uppercase btn btn-primary">
+          Skapa konto
         </button>
       </div>
       <div class="hidden-xs col-sm-5">
@@ -259,14 +259,14 @@
 <script>
   $(document).ready(function() {
 
-    $('#register-button').on('click', function(e) {
+    $('#create-button').on('click', function(e) {
       e.stopPropagation();
 
       var element = angular.element(document.body);
       var controller = element.controller();
 
       element.scope().$apply(function() {
-        controller.toggleRegister(true);
+        controller.toggleCreate(true);
       });
 
       $('.dropdown-toggle').click();

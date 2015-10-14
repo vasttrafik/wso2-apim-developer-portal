@@ -115,15 +115,15 @@
 
                 <div class="btn-group" ng-show="!user.loggedIn">
                   <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                    <span ng-if="!user.register">Logga in</span>
-                    <span ng-if="user.register">Registrera</span>
+                    <span ng-if="!user.create">Logga in</span>
+                    <span ng-if="user.create">Skapa konto</span>
                     <span class="caret"></span>
                   </button>
                   <div class="dropdown-menu" style="padding: 20px; min-width: 400px;">
                     <div class="col-md-12">
-                      <form name="form" ng-submit="user.register ? vm.register() : vm.login()" role="form">
+                      <form name="form" ng-submit="user.create ? vm.create() : vm.login()" role="form">
 
-                        <div ng-if="!user.register">
+                        <div ng-if="!user.create">
                           <div class="form-group" ng-class="{ 'has-error': login-form.username.$dirty && login-form.username.$error.required }">
                             <label for="username">Användarnamn</label>
                             <input type="text" name="username" id="username" class="form-control" ng-model="vm.username" required />
@@ -138,30 +138,54 @@
                             <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Logga in</button>
                             <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
                             />
-                            <span ng-click="vm.toggleRegister()" class="btn btn-link">Registrera</span>
+                            <span ng-click="vm.toggleCreate()" class="btn btn-link">Skapa konto</span>
                           </div>
                         </div>
-                        <div ng-if="user.register">
-                          <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+                        <div ng-if="user.create">
+                            <div class="form-group" ng-class="{ 'has-error': form.firstname.$dirty && form.firstname.$invalid,
+                            'has-success' : form.firstname.$valid}">
+                              <label for="firstname">Förnamn</label>
+                              <input type="text" name="firstname" id="firstname" class="form-control" ng-model="vm.user.firstname" required />
+                              <span ng-show="form.firstname.$dirty && form.firstname.$error.required" class="help-block">Förnamn är obligatoriskt</span>
+                            </div>
+                            <div class="form-group" ng-class="{ 'has-error': form.lastname.$dirty && form.lastname.$invalid,
+                            'has-success' : form.lastname.$valid}">
+                              <label for="lastname">Efternamn</label>
+                              <input type="text" name="lastname" id="lastname" class="form-control" ng-model="vm.user.lastname" required />
+                              <span ng-show="form.lastname.$dirty && form.lastname.$error.required" class="help-block">Efternamn är obligatoriskt</span>
+                            </div>
+                          <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$invalid,
+                          'has-success' : form.username.$valid}">
                             <label for="username">Användarnamn</label>
-                            <input type="text" name="username" id="username" class="form-control" ng-model="vm.user.username" required />
+                            <input type="text" name="username" id="username" class="form-control" ng-model="vm.user.username" ng-minlength=3 required />
                             <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Användarnamn är obligatoriskt</span>
+                            <span ng-show="form.username.$error.minlength" class="help-block">Användarnamn måste vara minst 3 tecken långt</span>
                           </div>
-                          <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+                          <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$invalid,
+                          'has-success' : form.password.$valid}">
                             <label for="password">Lösenord</label>
-                            <input type="password" name="password" id="password" class="form-control" ng-model="vm.user.password" required />
+                            <input type="password" name="password" id="password" class="form-control" ng-model="vm.user.password" ng-minlength=8 required />
                             <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Lösenord är obligatoriskt</span>
+                            <span ng-show="form.password.$error.minlength" class="help-block">Lösenordet måste vara minst 8 tecken långt</span>
                           </div>
-                          <div class="form-group" ng-class="{ 'has-error': form.email.$dirty && form.email.$error.required }">
+                          <div ng-password-strength="vm.user.password" strength="passStrength" inner-class="progress-bar" inner-class-prefix="progress-bar-"></div>
+                          <div class="form-group" ng-class="{ 'has-error': form.passwordRepeat.$dirty && form.passwordRepeat.$invalid,
+                          'has-success' : form.passwordRepeat.$valid}">
+                            <label for="passwordRepeat">Upprepa lösenord</label>
+                            <input type="password" name="passwordRepeat" id="passwordRepeat" class="form-control" ng-model="vm.user.passwordRepeat" ui-validate=" '$value==vm.user.password' "ui-validate-watch=" 'vm.user.password' "  required />
+                            <span ng-show="form.passwordRepeat.$dirty && form.passwordRepeat.$error.required" class="help-block">Måste upprepa lösenordet</span>
+                          </div>
+                          <div class="form-group" ng-class="{ 'has-error': form.email.$dirty && form.email.$invalid,
+                          'has-success' : form.email.$valid}">
                             <label for="email">E-post</label>
-                            <input type="text" name="email" id="email" class="form-control" ng-model="vm.user.email" required />
+                            <input type="email" name="email" id="email" class="form-control" ng-model="vm.user.email" required />
                             <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">E-Post är obligatoriskt</span>
                           </div>
                           <div class="form-actions noclick">
-                            <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Registrera</button>
+                            <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Skapa konto</button>
                             <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
                             />
-                            <span ng-click="vm.toggleRegister()" class="btn btn-link">Ångra</span>
+                            <span ng-click="vm.toggleCreate()" class="btn btn-link">Ångra</span>
                           </div>
                         </div>
                       </form>
@@ -245,6 +269,10 @@
     <script src="js/vendor/angular.min.js"></script>
     <script src="js/vendor/angular-route.min.js"></script>
     <script src="js/vendor/angular-sanitize.min.js"></script>
+    <script src="js/vendor/angular-animate.min.js"></script>
+    <script src="js/vendor/angular-validate.min.js"></script>
+    <script src="js/vendor/ng-password-strength.min.js"></script>
+    <script src="js/vendor/lodash.min.js"></script>
     <script src="js/vendor/BootSideMenu.js"></script>
 
     <script src="js/main.js"></script>
