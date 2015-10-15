@@ -363,3 +363,21 @@ button, select {
 button {
     overflow: visible;
 }
+
+i.fa.fa-user.fa-stack-1x,
+i.fa.fa-question.fa-stack-1x {
+    color:#00AAFD;
+}
+
+div.navbar-collapse.collapse > div > div:nth-child(2) > a,
+div.navbar-collapse.collapse > div > div:nth-child(1) > a {
+    color:white;
+    font-weight:500;
+    cursor: pointer;
+    text-decoration:none;
+}
+
+div.btn-group.open a {
+    font-weight:normal;
+    text-decoration:none;
+}
