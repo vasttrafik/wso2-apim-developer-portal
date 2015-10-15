@@ -37,16 +37,18 @@
       }
     }
 
-    function success(message) {
+    function success(message, heading) {
       $rootScope.alert = {
         message: message,
+        heading: heading,
         type: 'success'
       };
     }
 
-    function error(message) { // jshint ignore:line
+    function error(message, heading) { // jshint ignore:line
       $rootScope.alert = {
         message: message,
+        heading: heading,
         type: 'error'
       };
     }

@@ -53,12 +53,14 @@ Handles authentication of the user.
               }
             }).catch(function(apiResponse) {
               response = {
+                status: apiResponse.status,
                 message: apiResponse.data.message
               };
               deferred.reject(response);
             });
         }).catch(function(apiResponse) {
           response = {
+            status: apiResponse.status,
             message: apiResponse.data.message
           };
           deferred.reject(response);
@@ -88,16 +90,24 @@ Handles authentication of the user.
         .then(function(userAccountObject) {
           if (userAccountObject.status === 201) {
             response = {
+              status: userAccountObject.status,
               user: userAccountObject.data
             };
             deferred.resolve(response);
 
           } else {
             response = {
+              status: userAccountObject.status,
               message: userAccountObject.data.message
             };
             deferred.reject(response);
           }
+        }).catch(function(apiResponse) {
+          response = {
+            status: apiResponse.status,
+            message: apiResponse.data.message
+          };
+          deferred.reject(response);
         });
 
       return deferred.promise;
@@ -110,10 +120,15 @@ Handles authentication of the user.
       apiClient.securityPost('logout', null, null)
         .then(function(apiResponse) {
           if (apiResponse.status === 204 || apiResponse.status === 200) {
-            UserService.ClearUser();
-            deferred.resolve();
+
+            response = {
+              status: apiResponse.status
+            };
+
+            deferred.resolve(response);
           } else {
             response = {
+              status: apiResponse.status,
               message: apiResponse.data.message
             };
             deferred.reject(response);
@@ -121,8 +136,16 @@ Handles authentication of the user.
 
           $location.path('/');
 
+        }).catch(function(apiResponse) {
+          response = {
+            status: apiResponse.status,
+            message: apiResponse.data.message
+          };
+          $location.path('/');
+          deferred.reject(response);
         });
 
+      UserService.ClearUser();
       return deferred.promise;
     }
 

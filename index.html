@@ -71,7 +71,7 @@
 
     <div ng-class="{ 'alert': alert, 'alert-success': alert.type === 'success', 'alert-danger': alert.type === 'error' }" ng-show="alert" style="margin-bottom: 0px; border-radius: 0px">
       <div class="container" style="padding: 0px">
-        <span ng-show="alert" ng-bind="alert.message"></span>
+        <span ng-show="alert" ng-bind="alert.heading" style="font-weight: bold"></span><span ng-show="alert" ng-bind="alert.message"></span>
         <button type="button" class="close" ng-show="alert">×</button>
       </div>
     </div>

@@ -91,15 +91,18 @@
 
       vm.dataLoading = true;
       AuthenticationService.login(vm.username, vm.password).then(
-      function(response) {
+        function(response) {
           $rootScope.user.loggedIn = true;
           vm.dataLoading = false;
           AlertService.clearAlertMessage();
-      }, function(response) {
-          AlertService.error("Problem att logga in: " + response.message);
-          vm.dataLoading = false;
+        }).catch(function(response) {
+        if (response.status === 401) {
+          AlertService.error("användarnamn och lösenord stämmer inte.", "Problem att logga in: ");
+        } else {
+          AlertService.error(response.message, "Problem att logga in: ");
         }
-      );
+        vm.dataLoading = false;
+      });
 
     }
 
@@ -111,15 +114,14 @@
 
     function create() {
       vm.dataLoading = true;
-      AuthenticationService.create(vm.user.username, vm.user.password, vm.user.email, vm.user.firstname, vm.user.lastname).then( function(response) {
-          AlertService.success('Skapade kontot!');
-          $rootScope.user.create = false;
-          vm.dataLoading = false;
-        }, function(response){
-          AlertService.error(response.message);
-          vm.dataLoading = false;
-        }
-      );
+      AuthenticationService.create(vm.user.username, vm.user.password, vm.user.email, vm.user.firstname, vm.user.lastname).then(function(response) {
+        AlertService.success('Skapade kontot!');
+        $rootScope.user.create = false;
+        vm.dataLoading = false;
+      }).catch( function(response) {
+        AlertService.error(response.message);
+        vm.dataLoading = false;
+      });
 
     }
 
