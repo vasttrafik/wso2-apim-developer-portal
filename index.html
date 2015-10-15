@@ -98,18 +98,15 @@
               {{globals.currentUser.firstName + ' ' + globals.currentUser.lastName}}
               <span class="caret"></span>
             </button>
-            <div class="dropdown-menu" style="padding: 20px; min-width: 400px;">
+            <div class="dropdown-menu" style="padding: 20px; min-width: 200px;">
               <div class="row">
-                <div class="col-md-8">
-                  <a href="#/profile">Min profil</a>
-                </div>
-                <div class="col-md-4">
-                  <form name="form" ng-submit="vm.logout()" role="form">
-                    <div class="form-actions noclick">
-                      <button type="submit" class="btn btn-primary">Logga ut</button>
-                    </div>
-                  </form>
-
+                <div class="col-md-12" style="font-size: 20px; font-weight: 600;">
+                  <p>Mina sidor</p>
+                  <a href="#/overview">Översikt</a><br/>
+                  <a href="#/profile">Profil</a><br/>
+                  <a href="#/application">Mna applikationer</a><br/>
+                  <a href="#/subscriptions">Prenumerationer</a><br/>
+                  <a href="#/" ng-click="vm.logout()">Logga ut</a><br/>
                 </div>
               </div>
 
@@ -309,6 +306,9 @@
   <script src="js/app/controllers/home.controller.js"></script>
   <script src="js/app/controllers/profile.controller.js"></script>
   <script src="js/app/controllers/api.controller.js"></script>
+  <script src="js/app/controllers/application.controller.js"></script>
+  <script src="js/app/controllers/subscription.controller.js"></script>
+  <script src="js/app/controllers/overview.controller.js"></script>
 
   <script>
     $(document).ready(function() {

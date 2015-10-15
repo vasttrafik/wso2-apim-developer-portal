@@ -23,9 +23,27 @@
       controllerAs: 'vm'
     })
 
+    .when('/overview', {
+      controller: 'OverviewCtrl',
+      templateUrl: 'js/app/views/overview.view.html',
+      controllerAs: 'vm'
+    })
+
     .when('/profile', {
       controller: 'ProfileCtrl',
       templateUrl: 'js/app/views/profile.view.html',
+      controllerAs: 'vm'
+    })
+
+    .when('/application', {
+      controller: 'ApplicationCtrl',
+      templateUrl: 'js/app/views/application.view.html',
+      controllerAs: 'vm'
+    })
+
+    .when('/subscription', {
+      controller: 'SubscriptionCtrl',
+      templateUrl: 'js/app/views/subscription.view.html',
       controllerAs: 'vm'
     })
 
@@ -76,9 +94,9 @@
 
   }
 
-  MainCtrl.$inject = ['$rootScope', 'AuthenticationService', 'AlertService'];
+  MainCtrl.$inject = ['$location', '$rootScope', 'AuthenticationService', 'AlertService'];
 
-  function MainCtrl($rootScope, AuthenticationService, AlertService) {
+  function MainCtrl($location, $rootScope, AuthenticationService, AlertService) {
     var vm = this;
 
     vm.login = login;
@@ -95,6 +113,8 @@
           $rootScope.user.loggedIn = true;
           vm.dataLoading = false;
           AlertService.clearAlertMessage();
+          $location.path('/overview');
+
         }).catch(function(response) {
         if (response.status === 401) {
           AlertService.error("användarnamn och lösenord stämmer inte.", "Problem att logga in: ");
@@ -110,6 +130,7 @@
       $rootScope.user.loggedIn = false;
       $rootScope.user.create = false;
       AuthenticationService.logout();
+      $location.path('/');
     }
 
     function create() {

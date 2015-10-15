@@ -120,7 +120,6 @@ Handles authentication of the user.
         });
 
       UserService.ClearUser();
-      $location.path('/');
       return deferred.promise;
     }
 
