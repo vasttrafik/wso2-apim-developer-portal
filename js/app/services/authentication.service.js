@@ -52,18 +52,11 @@ Handles authentication of the user.
                 deferred.resolve(response);
               }
             }).catch(function(apiResponse) {
-              response = {
-                status: apiResponse.status,
-                message: apiResponse.data.message
-              };
-              deferred.reject(response);
+              apiErrorResponse(apiResponse, deferred);
             });
+
         }).catch(function(apiResponse) {
-          response = {
-            status: apiResponse.status,
-            message: apiResponse.data.message
-          };
-          deferred.reject(response);
+          apiErrorResponse(apiResponse, deferred);
         });
 
       return deferred.promise;
@@ -96,18 +89,10 @@ Handles authentication of the user.
             deferred.resolve(response);
 
           } else {
-            response = {
-              status: userAccountObject.status,
-              message: userAccountObject.data.message
-            };
-            deferred.reject(response);
+            apiErrorResponse(userAccountObject, deferred);
           }
         }).catch(function(apiResponse) {
-          response = {
-            status: apiResponse.status,
-            message: apiResponse.data.message
-          };
-          deferred.reject(response);
+          apiErrorResponse(apiResponse, deferred);
         });
 
       return deferred.promise;
@@ -127,26 +112,24 @@ Handles authentication of the user.
 
             deferred.resolve(response);
           } else {
-            response = {
-              status: apiResponse.status,
-              message: apiResponse.data.message
-            };
-            deferred.reject(response);
+            apiErrorResponse(apiResponse, deferred);
           }
 
-          $location.path('/');
-
         }).catch(function(apiResponse) {
-          response = {
-            status: apiResponse.status,
-            message: apiResponse.data.message
-          };
-          $location.path('/');
-          deferred.reject(response);
+          apiErrorResponse(apiResponse, deferred);
         });
 
       UserService.ClearUser();
+      $location.path('/');
       return deferred.promise;
+    }
+
+    function apiErrorResponse(apiResponse, deferred) {
+      var response = {
+        status: apiResponse.status,
+        message: apiResponse.data.message
+      };
+      deferred.reject(response);
     }
 
   }
