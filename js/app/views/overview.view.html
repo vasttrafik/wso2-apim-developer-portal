@@ -3,34 +3,41 @@
 <div class="container-fluid" style="margin-top: 150px; margin-bottom: 100px">
   <div class="container">
         <div class="row">
-          <p>Mina sidor</p>
-          <h1 style="font-weight: 900">Översikt</h1>
+          <p class="heading-small">Mina sidor</p>
+          <h1 class="heading-large">Översikt</h1>
         </div>
     <div class="row">
       <div class="col-md-3 col-sm-6">
-          <div class="area" style="margin: 20px 0 0 0">
-            <span class="fa fa-rocket fa-2x" aria-hidden="true"></span>
-          </div>
 
+          <div class="area" style="margin: 20px 0 0 0">
+            <span class="fa fa-user fa-2x" aria-hidden="true"></span>
+          </div>
           <h3>Profil</h3>
+
         <p>{{globals.currentUser.firstName + ' ' + globals.currentUser.lastName}}</p>
         <p>{{globals.currentUser.email}}</p>
+        <br/><a href="#/profile" title="Profil"><strong>Redigera</strong></a>
       </div>
 
       <div class="col-md-3 col-sm-6">
           <div class="area" style="margin: 20px 0 0 0">
-            <span class="fa fa-cog fa-2x" aria-hidden="true"></span>
+            <span class="fa fa-star fa-2x" aria-hidden="true"></span>
           </div>
           <h3>Mina appar</h3>
+
         <span ng-repeat="entries in vm.applications"><p>{{entries.name}}</p></span>
+        <br/><a href="#/application" title="Mina applikationer"><strong>Redigera</strong></a>
       </div>
 
       <div class="col-md-3 col-sm-6">
+
           <div class="area" style="margin: 20px 0 0 0">
-            <span class="fa fa-file-text fa-2x" aria-hidden="true"></span>
+            <span class="fa fa-paper-plane fa-2x" aria-hidden="true"></span>
           </div>
           <h3>Prenumerationer</h3>
-        <p>Här är en kort beskrivande text om vad man hittar om man klickar här.</p>
+
+        <span ng-repeat="entries in vm.subscriptions"><p>{{entries.api.name}}</p></span>
+        <br/><a href="#/subscription" title="Prenumerationer"><strong>Redigera</strong></a>
       </div>
 
       <div class="col-md-3 col-sm-6">
@@ -38,6 +45,7 @@
             <span class="fa fa-bar-chart fa-2x" aria-hidden="true"></span>
           </div>
           <h3>Statistik</h3>
+
         <p>Kommer i version 2.</p>
       </div>
     </div>

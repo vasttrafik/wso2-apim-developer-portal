@@ -17,7 +17,7 @@
       if (response.status === 200) {
         vm.applications = response.data.list;
       } else {
-        AlertService.error("Problem retrieving application list", false);
+        AlertService.error("Problem retrieving application list");
       }
     }
 

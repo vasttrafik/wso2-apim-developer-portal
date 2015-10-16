@@ -38,6 +38,7 @@
     }
 
     function success(message, heading) {
+
       $rootScope.alert = {
         message: message,
         heading: heading,
@@ -46,6 +47,7 @@
     }
 
     function error(message, heading) { // jshint ignore:line
+
       $rootScope.alert = {
         message: message,
         heading: heading,

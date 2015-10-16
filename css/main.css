@@ -363,3 +363,13 @@ button, select {
 button {
     overflow: visible;
 }
+
+.heading-small {
+  font-size: 1.2em;
+  color: #777;
+  margin-bottom: 0px;
+}
+.heading-large {
+  margin-top: 0px;
+  font-weight: bold;
+}
