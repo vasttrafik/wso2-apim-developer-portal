@@ -389,4 +389,5 @@ div.navbar-collapse.collapse > div > div:nth-child(1) > a {
 div.btn-group.open a {
     font-weight:normal;
     text-decoration:none;
+    box-shadow: none !important;
 }
