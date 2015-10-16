@@ -11,13 +11,12 @@
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/slidemenu.css" />
     <link rel="stylesheet" href="css/bootsnipp.css" />
+    <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
     <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-
 </head>
 
 <body id="body" ng-controller="MainCtrl as vm">
@@ -90,7 +89,7 @@
             <div class="navbar-collapse collapse">
                 <div class="navbar-right">
                     <div class="btn-group" ng-show="user.loggedIn">
-                        <a class="menuUser dropdown-toggle" data-toggle="dropdown">
+                        <a class="menu-user dropdown-toggle" data-toggle="dropdown">
 
                             {{globals.currentUser.firstName + ' ' + globals.currentUser.lastName}}
                             <span class="fa-stack fa-lg">
@@ -115,7 +114,7 @@
 
                     <div class="btn-group" ng-show="!user.loggedIn">
 
-                        <a class="menuUser" data-toggle="dropdown">
+                        <a class="menu-user" data-toggle="dropdown">
                             <div class="name">
                                 <span ng-if="!user.create">
                                     Logga in
@@ -313,20 +312,20 @@
 
     <script src="js/main.js"></script>
 
-    <script src="js/vendor/api/DefaultApi.js"></script>
-    <script src="js/vendor/api/API.js"></script>
-    <script src="js/vendor/api/AccessToken.js"></script>
-    <script src="js/vendor/api/Application.js"></script>
-    <script src="js/vendor/api/AuthenticatedUser.js"></script>
-    <script src="js/vendor/api/Claim.js"></script>
-    <script src="js/vendor/api/Credentials.js"></script>
-    <script src="js/vendor/api/Document.js"></script>
-    <script src="js/vendor/api/Subscription.js"></script>
-    <script src="js/vendor/api/Tier.js"></script>
-    <script src="js/vendor/api/TierPermission.js"></script>
-    <script src="js/vendor/api/User.js"></script>
-    <script src="js/vendor/api/Error.js"></script>
-    <script src="js/vendor/api/ErrorListItem.js"></script>
+    <script src="js/api/DefaultApi.js"></script>
+    <script src="js/api/API.js"></script>
+    <script src="js/api/AccessToken.js"></script>
+    <script src="js/api/Application.js"></script>
+    <script src="js/api/AuthenticatedUser.js"></script>
+    <script src="js/api/Claim.js"></script>
+    <script src="js/api/Credentials.js"></script>
+    <script src="js/api/Document.js"></script>
+    <script src="js/api/Subscription.js"></script>
+    <script src="js/api/Tier.js"></script>
+    <script src="js/api/TierPermission.js"></script>
+    <script src="js/api/User.js"></script>
+    <script src="js/api/Error.js"></script>
+    <script src="js/api/ErrorListItem.js"></script>
 
     <script src="js/app/app.js"></script>
 
