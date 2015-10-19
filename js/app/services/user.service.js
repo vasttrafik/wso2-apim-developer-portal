@@ -40,13 +40,14 @@
   function UserService($http, $rootScope, $q) {
     var service = {};
 
-    service.SetUser = SetUser;
-    service.GetUser = GetUser;
-    service.ClearUser = ClearUser;
+    service.setUser = setUser;
+    service.getUser = getUser;
+    service.clearUser = clearUser;
+    service.setOrUpdateClaim = setOrUpdateClaim;
 
     return service;
 
-    function SetUser(user) {
+    function setUser(user) {
       var deferred = $q.defer();
       $http.defaults.headers.common.Authorization = 'Bearer ' + user.token.token;
       localStorage.user = JSON.stringify(user);
@@ -74,7 +75,7 @@
       return deferred.promise;
     }
 
-    function GetUser() {
+    function getUser() {
       var deferred = $q.defer();
       if (!localStorage.user) {
         localStorage.user = JSON.stringify([]);
@@ -84,11 +85,33 @@
       return deferred.promise;
     }
 
-    function ClearUser() {
+    function clearUser() {
       $rootScope.globals = {};
       $rootScope.user.loggedIn = false;
       localStorage.user = [];
       $http.defaults.headers.common.Authorization = 'Bearer ';
+    }
+
+
+    function setOrUpdateClaim(userObject, claimURI, claimValue) {
+      var deferred = $q.defer();
+
+      var claimsList = userObject.claims;
+      var updated = false;
+
+      if(!claimsList.isEmpty()) {
+        for(var i = 0; i < claimsList.length; i++) {
+          if(claimsList[i].claimURI === claimURI) {
+            claimsList.splice(i,1);
+            break;
+          }
+        }
+      }
+
+      claimsList.push({claimURI: claimURI, value: claimValue});
+      deferred.resolve(claimsList);
+
+      return deferred.promise;
     }
   }
 

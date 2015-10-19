@@ -67,12 +67,12 @@
     $rootScope.user.create = false;
 
     // keep user logged in after page refresh
-    UserService.GetUser()
+    UserService.getUser()
       .then(function(user) {
 
         if (!$.isEmptyObject(user)) {
           $rootScope.user.loggedIn = true;
-          UserService.SetUser(user); // Since this also sets the user scope
+          UserService.setUser(user); // Since this also sets the user scope
 
           $http.defaults.headers.common.Authorization = 'Bearer ' + user.token.token;
         } else {
@@ -139,7 +139,7 @@
         AlertService.success('Skapade kontot!');
         $rootScope.user.create = false;
         vm.dataLoading = false;
-      }).catch( function(response) {
+      }).catch(function(response) {
         AlertService.error(response.message);
         vm.dataLoading = false;
       });

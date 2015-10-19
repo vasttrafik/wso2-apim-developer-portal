@@ -11,9 +11,9 @@
     var vm = this;
 
     APIService.call('apisGet', [0.0, 0.0])
-      .then(APIsGetResponse);
+      .then(aPIsGetResponse);
 
-    function APIsGetResponse(response) {
+    function aPIsGetResponse(response) {
       if (response.status === 200) {
         vm.apis = response.data.list;
       } else {

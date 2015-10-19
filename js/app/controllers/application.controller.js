@@ -11,9 +11,9 @@
     var vm = this;
 
     APIService.call('applicationsGet', [0.0, 0.0])
-      .then(ApplicationsGetResponse);
+      .then(applicationsGetResponse);
 
-    function ApplicationsGetResponse(response) {
+    function applicationsGetResponse(response) {
       if (response.status === 200) {
         vm.applications = response.data.list;
       } else {

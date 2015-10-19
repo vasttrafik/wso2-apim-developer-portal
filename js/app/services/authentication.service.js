@@ -48,7 +48,7 @@ Handles authentication of the user.
             .then(function(userAccountObject) {
               if (userAccountObject.status === 200) {
                 response.user.claims = userAccountObject.data.claims;
-                UserService.SetUser(response.user);
+                UserService.setUser(response.user);
                 deferred.resolve(response);
               }
             }).catch(function(apiResponse) {
@@ -119,7 +119,7 @@ Handles authentication of the user.
           apiErrorResponse(apiResponse, deferred);
         });
 
-      UserService.ClearUser();
+      UserService.clearUser();
       return deferred.promise;
     }
 

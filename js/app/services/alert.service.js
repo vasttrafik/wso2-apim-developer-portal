@@ -9,9 +9,9 @@
     .module('vtPortal')
     .factory('AlertService', AlertService);
 
-  AlertService.$inject = ['$rootScope'];
+  AlertService.$inject = ['$rootScope', '$timeout'];
 
-  function AlertService($rootScope) {
+  function AlertService($rootScope, $timeout) {
     var service = {};
 
     service.success = success;
@@ -22,6 +22,7 @@
     return service;
 
     function clearAlertMessage() {
+
       var alert = $rootScope.alert;
       if (alert) {
           delete $rootScope.alert;
@@ -44,6 +45,8 @@
         heading: heading,
         type: 'success'
       };
+
+      $timeout(clearAlertMessage,5000);
     }
 
     function error(message, heading) { // jshint ignore:line
@@ -53,6 +56,8 @@
         heading: heading,
         type: 'error'
       };
+
+      $timeout(clearAlertMessage,10000);
     }
   }
 

@@ -11,20 +11,20 @@
     var vm = this;
 
       APIService.call('applicationsGet', [0.0, 0.0])
-        .then(ApplicationsGetResponse);
+        .then(applicationsGetResponse);
 
-        APIService.call('subscriptionsGet', [0.0, 0.0])
-          .then(SubscriptionsGetResponse);
+      APIService.call('subscriptionsGet', [0.0, 0.0])
+        .then(subscriptionsGetResponse);
 
-          function SubscriptionsGetResponse(response) {
-            if (response.status === 200) {
-              vm.subscriptions = response.data.list;
-            } else {
-              AlertService.error("Problem retrieving subscription list");
-            }
-          }
+      function subscriptionsGetResponse(response) {
+        if (response.status === 200) {
+          vm.subscriptions = response.data.list;
+        } else {
+          AlertService.error("Problem retrieving subscription list");
+        }
+      }
 
-      function ApplicationsGetResponse(response) {
+      function applicationsGetResponse(response) {
         if (response.status === 200) {
           vm.applications = response.data.list;
         } else {
