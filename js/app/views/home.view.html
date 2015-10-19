@@ -267,11 +267,12 @@
       var element = angular.element(document.body);
       var controller = element.controller();
 
-      element.scope().$apply(function() {
+      element.scope().$apply(function () {
         controller.toggleCreate(true);
       });
 
       $('.dropdown-toggle').click();
+
     });
   });
 </script>
