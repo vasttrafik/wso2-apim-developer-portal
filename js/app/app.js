@@ -37,7 +37,7 @@
 
     .when('/application', {
       controller: 'ApplicationCtrl',
-      templateUrl: 'js/app/views/application.view.html',
+      templateUrl: 'js/app/views/applications.view.html',
       controllerAs: 'vm'
     })
 
@@ -49,7 +49,7 @@
 
     .when('/api', {
       controller: 'ApiCtrl',
-      templateUrl: 'js/app/views/api.view.html',
+      templateUrl: 'js/app/views/apis.view.html',
       controllerAs: 'vm'
     })
 
