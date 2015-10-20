@@ -29,7 +29,7 @@
       <div class="menu-list">
         <ul id="menu-content" class="menu-content collapse out">
           <li data-toggle="collapse" data-target="#api" class="collapsed">
-            <a href="#/apis/">API<span class="arrow"></span></a>
+            <a href="#">API<span class="arrow"></span></a>
           </li>
           <ul class="sub-menu collapse" id="api" style="height: 0;">
             <li><a href="#/api">Våra apier</a></li>
@@ -345,6 +345,10 @@
         $('.fa.fa-cog.fa-2x').addClass("fa-spin");
       }, function () {
         $('.fa.fa-cog.fa-2x').removeClass("fa-spin");
+      });
+
+      $('.nav-side-menu ul .sub-menu li a, .nav-side-menu li .sub-menu li a').click(function () {
+        $('.toggler').click();
       });
 
     });
