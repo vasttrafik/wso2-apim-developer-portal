@@ -1,7 +1,6 @@
-<!-- Main jumbotron for a primary marketing message or call to action -->
-<div class="jumbotron">
-  <div class="container">
-    <h1>Mina applikationer</h1>
+<div class="jumbotron" style="background: #ffffff">
+  <div class="container" style="padding-left: 0px">
+    <h1 style="margin-bottom: -80px;">Mina applikationer</h1>
   </div>
 </div>
 
@@ -11,9 +10,11 @@
     <table class="table table-hover table-striped">
       <thead class="table-header">
         <tr>
-          <th>ApplicationId</th>
-          <th>Name</th>
-          <th>Description</th>
+          <th>Applikations Id</th>
+          <th>Namn</th>
+          <th>Status</th>
+          <th>Beskrivning</th>
+          <th colspan="2">Aktioner</th>
         </tr>
       </thead>
 
@@ -27,11 +28,98 @@
             <span>{{entries.name}}</span>
           </td>
           <td>
+            <span>{{entries.status}}</span>
+          </td>
+          <td>
             <span>{{entries.description}}</span>
+          </td>
+          <td>
+            <span ng-click="vm.addApplicationUpdate($index)" style="cursor: pointer">
+              <span class="glyphicon glyphicon-edit"></span> Uppdatera
+            </span>
+          </td>
+          <td>
+            <span ng-click="vm.removeApplication($index)" style="cursor: pointer">
+              <span class="glyphicon glyphicon-trash" style="margin-left: 10px;"></span> Ta bort
+            </span>
           </td>
         </tr>
       </tbody>
     </table>
 
+  </div>
+</div>
+
+<div ng-show="!vm.form.application.update">
+  <div class="jumbotron" style="background: #ffffff; padding: 0px">
+    <div class="container" style="padding-left: 0px">
+      <h2 style="margin-bottom: -50px;">Skapa ny applikation</h2>
+    </div>
+  </div>
+
+
+  <div class="container" style="padding-bottom: 100px;">
+    <div class="row well">
+      <form name="addApplicationForm" ng-submit="vm.addApplication()" role="form">
+        <div class="form-group" ng-class="{ 'has-error': addApplicationForm.name.$dirty && addApplicationForm.name.$invalid,
+'has-success' : addApplicationForm.name.$valid}">
+          <label for="name">Namn</label>
+          <input type="text" name="name" id="name" class="form-control" ng-model="vm.form.application.add.name" required />
+          <span ng-show="addApplicationForm.name.$dirty && addApplicationForm.name.$error.required" class="help-block">Namn är obligatoriskt</span>
+        </div>
+        <div class="form-group">
+          <label for="callbackUrl">Callback URL</label>
+          <input type="text" name="callbackUrl" id="callbackUrl" class="form-control" ng-model="vm.form.application.add.callbackUrl" />
+        </div>
+        <div class="form-group">
+          <label for="description">Beskrivning</label>
+          <textarea id="description" maxlength="400" type="text" class="form-control" ng-model="vm.form.application.add.description"></textarea>
+        </div>
+
+        <div class="form-actions noclick" style="padding-top: 20px">
+          <button type="submit" ng-disabled="addApplicationForm.$invalid || vm.dataLoading" class="btn btn-primary">Skapa</button>
+          <img ng-if="vm.dataLoadingAddApplication" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+          />
+          <span ng-click="vm.resetAddApplicationForm();" class="btn btn-link">Ångra</span>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div ng-show="vm.form.application.update">
+  <div class="jumbotron" style="background: #ffffff; padding: 0px">
+    <div class="container" style="padding-left: 0px">
+      <h2 style="margin-bottom: -50px;">Uppdatera applikation {{vm.form.application.update.applicationId}}</h2>
+    </div>
+  </div>
+
+
+  <div class="container" style="padding-bottom: 100px;">
+    <div class="row well">
+      <form name="updateApplicationForm" ng-submit="vm.updateApplication()" role="form">
+        <div class="form-group" ng-class="{ 'has-error': updateApplicationForm.name.$dirty && updateApplicationForm.name.$invalid,
+    'has-success' : updateApplicationForm.name.$valid}">
+          <label for="name">Namn</label>
+          <input type="text" name="name" id="name" class="form-control" ng-model="vm.form.application.update.name" required />
+          <span ng-show="updateApplicationForm.name.$dirty && updateApplicationForm.name.$error.required" class="help-block">Namn är obligatoriskt</span>
+        </div>
+        <div class="form-group">
+          <label for="callbackUrl">Callback URL</label>
+          <input type="text" name="callbackUrl" id="callbackUrl" class="form-control" ng-model="vm.form.application.update.callbackUrl" />
+        </div>
+        <div class="form-group">
+          <label for="description">Beskrivning</label>
+          <textarea id="description" maxlength="400" type="text" class="form-control" ng-model="vm.form.application.update.description"></textarea>
+        </div>
+
+        <div class="form-actions noclick" style="padding-top: 20px">
+          <button type="submit" ng-disabled="updateApplicationForm.$invalid || vm.dataLoading" class="btn btn-primary">Uppdatera</button>
+          <img ng-if="vm.dataLoadingUpdateApplication" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+          />
+          <span ng-click="vm.resetUpdateApplicationForm();" class="btn btn-link">Ångra</span>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
