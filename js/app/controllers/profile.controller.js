@@ -15,14 +15,8 @@
     vm.resetProfileForm = resetProfileForm;
     vm.resetPasswordForm = resetPasswordForm;
 
-    vm.user = angular.copy($rootScope.globals.currentUser);
-
-    // angular.element(document).ready(function() {
-    //   $timeout(function() {
-    //     angular.element('#editButton').trigger('click');
-    //   }, 100);
-    // });
-
+    vm.user = {};
+    vm.user.profile = angular.copy($rootScope.globals.currentUser);
 
     function saveProfile() {
 
@@ -31,16 +25,16 @@
       UserService.getUser()
         .then(function(response) {
 
-          response.userName = vm.user.userName;
+          response.userName = vm.user.profile.userName;
           response.claims = [{
             claimURI: 'http://wso2.org/claims/emailaddress',
-            value: vm.user.email
+            value: vm.user.profile.email
           }, {
             claimURI: 'http://wso2.org/claims/givenname',
-            value: vm.user.firstName
+            value: vm.user.profile.firstName
           }, {
             claimURI: 'http://wso2.org/claims/lastname',
-            value: vm.user.lastName
+            value: vm.user.profile.lastName
           }];
 
           APIService.call('usersUserIdPut', ['updateProfile', response, response.userId])
@@ -56,7 +50,7 @@
               userResponse.claims = response.data.claims;
               UserService.setUser(userResponse)
                 .then(function() {
-                  vm.user = angular.copy($rootScope.globals.currentUser);
+                  vm.user.profile = angular.copy($rootScope.globals.currentUser);
                   vm.dataLoadingProfile = false;
                   AlertService.success("Din profil är uppdaterad!");
                 });
@@ -90,12 +84,12 @@
     }
 
     function resetProfileForm() {
-      vm.user = angular.copy($rootScope.globals.currentUser);
+      vm.user.profile = angular.copy($rootScope.globals.currentUser);
     }
 
     function resetPasswordForm() {
-      vm.user.password = '';
-      vm.user.passwordRepeat = '';
+      vm.user.password.password = '';
+      vm.user.password.passwordRepeat = '';
     }
 
   }
