@@ -33,6 +33,7 @@
 
 @media (min-width: 400) {
     #menu_left{margin-left:0;}
+    .container{margin-right:auto;}
 }
 @media (min-width: 528px) {
     .sidebar {
@@ -43,6 +44,15 @@
         right: auto;
     }
     .container { margin-right:auto; }
+}
+
+@media (max-width: 527px) {
+  .container {
+    padding-right: -15px;
+    padding-left: -15px;
+    margin-right:0;
+    margin-left:0;
+  }
 }
 @media (min-width: 768px) {
     .sidebar {
@@ -60,6 +70,7 @@
         left:0;
         right:20px;
     }
+    .container{margin-right:auto;}
 }
 @media (min-width: 992px) {
     .sidebar {
