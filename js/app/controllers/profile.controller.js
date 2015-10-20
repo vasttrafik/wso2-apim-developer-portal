@@ -16,7 +16,7 @@
     vm.resetPasswordForm = resetPasswordForm;
 
     vm.user = {};
-    vm.user.profile = angular.copy($rootScope.globals.currentUser);
+    resetProfileForm();
 
     function saveProfile() {
 
@@ -50,7 +50,7 @@
               userResponse.claims = response.data.claims;
               UserService.setUser(userResponse)
                 .then(function() {
-                  vm.user.profile = angular.copy($rootScope.globals.currentUser);
+                  resetProfileForm(); // At this stage the rootScope is updated
                   vm.dataLoadingProfile = false;
                   AlertService.success("Din profil är uppdaterad!");
                 });
