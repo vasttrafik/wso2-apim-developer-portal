@@ -12,11 +12,11 @@
             <tr>
               <th><!--Img--></th>
               <th>Namn</th>
-              <th>Beskrivning</th>
+              <th class="hidden-xs">Beskrivning</th>
               <th class="hidden-xs">Context</th>
               <th>Version</th>
               <th class="hidden-xs">Provider</th>
-              <th>Status</th>
+              <th class="hidden-xs">Status</th>
               <th>
                 <!--Edit-->
               </th>
@@ -25,27 +25,26 @@
           <tbody>
             <tr ng-repeat="entries in vm.apis">
               <td>
-                <span><img src="{{entries.imageUrl}}" style="width:40px;height:40px" alt="link to img..." /></span>
+                <img src="{{entries.imageUrl}}" style="width:40px;height:40px" alt="link to img..." />
               </td>
               <td>
-                <span>{{entries.name}}</span>
-              </td>
-              <td>
-                <span>{{entries.description}}</span>
+                {{entries.name}}
               </td>
               <td class="hidden-xs">
-                <span>{{entries.context}}</span>
-              </td>
-              <td>
-                <span>{{entries.version}}</span>
+                {{entries.description}}
               </td>
               <td class="hidden-xs">
-                <span>{{entries.provider}}</span>
-
+                {{entries.context}}
               </td>
               <td>
-                <span>{{entries.status}}</span>
+                {{entries.version}}
+              </td>
+              <td class="hidden-xs">
+                {{entries.provider}}
 
+              </td>
+              <td class="hidden-xs">
+                {{entries.status}}
               </td>
               <td>
                 <a href="#/api/1" title="Detailjer..."><span class="glyphicon glyphicon-edit"></span></a>
