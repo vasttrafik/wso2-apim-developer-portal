@@ -1,37 +1,80 @@
 <!-- Main jumbotron for a primary marketing message or call to action -->
-<div class="jumbotron">
+<h2>Våra API:er</h2>
+
+<div class="container-fluid" style="margin-top:90px;">
   <div class="container">
-    <h1>These are our apis</h1>
-  </div>
-</div>
+    <div class="row">
+      <!--<table class="table table-hover table-striped" style="width:900px">-->
+      <h2 class="sub-header">API</h2>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th><!--Img--></th>
+              <th>Namn</th>
+              <th>Beskrivning</th>
+              <th class="hidden-xs">Context</th>
+              <th>Version</th>
+              <th class="hidden-xs">Provider</th>
+              <th>Status</th>
+              <th>
+                <!--Edit-->
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="entries in vm.apis">
+              <td>
+                <span><img src="{{entries.imageUrl}}" style="width:40px;height:40px" alt="link to img..." /></span>
+              </td>
+              <td>
+                <span>{{entries.name}}</span>
+              </td>
+              <td>
+                <span>{{entries.description}}</span>
+              </td>
+              <td class="hidden-xs">
+                <span>{{entries.context}}</span>
+              </td>
+              <td>
+                <span>{{entries.version}}</span>
+              </td>
+              <td class="hidden-xs">
+                <span>{{entries.provider}}</span>
 
-<div class="container">
-  <div class="row">
+              </td>
+              <td>
+                <span>{{entries.status}}</span>
 
-    <table class="table table-hover table-striped">
-      <thead class="table-header">
-        <tr>
-          <th>Name</th>
-          <th>Description</th>
-          <th>Context</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <tr ng-repeat="entries in vm.apis">
-          <td>
-            <span>{{entries.name}}
-            </span>
-          </td>
-          <td>
-            <span>{{entries.description}}</span>
-          </td>
-          <td>
-            <span>{{entries.context}}</span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
+              </td>
+              <td>
+                <a href="#/api/1" title="Detailjer..."><span class="glyphicon glyphicon-edit"></span></a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!--{
+      "name": "SPP",
+      "description": "Smart pendelparkering",
+      "imageUrl": "someUrl",
+      "context": "/spp",
+      "version": "1.0",
+      "provider": "",
+      "swagger": "",
+      "status": "",
+      "responseCaching": "",
+      "lastModifiedDate": "",
+      "isDefaultVersion": true,
+      "transport": [],
+      "tier": "",
+      "visibility": "",
+      "endpoint": {
+      "type": "http",
+      "production": [],
+      "sandbox": []
+      }
+      }-->
+    </div>
   </div>
 </div>
