@@ -5,9 +5,9 @@
     .module('vtPortal')
     .controller('ProfileCtrl', ProfileCtrl);
 
-  ProfileCtrl.$inject = ['$rootScope', '$timeout', '$location', '$http', '$httpParamSerializer', 'APIService', 'AlertService', 'UserService'];
+  ProfileCtrl.$inject = ['$scope', '$rootScope', '$timeout', '$location', '$http', '$httpParamSerializer', 'APIService', 'AlertService', 'UserService'];
 
-  function ProfileCtrl($rootScope, $timeout, $location, $http, $httpParamSerializer, APIService, AlertService, UserService) {
+  function ProfileCtrl($scope, $rootScope, $timeout, $location, $http, $httpParamSerializer, APIService, AlertService, UserService) {
     var vm = this;
 
     vm.saveProfile = saveProfile;
@@ -15,7 +15,8 @@
     vm.resetProfileForm = resetProfileForm;
     vm.resetPasswordForm = resetPasswordForm;
 
-    vm.user = {};
+    vm.form = {};
+
     resetProfileForm();
 
     function saveProfile() {
@@ -76,6 +77,7 @@
 
         $timeout(function() {
           vm.dataLoadingPassword = false;
+          resetPasswordForm();
           AlertService.success("Ditt lösenord är uppdaterat!");
 
         }, 1000);
@@ -84,12 +86,14 @@
     }
 
     function resetProfileForm() {
-      vm.user.profile = angular.copy($rootScope.globals.currentUser);
+      vm.form.profile = angular.copy($rootScope.globals.currentUser);
     }
 
     function resetPasswordForm() {
-      vm.user.password.password = '';
-      vm.user.password.passwordRepeat = '';
+      vm.form.password = {};
+      vm.form.password.password = '';
+      vm.form.password.passwordRepeat = '';
+      $scope.passwordForm.$setPristine();
     }
 
   }

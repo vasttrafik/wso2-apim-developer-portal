@@ -35,7 +35,7 @@
       controllerAs: 'vm'
     })
 
-    .when('/application', {
+    .when('/applications', {
       controller: 'ApplicationsCtrl',
       templateUrl: 'js/app/views/applications.view.html',
       controllerAs: 'vm'
@@ -136,7 +136,7 @@
     function create() {
       vm.dataLoading = true;
       AuthenticationService.create(vm.user.username, vm.user.password, vm.user.email, vm.user.firstname, vm.user.lastname).then(function(response) {
-        AlertService.success('Skapade kontot!');
+        AlertService.success('Kontot skapat, nu kan du logga in!');
         $rootScope.user.create = false;
         vm.dataLoading = false;
       }).catch(function(response) {

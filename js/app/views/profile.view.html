@@ -1,18 +1,17 @@
-<!-- Main jumbotron for a primary marketing message or call to action -->
 <div class="jumbotron" style="background: #ffffff">
   <div class="container" style="padding-left: 0px">
-    <h1 style="margin-bottom: -50px;">Uppdatera profil</h1>
+    <h1 style="margin-bottom: -80px;">Uppdatera profil</h1>
   </div>
 </div>
 
 <div class="container">
-  <div class="row">
+  <div class="row well">
     <form name="profileForm" ng-submit="vm.saveProfile()" role="form">
       <div class="form-group" ng-class="{ 'has-error': profileForm.firstname.$dirty && profileForm.firstname.$invalid,
 'has-success' : profileForm.firstname.$valid}">
         <label for="firstname">Förnamn</label>
 
-        <input type="text" name="firstname" id="firstname" class="form-control" ng-model="vm.user.profile.firstName" required />
+        <input type="text" name="firstname" id="firstname" class="form-control" ng-model="vm.form.profile.firstName" required />
         <span ng-show="profileForm.firstname.$dirty && profileForm.firstname.$error.required" class="help-block">Förnamn är obligatoriskt</span>
 
       </div>
@@ -21,7 +20,7 @@
 'has-success' : profileForm.lastname.$valid}">
         <label for="lastname">Efternamn</label>
 
-        <input type="text" name="lastname" id="lastname" class="form-control" ng-model="vm.user.profile.lastName" required />
+        <input type="text" name="lastname" id="lastname" class="form-control" ng-model="vm.form.profile.lastName" required />
         <span ng-show="profileForm.lastname.$dirty && profileForm.lastname.$error.required" class="help-block">Efternamn är obligatoriskt</span>
 
         <div class="form-group" ng-class="{ 'has-error': profileForm.username.$dirty && profileForm.username.$invalid,
@@ -33,7 +32,7 @@
 'has-success' : profileForm.username.$valid}">
           <label for="username">Användarnamn</label>
 
-          <input type="text" name="username" id="username" class="form-control" ng-model="vm.user.profile.userName" ng-minlength=3 required />
+          <input type="text" name="username" id="username" class="form-control" ng-model="vm.form.profile.userName" ng-minlength=3 required />
           <span ng-show="profileForm.username.$dirty && profileForm.username.$error.required" class="help-block">Användarnamn är obligatoriskt</span>
           <span ng-show="profileForm.username.$error.minlength" class="help-block">Användarnamn måste vara minst 3 tecken långt</span>
         </div>
@@ -42,7 +41,7 @@
 'has-success' : profileForm.email.$valid}">
           <label for="email">E-post</label>
 
-          <input type="email" name="email" id="email" class="form-control" ng-model="vm.user.profile.email" required />
+          <input type="email" name="email" id="email" class="form-control" ng-model="vm.form.profile.email" required />
           <span ng-show="profileForm.email.$dirty && profileForm.email.$error.required" class="help-block">E-Post är obligatoriskt</span>
 
         </div>
@@ -62,27 +61,27 @@
 
 <div class="jumbotron" style="background: #ffffff; padding-top: 50px;">
   <div class="container" style="padding-left: 0px">
-    <h1 style="margin-bottom: -50px;">Uppdatera lösenord</h1>
+    <h1 style="margin-bottom: -80px;">Uppdatera lösenord</h1>
   </div>
 </div>
 
 
 <div class="container" style="padding-bottom: 100px;">
-  <div class="row">
+  <div class="row well">
     <form name="passwordForm" ng-submit="vm.savePassword()" role="form">
       <div class="form-group" ng-class="{ 'has-error': passwordForm.password.$dirty && passwordForm.password.$invalid,
 'has-success' : passwordForm.password.$valid}">
         <label for="password">Nytt lösenord</label>
-        <input type="password" name="password" id="password" class="form-control" ng-model="vm.user.password.password" ng-minlength=8 required />
+        <input type="password" name="password" id="password" class="form-control" ng-model="vm.form.password.password" ng-minlength=8 required />
         <span ng-show="passwordForm.password.$dirty && passwordForm.password.$error.required" class="help-block">Lösenord är obligatoriskt</span>
         <span ng-show="passwordForm.password.$error.minlength" class="help-block">Lösenordet måste vara minst 8 tecken långt</span>
       </div>
 
-      <div ng-password-strength="vm.user.password.password" strength="passStrength" inner-class="progress-bar" inner-class-prefix="progress-bar-"></div>
+      <div ng-password-strength="vm.form.password.password" strength="passStrength" inner-class="progress-bar" inner-class-prefix="progress-bar-"></div>
       <div class="form-group" ng-class="{ 'has-error': passwordForm.passwordRepeat.$dirty && passwordForm.passwordRepeat.$invalid,
 'has-success' : passwordForm.passwordRepeat.$valid}">
         <label for="passwordRepeat">Upprepa lösenord</label>
-        <input type="password" name="passwordRepeat" id="passwordRepeat" class="form-control" ng-model="vm.user.password.passwordRepeat" ui-validate=" '$value==vm.user.password.password' " ui-validate-watch=" 'vm.user.password.password' " required />
+        <input type="password" name="passwordRepeat" id="passwordRepeat" class="form-control" ng-model="vm.form.password.passwordRepeat" ui-validate=" '$value==vm.form.password.password' " ui-validate-watch=" 'vm.form.password.password' " required />
         <span ng-show="passwordForm.passwordRepeat.$dirty && passwordForm.passwordRepeat.$error.required" class="help-block">Måste upprepa lösenordet</span>
         <span ng-show="passwordForm.passwordRepeat.$dirty && passwordForm.passwordRepeat.$invalid" class="help-block">Lösenorden stämmer inte överrens</span>
       </div>
@@ -91,10 +90,8 @@
         <button type="submit" ng-disabled="passwordForm.$invalid || vm.dataLoading" class="btn btn-primary">Uppdatera</button>
         <img ng-if="vm.dataLoadingPassword" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
         />
-        <span ng-click="vm.resetPasswordForm();passwordForm.$setPristine();" class="btn btn-link">Ångra</span>
+        <span ng-click="vm.resetPasswordForm();" class="btn btn-link">Ångra</span>
       </div>
   </div>
   </form>
-</div>
-
 </div>
