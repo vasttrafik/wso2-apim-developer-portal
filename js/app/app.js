@@ -36,7 +36,7 @@
     })
 
     .when('/application', {
-      controller: 'ApplicationCtrl',
+      controller: 'ApplicationsCtrl',
       templateUrl: 'js/app/views/applications.view.html',
       controllerAs: 'vm'
     })
@@ -48,7 +48,7 @@
     })
 
     .when('/api', {
-      controller: 'ApiCtrl',
+      controller: 'ApisCtrl',
       templateUrl: 'js/app/views/apis.view.html',
       controllerAs: 'vm'
     })
