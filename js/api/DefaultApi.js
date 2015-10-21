@@ -104,7 +104,7 @@ var API;
             DefaultApi.prototype.apisApiIdDocumentsGet = function (limit, offset, apiId, query, accept, ifNoneMatch, extraHttpRequestParams) {
                 var path = this.basePath + '/apis/{apiId}/documents';
 
-                path = path.replace('{' + 'apiId' + '}', String(apiId));
+                path = path.replace('{apiId}', String(apiId));
 
                 var queryParameters = {};
                 var headerParams = {};
