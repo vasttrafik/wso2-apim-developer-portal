@@ -53,7 +53,7 @@
       controllerAs: 'vm'
     })
 
-    .when('/api', {
+    .when('/api/:apiName/:apiVersion/:apiProvider', {
       controller: 'ApiCtrl',
       templateUrl: 'js/app/views/api.view.html',
       controllerAs: 'vm'
@@ -89,8 +89,10 @@
 
     $rootScope.$on('$locationChangeStart', function(event, next, current) {
 
+
+      var restrictedPage = true;
       // redirect to startpage page if not logged in and trying to access a restricted page
-      var restrictedPage = $.inArray($location.path(), ['/', '/apis', '/api']) === -1;
+        restrictedPage = $.inArray($location.path().split('/'), ['', 'apis', 'api']) === -1;
 
       if (restrictedPage && !$rootScope.user.loggedIn) {
         $location.path('/');

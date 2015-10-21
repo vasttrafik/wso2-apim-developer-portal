@@ -5,16 +5,13 @@
     .module('vtPortal')
     .controller('ApiCtrl', ApiCtrl);
 
-  ApiCtrl.$inject = ['$http', '$httpParamSerializer', 'APIService', 'AlertService'];
+  ApiCtrl.$inject = ['$routeParams', '$http', '$httpParamSerializer', 'APIService', 'AlertService'];
 
-  function ApiCtrl($http, $httpParamSerializer, APIService, AlertService) {
+  function ApiCtrl($routeParams, $http, $httpParamSerializer, APIService, AlertService) {
     var vm = this;
-    var name = "";
-    var version = "";
-    var provider = "";
 
-    APIService.call('apisApiIdGet', [name + '/' + version + '/' + provider])
-    .then(aPIsIdGetResponse)
+    APIService.call('apisApiIdGet', [$routeParams.apiName + '/' + $routeParams.apiVersion + '/' + $routeParams.apiProvider])
+    .then(aPIsIdGetResponse);
 
     function aPIsIdGetResponse(response) {
       if (response.status == 200) {
