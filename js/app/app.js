@@ -89,10 +89,8 @@
 
     $rootScope.$on('$locationChangeStart', function(event, next, current) {
 
-
-      var restrictedPage = true;
       // redirect to startpage page if not logged in and trying to access a restricted page
-        restrictedPage = $.inArray($location.path().split('/'), ['', 'apis', 'api']) === -1;
+      var  restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api']) === -1;
 
       if (restrictedPage && !$rootScope.user.loggedIn) {
         $location.path('/');
