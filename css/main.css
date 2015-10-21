@@ -14,7 +14,7 @@ body {
   font-family:'FoundersGroteskWeb-Regular','Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size:18px;
   line-height:1.42857;
-  padding-top:90px;
+  padding-top:120px;
 }
 
 a {
@@ -76,7 +76,7 @@ a:focus {
 
 /* Jumbotron */
 .jumbotron {
-    padding-top:120px;
+  padding-top: 0px;
 }
 
 /* Hero */
@@ -379,19 +379,19 @@ div.btn-group.open a {
 div.card .nav-tabs  {
   border-bottom: 2px solid #DDD;
 }
-        
+
 div.card .nav-tabs > li.active > a,
 div.card .nav-tabs > li.active > a:focus,
 div.card .nav-tabs > li.active > a:hover {
   border-width: 0;
 }
-        
+
 div.card .nav-tabs > li > a {
     border: none;
     color: #666;
     font-weight: bold;
 }
-        
+
 div.card .nav-tabs > li.active > a,
 div.card .nav-tabs > li > a:hover {
     border: none;
@@ -427,12 +427,12 @@ div.card .nav-tabs > li > a:hover {
     -webkit-transform: scale(1);
     transform: scale(1);
   }
-        
+
 div.card .tab-nav > li > a::after {
     background: #21527d none repeat scroll 0 0;
     color: #fff;
 }
-        
+
 div.card .tab-pane {
     padding: 0;
 }
@@ -443,7 +443,7 @@ div.card .tab-content {
   -webkit-box-sizing: content-box;
   box-sizing: content-box;
 }
-        
+
 div.card {
     background: #fff none repeat scroll 0 0;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
@@ -451,3 +451,10 @@ div.card {
 
 }
 /* END: API tab styles */
+
+.form-data {
+  padding: 5px 15px 5px;
+  border-radius: 5px;
+  background-color: #999;
+  color: #fff;
+}
