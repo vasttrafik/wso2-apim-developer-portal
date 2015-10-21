@@ -598,12 +598,12 @@ var API;
                 var headerParams = {};
 
                 // verify required parameter 'body' is set
-                if (!body) {
+                if (body == null) {
                     throw new Client.Error('Missing required parameter body when calling subscriptionsSubscriptionIdPut');
                 }
 
                 // verify required parameter 'subscriptionId' is set
-                if (!subscriptionId) {
+                if (subscriptionId == null) {
                     throw new Client.Error('Missing required parameter subscriptionId when calling subscriptionsSubscriptionIdPut');
                 }
 

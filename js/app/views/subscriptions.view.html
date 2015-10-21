@@ -1,0 +1,135 @@
+<div class="jumbotron" style="background: #ffffff">
+  <div class="container" style="padding-left: 0px">
+    <h1 style="margin-bottom: -80px;">Mina prenumerationer</h1>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+
+    <table class="table table-hover table-striped">
+      <thead class="table-header">
+        <tr>
+          <th>Applikation</th>
+          <th>API</th>
+          <th>Status</th>
+          <th colspan="2">Aktioner</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr ng-repeat="entries in vm.subscriptions">
+          <td>
+            <span>{{entries.application.name}}
+            </span>
+          </td>
+          <td>
+            <span>{{entries.api.name}} {{entries.api.version}}</span>
+          </td>
+          <td>
+            <span>{{entries.status}}</span>
+          </td>
+          <td>
+            <span ng-click="vm.addSubscriptionUpdate($index)" style="cursor: pointer">
+              <span class="glyphicon glyphicon-edit"></span> Uppdatera
+            </span>
+          </td>
+          <td>
+            <span ng-click="vm.removeSubscription($index)" style="cursor: pointer">
+              <span class="glyphicon glyphicon-trash" style="margin-left: 10px;"></span> Ta bort
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+<div ng-show="!vm.form.subscription.update">
+  <div class="jumbotron" style="background: #ffffff; padding: 0px">
+    <div class="container" style="padding-left: 0px">
+      <h2 style="margin-bottom: -50px;">Skapa ny prenumeration</h2>
+    </div>
+  </div>
+
+
+  <div class="container" style="padding-bottom: 100px;">
+    <div class="row well">
+      <form name="addSubscriptionForm" ng-submit="vm.addSubscription()" role="form">
+
+
+        <div class="form-group" ng-class="{ 'has-error': addSubscriptionForm.application.$dirty && addSubscriptionForm.application.$invalid,
+  'has-success' : addSubscriptionForm.application.$valid}">
+          <label for="application">Applikation</label>
+          <div ng-show="!vm.applications.length" style="margin-bottom: 20px">Du har inga registrerade applikationer. <a href="#/applications">Skapa en applikation först</a>, skapa sedan en prenumeration här!</div>
+          <div ng-show="vm.applications.length">
+            <select name="application" id="applications" ng-model="vm.form.subscription.add.application" class="form-control" required>
+              <option ng-repeat="entry in vm.applications" value="{{entry.applicationId}}">{{entry.name}}</option>
+            </select>
+            <span ng-show="addSubscriptionForm.application.$dirty && addSubscriptionForm.application.$error.required" class="help-block">Applikation är obligatoriskt</span>
+          </div>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error': addSubscriptionForm.api.$dirty && addSubscriptionForm.api.$invalid,
+  'has-success' : addSubscriptionForm.api.$valid}">
+          <label for="api">API</label>
+          <div ng-show="!vm.apis.length" style="margin-bottom: 20px">Det finns inga tillgängliga APIer att skapa en prenumeration emot</div>
+          <div ng-show="vm.apis.length">
+            <select name="api" id="api" ng-model="vm.form.subscription.add.api" class="form-control" required>
+              <option ng-repeat="entry in vm.apis" value="{{entry.name}}/{{entry.version}}/{{entry.provuder}}">{{entry.name}} {{entry.version}}</option>
+            </select>
+            <span ng-show="addSubscriptionForm.api.$dirty && addSubscriptionForm.api.$error.required" class="help-block">API är obligatoriskt</span>
+          </div>
+        </div>
+
+        <div class="form-actions noclick" style="padding-top: 20px">
+          <button type="submit" ng-disabled="addSubscriptionForm.$invalid || vm.dataLoading" class="btn btn-primary">Skapa</button>
+          <img ng-if="vm.dataLoadingAddApplication" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+          />
+          <span ng-click="vm.resetAddSubscriptionForm();" class="btn btn-link">Ångra</span>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div ng-show="vm.form.subscription.update">
+  <div class="jumbotron" style="background: #ffffff; padding: 0px">
+    <div class="container" style="padding-left: 0px">
+      <h2 style="margin-bottom: -50px;">Uppdatera prenumeration</h2>
+    </div>
+  </div>
+
+
+  <div class="container" style="padding-bottom: 100px;">
+    <div class="row well">
+      <form name="updateSubscriptionForm" ng-submit="vm.updateSubscription()" role="form">
+        <div class="form-group" ng-class="{ 'has-error': updateSubscriptionForm.application.$dirty && updateSubscriptionForm.application.$invalid,
+  'has-success' : updateSubscriptionForm.application.$valid}">
+          <label for="application">Applikation</label>
+          <select name="application" id="applications" ng-model="vm.form.subscription.update.application" class="form-control" required>
+            <option ng-repeat="entry in vm.applications" value="{{entry.applicationId}}">{{entry.name}}</option>
+          </select>
+          <span ng-show="updateSubscriptionForm.application.$dirty && updateSubscriptionForm.application.$error.required" class="help-block">Applikation är obligatoriskt</span>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error': updateSubscriptionForm.api.$dirty && updateSubscriptionForm.api.$invalid,
+  'has-success' : updateSubscriptionForm.api.$valid}">
+          <label for="api">API</label>
+            <select name="api" id="api" ng-model="vm.form.subscription.update.api" class="form-control" required>
+              <option ng-repeat="entry in vm.apis" value="{{entry.name}}/{{entry.version}}/{{entry.provider}}">{{entry.name}} {{entry.version}}</option>
+            </select>
+            <span ng-show="updateSubscriptionForm.api.$dirty && updateSubscriptionForm.api.$error.required" class="help-block">API är obligatoriskt</span>
+        </div>
+
+        <div class="form-actions noclick" style="padding-top: 20px">
+          <button type="submit" ng-disabled="updateSubscriptionForm.$invalid || vm.dataLoadingUpdateSubscription" class="btn btn-primary">Uppdatera</button>
+          <img ng-if="vm.dataLoadingUpdateApplication" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+          />
+          <span ng-click="vm.resetUpdateSubscriptionForm();" class="btn btn-link">Ångra</span>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

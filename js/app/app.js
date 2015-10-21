@@ -41,9 +41,9 @@
       controllerAs: 'vm'
     })
 
-    .when('/subscription', {
-      controller: 'SubscriptionCtrl',
-      templateUrl: 'js/app/views/subscription.view.html',
+    .when('/subscriptions', {
+      controller: 'SubscriptionsCtrl',
+      templateUrl: 'js/app/views/subscriptions.view.html',
       controllerAs: 'vm'
     })
 
