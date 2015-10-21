@@ -6,12 +6,12 @@
   'use strict';
 
   angular
-    .module('vtPortal', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ngPasswordStrength', 'ui.validate'])
+    .module('vtPortal', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ngPasswordStrength', 'ui.validate', 'angular-clipboard', 'ngLocationUpdate'])
     .config(config)
     .run(run)
     .controller('MainCtrl', MainCtrl);
 
-  config.$inject = ['$routeProvider'];
+  config.$inject = ['$routeProvider', '$locationProvider'];
 
   function config($routeProvider) {
 
@@ -35,7 +35,7 @@
       controllerAs: 'vm'
     })
 
-    .when('/applications', {
+    .when('/applications/:applicationId?', {
       controller: 'ApplicationsCtrl',
       templateUrl: 'js/app/views/applications.view.html',
       controllerAs: 'vm'
