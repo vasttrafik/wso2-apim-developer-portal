@@ -1,33 +1,43 @@
 ﻿
-  <div class="container">
-    <h1 class="sub-header">{{vm.api.name}} - v.{{vm.api.version}}</h1>
+<div class="container">
+  <h1 class="sub-header">{{vm.api.name}} - v.{{vm.api.version}}</h1>
 
-    <div class="row col-md-2">
-      <!--Image-->
-      <img src="{{vm.api.imageUrl}}" alt="image..." />
+  <div class="row col-md-2">
+    <!--Image-->
+    <img src="{{vm.api.imageUrl}}" alt="image..." />
+  </div>
+
+  <div class="row col-md-6">
+    <div class="row">
+      <label for="desc" class="col-xs-4 col-md-3">Beskrivning:</label>
+      <div id="#desc" class="col-xs-8 col-md-9">{{vm.api.description}}</div>
     </div>
 
-    <div class="row col-md-6 ">
-      <!-- Base facts -->
-      <label for="version">Beskrivning:</label> En ganska lång beskrivning så man ser när texten inte radbryter på små enheter så det inte blir fel i vertikal positionering när man skriver mycket men egentligen ska det stå {{entry.description}} här men den kan säkert vara ganska lång för den som är tjötig du vet...<br />
-
-      <label for="version">Version:</label> {{vm.api.version}}<br />
-
-      <label for="status">Status:</label> {{vm.api.status}}<br>
-
-      <label for="updated">Uppdaterad:</label> {{vm.api.updated}}
+    <div class="row">
+      <label for="version" class="col-xs-4 col-md-3">Version:</label>
+      <div id="#version" class="col-xs-8 col-md-9">{{vm.api.version}}</div>
     </div>
 
-    <div ng-show="user.loggedIn" class="row col-md-4">
-      <!-- If user logged in, subscribe -->
-      Subscribe if logged in...
+    <div class="row">
+      <label for="status" class="col-xs-4 col-md-3">Status:</label>
+      <div class="col-xs-8 col-md-9">{{vm.api.status}}</div>
     </div>
-    <div ng-show="!user.loggedIn" class="row col-md-4">
-      <div class="alert alert-warning" role="alert">
-        <span class="glyphicon glyphicon-info-sign">&nbsp;</span>Logga in för att kunna prenumerera på detta API!
-      </div>
+
+    <div class="row">
+      <label for="updated" class="col-xs-4 col-md-3">Uppdaterad:</label>
+      <div class="col-xs-8 col-md-9">{{vm.api.lastModifiedDate}}</div>
     </div>
   </div>
+
+  <div ng-show="user.loggedIn" class="row col-md-3">
+    Du kan prenumerera på denna tjänst...
+  </div>
+  <div ng-show="!user.loggedIn" class="row col-md-4">
+    <div class="alert alert-warning" role="alert">
+      <span class="glyphicon glyphicon-info-sign">&nbsp;</span>Logga in för att kunna prenumerera på detta API!
+    </div>
+  </div>
+</div>
 
 <div class="container">
   <div class="row col-md-12">
@@ -46,6 +56,7 @@
 
       <!-- Tab panes -->
       <div class="tab-content">
+
         <div role="tabpanel" class="tab-pane active" id="apiOverview">
           <h3>URL:er</h3>
           <label for="production">Produktion</label>
@@ -54,18 +65,21 @@
           <label for="sandbox">Test</label>
           <div id="sandbox" class="well well-sm">{{vm.api.endpoint.sandbox[0]}}</div>
         </div>
+
         <div role="tabpanel" class="tab-pane" id="apiDocs">
-          Inga dokument har ännu blivit associerade med detta API!
+          <ul ng-show="vm.documents.length > 0">
+            <li ng-repeat="doc in vm.documents"><a href="{{doc.url}}" title="{{doc.type}}">{{doc.name}}</a></li>
+          </ul>
+          <div ng-show="!(vm.documents.length > 0)" class="alert alert-warning" role="alert">
+            <span class="glyphicon glyphicon-info-sign">&nbsp;</span>Det finns inga dokument associerade till detta API!
+          </div>
         </div>
 
         <div role="tabpanel" class="tab-pane disabled" id="apiConsole">
-          API-konsolen
           <div ng-if="!user.loggedIn" class="alert alert-warning">
             <span class="glyphicon glyphicon-info-sign">&nbsp;</span>Du behöver ett access token för att testa detta API. Var vänlig logga in och prenumerera på API
             för att generera ett access token. Om du redan har ett token, var vänlig ange det nedan.
           </div>
-
-
           <label for="requestHeader">Sätt Request Header</label>
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon3">Authorization: Bearer </span>
