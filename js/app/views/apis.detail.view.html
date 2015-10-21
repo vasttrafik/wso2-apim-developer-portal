@@ -1,0 +1,65 @@
+﻿<div class="container-fluid">
+  <div class="container">
+    <h2 class="sub-header">{{entry.Name}}</h2>
+
+    <div class="row col-md-2">
+      <!--Image-->
+      <img src="{{entry.imageUrl}}" alt="image..." />
+    </div>
+
+    <div class="row col-md-6 ">
+      <!-- Base facts -->
+      <label for="version">Version:</label> {{entry.version}}
+      <br>
+      <label for="status">Status:</label> {{entry.status}}
+      <br>
+      <label for="updated">Senast uppdaterad:</label> {{entry.updated}}
+    </div>
+
+    <!--<div ng-show="user.loggedin" class="row col-md-4">-->
+    <!-- If user logged in, subscribe -->
+    <!--Subscribe if logged in...-->
+    <!--</div>-->
+
+    <div class="row col-md-4">
+      <div class="alert alert-warning" role="alert">
+        Logga in för att kunna prenumerera på detta API!
+      </div>
+    </div>
+  </div>
+
+  <div class="row col-md-12">
+    <div class="card">
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active">
+          <a href="#apiOverview" aria-controls="home" role="tab" data-toggle="tab">Översikt</a>
+        </li>
+        <li role="presentation">
+          <a href="#apiDocs" aria-controls="profile" role="tab" data-toggle="tab">Dokumentation</a>
+        </li>
+        <li role="presentation">
+          <a href="#apiConsole" aria-controls="messages" role="tab" data-toggle="tab">API-konsol</a>
+        </li>
+      </ul>
+
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="apiOverview">
+          <h3>URL:er</h3>
+          <label for="production">Produktion</label>
+          <div id="production" class="well well-sm">{{entry.production}}</div>
+
+          <label for="sandbox">Test</label>
+          <div id="sandbox" class="well well-sm">{{entry.sandbox}}</div>
+        </div>
+        <div role="tabpanel" class="tab-pane" id="apiDocs">
+          Inga dokument har ännu blivit associerade med detta API!
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="apiConsole">
+          API-konsolen
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
