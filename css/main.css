@@ -63,8 +63,12 @@ a:focus {
     font-size:32px;
     font-weight:600;
     color:white;
-    background:url(../img/png/logo_start.png) no-repeat;
+    /*background:url(../img/png/logo_start.png) no-repeat;*/
+    background:url(../img/png/vt_brand_logo.png) no-repeat;
     padding-left: 0;
+}
+div.navbar-header > a.logo {
+  width:485px;
 }
 
 .barrel {
