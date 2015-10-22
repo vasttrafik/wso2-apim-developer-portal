@@ -65,6 +65,8 @@
 
     function addSubscription() {
 
+      vm.dataLoadingAddSubscription = true;
+
       var apiDef = vm.form.subscription.add.api.split("/");
 
       APIService.call('subscriptionsPost', [{
@@ -90,11 +92,14 @@
         } else {
           AlertService.error("Problem att skapa ny prenumeration");
         }
+        vm.dataLoadingAddSubscription = false;
       }
 
     }
 
     function updateSubscription() {
+
+      vm.dataLoadingUpdateSubscription = true;
 
       var apiDef = vm.form.subscription.update.api.split("/");
 
@@ -125,6 +130,7 @@
         } else {
           AlertService.error("Problem att uppdatera prenumerationen");
         }
+        vm.dataLoadingUpdateSubscription = false;
       }
     }
 

@@ -26,16 +26,16 @@
       UserService.getUser()
         .then(function(response) {
 
-          response.userName = vm.user.profile.userName;
+          response.userName = vm.form.profile.userName;
           response.claims = [{
             claimURI: 'http://wso2.org/claims/emailaddress',
-            value: vm.user.profile.email
+            value: vm.form.profile.email
           }, {
             claimURI: 'http://wso2.org/claims/givenname',
-            value: vm.user.profile.firstName
+            value: vm.form.profile.firstName
           }, {
             claimURI: 'http://wso2.org/claims/lastname',
-            value: vm.user.profile.lastName
+            value: vm.form.profile.lastName
           }];
 
           APIService.call('usersUserIdPut', ['updateProfile', response, response.userId])
@@ -68,6 +68,9 @@
 
       UserService.getUser()
         .then(function(response) {
+
+          response.credential = vm.form.password.password;
+          response.newCredential = vm.form.password.passwordRepeat;
 
           APIService.call('usersUserIdPut', ['updateCredential', response, response.userId])
             .then(usersUserIdPutResponse);

@@ -71,6 +71,8 @@
 
     function addApplication() {
 
+      vm.dataLoadingAddApplication = true;
+
       APIService.call('applicationsPost', [{
           name: vm.form.application.add.name,
           description: vm.form.application.add.description,
@@ -89,10 +91,13 @@
         } else {
           AlertService.error("Problem att skapa ny applikation");
         }
+          vm.dataLoadingAddApplication = false;
       }
     }
 
     function updateApplication() {
+
+      vm.dataLoadingUpdateApplication = true;
 
       APIService.call('applicationsApplicationIdPut', [{
           name: vm.form.application.update.name,
@@ -116,6 +121,7 @@
         } else {
           AlertService.error("Problem att uppdatera applikationen");
         }
+        vm.dataLoadingUpdateApplication = false;
       }
     }
 
