@@ -474,4 +474,8 @@ div.row.col-md-4.well {
   div.row.col-md-4.well {
     margin: 15px 0;
   }
+
+  .nav > li > a {
+    padding: 10px 10px;
+  }
 }
