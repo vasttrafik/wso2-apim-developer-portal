@@ -176,12 +176,14 @@
     function resetUpdateApplicationForm() {
 
       vm.form.application.update = null;
+      vm.form.application.details = null;
       $scope.updateApplicationForm.$setPristine();
 
     }
 
     function resetDetailsApplicationForm() {
       vm.form.application.details = null;
+      vm.form.application.update = null;
       $scope.detailsApplicationForm.$setPristine();
     }
 
