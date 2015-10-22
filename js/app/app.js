@@ -6,7 +6,7 @@
   'use strict';
 
   angular
-    .module('vtPortal', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ngPasswordStrength', 'ui.validate', 'angular-clipboard', 'ngLocationUpdate'])
+    .module('vtPortal', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ngPasswordStrength', 'ui.validate', 'angular-clipboard', 'ngLocationUpdate', 'swaggerUi'])
     .config(config)
     .run(run)
     .controller('MainCtrl', MainCtrl);
@@ -53,6 +53,12 @@
       controllerAs: 'vm'
     })
 
+    .when('/swagger', {
+      controller: 'SwaggerCtrl',
+      templateUrl: 'js/app/views/swagger.view.html',
+      controllerAs: 'vm'
+    })
+
     .when('/api/:apiName/:apiVersion/:apiProvider', {
       controller: 'ApiCtrl',
       templateUrl: 'js/app/views/api.view.html',
@@ -65,9 +71,12 @@
 
   }
 
-  run.$inject = ['$rootScope', '$location', '$http', 'UserService'];
+  run.$inject = ['$rootScope', '$location', '$http', 'UserService', 'swaggerModules', 'swaggerUiExternalReferences', 'swagger1ToSwagger2Converter'];
 
-  function run($rootScope, $location, $http, UserService) {
+  function run($rootScope, $location, $http, UserService, swaggerModules, swaggerUiExternalReferences, swagger1ToSwagger2Converter) {
+
+    swaggerModules.add(swaggerModules.BEFORE_PARSE, swaggerUiExternalReferences);
+    swaggerModules.add(swaggerModules.BEFORE_PARSE, swagger1ToSwagger2Converter);
 
     $rootScope.user = {};
     $rootScope.user.create = false;
