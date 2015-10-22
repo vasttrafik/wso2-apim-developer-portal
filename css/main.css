@@ -63,9 +63,6 @@ a:focus {
     font-size:32px;
     font-weight:600;
     color:white;
-    /*background:url(../img/png/logo_start.png) no-repeat;*/
-    /*background:url(../img/png/vt_brand_logo.png);
-    background-repeat:no-repeat;*/
     background-position-x:top;
     padding-left: 0;
     margin-top:-20px
@@ -83,7 +80,7 @@ div.navbar-header > a.logo {
 
 /* Jumbotron */
 .jumbotron {
-  padding-top: 0px;
+  padding-top: 0;
 }
 
 /* Hero */
@@ -470,7 +467,7 @@ div.row.col-md-4.well {
   margin: 0 15px;
 }
 
-@media (max-width: 527px) {
+@media (min-width: 400px) {
   div.row.col-md-4.well {
     margin: 15px 0;
   }
@@ -478,4 +475,19 @@ div.row.col-md-4.well {
   .nav > li > a {
     padding: 10px 10px;
   }
+
+ .navbar-collapse, .collapse {
+    display: block;
+    visibility:visible;
+    float: right;
+    border:none;
+  }
+ .collapse {
+   display:inline-block;
+   padding-right:70px;
+   border:none;
+ }
+ .navbar {
+   border:none;
+ }
 }
