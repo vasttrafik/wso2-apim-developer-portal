@@ -5,15 +5,13 @@
     .module('vtPortal')
     .controller('ApiCtrl', ApiCtrl);
 
-  ApiCtrl.$inject = ['$routeParams', '$http', '$httpParamSerializer', 'APIService', 'AlertService'];
+  ApiCtrl.$inject = ['$scope', '$routeParams', '$http', '$httpParamSerializer', 'APIService', 'AlertService'];
 
   function ApiCtrl($routeParams, $http, $httpParamSerializer, APIService, AlertService) {
     var vm = this;
 
     vm.documents = {};
     vm.applications = {};
-    vm.selectedApplicationId = "";
-    vm.apiId = "";
 
     vm.addSubscription = addSubscription;
 
