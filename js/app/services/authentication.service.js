@@ -14,6 +14,7 @@ Handles authentication of the user.
   function AuthenticationService($http, $location, UserService, $httpParamSerializer, $q) {
     var service = {};
     var apiClient = new API.Client.DefaultApi($http, null, $httpParamSerializer);
+    var userApiClient = new UserAPI.Client.UserApi($http, null, $httpParamSerializer);
 
     service.login = login;
     service.logout = logout;
@@ -66,7 +67,7 @@ Handles authentication of the user.
       var deferred = $q.defer();
 
       var response;
-      apiClient.usersPost({
+      userApiClient.usersPost({
           userName: username,
           credential: password,
           claims: [{
