@@ -14,7 +14,7 @@ body {
   font-family:'FoundersGroteskWeb-Regular','Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size:18px;
   line-height:1.42857;
-  padding-top:120px;
+  padding-top:90px;
 }
 
 a {
@@ -58,14 +58,17 @@ a:focus {
 
 */
 
-
-.navbar-brand, a.logo {
+/*, a.logo*/
+.navbar-brand {
     font-size:32px;
     font-weight:600;
     color:white;
     /*background:url(../img/png/logo_start.png) no-repeat;*/
-    background:url(../img/png/vt_brand_logo.png) no-repeat;
+    /*background:url(../img/png/vt_brand_logo.png);
+    background-repeat:no-repeat;*/
+    background-position-x:top;
     padding-left: 0;
+    margin-top:-20px
 }
 div.navbar-header > a.logo {
   width:485px;

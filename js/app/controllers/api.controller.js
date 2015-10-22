@@ -7,7 +7,7 @@
 
   ApiCtrl.$inject = ['$scope', '$routeParams', '$http', '$httpParamSerializer', 'APIService', 'AlertService'];
 
-  function ApiCtrl($routeParams, $http, $httpParamSerializer, APIService, AlertService) {
+  function ApiCtrl($scope, $routeParams, $http, $httpParamSerializer, APIService, AlertService) {
     var vm = this;
 
     vm.documents = {};
