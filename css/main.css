@@ -63,8 +63,12 @@ a:focus {
     font-size:32px;
     font-weight:600;
     color:white;
-    background:url(../img/png/logo_start.png) no-repeat;
+    /*background:url(../img/png/logo_start.png) no-repeat;*/
+    background:url(../img/png/vt_brand_logo.png) no-repeat;
     padding-left: 0;
+}
+div.navbar-header > a.logo {
+  width:485px;
 }
 
 .barrel {
@@ -457,4 +461,14 @@ div.card {
   border-radius: 5px;
   background-color: #999;
   color: #fff;
+}
+
+div.row.col-md-4.well {
+  margin: 0 15px;
+}
+
+@media (max-width: 527px) {
+  div.row.col-md-4.well {
+    margin: 15px 0;
+  }
 }
