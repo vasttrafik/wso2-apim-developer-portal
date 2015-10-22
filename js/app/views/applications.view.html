@@ -14,7 +14,7 @@
           <th>Namn</th>
           <th>Status</th>
           <th>Beskrivning</th>
-          <th colspan="2">Aktioner</th>
+          <th colspan="3">Aktioner</th>
         </tr>
       </thead>
 
@@ -34,6 +34,11 @@
             <span>{{entries.description}}</span>
           </td>
           <td>
+            <span ng-click="vm.addApplicationDetails($index)" style="cursor: pointer">
+              <span class="glyphicon glyphicon-cog"></span> Visa detaljer
+            </span>
+          </td>
+          <td>
             <span ng-click="vm.addApplicationUpdate($index)" style="cursor: pointer">
               <span class="glyphicon glyphicon-edit"></span> Uppdatera
             </span>
@@ -50,7 +55,7 @@
   </div>
 </div>
 
-<div ng-show="!vm.form.application.update">
+<div ng-show="!vm.form.application.update && !vm.form.application.details">
   <div class="jumbotron" style="background: #ffffff; padding: 0px">
     <div class="container" style="padding-left: 0px">
       <h2 style="margin-bottom: -50px;">Skapa ny applikation</h2>
@@ -118,6 +123,56 @@
           <img ng-if="vm.dataLoadingUpdateApplication" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
           />
           <span ng-click="vm.resetUpdateApplicationForm();" class="btn btn-link">Ångra</span>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+<div ng-show="!vm.form.application.update && vm.form.application.details">
+  <div class="jumbotron" style="background: #ffffff; padding: 0px">
+    <div class="container" style="padding-left: 0px">
+      <h2 style="margin-bottom: -50px;">Detaljer för applikation {{vm.form.application.details.name}}</h2>
+    </div>
+  </div>
+
+
+  <div class="container" style="padding-bottom: 100px;">
+    <div class="row well">
+      <form name="detailsApplicationForm" ng-submit="vm.detailsApplication()" role="form">
+
+        <div class="form-group">
+          <label for="consumerkey">Nyckel</label>
+          <div id="consumersecret" class="form-data">{{vm.form.application.details.consumerKey}} <span clipboard text="vm.form.application.details.consumerKey" class="fa fa-files-o" style="float:right; cursor: pointer"></span></div>
+        </div>
+
+        <div class="form-group">
+          <label for="consumersecret">Hemlighet</label>
+          <div id="consumersecret" class="form-data">{{vm.form.application.details.consumerSecret}} <span clipboard text="vm.form.application.details.consumerSecret" class="fa fa-files-o" style="float:right; cursor: pointer"></span></div>
+        </div>
+
+        <div class="form-group">
+          <label for="description">AccessToken</label>
+          <div id="consumersecret" class="form-data">{{vm.form.application.details.accessToken}} <span clipboard text="vm.form.application.details.accessToken" class="fa fa-files-o" style="float:right; cursor: pointer"></span></div>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': detailsApplicationForm.validitytime.$dirty && detailsApplicationForm.validitytime.$invalid,
+    'has-success' : detailsApplicationForm.validitytime.$valid}">
+          <label for="description">Giltighetstid</label>
+          <div class="input-group">
+
+          <input type="number" name="validitytime" id="validitytime" class="form-control" ng-model="vm.form.application.details.validityTime" required min="1"/>
+            <span class="input-group-addon">Sekunder</span>
+        </div>
+        <span ng-show="detailsApplicationForm.validitytime.$dirty && detailsApplicationForm.validitytime.$invalid" class="help-block">Måste vara ett nummer större än 0</span>
+        <span ng-show="detailsApplicationForm.validitytime.$dirty && detailsApplicationForm.validitytime.$error.required" class="help-block">Giltighetstid är obligatoriskt</span>
+      </div>
+
+        <div class="form-actions noclick" style="padding-top: 20px">
+          <button type="submit" ng-disabled="detailsApplicationForm.$invalid || vm.dataLoadingdetailsApplication" class="btn btn-primary">Generera ny access token</button>
+          <img ng-if="vm.dataLoadingAddApplication" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+          />
+          <span ng-click="vm.resetDetailsApplicationForm();" class="btn btn-link">Stäng</span>
         </div>
       </form>
     </div>

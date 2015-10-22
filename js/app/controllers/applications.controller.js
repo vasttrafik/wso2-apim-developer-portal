@@ -5,39 +5,67 @@
     .module('vtPortal')
     .controller('ApplicationsCtrl', ApplicationsCtrl);
 
-  ApplicationsCtrl.$inject = ['$scope', '$http', '$httpParamSerializer', 'APIService', 'AlertService'];
+  ApplicationsCtrl.$inject = ['$routeParams', '$scope', '$http', '$httpParamSerializer', '$q', '$location', 'APIService', 'AlertService'];
 
-  function ApplicationsCtrl($scope, $http, $httpParamSerializer, APIService, AlertService) {
+  function ApplicationsCtrl($routeParams, $scope, $http, $httpParamSerializer, $q, $location, APIService, AlertService) {
     var vm = this;
 
     vm.addApplication = addApplication;
     vm.updateApplication = updateApplication;
     vm.removeApplication = removeApplication;
+    vm.detailsApplication = detailsApplication;
     vm.addApplicationUpdate = addApplicationUpdate;
+    vm.addApplicationDetails = addApplicationDetails;
     vm.resetAddApplicationForm = resetAddApplicationForm;
     vm.resetUpdateApplicationForm = resetUpdateApplicationForm;
+    vm.resetDetailsApplicationForm = resetDetailsApplicationForm;
 
     vm.form = {};
     vm.form.application = {};
 
-    getAllApplications();
+    getAllApplications()
+      .then(function() {
+
+        if ($routeParams.applicationId) {
+          for (var i = 0; i < vm.applications.length; i++) {
+            if (vm.applications[i].applicationId === $routeParams.applicationId) {
+              addApplicationDetails(i);
+              break;
+            }
+          }
+          // Clean up url
+          $location.update_path('/applications');
+        }
+
+      });
 
     function getAllApplications() {
+      var deferred = $q.defer();
+
       APIService.call('applicationsGet', [0.0, 0.0])
         .then(applicationsGetResponse);
 
       function applicationsGetResponse(response) {
         if (response.status === 200) {
           vm.applications = response.data.list;
+          deferred.resolve();
         } else {
           AlertService.error("Problem retrieving application list");
+          deferred.reject();
         }
       }
+
+      return deferred.promise;
     }
 
     function addApplicationUpdate(applicationNumber) {
       vm.form.application.update = angular.copy(vm.applications[applicationNumber]);
       vm.form.application.update.applicationNumber = applicationNumber;
+    }
+
+    function addApplicationDetails(applicationNumber) {
+      vm.form.application.details = angular.copy(vm.applications[applicationNumber]);
+      vm.form.application.details.applicationNumber = applicationNumber;
     }
 
 
@@ -93,7 +121,7 @@
 
     function removeApplication(applicationNumber) {
 
-      if (confirm("Är du säker på att du vill ta bort applikation " + vm.applications[applicationNumber].name +  "? Betänk att även relaterade prenumerationer för applikationen kommer tas bort") === true) {
+      if (confirm("Är du säker på att du vill ta bort applikation " + vm.applications[applicationNumber].name + "? Betänk att även relaterade prenumerationer för applikationen kommer tas bort") === true) {
         APIService.call('applicationsApplicationIdDelete', [vm.applications[applicationNumber].applicationId])
           .then(applicationsApplicationIdDeleteResponse);
 
@@ -117,6 +145,24 @@
 
     }
 
+    function detailsApplication() {
+
+      APIService.call('applicationsApplicationIdTokensPost', [vm.form.application.details.validityTime, vm.form.application.details.applicationId])
+        .then(applicationsApplicationIdTokensPostResponse);
+
+      function applicationsApplicationIdTokensPostResponse(response) {
+        if (response.status === 200) {
+
+          AlertService.success("Ny nyckel genererad!");
+          vm.form.application.details = response.data;
+          $scope.detailsApplicationForm.$setPristine();
+
+        } else {
+          AlertService.error("Problem att uppdatera applikationen");
+        }
+      }
+    }
+
     function resetAddApplicationForm() {
 
       vm.form.application.add.name = '';
@@ -132,6 +178,11 @@
       vm.form.application.update = null;
       $scope.updateApplicationForm.$setPristine();
 
+    }
+
+    function resetDetailsApplicationForm() {
+      vm.form.application.details = null;
+      $scope.detailsApplicationForm.$setPristine();
     }
 
   }
