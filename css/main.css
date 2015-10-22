@@ -451,3 +451,13 @@ div.card {
 
 }
 /* END: API tab styles */
+
+div.row.col-md-4.well {
+  margin: 0 15px;
+}
+
+@media (max-width: 527px) {
+  div.row.col-md-4.well {
+    margin: 15px 0;
+  }
+}

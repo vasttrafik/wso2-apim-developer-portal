@@ -64,7 +64,7 @@
           <label for="application">Applikation</label>
           <div ng-show="!vm.applications.length" style="margin-bottom: 20px">Du har inga registrerade applikationer. <a href="#/applications">Skapa en applikation först</a>, skapa sedan en prenumeration här!</div>
           <div ng-show="vm.applications.length">
-            <select name="application" id="applications" ng-model="vm.form.subscription.add.application" class="form-control" required>
+            <select name="application" id="applications" ng-model="vm.selectedApplicationId" class="form-control" required>
               <option ng-repeat="entry in vm.applications" value="{{entry.applicationId}}">{{entry.name}}</option>
             </select>
             <span ng-show="addSubscriptionForm.application.$dirty && addSubscriptionForm.application.$error.required" class="help-block">Applikation är obligatoriskt</span>

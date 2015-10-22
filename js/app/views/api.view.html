@@ -29,12 +29,39 @@
     </div>
   </div>
 
-  <div ng-show="user.loggedIn" class="row col-md-3">
-    Du kan prenumerera på denna tjänst...
-  </div>
   <div ng-show="!user.loggedIn" class="row col-md-4">
     <div class="alert alert-warning" role="alert">
       <span class="glyphicon glyphicon-info-sign">&nbsp;</span>Logga in för att kunna prenumerera på detta API!
+    </div>
+  </div>
+
+  <div ng-show="(user.loggedIn)" class="row col-md-4 well">
+    <div class="form-group" ng-class="{ 'has-error': addSubscriptionForm.application.$dirty && addSubscriptionForm.application.$invalid, 'has-success' : addSubscriptionForm.application.$valid}">
+      <div ng-show="!vm.applications.length">
+        Du har inga registrerade applikationer.<br />
+        <a href="#/applications">Skapa en applikation först</a>, skapa sedan en prenumeration här!
+      </div>
+
+      <div ng-show="vm.applications.length">
+        <!-- Copied from subscriptions -->
+        <form name="addSubscriptionForm" ng-submit="vm.addSubscription()" role="form" class="ng-pristine ng-invalid ng-invalid-required">
+          <input type="hidden" name="apiId" ng-model="vm.apiId" value="{{vm.apiId}}" />
+          <div class="form-group" ng-class="{ 'has-error': addSubscriptionForm.application.$dirty && addSubscriptionForm.application.$invalid, 'has-success' : addSubscriptionForm.application.$valid}">
+            <label for="application">Applikation</label>
+              <select name="application" id="applications" ng-model="vm.selectedApplicationId" class="form-control" required>
+                <option value=""></option>
+                <option ng-repeat="entry in vm.applications" value="{{entry.applicationId}}">{{entry.name}}</option>
+              </select>
+              <span ng-show="addSubscriptionForm.application.$dirty && addSubscriptionForm.application.$error.required" class="help-block">Applikation är obligatoriskt</span>
+          </div>
+          <div class="form-actions noclick" style="padding-top: 20px">
+            <button type="submit" ng-disabled="addSubscriptionForm.$invalid || vm.dataLoading" class="btn btn-primary" disabled="disabled">Skapa prenumeration</button>
+            <img ng-if="vm.dataLoadingAddApplication" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+            <span ng-click="vm.resetAddSubscriptionForm();" class="btn btn-link">Ångra</span>
+          </div>
+        </form>
+        <!-- END Copied from subscriptions -->
+      </div>
     </div>
   </div>
 </div>
@@ -47,7 +74,7 @@
           <a href="#apiOverview" target="_self" aria-controls="home" role="tab" data-toggle="tab">Översikt</a>
         </li>
         <li role="presentation">
-          <a href="#apiDocs" target="_self" aria-controls="profile" role="tab" data-toggle="tab">Dokumentation</a>
+            <a href="#apiDocs" target="_self" aria-controls="profile" role="tab" data-toggle="tab">Dokumentation</a>
         </li>
         <li role="presentation">
           <a href="#apiConsole" target="_self" aria-controls="messages" role="tab" data-toggle="tab">API-konsol</a>
@@ -80,7 +107,7 @@
             <span class="glyphicon glyphicon-info-sign">&nbsp;</span>Du behöver ett access token för att testa detta API. Var vänlig logga in och prenumerera på API
             för att generera ett access token. Om du redan har ett token, var vänlig ange det nedan.
           </div>
-          <label for="requestHeader">Sätt Request Header</label>
+          <label for="requestHeader">Ange Request Header</label>
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon3">Authorization: Bearer </span>
             <input type="text" class="form-control" id="requestHeader" aria-describedby="basic-addon3">
