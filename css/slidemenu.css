@@ -1,7 +1,7 @@
 .sidebar {
     z-index: 999999;
     position: fixed;
-    top:90px;
+    top:88px;
     bottom: -1px;
     padding: 0;
     width: auto;
@@ -10,6 +10,7 @@
     -moz-background-clip: padding-box;
     background-clip: padding-box;
     border: 1px solid rgba(0, 0, 0, .15);
+    border-left:none;
     -webkit-box-shadow: 0 6px 6px rgba(0, 0, 0, .175);
     box-shadow: 0 6px 6px rgba(0, 0, 0, .175);
    
