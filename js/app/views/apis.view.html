@@ -6,7 +6,7 @@
         <table class="table table-hover table-striped">
           <thead>
             <tr>
-              <th><!--Img--></th>
+              <th class="hidden-xs"><!--Img--></th>
               <th>Namn</th>
               <th>Beskrivning</th>
               <th class="hidden-xs">Context</th>
@@ -20,7 +20,7 @@
           </thead>
           <tbody>
             <tr ng-repeat="entries in vm.apis">
-              <td>
+              <td class="hidden-xs">
                 <img src="{{entries.imageUrl}}" style="width:40px;height:40px" alt="link to img..." />
               </td>
               <td>

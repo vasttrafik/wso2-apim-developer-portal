@@ -73,7 +73,7 @@
           <span ng-show="addApplicationForm.name.$dirty && addApplicationForm.name.$error.required" class="help-block">Namn är obligatoriskt</span>
         </div>
         <div class="form-group">
-          <label for="callbackUrl">Callback URL</label>
+          <label for="callbackUrl">Callback URL</label> <i class="glyphicon glyphicon-info-sign text-info" title="Callback URL ska anges i formatet..."></i>
           <input type="text" name="callbackUrl" id="callbackUrl" class="form-control" ng-model="vm.form.application.add.callbackUrl" />
         </div>
         <div class="form-group">
