@@ -9,7 +9,7 @@
 
   function ApiCtrl($scope, $routeParams, $http, $httpParamSerializer, APIService, AlertService) {
     var vm = this;
-
+    vm.swaggerUrl = 'https://raw.githubusercontent.com/vasttrafik/wso2-apim-developer-portal-api/master/swagger/portal-api.json';
     vm.documents = {};
     vm.applications = {};
 

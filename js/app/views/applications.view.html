@@ -1,5 +1,5 @@
 <div class="jumbotron" style="background: #ffffff">
-  <div class="container" style="padding-left: 0px">
+  <div class="container" style="padding-left: 0">
     <h1 style="margin-bottom: -80px;">Mina applikationer</h1>
   </div>
 </div>
@@ -12,7 +12,7 @@
         <tr>
           <th>Applikations Id</th>
           <th>Namn</th>
-          <th>Status</th>
+          <!--<th>Status</th>-->
           <th>Beskrivning</th>
           <th colspan="3">Aktioner</th>
         </tr>
@@ -27,25 +27,25 @@
           <td>
             <span>{{entries.name}}</span>
           </td>
-          <td>
-            <span>{{entries.status}}</span>
-          </td>
+           <!--<td>
+           <span>{{//entries.status}}</span>
+          </td>-->
           <td>
             <span>{{entries.description}}</span>
           </td>
           <td>
-            <span ng-click="vm.addApplicationDetails($index)" style="cursor: pointer">
-              <span class="glyphicon glyphicon-cog"></span> Visa detaljer
+            <span ng-click="vm.addApplicationDetails($index)" style="cursor: pointer" title="Visa detaljer">
+              <span class="glyphicon glyphicon-cog"></span> <span class="hidden-xs">Visa detaljer</span>
             </span>
           </td>
           <td>
-            <span ng-click="vm.addApplicationUpdate($index)" style="cursor: pointer">
-              <span class="glyphicon glyphicon-edit"></span> Uppdatera
+            <span ng-click="vm.addApplicationUpdate($index)" style="cursor: pointer" title="Uppdatera">
+              <span class="glyphicon glyphicon-edit"></span> <span class="hidden-xs">Uppdatera</span>
             </span>
           </td>
           <td>
-            <span ng-click="vm.removeApplication($index)" style="cursor: pointer">
-              <span class="glyphicon glyphicon-trash" style="margin-left: 10px;"></span> Ta bort
+            <span ng-click="vm.removeApplication($index)" style="cursor: pointer" title="Ta bort">
+              <span class="glyphicon glyphicon-trash" style="margin-left: 10px;"></span> <span class="hidden-xs">Ta bort</span>
             </span>
           </td>
         </tr>
@@ -56,8 +56,8 @@
 </div>
 
 <div ng-show="!vm.form.application.update && !vm.form.application.details">
-  <div class="jumbotron" style="background: #ffffff; padding: 0px">
-    <div class="container" style="padding-left: 0px">
+  <div class="jumbotron" style="background: #ffffff; padding: 0">
+    <div class="container" style="padding-left: 0">
       <h2 style="margin-bottom: -50px;">Skapa ny applikation</h2>
     </div>
   </div>
@@ -93,8 +93,8 @@
 </div>
 
 <div ng-show="vm.form.application.update">
-  <div class="jumbotron" style="background: #ffffff; padding: 0px">
-    <div class="container" style="padding-left: 0px">
+  <div class="jumbotron" style="background: #ffffff; padding: 0">
+    <div class="container" style="padding-left: 0">
       <h2 style="margin-bottom: -50px;">Uppdatera applikation {{vm.form.application.update.applicationId}}</h2>
     </div>
   </div>
@@ -131,8 +131,8 @@
 
 
 <div ng-show="!vm.form.application.update && vm.form.application.details">
-  <div class="jumbotron" style="background: #ffffff; padding: 0px">
-    <div class="container" style="padding-left: 0px">
+  <div class="jumbotron" style="background: #ffffff; padding: 0">
+    <div class="container" style="padding-left: 0">
       <h2 style="margin-bottom: -50px;">Detaljer för applikation {{vm.form.application.details.name}}</h2>
     </div>
   </div>
