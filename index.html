@@ -32,14 +32,14 @@
       <div class="menu-list">
         <ul id="menu-content" class="menu-content collapse out">
           <li data-toggle="collapse" data-target="#api" class="collapsed">
-            <a href="javascript:void();">API<span class="arrow"></span></a>
+            <a href="javascript:void(0);">API<span class="arrow"></span></a>
           </li>
           <ul class="sub-menu collapse" id="api" style="height: 0;">
             <li><a href="#/apis">Våra apier</a></li>
           </ul>
 
           <li data-toggle="collapse" data-target="#showcase" data-parent="#menu-content" class="collapsed">
-            <a href="javascript:void();">Showcase<span class="arrow"></span></a>
+            <a href="javascript:void(0);">Showcase<span class="arrow"></span></a>
           </li>
           <ul class="sub-menu collapse" id="showcase" style="height: 0;">
             <li><a href="#">Reseplaneraren</a></li>
@@ -47,7 +47,7 @@
           </ul>
 
           <li data-toggle="collapse" data-target="#aktuellt" class="collapsed">
-            <a class="accordion-toggle" href="javascript:void();">Aktuellt<span class="arrow"></span></a>
+            <a class="accordion-toggle" href="javascript:void(0);">Aktuellt<span class="arrow"></span></a>
           </li>
           <ul class="sub-menu collapse" id="aktuellt" style="height: 0;">
             <li><a href="#">Aktuellt</a></li>
@@ -326,8 +326,12 @@
         $('.fa.fa-cog.fa-2x').removeClass("fa-spin");
       });
 
-      $('.nav-side-menu ul .sub-menu li a, .nav-side-menu li .sub-menu li a').click(function () {
+      $('.nav-side-menu ul .sub-menu li a, .nav-side-menu li .sub-menu li a').on('click', function () {
         $('.toggler').click();
+      });
+
+      $('div.dropdown-menu.user a').on('click', function () {
+        $('.menu-user').click();
       });
 
     });

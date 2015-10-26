@@ -46,7 +46,7 @@
         type: 'success'
       };
 
-      $timeout(clearAlertMessage,5000);
+      $timeout(clearAlertMessage,4000);
     }
 
     function error(message, heading) { // jshint ignore:line
