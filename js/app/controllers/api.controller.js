@@ -5,9 +5,9 @@
     .module('vtPortal')
     .controller('ApiCtrl', ApiCtrl);
 
-  ApiCtrl.$inject = ['$scope', '$routeParams', '$http', '$httpParamSerializer', 'APIService', 'AlertService'];
+  ApiCtrl.$inject = ['$scope','$location', '$routeParams', '$http', '$httpParamSerializer', 'APIService', 'AlertService'];
 
-  function ApiCtrl($scope, $routeParams, $http, $httpParamSerializer, APIService, AlertService) {
+  function ApiCtrl($scope, $location, $routeParams, $http, $httpParamSerializer, APIService, AlertService) {
     var vm = this;
     vm.swaggerUrl = 'http://petstore.swagger.io/v2/swagger.json';
     vm.documents = {};
@@ -72,8 +72,8 @@
       function subscriptionsPostResponse(response) {
         if (response.status === 200) {
           AlertService.success("Prenumerationen skapad!");
-          resetAddSubscriptionForm();
-
+          $location.path("/subscriptions");
+        
         } else {
           AlertService.error("Problem att skapa ny prenumeration");
         }
