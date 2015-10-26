@@ -58,14 +58,24 @@
       return deferred.promise;
     }
 
-    function addApplicationUpdate(applicationNumber) {
-      vm.form.application.update = angular.copy(vm.applications[applicationNumber]);
-      vm.form.application.update.applicationNumber = applicationNumber;
+    function addApplicationUpdate(applicationId) {
+      for (var i = 0; i < vm.applications.length; i++) {
+        if (vm.applications[i].applicationId === applicationId) {
+          vm.form.application.update = angular.copy(vm.applications[i]);
+          break;
+        }
+      }
+
     }
 
-    function addApplicationDetails(applicationNumber) {
-      vm.form.application.details = angular.copy(vm.applications[applicationNumber]);
-      vm.form.application.details.applicationNumber = applicationNumber;
+    function addApplicationDetails(applicationId) {
+      for (var i = 0; i < vm.applications.length; i++) {
+        if (vm.applications[i].applicationId === applicationId) {
+          vm.form.application.details = angular.copy(vm.applications[i]);
+          resetUpdateApplicationForm();
+          break;
+        }
+      }
     }
 
 
@@ -91,7 +101,7 @@
         } else {
           AlertService.error("Problem att skapa ny applikation");
         }
-          vm.dataLoadingAddApplication = false;
+        vm.dataLoadingAddApplication = false;
       }
     }
 
@@ -115,8 +125,14 @@
 
           // Simply in order to mock update
           //TODO: Remove this handling
-          vm.applications[vm.form.application.update.applicationNumber] = response.data;
+          for (var i = 0; i < vm.applications.length; i++) {
+            if (vm.applications[i].applicationId === vm.form.application.update.applicationId) {
+              vm.applications[i] = response.data;
+              break;
+            }
+          }
           resetUpdateApplicationForm();
+          resetDetailsApplicationForm();
 
         } else {
           AlertService.error("Problem att uppdatera applikationen");
@@ -125,24 +141,36 @@
       }
     }
 
-    function removeApplication(applicationNumber) {
+    function removeApplication(applicationId) {
 
-      if (confirm("Är du säker på att du vill ta bort applikation " + vm.applications[applicationNumber].name + "? Betänk att även relaterade prenumerationer för applikationen kommer tas bort") === true) {
-        APIService.call('applicationsApplicationIdDelete', [vm.applications[applicationNumber].applicationId])
-          .then(applicationsApplicationIdDeleteResponse);
+      var i = 0;
+      for (i; i < vm.applications.length; i++) {
+        if (vm.applications[i].applicationId === applicationId) {
+          if (confirm("Är du säker på att du vill ta bort applikation " + vm.applications[i].name + "? Betänk att även relaterade prenumerationer för applikationen kommer tas bort") === true) {
+            APIService.call('applicationsApplicationIdDelete', [vm.applications[i].applicationId])
+              .then(applicationsApplicationIdDeleteResponse);
+            break;
+          }
+        }
 
       }
 
       function applicationsApplicationIdDeleteResponse(response) {
         if (response.status === 200) {
 
-          AlertService.success("Applikationen " + vm.applications[applicationNumber].name + " borttagen!");
+          AlertService.success("Applikationen " + vm.applications[i].name + " borttagen!");
 
+          if (vm.form.application.update != null && vm.form.application.update.applicationId === applicationId) { // jshint ignore:line
+            resetUpdateApplicationForm();
+          }
+          if (vm.form.application.details != null && vm.form.application.details.applicationId === applicationId) { // jshint ignore:line
+            resetDetailsApplicationForm();
+          }
           //getAllApplications(); // To ensure consistency
 
           // Simply in order to mock update
           //TODO: Remove this handling
-          vm.applications.splice(applicationNumber, 1);
+          vm.applications.splice(i, 1);
 
         } else {
           AlertService.error("Problem att ta bort applikationen");
@@ -151,15 +179,20 @@
 
     }
 
-    function detailsApplication() {
+    function detailsApplication(applicationId) {
 
-      APIService.call('applicationsApplicationIdTokensPost', [vm.form.application.details.validityTime, vm.form.application.details.applicationId])
+      APIService.call('applicationsApplicationIdTokensPost', [vm.form.application.details.validityTime, applicationId])
         .then(applicationsApplicationIdTokensPostResponse);
 
       function applicationsApplicationIdTokensPostResponse(response) {
         if (response.status === 200) {
 
           AlertService.success("Ny nyckel genererad!");
+          for (var i = 0; i < vm.applications.length; i++) {
+            if (vm.applications[i].applicationId === applicationId) {
+              vm.applications[i] = response.data;
+            }
+          }
           vm.form.application.details = response.data;
           $scope.detailsApplicationForm.$setPristine();
 
@@ -182,14 +215,12 @@
     function resetUpdateApplicationForm() {
 
       vm.form.application.update = null;
-      vm.form.application.details = null;
       $scope.updateApplicationForm.$setPristine();
 
     }
 
     function resetDetailsApplicationForm() {
       vm.form.application.details = null;
-      vm.form.application.update = null;
       $scope.detailsApplicationForm.$setPristine();
     }
 

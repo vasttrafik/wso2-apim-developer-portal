@@ -53,14 +53,19 @@
       }
     }
 
-    function addSubscriptionUpdate(subscriptionNumber) {
+    function addSubscriptionUpdate(subscriptionId) {
 
       vm.form.subscription.update = {};
 
-      vm.form.subscription.update.subscriptionId = vm.subscriptions[subscriptionNumber].subscriptionId;
-      vm.form.subscription.update.api = vm.subscriptions[subscriptionNumber].api.name + "/" + vm.subscriptions[subscriptionNumber].api.version + "/" + vm.subscriptions[subscriptionNumber].api.provider;
-      vm.form.subscription.update.application = vm.subscriptions[subscriptionNumber].application.applicationId;
-      vm.form.subscription.update.subscriptionNumber = subscriptionNumber;
+      for (var i = 0; i < vm.subscriptions.length; i++) {
+        if (vm.subscriptions[i].subscriptionId === subscriptionId) {
+          vm.form.subscription.update.subscriptionId = vm.subscriptions[i].subscriptionId;
+          vm.form.subscription.update.api = vm.subscriptions[i].api.name + "/" + vm.subscriptions[i].api.version + "/" + vm.subscriptions[i].api.provider;
+          vm.form.subscription.update.application = vm.subscriptions[i].application.applicationId;
+          break;
+        }
+      }
+
     }
 
     function addSubscription() {
@@ -124,7 +129,13 @@
 
           // Simply in order to mock update
           //TODO: Remove this handling
-          vm.subscriptions[vm.form.subscription.update.subscriptionNumber] = response.data;
+          for (var i = 0; i < vm.subscriptions.length; i++) {
+            if (vm.subscriptions[i].subscriptionId === vm.form.subscription.update.subscriptionId) {
+              vm.subscriptions[i] = response.data;
+              break;
+            }
+          }
+
           resetUpdateSubscriptionForm();
 
         } else {
@@ -134,24 +145,33 @@
       }
     }
 
-    function removeSubscription(subscriptionNumber) {
+    function removeSubscription(subscriptionId) {
 
-      if (confirm("Är du säker på att du vill ta bort prenumerationen mellan applikation " + vm.subscriptions[subscriptionNumber].application.name + " och API " + vm.subscriptions[subscriptionNumber].api.name + " " + vm.subscriptions[subscriptionNumber].api.version) === true) {
-        APIService.call('subscriptionsSubscriptionIdDelete', [vm.subscriptions[subscriptionNumber].subscriptionId])
-          .then(subscriptionsSubscriptionIdDeleteResponse);
-
+      var i = 0;
+      for (i; i < vm.subscriptions.length; i++) {
+        if (vm.subscriptions[i].subscriptionId === subscriptionId) {
+          if (confirm("Är du säker på att du vill ta bort prenumerationen mellan applikation " + vm.subscriptions[i].application.name + " och API " + vm.subscriptions[i].api.name + " " + vm.subscriptions[i].api.version) === true) {
+            APIService.call('subscriptionsSubscriptionIdDelete', [vm.subscriptions[i].subscriptionId])
+              .then(subscriptionsSubscriptionIdDeleteResponse);
+            break;
+          }
+        }
       }
 
       function subscriptionsSubscriptionIdDeleteResponse(response) {
         if (response.status === 200) {
 
-          AlertService.success("Prenumerationen mellan applikation " + vm.subscriptions[subscriptionNumber].application.name + " och API " + vm.subscriptions[subscriptionNumber].api.name + " " + vm.subscriptions[subscriptionNumber].api.version + " borttagen!");
+          if (vm.form.subscription.update != null && vm.form.subscription.update.subscriptionId === subscriptionId) { // jshint ignore:line
+            resetUpdateSubscriptionForm();
+          }
+
+          AlertService.success("Prenumerationen mellan applikation " + vm.subscriptions[i].application.name + " och API " + vm.subscriptions[i].api.name + " " + vm.subscriptions[i].api.version + " borttagen!");
 
           //getAllApplications(); // To ensure consistency
 
           // Simply in order to mock update
           //TODO: Remove this handling
-          vm.subscriptions.splice(subscriptionNumber, 1);
+          vm.subscriptions.splice(i, 1);
 
         } else {
           AlertService.error("Problem att ta bort prenumerationen");
