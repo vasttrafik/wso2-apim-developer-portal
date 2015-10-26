@@ -30,12 +30,12 @@
             <span>{{//entries.status}}</span>
           </td>-->
           <td>
-            <span ng-click="vm.addSubscriptionUpdate($index)" style="cursor: pointer" title="Uppdatera">
+            <span ng-click="vm.addSubscriptionUpdate(entries.subscriptionId)" style="cursor: pointer" title="Uppdatera">
               <span class="glyphicon glyphicon-edit"></span> <span class="hidden-xs">Uppdatera</span>
             </span>
           </td>
           <td>
-            <span ng-click="vm.removeSubscription($index)" style="cursor: pointer" title="Ta bort">
+            <span ng-click="vm.removeSubscription(entries.subscriptionId)" style="cursor: pointer" title="Ta bort">
               <span class="glyphicon glyphicon-trash" style="margin-left: 10px;"></span> <span class="hidden-xs">Ta bort</span>
             </span>
           </td>

@@ -34,17 +34,17 @@
             <span>{{entries.description}}</span>
           </td>
           <td>
-            <span ng-click="vm.addApplicationDetails($index)" style="cursor: pointer" title="Visa detaljer">
+            <span ng-click="vm.addApplicationDetails(entries.applicationId)" style="cursor: pointer" title="Visa detaljer">
               <span class="glyphicon glyphicon-cog"></span> <span class="hidden-xs">Visa detaljer</span>
             </span>
           </td>
           <td>
-            <span ng-click="vm.addApplicationUpdate($index)" style="cursor: pointer" title="Uppdatera">
+            <span ng-click="vm.addApplicationUpdate(entries.applicationId)" style="cursor: pointer" title="Uppdatera">
               <span class="glyphicon glyphicon-edit"></span> <span class="hidden-xs">Uppdatera</span>
             </span>
           </td>
           <td>
-            <span ng-click="vm.removeApplication($index)" style="cursor: pointer" title="Ta bort">
+            <span ng-click="vm.removeApplication(entries.applicationId)" style="cursor: pointer" title="Ta bort">
               <span class="glyphicon glyphicon-trash" style="margin-left: 10px;"></span> <span class="hidden-xs">Ta bort</span>
             </span>
           </td>
