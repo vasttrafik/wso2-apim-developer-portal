@@ -9,7 +9,7 @@
 
   function ApiCtrl($scope, $routeParams, $http, $httpParamSerializer, APIService, AlertService) {
     var vm = this;
-
+    vm.swaggerUrl = 'http://petstore.swagger.io/v2/swagger.json';
     vm.documents = {};
     vm.applications = {};
 
