@@ -35,7 +35,7 @@ a {
 }
 
 .navbar {
-  height: 88px;
+  min-height: 88px;
 }
 
 .navbar-inverse {
@@ -507,7 +507,7 @@ div.row.col-md-4.well {
 }
 
 i.glyphicon.glyphicon-info-sign.text-info {
-  vertical-align:top; 
+  vertical-align:top;
   font-size:12px;
 }
 
