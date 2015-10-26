@@ -14,14 +14,47 @@ Handles calls towards backend api.
   function APIService($http, AuthenticationService, AlertService, $q, $httpParamSerializer) {
     var service = {};
     var apiClient = new API.Client.DefaultApi($http, null, $httpParamSerializer);
+    var userApiClient = new UserAPI.Client.UserApi($http, null, $httpParamSerializer);
 
     service.call = call;
+    service.userCall = userCall;
 
     return service;
 
     /*
+      Wrapper function for calls towards user backend API
+    */
+    // TODO: Add error handling
+    function userCall(funcName, args) {
+      var deferred = $q.defer();
+
+      userApiClient[funcName].apply(userApiClient, args)
+        .then(function(response) {
+
+          deferred.resolve(response);
+
+        }, function(response) {
+          if (response.status === 401) {
+
+            AuthenticationService.Logout();
+            AlertService.error("User not authenticated", false);
+            deferred.reject('User not authenticated');
+
+          } else {
+            // TODO: Change to reject
+            deferred.resolve(response);
+
+          }
+        });
+
+      return deferred.promise;
+
+    }
+
+    /*
       Wrapper function for calls towards backend API
     */
+    // TODO: Change to reject
     function call(funcName, args) {
       var deferred = $q.defer();
 
@@ -38,7 +71,7 @@ Handles calls towards backend api.
             deferred.reject('User not authenticated');
 
           } else {
-
+            // TODO: Change to reject
             deferred.resolve(response);
 
           }

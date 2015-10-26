@@ -6,27 +6,27 @@
         <table class="table table-hover table-striped">
           <thead>
             <tr>
-              <th><!--Img--></th>
+              <th class="hidden-xs"><!--Img--></th>
               <th>Namn</th>
-              <th class="hidden-xs">Beskrivning</th>
+              <th>Beskrivning</th>
               <th class="hidden-xs">Context</th>
               <th>Version</th>
               <th class="hidden-xs">Provider</th>
-              <th class="hidden-xs">Status</th>
+              <!--<th class="hidden-xs">Status</th>-->
               <th>
-                <!--Edit-->
+                Aktioner
               </th>
             </tr>
           </thead>
           <tbody>
             <tr ng-repeat="entries in vm.apis">
-              <td>
+              <td class="hidden-xs">
                 <img src="{{entries.imageUrl}}" style="width:40px;height:40px" alt="link to img..." />
               </td>
               <td>
                 {{entries.name}}
               </td>
-              <td class="hidden-xs">
+              <td>
                 {{entries.description}}
               </td>
               <td class="hidden-xs">
@@ -39,37 +39,16 @@
                 {{entries.provider}}
 
               </td>
-              <td class="hidden-xs">
-                {{entries.status}}
-              </td>
+              <!--<td class="hidden-xs">
+                {{//entries.status}}
+              </td>-->
               <td>
-                <a href="#/api/{{entries.name}}/{{entries.version}}/{{entries.provider}}" title="Detaljer..."><span class="glyphicon glyphicon-edit"></span></a>
+                <a href="#/api/{{entries.name}}/{{entries.version}}/{{entries.provider}}" title="Visa detaljer"><span class="glyphicon glyphicon-cog"></span><span class="hidden-xs">Visa detaljer</span></a>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-      <!--{
-      "name": "SPP",
-      "description": "Smart pendelparkering",
-      "imageUrl": "someUrl",
-      "context": "/spp",
-      "version": "1.0",
-      "provider": "",
-      "swagger": "",
-      "status": "",
-      "responseCaching": "",
-      "lastModifiedDate": "",
-      "isDefaultVersion": true,
-      "transport": [],
-      "tier": "",
-      "visibility": "",
-      "endpoint": {
-      "type": "http",
-      "production": [],
-      "sandbox": []
-      }
-      }-->
     </div>
   </div>
 </div>

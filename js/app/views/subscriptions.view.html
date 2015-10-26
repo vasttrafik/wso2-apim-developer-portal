@@ -1,5 +1,5 @@
 <div class="jumbotron" style="background: #ffffff">
-  <div class="container" style="padding-left: 0px">
+  <div class="container" style="padding-left: 0">
     <h1 style="margin-bottom: -80px;">Mina prenumerationer</h1>
   </div>
 </div>
@@ -12,7 +12,7 @@
         <tr>
           <th>Applikation</th>
           <th>API</th>
-          <th>Status</th>
+          <!--<th>Status</th>-->
           <th colspan="2">Aktioner</th>
         </tr>
       </thead>
@@ -26,17 +26,17 @@
           <td>
             <span><a href="#/api/{{entries.api.name}}/{{entries.api.version}}/{{entries.api.provider}}">{{entries.api.name}} {{entries.api.version}}</a></span>
           </td>
+          <!--<td>
+            <span>{{//entries.status}}</span>
+          </td>-->
           <td>
-            <span>{{entries.status}}</span>
-          </td>
-          <td>
-            <span ng-click="vm.addSubscriptionUpdate(entries.subscriptionId)" style="cursor: pointer">
-              <span class="glyphicon glyphicon-edit"></span> Uppdatera
+            <span ng-click="vm.addSubscriptionUpdate($index)" style="cursor: pointer" title="Uppdatera">
+              <span class="glyphicon glyphicon-edit"></span> <span class="hidden-xs">Uppdatera</span>
             </span>
           </td>
           <td>
-            <span ng-click="vm.removeSubscription(entries.subscriptionId)" style="cursor: pointer">
-              <span class="glyphicon glyphicon-trash" style="margin-left: 10px;"></span> Ta bort
+            <span ng-click="vm.removeSubscription($index)" style="cursor: pointer" title="Ta bort">
+              <span class="glyphicon glyphicon-trash" style="margin-left: 10px;"></span> <span class="hidden-xs">Ta bort</span>
             </span>
           </td>
         </tr>
@@ -47,8 +47,8 @@
 </div>
 
 <div ng-show="!vm.form.subscription.update">
-  <div class="jumbotron" style="background: #ffffff; padding: 0px">
-    <div class="container" style="padding-left: 0px">
+  <div class="jumbotron" style="background: #ffffff; padding: 0">
+    <div class="container" style="padding-left: 0">
       <h2 style="margin-bottom: -50px;">Skapa ny prenumeration</h2>
     </div>
   </div>
@@ -95,8 +95,8 @@
 </div>
 
 <div ng-show="vm.form.subscription.update">
-  <div class="jumbotron" style="background: #ffffff; padding: 0px">
-    <div class="container" style="padding-left: 0px">
+  <div class="jumbotron" style="background: #ffffff; padding: 0">
+    <div class="container" style="padding-left: 0">
       <h2 style="margin-bottom: -50px;">Uppdatera prenumeration</h2>
     </div>
   </div>
