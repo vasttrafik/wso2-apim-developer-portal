@@ -103,7 +103,8 @@
         </div>
 
         <div role="tabpanel" class="tab-pane" id="apiConsole">
-          <div ng-if="!user.loggedIn" class="alert alert-warning">
+          <!-- No token requirement yet. -->
+          <!--<div ng-if="!user.loggedIn" class="alert alert-warning">
             <span class="glyphicon glyphicon-info-sign">&nbsp;</span>Du behöver ett access token för att testa detta API. Var vänlig logga in och prenumerera på API
             för att generera ett access token. Om du redan har ett token, var vänlig ange det nedan.
           </div>
@@ -111,7 +112,7 @@
           <div class="input-group">
             <span class="input-group-addon" id="basic-addon3">Authorization: Bearer </span>
             <input type="text" class="form-control" id="requestHeader" aria-describedby="basic-addon3">
-          </div>
+          </div>-->
           
           <div class="row" style="padding:20px;"  ng-controller="SwaggerCtrl">
             <div swagger-ui url="vm.swaggerUrl" api-explorer="true" parser="json"></div>
