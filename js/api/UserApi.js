@@ -253,13 +253,28 @@ var UserAPI;
 
                 return this.$http(httpRequestParams);
             };
-            UserApi.prototype.claimsGet = function (accept, dialect, extraHttpRequestParams) {
+            UserApi.prototype.claimsGet = function (dialect, type, accept, extraHttpRequestParams) {
                 var path = this.basePath + '/claims';
 
                 var queryParameters = {};
                 var headerParams = {};
+
+                // verify required parameter 'dialect' is set
+                if (!dialect) {
+                    throw new Client.Error('Missing required parameter dialect when calling claimsGet');
+                }
+
+                // verify required parameter 'type' is set
+                if (!type) {
+                    throw new Client.Error('Missing required parameter type when calling claimsGet');
+                }
+
                 if (dialect !== undefined) {
                     queryParameters['dialect'] = dialect;
+                }
+
+                if (type !== undefined) {
+                    queryParameters['type'] = type;
                 }
 
                 headerParams['Accept'] = accept;
