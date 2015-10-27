@@ -18,8 +18,18 @@ Handles calls towards backend api.
 
     service.call = call;
     service.userCall = userCall;
+    service.getApiBasePath = getApiBasePath;
+    service.getUserApiBasePath = getUserApiBasePath;
 
     return service;
+
+    function getApiBasePath() {
+      return apiClient.basePath;
+    }
+
+    function getUserApiBasePath() {
+      return userApiClient.basePath;
+    }
 
     /*
       Wrapper function for calls towards user backend API
@@ -30,7 +40,6 @@ Handles calls towards backend api.
 
       userApiClient[funcName].apply(userApiClient, args)
         .then(function(response) {
-
           deferred.resolve(response);
 
         }, function(response) {
