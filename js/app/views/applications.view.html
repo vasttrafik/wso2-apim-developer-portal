@@ -144,17 +144,17 @@
 
         <div class="form-group">
           <label for="consumerkey">Nyckel</label>
-          <div id="consumersecret" class="form-data">{{vm.form.application.details.consumerKey}} <span clipboard text="vm.form.application.details.consumerKey" class="fa fa-files-o" style="float:right; cursor: pointer"></span></div>
+          <div id="consumersecret" class="form-data">{{vm.form.application.details.consumerKey}} <span clipboard text="vm.form.application.details.consumerKey" on-copied="vm.copySuccess('Nyckel')" class="fa fa-files-o" style="float:right; cursor: pointer"></span></div>
         </div>
 
         <div class="form-group">
           <label for="consumersecret">Hemlighet</label>
-          <div id="consumersecret" class="form-data">{{vm.form.application.details.consumerSecret}} <span clipboard text="vm.form.application.details.consumerSecret" class="fa fa-files-o" style="float:right; cursor: pointer"></span></div>
+          <div id="consumersecret" class="form-data">{{vm.form.application.details.consumerSecret}} <span clipboard text="vm.form.application.details.consumerSecret" on-copied="vm.copySuccess('Hemlighet')" class="fa fa-files-o" style="float:right; cursor: pointer"></span></div>
         </div>
 
         <div class="form-group">
           <label for="description">AccessToken</label>
-          <div id="consumersecret" class="form-data">{{vm.form.application.details.accessToken}} <span clipboard text="vm.form.application.details.accessToken" class="fa fa-files-o" style="float:right; cursor: pointer"></span></div>
+          <div id="consumersecret" class="form-data">{{vm.form.application.details.accessToken}} <span clipboard text="vm.form.application.details.accessToken" on-copied="vm.copySuccess('AccessToken')" class="fa fa-files-o" style="float:right; cursor: pointer"></span></div>
         </div>
         <div class="form-group" ng-class="{ 'has-error': detailsApplicationForm.validitytime.$dirty && detailsApplicationForm.validitytime.$invalid,
     'has-success' : detailsApplicationForm.validitytime.$valid}">
