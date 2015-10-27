@@ -73,6 +73,10 @@
       for (var i = 0; i < vm.applications.length; i++) {
         if (vm.applications[i].applicationId === applicationId) {
           vm.form.application.details = angular.copy(vm.applications[i]);
+          vm.curl = {};
+          vm.curl.client = 'curl -k -d "grant_type=client_credentials" -H "Authorization: Basic ' + btoa(vm.applications[i].consumerKey +':' + vm.applications[i].consumerSecret) + ', Content-Type: application/x-www-form-urlencoded" https://wso2api.vasttrafik.se:443/token';
+          vm.curl.password = 'curl -k -d "grant_type=password&username=<USER>&password=<PASSWORD>" -H "Authorization: Basic ' + btoa(vm.applications[i].consumerKey +':' + vm.applications[i].consumerSecret) + ', Content-Type: application/x-www-form-urlencoded" https://wso2api.vasttrafik.se:443/token';
+
           resetUpdateApplicationForm();
           break;
         }

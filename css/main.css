@@ -516,3 +516,11 @@ i.glyphicon.glyphicon-info-sign.text-info {
     padding: 10px 10px;
   }
 }
+
+.code-highlight {
+    font-family: monospace;
+    background: #272b38;
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+}
