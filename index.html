@@ -113,8 +113,8 @@
                 Skapa konto
               </span>
             </a>
-            <div class="dropdown-menu" style="padding: 20px; min-width: 400px;">
-              <div class="col-md-12">
+            <div class="dropdown-menu create">
+              
                 <form name="form" ng-submit="user.create ? vm.create() : vm.login()" role="form">
                   <div ng-if="!user.create">
                     <div class="form-group" ng-class="{ 'has-error': login-form.username.$dirty && login-form.username.$error.required }">
@@ -167,7 +167,6 @@
                     </div>
                   </div>
                 </form>
-              </div>
             </div>
           </div>
 

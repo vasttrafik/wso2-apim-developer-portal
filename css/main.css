@@ -475,10 +475,18 @@ div.row.col-md-4.well {
   margin: 0 15px;
 }
 
+.dropdown-menu {
+  min-width:400px;
+}
 .dropdown-menu.user {
   padding: 20px;
   min-width: 220px;
   font-size: 20px;
+}
+
+.dropdown-menu.create{
+  padding: 20px;
+  min-width: 400px;
 }
 
 i.glyphicon.glyphicon-info-sign.text-info {
@@ -514,5 +522,14 @@ i.glyphicon.glyphicon-info-sign.text-info {
 
   .nav > li > a {
     padding: 10px 10px;
+  }
+
+  .create{
+    padding: 20px; 
+    min-width: 400px;
+  }
+
+  .dropdown-menu.create{
+    margin-left:-320px;
   }
 }
