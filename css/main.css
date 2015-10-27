@@ -17,6 +17,11 @@ body {
   padding-top: 90px;
 }
 
+.container {
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
 a {
   color: #00aaeb;
   text-decoration: none;
@@ -27,12 +32,6 @@ a {
     color: #0085b8;
     text-decoration: underline;
   }
-
-
-.container {
-  padding-bottom: 20px;
-  padding-top: 20px;
-}
 
 .navbar {
   min-height: 88px;
@@ -48,22 +47,7 @@ a {
   .navbar-inverse .navbar-brand {
     color: white;
   }
-/*
-.navbar {
-  border:1px solid transparent;
-  margin-bottom:0;
-  min-height:50px;
-  position:relative;
-}
 
-.navbar-inverse > .container {
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
-
-*/
-
-/*, a.logo*/
 .navbar-brand {
   font-size: 32px;
   font-weight: 600;
@@ -104,6 +88,7 @@ div.navbar-header > a.logo {
     font-size: 26px;
     margin: 0 0 12.5px;
   }
+
 /* Startpage areas */
 .area {
   width: 90px;
@@ -129,7 +114,6 @@ div.navbar-header > a.logo {
   transform: rotate(45deg);
 }
 
-
 div .area {
   margin-top: 20px;
 }
@@ -137,13 +121,9 @@ div .area {
 .area span {
   line-height: 90px;
 }
-
-span .fa .fa-arrow-right .fa-arrow-right {
-  font-size: 12px;
-}
-
-.fa .fa-arrow-right {
-  font-size: 14px;
+i.fa.fa-user.fa-stack-1x,
+i.fa.fa-question.fa-stack-1x {
+  color: #00AAFD;
 }
 
 /* Showcase area */
@@ -394,11 +374,6 @@ button {
   font-weight: bold;
 }
 
-i.fa.fa-user.fa-stack-1x,
-i.fa.fa-question.fa-stack-1x {
-  color: #00AAFD;
-}
-
 div.navbar-collapse.collapse > div > div:nth-child(2) > a,
 div.navbar-collapse.collapse > div > div:nth-child(1) > a {
   color: white;
@@ -418,53 +393,53 @@ div.card .nav-tabs {
   border-bottom: 2px solid #DDD;
 }
 
-  div.card .nav-tabs > li.active > a,
-  div.card .nav-tabs > li.active > a:focus,
-  div.card .nav-tabs > li.active > a:hover {
-    border-width: 0;
-  }
+div.card .nav-tabs > li.active > a,
+div.card .nav-tabs > li.active > a:focus,
+div.card .nav-tabs > li.active > a:hover {
+  border-width: 0;
+}
 
-  div.card .nav-tabs > li > a {
+div.card .nav-tabs > li > a {
+  border: none;
+  color: #666;
+  font-weight: bold;
+}
+
+  div.card .nav-tabs > li.active > a,
+  div.card .nav-tabs > li > a:hover {
     border: none;
-    color: #666;
+    color: #4285F4 !important;
+    background: transparent;
     font-weight: bold;
   }
 
-    div.card .nav-tabs > li.active > a,
-    div.card .nav-tabs > li > a:hover {
-      border: none;
-      color: #4285F4 !important;
-      background: transparent;
-      font-weight: bold;
-    }
-
-    div.card .nav-tabs > li > a::after {
-      content: "";
-      background: #4285F4;
-      height: 2px;
-      position: absolute;
-      width: 100%;
-      left: 0;
-      bottom: -1px;
-      -moz-transition: all 250ms ease 0s;
-      -o-transition: all 250ms ease 0s;
-      -webkit-transition: all 250ms ease 0s;
-      transition: all 250ms ease 0s;
-      -moz-transform: scale(0);
-      -ms-transform: scale(0);
-      -o-transform: scale(0);
-      -webkit-transform: scale(0);
-      transform: scale(0);
-    }
-
-  div.card .nav-tabs > li.active > a::after,
-  div.card .nav-tabs > li:hover > a::after {
-    -moz-transform: scale(1);
-    -ms-transform: scale(1);
-    -o-transform: scale(1);
-    -webkit-transform: scale(1);
-    transform: scale(1);
+  div.card .nav-tabs > li > a::after {
+    content: "";
+    background: #4285F4;
+    height: 2px;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: -1px;
+    -moz-transition: all 250ms ease 0s;
+    -o-transition: all 250ms ease 0s;
+    -webkit-transition: all 250ms ease 0s;
+    transition: all 250ms ease 0s;
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    -o-transform: scale(0);
+    -webkit-transform: scale(0);
+    transform: scale(0);
   }
+
+div.card .nav-tabs > li.active > a::after,
+div.card .nav-tabs > li:hover > a::after {
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -o-transform: scale(1);
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
 
 div.card .tab-nav > li > a::after {
   background: #21527d none repeat scroll 0 0;
@@ -507,8 +482,8 @@ div.row.col-md-4.well {
 }
 
 i.glyphicon.glyphicon-info-sign.text-info {
-  vertical-align:top;
-  font-size:12px;
+  vertical-align: top;
+  font-size: 12px;
 }
 
 @media (max-width: 767px) {
