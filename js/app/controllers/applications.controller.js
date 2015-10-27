@@ -19,6 +19,7 @@
     vm.resetAddApplicationForm = resetAddApplicationForm;
     vm.resetUpdateApplicationForm = resetUpdateApplicationForm;
     vm.resetDetailsApplicationForm = resetDetailsApplicationForm;
+    vm.copySuccess = copySuccess;
 
     vm.form = {};
     vm.form.application = {};
@@ -222,6 +223,11 @@
     function resetDetailsApplicationForm() {
       vm.form.application.details = null;
       $scope.detailsApplicationForm.$setPristine();
+    }
+
+    function copySuccess(leadingText) {
+      AlertService.success(leadingText + " kopierad till urklipp");
+      $scope.$apply();
     }
 
   }
