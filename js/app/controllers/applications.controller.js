@@ -23,21 +23,21 @@
     vm.form = {};
     vm.form.application = {};
 
-    getAllApplications()
-      .then(function() {
+      getAllApplications()
+        .then(function() {
 
-        if ($routeParams.applicationId) {
-          for (var i = 0; i < vm.applications.length; i++) {
-            if (vm.applications[i].applicationId === $routeParams.applicationId) {
-              addApplicationDetails(i);
-              break;
+          if ($routeParams.applicationId) {
+            for (var i = 0; i < vm.applications.length; i++) {
+              if (vm.applications[i].applicationId === $routeParams.applicationId) {
+                addApplicationDetails(i);
+                break;
+              }
             }
+            // Clean up url
+            $location.update_path('/applications');
           }
-          // Clean up url
-          $location.update_path('/applications');
-        }
 
-      });
+        });
 
     function getAllApplications() {
       var deferred = $q.defer();

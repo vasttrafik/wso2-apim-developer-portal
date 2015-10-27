@@ -63,23 +63,25 @@ Handles authentication of the user.
       return deferred.promise;
     }
 
-    function create(username, password, email, firstname, lastname) {
+    function create(userFormObj) {
       var deferred = $q.defer();
+
+      // Collect dynamic claims for post
+      var claims = [];
+      for (var property in userFormObj) {
+        if (userFormObj.hasOwnProperty(property) && userFormObj[property].claimUri) {
+          claims.push({
+            claimUri: userFormObj[property].claimUri,
+            value: userFormObj[property].value
+          });
+        }
+      }
 
       var response;
       userApiClient.usersPost({
           userName: username,
           credential: password,
-          claims: [{
-            claimURI: "http://wso2.org/claims/emailaddress",
-            value: email
-          }, {
-            claimURI: "http://wso2.org/claims/givenname",
-            value: firstname
-          }, {
-            claimURI: "http://wso2.org/claims/lastname",
-            value: lastname
-          }]
+          claims: claims
         })
         .then(function(userAccountObject) {
           if (userAccountObject.status === 201) {

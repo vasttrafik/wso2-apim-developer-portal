@@ -8,6 +8,14 @@
   angular
     .module('vtPortal', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ngPasswordStrength', 'ui.validate', 'angular-clipboard', 'ngLocationUpdate', 'swaggerUi'])
     .config(config)
+    .filter('camelize', function() {
+      return function(input, all) {
+        return input.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function(match, index) {
+          if (+match === 0) return ""; // or if (/\s+/.test(match)) for white spaces
+          return index === 0 ? match.toLowerCase() : match.toUpperCase();
+        });
+      }
+    })
     .run(run)
     .controller('MainCtrl', MainCtrl);
 
@@ -99,7 +107,7 @@
     $rootScope.$on('$locationChangeStart', function(event, next, current) {
 
       // redirect to startpage page if not logged in and trying to access a restricted page
-      var  restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api']) === -1;
+      var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api']) === -1;
 
       if (restrictedPage && !$rootScope.user.loggedIn) {
         $location.path('/');
@@ -109,9 +117,9 @@
 
   }
 
-  MainCtrl.$inject = ['$location', '$rootScope', 'AuthenticationService', 'AlertService'];
+  MainCtrl.$inject = ['$location', '$rootScope', 'AuthenticationService', 'AlertService', 'APIService'];
 
-  function MainCtrl($location, $rootScope, AuthenticationService, AlertService) {
+  function MainCtrl($location, $rootScope, AuthenticationService, AlertService, APIService) {
     var vm = this;
 
     vm.login = login;
@@ -119,6 +127,31 @@
     vm.create = create;
     vm.toggleCreate = toggleCreate;
     vm.clearAlertMessage = AlertService.clearAlertMessageAndDigest;
+
+    APIService.userCall('claimsGet', ['http://wso2.org/claims', 'user'])
+      .then(claimsGetResponse);
+
+    function claimsGetResponse(response) {
+
+      // Only include claims set to be displayed by default
+      var claims = response.data.filter(function(a){
+        return a.supportedByDefault === 'true';
+      });
+
+      // Sort the claims in correct order.
+      claims.sort(function(a, b) {
+        return a.displayOrder - b.displayOrder;
+      });
+
+      vm.claims = claims;
+      vm.user = {};
+
+      for(var i = 0; i < vm.claims.length; i++) {
+        vm.user[vm.claims[i].claimValue] = {};
+        vm.user[vm.claims[i].claimValue].claimUri = vm.claims[i].claimUri;
+      }
+
+    }
 
     function login() {
 
@@ -150,7 +183,7 @@
 
     function create() {
       vm.dataLoading = true;
-      AuthenticationService.create(vm.user.username, vm.user.password, vm.user.email, vm.user.firstname, vm.user.lastname).then(function(response) {
+      AuthenticationService.create(vm.user, vm.claims).then(function(response) {
         AlertService.success('Kontot skapat, nu kan du logga in!');
         $rootScope.user.create = false;
         vm.dataLoading = false;

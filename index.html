@@ -135,16 +135,12 @@
                   </div>
 
                   <div ng-if="user.create">
-                    <div class="form-group" ng-class="{ 'has-error': form.firstname.$dirty && form.firstname.$invalid, 'has-success' : form.firstname.$valid}">
-                      <label for="firstname">Förnamn</label>
-                      <input type="text" name="firstname" id="firstname" class="form-control" ng-model="vm.user.firstname" required />
-                      <span ng-show="form.firstname.$dirty && form.firstname.$error.required" class="help-block">Förnamn är obligatoriskt</span>
+                    <div class="form-group" ng-class="{ 'has-error': form.{{entries.claimValue}}.$dirty && form.{{entries.claimValue}}.$invalid, 'has-success' : form.{{entries.claimValue}}.$valid}" ng-repeat="entries in vm.claims">
+                      <label for="{{entries.claimValue}}">{{entries.description}}</label>
+                      <input type="text" name="{{entries.claimValue}}" id="{{entries.claimValue}}" class="form-control" ng-model="vm.user[entries.claimValue].value" required />
+                      <span ng-show="form.{{entries.claimValue}}.$dirty && form.{{entries.claimValue}}.$error.required" class="help-block">{{entries.description}} är obligatoriskt</span>
                     </div>
-                    <div class="form-group" ng-class="{ 'has-error': form.lastname.$dirty && form.lastname.$invalid, 'has-success' : form.lastname.$valid}">
-                      <label for="lastname">Efternamn</label>
-                      <input type="text" name="lastname" id="lastname" class="form-control" ng-model="vm.user.lastname" required />
-                      <span ng-show="form.lastname.$dirty && form.lastname.$error.required" class="help-block">Efternamn är obligatoriskt</span>
-                    </div>
+
                     <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$invalid, 'has-success' : form.username.$valid}">
                       <label for="username">Användarnamn</label>
                       <input type="text" name="username" id="username" class="form-control" ng-model="vm.user.username" ng-minlength=3 required />
@@ -163,11 +159,6 @@
                       <input type="password" name="passwordRepeat" id="passwordRepeat" class="form-control" ng-model="vm.user.passwordRepeat" ui-validate=" '$value==vm.user.password' " ui-validate-watch=" 'vm.user.password' " required />
                       <span ng-show="form.passwordRepeat.$dirty && form.passwordRepeat.$error.required" class="help-block">Måste upprepa lösenordet</span>
                       <span ng-show="form.passwordRepeat.$dirty && form.passwordRepeat.$invalid" class="help-block">Lösenorden stämmer inte överrens</span>
-                    </div>
-                    <div class="form-group" ng-class="{ 'has-error': form.email.$dirty && form.email.$invalid, 'has-success' : form.email.$valid}">
-                      <label for="email">E-post</label>
-                      <input type="email" name="email" id="email" class="form-control" ng-model="vm.user.email" required />
-                      <span ng-show="form.email.$dirty && form.email.$error.required" class="help-block">E-Post är obligatoriskt</span>
                     </div>
                     <div class="form-actions noclick">
                       <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Skapa konto</button>
@@ -260,7 +251,7 @@
         </div>
         <div class="col-xs-12 col-sm-6">
           <a class="logo" href="#/index.html" title="Västtrafik - En del av Västra Götalandsregionen">
-            <img src="img/png/vt_vgr.png" alt="" /> 
+            <img src="img/png/vt_vgr.png" alt="" />
           </a>
         </div>
       </div>
@@ -287,7 +278,7 @@
   <script src="js/vendor/swagger-external-references.min.js"></script>
   <script src="js/vendor/swagger1-to-swagger2-converter.min.js"></script>
 
-  <script src="js/vendor/ng-password-strength.min.js"></script>
+  <script src="js/vendor/ng-password-strength.js"></script>
   <script src="js/vendor/lodash.min.js"></script>
   <script src="js/vendor/BootSideMenu.js"></script>
 
