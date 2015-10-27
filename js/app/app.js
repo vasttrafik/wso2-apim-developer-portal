@@ -61,9 +61,9 @@
       controllerAs: 'vm'
     })
 
-    .when('/swagger', {
-      controller: 'SwaggerCtrl',
-      templateUrl: 'js/app/views/swagger.view.html',
+    .when('/activation', {
+      controller: 'ActivationCtrl',
+      templateUrl: 'js/app/views/activation.view.html',
       controllerAs: 'vm'
     })
 
@@ -107,7 +107,7 @@
     $rootScope.$on('$locationChangeStart', function(event, next, current) {
 
       // redirect to startpage page if not logged in and trying to access a restricted page
-      var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api']) === -1;
+      var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api', 'activation']) === -1;
 
       if (restrictedPage && !$rootScope.user.loggedIn) {
         $location.path('/');
@@ -117,9 +117,9 @@
 
   }
 
-  MainCtrl.$inject = ['$location', '$rootScope', 'AuthenticationService', 'AlertService', 'APIService'];
+  MainCtrl.$inject = ['$location', '$rootScope', '$filter', 'AuthenticationService', 'AlertService', 'APIService'];
 
-  function MainCtrl($location, $rootScope, AuthenticationService, AlertService, APIService) {
+  function MainCtrl($location, $rootScope, $filter, AuthenticationService, AlertService, APIService) {
     var vm = this;
 
     vm.login = login;
@@ -132,7 +132,6 @@
       .then(claimsGetResponse);
 
     function claimsGetResponse(response) {
-
       // Only include claims set to be displayed by default
       var claims = response.data.filter(function(a){
         return a.supportedByDefault === 'true';
@@ -147,6 +146,7 @@
       vm.user = {};
 
       for(var i = 0; i < vm.claims.length; i++) {
+        vm.claims[i].claimValue = $filter('camelize')(vm.claims[i].description);
         vm.user[vm.claims[i].claimValue] = {};
         vm.user[vm.claims[i].claimValue].claimUri = vm.claims[i].claimUri;
       }
@@ -184,14 +184,13 @@
     function create() {
       vm.dataLoading = true;
       AuthenticationService.create(vm.user, vm.claims).then(function(response) {
-        AlertService.success('Kontot skapat, nu kan du logga in!');
+        AlertService.success('Du kommer få ett mail med instruktioner för att akivera ditt konto', 'Registrering skickad!', 10000);
         $rootScope.user.create = false;
         vm.dataLoading = false;
       }).catch(function(response) {
         AlertService.error(response.message);
         vm.dataLoading = false;
       });
-
     }
 
     function toggleCreate(create) {
