@@ -538,3 +538,11 @@ i.glyphicon.glyphicon-info-sign.text-info {
     margin-left:-320px;
   }
 }
+
+.code-highlight {
+    font-family: monospace;
+    background: #272b38;
+    color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+}

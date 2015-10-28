@@ -27,7 +27,7 @@
           <td>
             <span>{{entries.name}}</span>
           </td>
-           <!--<td>
+          <!--<td>
            <span>{{//entries.status}}</span>
           </td>-->
           <td>
@@ -35,17 +35,20 @@
           </td>
           <td>
             <span ng-click="vm.addApplicationDetails(entries.applicationId)" style="cursor: pointer" title="Visa detaljer">
-              <span class="glyphicon glyphicon-cog"></span> <span class="hidden-xs">Visa detaljer</span>
+              <span class="glyphicon glyphicon-cog"></span>
+              <span class="hidden-xs">Visa detaljer</span>
             </span>
           </td>
           <td>
             <span ng-click="vm.addApplicationUpdate(entries.applicationId)" style="cursor: pointer" title="Uppdatera">
-              <span class="glyphicon glyphicon-edit"></span> <span class="hidden-xs">Uppdatera</span>
+              <span class="glyphicon glyphicon-edit"></span>
+              <span class="hidden-xs">Uppdatera</span>
             </span>
           </td>
           <td>
             <span ng-click="vm.removeApplication(entries.applicationId)" style="cursor: pointer" title="Ta bort">
-              <span class="glyphicon glyphicon-trash" style="margin-left: 10px;"></span> <span class="hidden-xs">Ta bort</span>
+              <span class="glyphicon glyphicon-trash" style="margin-left: 10px;"></span>
+              <span class="hidden-xs">Ta bort</span>
             </span>
           </td>
         </tr>
@@ -144,29 +147,35 @@
 
         <div class="form-group">
           <label for="consumerkey">Nyckel</label>
-          <div id="consumersecret" class="form-data">{{vm.form.application.details.consumerKey}} <span clipboard text="vm.form.application.details.consumerKey" on-copied="vm.copySuccess('Nyckel')" class="fa fa-files-o" style="float:right; cursor: pointer"></span></div>
+          <div id="consumersecret" class="form-data">{{vm.form.application.details.consumerKey}}
+            <span clipboard text="vm.form.application.details.consumerKey" on-copied="vm.copySuccess('Nyckel')" class="fa fa-files-o" style="float:right; cursor: pointer"></span>
+          </div>
         </div>
 
         <div class="form-group">
           <label for="consumersecret">Hemlighet</label>
-          <div id="consumersecret" class="form-data">{{vm.form.application.details.consumerSecret}} <span clipboard text="vm.form.application.details.consumerSecret" on-copied="vm.copySuccess('Hemlighet')" class="fa fa-files-o" style="float:right; cursor: pointer"></span></div>
+          <div id="consumersecret" class="form-data">{{vm.form.application.details.consumerSecret}}
+            <span clipboard text="vm.form.application.details.consumerSecret" on-copied="vm.copySuccess('Hemlighet')" class="fa fa-files-o" style="float:right; cursor: pointer"></span>
+          </div>
         </div>
 
         <div class="form-group">
           <label for="description">AccessToken</label>
-          <div id="consumersecret" class="form-data">{{vm.form.application.details.accessToken}} <span clipboard text="vm.form.application.details.accessToken" on-copied="vm.copySuccess('AccessToken')" class="fa fa-files-o" style="float:right; cursor: pointer"></span></div>
+          <div id="consumersecret" class="form-data">{{vm.form.application.details.accessToken}}
+            <span clipboard text="vm.form.application.details.accessToken" on-copied="vm.copySuccess('AccessToken')" class="fa fa-files-o" style="float:right; cursor: pointer"></span>
+          </div>
         </div>
         <div class="form-group" ng-class="{ 'has-error': detailsApplicationForm.validitytime.$dirty && detailsApplicationForm.validitytime.$invalid,
     'has-success' : detailsApplicationForm.validitytime.$valid}">
           <label for="description">Giltighetstid</label>
           <div class="input-group">
 
-          <input type="number" name="validitytime" id="validitytime" class="form-control" ng-model="vm.form.application.details.validityTime" required min="1"/>
+            <input type="number" name="validitytime" id="validitytime" class="form-control" ng-model="vm.form.application.details.validityTime" required min="1" />
             <span class="input-group-addon">Sekunder</span>
+          </div>
+          <span ng-show="detailsApplicationForm.validitytime.$dirty && detailsApplicationForm.validitytime.$invalid" class="help-block">Måste vara ett nummer större än 0</span>
+          <span ng-show="detailsApplicationForm.validitytime.$dirty && detailsApplicationForm.validitytime.$error.required" class="help-block">Giltighetstid är obligatoriskt</span>
         </div>
-        <span ng-show="detailsApplicationForm.validitytime.$dirty && detailsApplicationForm.validitytime.$invalid" class="help-block">Måste vara ett nummer större än 0</span>
-        <span ng-show="detailsApplicationForm.validitytime.$dirty && detailsApplicationForm.validitytime.$error.required" class="help-block">Giltighetstid är obligatoriskt</span>
-      </div>
 
         <div class="form-actions noclick" style="padding-top: 20px">
           <button type="submit" ng-disabled="detailsApplicationForm.$invalid || vm.dataLoadingdetailsApplication" class="btn btn-primary">Generera ny access token</button>
@@ -175,6 +184,20 @@
           <span ng-click="vm.resetDetailsApplicationForm();" class="btn btn-link">Stäng</span>
         </div>
       </form>
+    </div>
+    <div class="row">
+      <h3>Curl kommando för client credential grant</h3>
+      <div class="code-highlight">
+        <span clipboard text="vm.curl.client" on-copied="vm.copySuccess('Grant')" class="fa fa-files-o" style="float:right; cursor: pointer"></span>
+        {{vm.curl.client}}
+      </div>
+    </div>
+    <div class="row">
+      <h3>Curl kommando för lösenord grant</h3>
+      <div class="code-highlight">
+        <span clipboard text="vm.curl.password" on-copied="vm.copySuccess('Grant')" class="fa fa-files-o" style="float:right; cursor: pointer; margin-left: 20px;"></span>
+        {{vm.curl.password}}
+      </div>
     </div>
   </div>
 </div>

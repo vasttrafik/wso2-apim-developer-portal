@@ -25,8 +25,8 @@
 
       var alert = $rootScope.alert;
       if (alert) {
-          delete $rootScope.alert;
-        }
+        delete $rootScope.alert;
+      }
     }
 
     function clearAlertMessageAndDigest() {
@@ -38,7 +38,12 @@
       }
     }
 
-    function success(message, heading) {
+    function success(message, heading, timeout) {
+
+      var timeoutValue = 4000;
+      if (timeout != null) { // jshint ignore:line
+        timeoutValue = timeout;
+      }
 
       $rootScope.alert = {
         message: message,
@@ -46,10 +51,15 @@
         type: 'success'
       };
 
-      $timeout(clearAlertMessage,4000);
+      $timeout(clearAlertMessage, timeoutValue);
     }
 
-    function error(message, heading) { // jshint ignore:line
+    function error(message, heading, timeout) { // jshint ignore:line
+
+      var timeoutValue = 10000;
+      if (timeout != null) { // jshint ignore:line
+        timeoutValue = timeout;
+      }
 
       $rootScope.alert = {
         message: message,
@@ -57,7 +67,7 @@
         type: 'error'
       };
 
-      $timeout(clearAlertMessage,10000);
+      $timeout(clearAlertMessage, timeoutValue);
     }
   }
 

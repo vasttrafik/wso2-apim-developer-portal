@@ -9,12 +9,12 @@ var UserAPI;
             function UserApi($http, basePath, $httpParamSerializer) {
                 this.$http = $http;
                 this.$httpParamSerializer = $httpParamSerializer;
-                this.basePath = 'http://localhost:8080';
+                this.basePath = 'https://wso2publisher-test:9444/vt-wso2-identity-mgmt-api';
                 if (basePath) {
                     this.basePath = basePath;
                 }
             }
-            UserApi.prototype.usersPut = function (accept, contentType, body, extraHttpRequestParams) {
+            UserApi.prototype.usersPut = function (body, accept, contentType, extraHttpRequestParams) {
                 var path = this.basePath + '/users';
 
                 var queryParameters = {};
