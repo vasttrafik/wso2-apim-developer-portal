@@ -413,14 +413,14 @@ div.card .nav-tabs > li > a {
   div.card .nav-tabs > li.active > a,
   div.card .nav-tabs > li > a:hover {
     border: none;
-    color: #4285F4 !important;
+    color: #00AAEB !important;
     background: transparent;
     font-weight: bold;
   }
 
   div.card .nav-tabs > li > a::after {
     content: "";
-    background: #4285F4;
+    background: #00AAEB;
     height: 2px;
     position: absolute;
     width: 100%;
