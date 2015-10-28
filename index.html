@@ -114,7 +114,7 @@
               </span>
             </a>
             <div class="dropdown-menu create">
-              
+
                 <form name="form" ng-submit="user.create ? vm.create() : vm.login()" role="form">
                   <div ng-if="!user.create">
                     <div class="form-group" ng-class="{ 'has-error': login-form.username.$dirty && login-form.username.$error.required }">
@@ -123,7 +123,7 @@
                       <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Användarnamn är obligatoriskt</span>
                     </div>
                     <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
-                      <label for="password">Lösenord</label>
+                      <label for="password">Lösenord</label><span ng-click="vm.togglePasswordRecovery()" style="float:right;cursor:pointer;">Glömt ditt lösenord?</span>
                       <input type="password" name="password" id="password" class="form-control" ng-model="vm.password" required />
                       <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Lösenord är obligatoriskt</span>
                     </div>
@@ -149,9 +149,11 @@
                     </div>
                     <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$invalid, 'has-success' : form.password.$valid}">
                       <label for="password">Lösenord</label>
-                      <input type="password" name="password" id="password" class="form-control" ng-model="vm.user.password" ng-minlength=8 required />
+                      <input type="password" name="password" id="password" class="form-control" ng-model="vm.user.password" ng-minlength=6 ng-maxlength=12 ng-pattern="/^((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*])).{6,12}$/" required />
                       <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Lösenord är obligatoriskt</span>
-                      <span ng-show="form.password.$error.minlength" class="help-block">Lösenordet måste vara minst 8 tecken långt</span>
+                      <span ng-show="form.password.$error.minlength" class="help-block">Lösenordet måste vara minst 6 tecken långt</span>
+                      <span ng-show="form.password.$error.maxlength" class="help-block">Lösenordet får vara max 12 tecken långt</span>
+                      <span ng-show="form.password.$error.pattern" class="help-block">Lösenordet måste innehålla en siffra[0-9], en liten bokstav [a-z], en stor bokstav [A-Z] och en av karraktärerna [!@#$%&]</span>
                     </div>
                     <div ng-password-strength="vm.user.password" strength="passStrength" inner-class="progress-bar" inner-class-prefix="progress-bar-"></div>
                     <div class="form-group" ng-class="{ 'has-error': form.passwordRepeat.$dirty && form.passwordRepeat.$invalid, 'has-success' : form.passwordRepeat.$valid}">
@@ -278,6 +280,7 @@
   <script src="js/app/controllers/overview.controller.js"></script>
 
   <script src="js/app/controllers/activation.controller.js"></script>
+  <script src="js/app/controllers/recover.controller.js"></script>
 
   <script>
     $(document).ready(function () {

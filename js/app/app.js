@@ -14,7 +14,7 @@
           if (+match === 0) return ""; // or if (/\s+/.test(match)) for white spaces
           return index === 0 ? match.toLowerCase() : match.toUpperCase();
         });
-      }
+      };
     })
     .run(run)
     .controller('MainCtrl', MainCtrl);
@@ -67,6 +67,12 @@
       controllerAs: 'vm'
     })
 
+    .when('/recover', {
+      controller: 'RecoverCtrl',
+      templateUrl: 'js/app/views/recover.view.html',
+      controllerAs: 'vm'
+    })
+
     .when('/api/:apiName/:apiVersion/:apiProvider', {
       controller: 'ApiCtrl',
       templateUrl: 'js/app/views/api.view.html',
@@ -107,7 +113,7 @@
     $rootScope.$on('$locationChangeStart', function(event, next, current) {
 
       // redirect to startpage page if not logged in and trying to access a restricted page
-      var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api', 'activation']) === -1;
+      var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api', 'activation', 'recover']) === -1;
 
       if (restrictedPage && !$rootScope.user.loggedIn) {
         $location.path('/');
@@ -126,6 +132,7 @@
     vm.logout = logout;
     vm.create = create;
     vm.toggleCreate = toggleCreate;
+    vm.togglePasswordRecovery = togglePasswordRecovery;
     vm.clearAlertMessage = AlertService.clearAlertMessageAndDigest;
 
     APIService.userCall('claimsGet', ['http://wso2.org/claims', 'user'])
@@ -202,6 +209,10 @@
         $rootScope.user.create = !$rootScope.user.create;
       }
       delete $rootScope.alert;
+    }
+
+    function togglePasswordRecovery() {
+      $location.path('/recover').search('username', vm.username);
     }
   }
 

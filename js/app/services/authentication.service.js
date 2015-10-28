@@ -72,19 +72,21 @@ Handles authentication of the user.
         if (userFormObj.hasOwnProperty(property) && userFormObj[property].claimUri) {
           claims.push({
             claimUri: userFormObj[property].claimUri,
-            value: userFormObj[property].value
+            claimValue: userFormObj[property].value
           });
         }
       }
 
       var response;
-      userApiClient.usersPost({
-          userName: username,
-          credential: password,
-          claims: claims
+      userApiClient.usersPost('*/*','application/json',{
+          userName: userFormObj.username,
+          password: {password: userFormObj.password},
+          claims: claims,
+          profileName: 'default',
+          tenantDomain: 'carbon.super'
         })
         .then(function(userAccountObject) {
-          if (userAccountObject.status === 201) {
+          if (userAccountObject.status === 200) {
             response = {
               status: userAccountObject.status,
               user: userAccountObject.data

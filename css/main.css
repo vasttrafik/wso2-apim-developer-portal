@@ -530,7 +530,7 @@ i.glyphicon.glyphicon-info-sign.text-info {
   }
 
   .create{
-    padding: 20px; 
+    padding: 20px;
     min-width: 400px;
   }
 
@@ -541,7 +541,7 @@ i.glyphicon.glyphicon-info-sign.text-info {
 
 .code-highlight {
     font-family: monospace;
-    background: #272b38;
+    background: #3c4650;
     color: #ffffff;
     padding: 20px;
     border-radius: 8px;
