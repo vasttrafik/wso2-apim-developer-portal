@@ -5,16 +5,21 @@
     .module('vtPortal')
     .controller('OverviewCtrl', OverviewCtrl);
 
-  OverviewCtrl.$inject = ['$http', '$httpParamSerializer', 'APIService', 'AlertService'];
+  OverviewCtrl.$inject = ['$http', 'APIService', 'AlertService'];
 
-  function OverviewCtrl($http, $httpParamSerializer, APIService, AlertService) {
+  function OverviewCtrl($http, APIService, AlertService) {
     var vm = this;
 
-      APIService.call('applicationsGet', [0.0, 0.0])
-        .then(applicationsGetResponse);
+    function GuidesCtrl($routeParams) {
+      var vm = this;
 
-      APIService.call('subscriptionsGet', [0.0, 0.0])
-        .then(subscriptionsGetResponse);
+      (function init() {
+        APIService.call('applicationsGet', [0.0, 0.0])
+          .then(applicationsGetResponse);
+
+        APIService.call('subscriptionsGet', [0.0, 0.0])
+          .then(subscriptionsGetResponse);
+      })();
 
       function subscriptionsGetResponse(response) {
         if (response.status === 200) {
@@ -31,6 +36,8 @@
           AlertService.error("Problem retrieving application list");
         }
       }
+
+    }
 
   }
 

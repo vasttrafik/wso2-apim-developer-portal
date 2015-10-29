@@ -6,25 +6,28 @@
     .module('vtPortal')
     .controller('ApiCtrl', ApiCtrl);
 
-  ApiCtrl.$inject = ['$rootScope', '$scope', '$location', '$routeParams', '$http', '$httpParamSerializer', 'APIService', 'AlertService'];
+  ApiCtrl.$inject = ['$scope', '$location', '$routeParams','APIService', 'AlertService'];
 
-  function ApiCtrl($rootScope, $scope, $location, $routeParams, $http, $httpParamSerializer, APIService, AlertService) {
+  function ApiCtrl($scope, $location, $routeParams, APIService, AlertService) {
     var vm = this;
-    vm.swaggerUrl = 'http://petstore.swagger.io/v2/swagger.json';
-    vm.documents = {};
-    vm.applications = {};
 
     vm.addSubscription = addSubscription;
     vm.resetAddSubscriptionForm = resetAddSubscriptionForm;
 
-    APIService.call('apisApiIdGet', [$routeParams.apiName + '/' + $routeParams.apiVersion + '/' + $routeParams.apiProvider])
-      .then(aPIsIdGetResponse)
-      .then(getDocumentsForApi);
+    (function init() {
+      vm.swaggerUrl = 'http://petstore.swagger.io/v2/swagger.json';
+      vm.documents = {};
+      vm.applications = {};
 
-    if ($rootScope.user.loggedIn) {
-      APIService.call('applicationsGet', [0.0, 0.0])
-        .then(applicationsGetResponse);
-    }
+      APIService.call('apisApiIdGet', [$routeParams.apiName + '/' + $routeParams.apiVersion + '/' + $routeParams.apiProvider])
+        .then(aPIsIdGetResponse)
+        .then(getDocumentsForApi);
+
+      if ($rootScope.user.loggedIn) {
+        APIService.call('applicationsGet', [0.0, 0.0])
+          .then(applicationsGetResponse);
+      }
+    })();
 
     function applicationsGetResponse(response) {
       if (response.status === 200) {

@@ -31,12 +31,14 @@
           </td>-->
           <td>
             <span ng-click="vm.addSubscriptionUpdate(entries.subscriptionId)" style="cursor: pointer" title="Uppdatera">
-              <span class="glyphicon glyphicon-edit"></span> <span class="hidden-xs">Uppdatera</span>
+              <span class="glyphicon glyphicon-edit"></span>
+              <span class="hidden-xs">Uppdatera</span>
             </span>
           </td>
           <td>
             <span ng-click="vm.removeSubscription(entries.subscriptionId)" style="cursor: pointer" title="Ta bort">
-              <span class="glyphicon glyphicon-trash" style="margin-left: 10px;"></span> <span class="hidden-xs">Ta bort</span>
+              <span class="glyphicon glyphicon-trash" style="margin-left: 10px;"></span>
+              <span class="hidden-xs">Ta bort</span>
             </span>
           </td>
         </tr>
@@ -53,11 +55,9 @@
     </div>
   </div>
 
-
   <div class="container" style="padding-bottom: 100px;">
     <div class="row well">
       <form name="addSubscriptionForm" ng-submit="vm.addSubscription()" role="form">
-
 
         <div class="form-group" ng-class="{ 'has-error': addSubscriptionForm.application.$dirty && addSubscriptionForm.application.$invalid,
   'has-success' : addSubscriptionForm.application.$valid}">
@@ -101,7 +101,6 @@
     </div>
   </div>
 
-
   <div class="container" style="padding-bottom: 100px;">
     <div class="row well">
       <form name="updateSubscriptionForm" ng-submit="vm.updateSubscription()" role="form">
@@ -117,10 +116,10 @@
         <div class="form-group" ng-class="{ 'has-error': updateSubscriptionForm.api.$dirty && updateSubscriptionForm.api.$invalid,
   'has-success' : updateSubscriptionForm.api.$valid}">
           <label for="api">API</label>
-            <select name="api" id="api" ng-model="vm.form.subscription.update.api" class="form-control" required>
-              <option ng-repeat="entry in vm.apis" value="{{entry.name}}/{{entry.version}}/{{entry.provider}}">{{entry.name}} {{entry.version}}</option>
-            </select>
-            <span ng-show="updateSubscriptionForm.api.$dirty && updateSubscriptionForm.api.$error.required" class="help-block">API är obligatoriskt</span>
+          <select name="api" id="api" ng-model="vm.form.subscription.update.api" class="form-control" required>
+            <option ng-repeat="entry in vm.apis" value="{{entry.name}}/{{entry.version}}/{{entry.provider}}">{{entry.name}} {{entry.version}}</option>
+          </select>
+          <span ng-show="updateSubscriptionForm.api.$dirty && updateSubscriptionForm.api.$error.required" class="help-block">API är obligatoriskt</span>
         </div>
 
         <div class="form-actions noclick" style="padding-top: 20px">

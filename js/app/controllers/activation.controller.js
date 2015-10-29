@@ -7,14 +7,13 @@
 
   ActivationCtrl.$inject = ['$location', '$scope', 'APIService', 'AlertService'];
 
-  function ActivationCtrl($location, $scope,  APIService, AlertService) {
+  function ActivationCtrl($location, $scope, APIService, AlertService) {
     var vm = this;
 
     vm.activateAccount = activateAccount;
     vm.generateCaptcha = generateCaptcha;
 
     (function init() {
-
       generateCaptcha();
 
       vm.form = {};
@@ -34,7 +33,7 @@
             userAnswer: vm.form.activation.captcha
           },
           tenantDomain: "carbon.super"
-        }, '*/*','application/json'])
+        }, '*/*', 'application/json'])
         .then(usersPutResponse);
 
 
@@ -43,13 +42,11 @@
         if (response.data.verified) {
           AlertService.success("Nu kan du logga in", "Ditt konto är aktiverat!");
           $location.path('/');
-        }
-        else {
+        } else {
           AlertService.error("Problem vid verifiering av konto, försök igen");
           generateCaptcha();
           vm.form.activation.captcha = '';
           $scope.activateAccountForm.$setPristine();
-
         }
 
       }
