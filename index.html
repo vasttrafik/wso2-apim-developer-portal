@@ -175,7 +175,7 @@
       </div>
     </div>
   </div>
-
+  <div id="top"></div>
   <div ng-view></div>
 
   <footer class="bs-docs-footer" role="contentinfo">
@@ -235,6 +235,13 @@
     </div>
 
   </footer>
+
+  <!-- Scroller -->
+  <div class="scroll-top-wrapper ">
+    <span class="scroll-top-inner">
+      <i class="fa fa-2x fa-arrow-up"></i>
+    </span>
+  </div>
 
   <!-- Final script referencing -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -314,6 +321,25 @@
       $('div.dropdown-menu.user a').on('click', function () {
         $('.menu-user').click();
       });
+
+      $(document).on('scroll', function () {
+
+        if ($(window).scrollTop() > 100) {
+          $('.scroll-top-wrapper').addClass('show');
+        } else {
+          $('.scroll-top-wrapper').removeClass('show');
+        }
+      });
+
+      $('.scroll-top-wrapper').on('click', scrollToTop);
+
+      function scrollToTop() {
+        verticalOffset = typeof (verticalOffset) != 'undefined' ? verticalOffset : 0;
+        element = $('body');
+        offset = element.offset();
+        offsetTop = offset.top;
+        $('html, body').animate({ scrollTop: offsetTop }, 300, 'linear');
+      }
 
     });
   </script>

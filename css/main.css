@@ -545,7 +545,7 @@ i.glyphicon.glyphicon-info-sign.text-info {
     padding: 20px;
     min-width: 220px;
     font-size: 20px;
-    margin-left: -50px;
+    margin-left: -15px;
   }
 
   div.row.col-md-4.well {
@@ -572,4 +572,50 @@ i.glyphicon.glyphicon-info-sign.text-info {
     color: #ffffff;
     padding: 20px;
     border-radius: 8px;
+}
+
+span.fa-stack.fa-lg{
+  margin: 0 8px;
+}
+
+i.fa.fa-bars {
+  font-size: 30px;
+  vertical-align: middle;
+}
+
+/* Page scoller */
+.scroll-top-wrapper {
+  position: fixed;
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
+  text-align: center;
+  z-index: 99999999;
+  background-color: #00AAEB;
+  color: #eeeeee;
+  width: 60px;
+  height: 60px;
+  line-height: 48px;
+  right: 20px;
+  bottom: 20px;
+  padding-top: 2px;
+  border-radius: 30px;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.scroll-top-wrapper:hover {
+  box-shadow: 2px 2px 5px 0 rgba(100, 100, 100, 0.9);
+}
+
+.scroll-top-wrapper.show {
+  visibility: visible;
+  cursor: pointer;
+  opacity: 1.0;
+}
+
+.scroll-top-wrapper i.fa {
+  line-height: inherit;
 }
