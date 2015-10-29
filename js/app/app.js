@@ -31,6 +31,12 @@
       controllerAs: 'vm'
     })
 
+      .when('/getstarted', {
+        controller: 'HomeCtrl',
+        templateUrl: 'js/app/views/getstarted.view.html',
+        controllerAs: 'vm'
+      })
+
     .when('/overview', {
       controller: 'OverviewCtrl',
       templateUrl: 'js/app/views/overview.view.html',
@@ -113,7 +119,7 @@
     $rootScope.$on('$locationChangeStart', function(event, next, current) {
 
       // redirect to startpage page if not logged in and trying to access a restricted page
-      var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api', 'activation', 'recover']) === -1;
+      var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api', 'getstarted', 'activation', 'recover']) === -1;
 
       if (restrictedPage && !$rootScope.user.loggedIn) {
         $location.path('/');
