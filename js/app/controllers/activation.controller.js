@@ -33,7 +33,7 @@
             secretKey: vm.form.activation.secretKey,
             userAnswer: vm.form.activation.captcha
           },
-          tenantDomain: ""
+          tenantDomain: "carbon.super"
         }, '*/*','application/json'])
         .then(usersPutResponse);
 
