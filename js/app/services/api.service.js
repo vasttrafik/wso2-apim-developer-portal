@@ -75,7 +75,7 @@ Handles calls towards backend api.
         }, function(response) {
           if (response.status === 401) {
 
-            AuthenticationService.Logout();
+            AuthenticationService.logout();
             AlertService.error("User not authenticated", false);
             deferred.reject('User not authenticated');
 

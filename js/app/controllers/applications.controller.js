@@ -24,21 +24,16 @@
     vm.form = {};
     vm.form.application = {};
 
-      getAllApplications()
-        .then(function() {
+    getAllApplications()
+      .then(function() {
+        if ($routeParams.applicationId) {
+          // If an application has been specified, open its details
+          addApplicationDetails($routeParams.applicationId);
+          // Clean up url
+          $location.update_path('/applications');
+        }
 
-          if ($routeParams.applicationId) {
-            for (var i = 0; i < vm.applications.length; i++) {
-              if (vm.applications[i].applicationId === $routeParams.applicationId) {
-                addApplicationDetails(i);
-                break;
-              }
-            }
-            // Clean up url
-            $location.update_path('/applications');
-          }
-
-        });
+      });
 
     function getAllApplications() {
       var deferred = $q.defer();
@@ -71,11 +66,12 @@
 
     function addApplicationDetails(applicationId) {
       for (var i = 0; i < vm.applications.length; i++) {
+        console.log("trying2" + applicationId);
         if (vm.applications[i].applicationId === applicationId) {
           vm.form.application.details = angular.copy(vm.applications[i]);
           vm.curl = {};
-          vm.curl.client = 'curl -k -d "grant_type=client_credentials" -H "Authorization: Basic ' + btoa(vm.applications[i].consumerKey +':' + vm.applications[i].consumerSecret) + ', Content-Type: application/x-www-form-urlencoded" https://wso2api.vasttrafik.se:443/token';
-          vm.curl.password = 'curl -k -d "grant_type=password&username=<USER>&password=<PASSWORD>" -H "Authorization: Basic ' + btoa(vm.applications[i].consumerKey +':' + vm.applications[i].consumerSecret) + ', Content-Type: application/x-www-form-urlencoded" https://wso2api.vasttrafik.se:443/token';
+          vm.curl.client = 'curl -k -d "grant_type=client_credentials" -H "Authorization: Basic ' + btoa(vm.applications[i].consumerKey + ':' + vm.applications[i].consumerSecret) + ', Content-Type: application/x-www-form-urlencoded" https://wso2api.vasttrafik.se:443/token';
+          vm.curl.password = 'curl -k -d "grant_type=password&username=<USER>&password=<PASSWORD>" -H "Authorization: Basic ' + btoa(vm.applications[i].consumerKey + ':' + vm.applications[i].consumerSecret) + ', Content-Type: application/x-www-form-urlencoded" https://wso2api.vasttrafik.se:443/token';
 
           resetUpdateApplicationForm();
           break;
