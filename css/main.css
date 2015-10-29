@@ -68,6 +68,12 @@ div.navbar-header > a.logo {
   margin-left: 230px;
 }
 
+.marked {
+  padding:10px 0 10px 0;
+  margin: 20px 0 20px 0;
+  box-shadow: 2px 2px 5px 0 rgba(100, 100, 100, 0.9);
+}
+
 /* Jumbotron */
 .jumbotron {
   padding-top: 0;
