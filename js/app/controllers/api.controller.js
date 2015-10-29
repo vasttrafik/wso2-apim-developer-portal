@@ -6,9 +6,9 @@
     .module('vtPortal')
     .controller('ApiCtrl', ApiCtrl);
 
-  ApiCtrl.$inject = ['$scope', '$location', '$routeParams','APIService', 'AlertService'];
+  ApiCtrl.$inject = ['$rootScope', '$scope', '$location', '$routeParams','APIService', 'AlertService'];
 
-  function ApiCtrl($scope, $location, $routeParams, APIService, AlertService) {
+  function ApiCtrl($rootScope, $scope, $location, $routeParams, APIService, AlertService) {
     var vm = this;
 
     vm.addSubscription = addSubscription;
