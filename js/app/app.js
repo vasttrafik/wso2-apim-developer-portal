@@ -31,11 +31,11 @@
       controllerAs: 'vm'
     })
 
-      .when('/getstarted', {
-        controller: 'HomeCtrl',
-        templateUrl: 'js/app/views/getstarted.view.html',
-        controllerAs: 'vm'
-      })
+    .when('/guides/:guide', {
+      controller: 'GuidesCtrl',
+      templateUrl: 'js/app/views/guides.view.html',
+      controllerAs: 'vm'
+    })
 
     .when('/overview', {
       controller: 'OverviewCtrl',
@@ -119,7 +119,7 @@
     $rootScope.$on('$locationChangeStart', function(event, next, current) {
 
       // redirect to startpage page if not logged in and trying to access a restricted page
-      var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api', 'getstarted', 'activation', 'recover']) === -1;
+      var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api', 'guides', 'activation', 'recover']) === -1;
 
       if (restrictedPage && !$rootScope.user.loggedIn) {
         $location.path('/');
@@ -146,7 +146,7 @@
 
     function claimsGetResponse(response) {
       // Only include claims set to be displayed by default
-      var claims = response.data.filter(function(a){
+      var claims = response.data.filter(function(a) {
         return a.supportedByDefault === 'true';
       });
 
@@ -158,7 +158,7 @@
       vm.claims = claims;
       vm.user = {};
 
-      for(var i = 0; i < vm.claims.length; i++) {
+      for (var i = 0; i < vm.claims.length; i++) {
         vm.claims[i].claimValue = $filter('camelize')(vm.claims[i].description);
         vm.user[vm.claims[i].claimValue] = {};
         vm.user[vm.claims[i].claimValue].claimUri = vm.claims[i].claimUri;
