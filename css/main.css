@@ -303,6 +303,9 @@ footer {
 
 
 /* Button styles */
+
+
+
 button.btn {
   border: 1px solid transparent;
   padding-bottom: 10px;
@@ -339,11 +342,29 @@ button.btn {
   white-space: nowrap;
 }
 
+span.btn.btn-link {
+  background-color: #75828A;
+  color: #EBF7F7;
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+ span.btn.btn-link:hover,
+ span.btn.btn-link:active {
+    
+    background-color: #39464E
+  } 
+
+
 .text-uppercase {
   text-transform: uppercase;
 }
 
-a, button, a .icon, a .panel-body {
+a, 
+button, 
+a .icon, 
+a .panel-body,
+span.btn.btn-link {
   -moz-transition: color 500ms ease-out 0s, background-color 500ms ease-out 0s, box-shadow 500ms ease-out 0s, opacity 500ms linear 0s, transform 500ms ease-in-out 0s;
   -o-transition: color 500ms ease-out 0s, background-color 500ms ease-out 0s, box-shadow 500ms ease-out 0s, opacity 500ms linear 0s, transform 500ms ease-in-out 0s;
   -webkit-transition: color 500ms ease-out 0s, background-color 500ms ease-out 0s, box-shadow 500ms ease-out 0s, opacity 500ms linear 0s, transform 500ms ease-in-out 0s;
