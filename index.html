@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="css/bootstrap-theme.min.css">
   <link rel="stylesheet" href="css/slidemenu.css" />
   <link rel="stylesheet" href="css/bootsnipp.css" />
+  <link rel="stylesheet" href="css/nga.all.min.css">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/font-awesome.min.css">
 </head>
@@ -60,14 +61,7 @@
     </div>
   </div>
 
-  <div class="navbar navbar-inverse navbar-fixed-top">
-    <div ng-class="{ 'alert': alert, 'alert-success': alert.type === 'success', 'alert-danger': alert.type === 'error' }" ng-show="alert" style="margin-bottom: 0; border-radius: 0">
-      <div class="container" style="padding: 0">
-        <span ng-show="alert" ng-bind="alert.heading" style="font-weight: bold; margin-right: 5px;"></span>
-        <span ng-show="alert" ng-bind="alert.message"></span>
-        <button type="button" class="close" ng-show="alert">×</button>
-      </div>
-    </div>
+  <div class="navbar navbar-inverse navbar-fixed-top" style="border: 0px">
 
     <div class="container">
       <div class="navbar-header">
@@ -182,8 +176,16 @@
         </div>
       </div>
     </div>
-  </div>
+
+    <div ng-class="{ 'alert': alert, 'alert-success': alert.type === 'success', 'alert-danger': alert.type === 'error' }" ng-show="alert" style="margin-bottom: 0; border-radius: 0">
+      <div class="container" style="padding: 0">
+        <span ng-show="alert" ng-bind="alert.heading" style="font-weight: bold; margin-right: 5px;"></span>
+        <span ng-show="alert" ng-bind="alert.message"></span>
+        <button type="button" class="close" ng-show="alert">×</button>
+      </div>
+    </div>
   <div id="top"></div>
+</div>
   <div ng-view></div>
 
   <footer class="bs-docs-footer" role="contentinfo">
