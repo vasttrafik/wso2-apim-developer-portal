@@ -1,24 +1,49 @@
-<div class="jumbotron" style="background: #ffffff">
+<style type="text/css">
+ ol.scroll > li {
+   display: inline-block;
+   margin: 0 10px;
+   padding: 0 5px;
+ }
+
+ ol.scroll {
+   list-style: none;
+   margin-left: -15px;
+   padding-left: 0;
+ }
+
+ #myNavbar{
+   background-color:white;
+   border:none;
+   box-shadow:none;
+   height:40px;
+ }
+ #myNavbar.navbar.navbar-default{
+   background-image:none;
+   min-height:40px;
+ }
+
+ .active{background-color:red;color:white;}
+
+</style>
+<div class="container-fluid" style="position:fixed;z-index: 100;top:90px;left:0;background-color: white;width:100%;">
   <div class="container">
     <h1>Kom igång</h1>
-    <p>
-      På denna sida har vi sammanställt information om vad som krävs för att snabbt komma igång med att använda utvecklarportalen.
-      Skapa konto, applikationer och att prenumerera på våra API:er beskrivs i enkla steg.
-      <ol>
-        <li><a href="" ng-click="vm.scrollTo('create-account')">Skapa konto</a></li>
-        <li><a href="" ng-click="vm.scrollTo('create-application')">Skapa applikation</a></li>
-        <li><a href="" ng-click="vm.scrollTo('create-subscription')">Skapa prenumeration</a></li>
-      </ol>
-    </p>
+      <nav style="height:40px;" id="myNavbar" class="navbar navbar-default" role="navigation">
+        <ol class="scroll">
+          <li><a href="" data-scrollspy-listen="create-account" ng-click="vm.scrollTo('create-account')">Skapa konto</a></li>
+          <li><a href="" data-scrollspy-listen="create-application" ng-click="vm.scrollTo('create-application')">Skapa applikation</a></li>
+          <li><a href="" data-scrollspy-listen="create-subscription" ng-click="vm.scrollTo('create-subscription')">Skapa prenumeration</a></li>
+        </ol>
+      </nav>
   </div>
 </div>
 
-<div class="container-fluid" style="margin-top:-80px;">
-  <div class="container">
-        <!-- Account management -->
+<div class="container-fluid" style="margin-top:160px;">
+  <div class="container" style="padding-top:0;">
+    <!-- Account management -->
     <div class="row">
       <div class="col-xs-12 col-md-12">
-        <h2 id="create-account">1. Skapa konto</h2>
+        <h2 id="create-account" data-scrollspy-broadcast>1. Skapa konto</h2>
         <h3>Ange kontoinformation</h3>
       </div>
 
@@ -74,7 +99,7 @@
 
       <!--Create-->
       <div class="col-xs-12 col-md-12">
-        <h3 id="create-application">2. Skapa applikation</h3>
+        <h3 id="create-application" data-scrollspy-broadcast>2. Skapa applikation</h3>
       </div>
       <div class="col-xs-12 col-md-12">
         <p>
@@ -107,7 +132,7 @@
 
     <div class="row">
       <div class="col-xs-12 col-md-12">
-        <h3 id="create-subscription">3. Skapa prenumeration</h3>
+        <h3 id="create-subscription" data-scrollspy-broadcast>3. Skapa prenumeration</h3>
         <p>
           Utvecklarportalen erbjuder två sätt att skapa prenumeration.
           <ol>
