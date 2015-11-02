@@ -70,7 +70,7 @@
           <label for="application">Applikation</label>
           <div ng-show="!vm.applications.length" style="margin-bottom: 20px">Du har inga registrerade applikationer. <a href="#/applications">Skapa en applikation först</a>, skapa sedan en prenumeration här!</div>
           <div ng-show="vm.applications.length">
-            <select name="application" id="applications" ng-model="vm.form.subscription.add.application" class="form-control" required>
+            <select name="application" id="application" ng-model="vm.form.subscription.add.application" class="form-control" required>
               <option ng-repeat="entry in vm.applications" value="{{entry.applicationId}}">{{entry.name}}</option>
             </select>
             <span ng-show="addSubscriptionForm.application.$dirty && addSubscriptionForm.application.$error.required" class="help-block">Applikation är obligatoriskt</span>
@@ -112,8 +112,8 @@
       <form name="updateSubscriptionForm" ng-submit="vm.updateSubscription()" role="form">
         <div class="form-group" ng-class="{ 'has-error': updateSubscriptionForm.application.$dirty && updateSubscriptionForm.application.$invalid,
   'has-success' : updateSubscriptionForm.application.$valid}">
-          <label for="application">Applikation</label>
-          <select name="application" id="applications" ng-model="vm.form.subscription.update.application" class="form-control" required>
+          <label for="updateApplication">Applikation</label>
+          <select name="updateApplication" id="updateApplication" ng-model="vm.form.subscription.update.application" class="form-control" required>
             <option ng-repeat="entry in vm.applications" value="{{entry.applicationId}}">{{entry.name}}</option>
           </select>
           <span ng-show="updateSubscriptionForm.application.$dirty && updateSubscriptionForm.application.$error.required" class="help-block">Applikation är obligatoriskt</span>
@@ -121,8 +121,8 @@
 
         <div class="form-group" ng-class="{ 'has-error': updateSubscriptionForm.api.$dirty && updateSubscriptionForm.api.$invalid,
   'has-success' : updateSubscriptionForm.api.$valid}">
-          <label for="api">API</label>
-          <select name="api" id="api" ng-model="vm.form.subscription.update.api" class="form-control" required>
+          <label for="updateApi">API</label>
+          <select name="updateApi" id="updateApi" ng-model="vm.form.subscription.update.api" class="form-control" required>
             <option ng-repeat="entry in vm.apis" value="{{entry.name}}/{{entry.version}}/{{entry.provider}}">{{entry.name}} {{entry.version}}</option>
           </select>
           <span ng-show="updateSubscriptionForm.api.$dirty && updateSubscriptionForm.api.$error.required" class="help-block">API är obligatoriskt</span>
