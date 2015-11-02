@@ -1,4 +1,5 @@
-﻿<!doctype html>
+
+<!doctype html>
 <html ng-app="vtPortal" class="no-js" lang="">
 
 <head>
@@ -17,9 +18,7 @@
   <link rel="stylesheet" href="css/slidemenu.css" />
   <link rel="stylesheet" href="css/bootsnipp.css" />
   <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-
-  <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+  <link rel="stylesheet" href="css/font-awesome.min.css">
 </head>
 
 <body id="body" ng-controller="MainCtrl as vm">
@@ -64,7 +63,8 @@
   <div class="navbar navbar-inverse navbar-fixed-top">
     <div ng-class="{ 'alert': alert, 'alert-success': alert.type === 'success', 'alert-danger': alert.type === 'error' }" ng-show="alert" style="margin-bottom: 0; border-radius: 0">
       <div class="container" style="padding: 0">
-        <span ng-show="alert" ng-bind="alert.heading" style="font-weight: bold; margin-right: 5px;"></span><span ng-show="alert" ng-bind="alert.message"></span>
+        <span ng-show="alert" ng-bind="alert.heading" style="font-weight: bold; margin-right: 5px;"></span>
+        <span ng-show="alert" ng-bind="alert.message"></span>
         <button type="button" class="close" ng-show="alert">×</button>
       </div>
     </div>
@@ -93,11 +93,16 @@
               <div class="row">
                 <div class="col-md-12">
                   <p>Mina sidor</p>
-                  <a href="#/overview">Översikt</a><br />
-                  <a href="#/profile">Min profil</a><br />
-                  <a href="#/applications">Mina applikationer</a><br />
-                  <a href="#/subscriptions">Mina prenumerationer</a><br />
-                  <a href="#/" ng-click="vm.logout()">Logga ut</a><br />
+                  <a href="#/overview">Översikt</a>
+                  <br />
+                  <a href="#/profile">Min profil</a>
+                  <br />
+                  <a href="#/applications">Mina applikationer</a>
+                  <br />
+                  <a href="#/subscriptions">Mina prenumerationer</a>
+                  <br />
+                  <a href="#/" ng-click="vm.logout()">Logga ut</a>
+                  <br />
                 </div>
               </div>
             </div>
@@ -115,60 +120,63 @@
             </a>
             <div class="dropdown-menu create">
 
-                <form name="form" ng-submit="user.create ? vm.create() : vm.login()" role="form">
-                  <div ng-if="!user.create">
-                    <div class="form-group" ng-class="{ 'has-error': login-form.username.$dirty && login-form.username.$error.required }">
-                      <label for="username">Användarnamn</label>
-                      <input type="text" name="username" id="username" class="form-control" ng-model="vm.username" required />
-                      <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Användarnamn är obligatoriskt</span>
-                    </div>
-                    <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
-                      <label for="password">Lösenord</label><span ng-click="vm.togglePasswordRecovery()" style="float:right;cursor:pointer;">Glömt ditt lösenord?</span>
-                      <input type="password" name="password" id="password" class="form-control" ng-model="vm.password" required />
-                      <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Lösenord är obligatoriskt</span>
-                    </div>
-                    <div class="form-actions noclick">
-                      <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Logga in</button>
-                      <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                      <span ng-click="vm.toggleCreate()" class="btn btn-link">Skapa konto</span>
-                    </div>
+              <form name="form" ng-submit="user.create ? vm.create() : vm.login()" role="form">
+                <div ng-if="!user.create">
+                  <div class="form-group" ng-class="{ 'has-error': login-form.username.$dirty && login-form.username.$error.required }">
+                    <label for="username">Användarnamn</label>
+                    <input type="text" name="username" id="username" class="form-control" ng-model="vm.username" required />
+                    <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Användarnamn är obligatoriskt</span>
+                  </div>
+                  <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+                    <label for="password">Lösenord</label>
+                    <span ng-click="vm.togglePasswordRecovery()" style="float:right;cursor:pointer;">Glömt ditt lösenord?</span>
+                    <input type="password" name="password" id="password" class="form-control" ng-model="vm.password" required />
+                    <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Lösenord är obligatoriskt</span>
+                  </div>
+                  <div class="form-actions noclick">
+                    <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Logga in</button>
+                    <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                    />
+                    <span ng-click="vm.toggleCreate()" class="btn btn-link">Skapa konto</span>
+                  </div>
+                </div>
+
+                <div ng-if="user.create">
+                  <div class="form-group" ng-class="{ 'has-error': form.{{entries.claimValue}}.$dirty && form.{{entries.claimValue}}.$invalid, 'has-success' : form.{{entries.claimValue}}.$valid}" ng-repeat="entries in vm.claims">
+                    <label for="{{entries.claimValue}}">{{entries.description}}</label>
+                    <input type="text" name="{{entries.claimValue}}" id="{{entries.claimValue}}" class="form-control" ng-model="vm.user[entries.claimValue].value" required />
+                    <span ng-show="form.{{entries.claimValue}}.$dirty && form.{{entries.claimValue}}.$error.required" class="help-block">{{entries.description}} är obligatoriskt</span>
                   </div>
 
-                  <div ng-if="user.create">
-                    <div class="form-group" ng-class="{ 'has-error': form.{{entries.claimValue}}.$dirty && form.{{entries.claimValue}}.$invalid, 'has-success' : form.{{entries.claimValue}}.$valid}" ng-repeat="entries in vm.claims">
-                      <label for="{{entries.claimValue}}">{{entries.description}}</label>
-                      <input type="text" name="{{entries.claimValue}}" id="{{entries.claimValue}}" class="form-control" ng-model="vm.user[entries.claimValue].value" required />
-                      <span ng-show="form.{{entries.claimValue}}.$dirty && form.{{entries.claimValue}}.$error.required" class="help-block">{{entries.description}} är obligatoriskt</span>
-                    </div>
-
-                    <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$invalid, 'has-success' : form.username.$valid}">
-                      <label for="username">Användarnamn</label>
-                      <input type="text" name="username" id="username" class="form-control" ng-model="vm.user.username" ng-minlength=3 required />
-                      <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Användarnamn är obligatoriskt</span>
-                      <span ng-show="form.username.$error.minlength" class="help-block">Användarnamn måste vara minst 3 tecken långt</span>
-                    </div>
-                    <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$invalid, 'has-success' : form.password.$valid}">
-                      <label for="password">Lösenord</label>
-                      <input type="password" name="password" id="password" class="form-control" ng-model="vm.user.password" ng-minlength=6 ng-maxlength=12 ng-pattern="/^((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*])).{6,12}$/" required />
-                      <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Lösenord är obligatoriskt</span>
-                      <span ng-show="form.password.$error.minlength" class="help-block">Lösenordet måste vara minst 6 tecken långt</span>
-                      <span ng-show="form.password.$error.maxlength" class="help-block">Lösenordet får vara max 12 tecken långt</span>
-                      <span ng-show="form.password.$error.pattern" class="help-block">Lösenordet måste innehålla en siffra[0-9], en liten bokstav [a-z], en stor bokstav [A-Z] och en av karraktärerna [!@#$%&]</span>
-                    </div>
-                    <div ng-password-strength="vm.user.password" strength="passStrength" inner-class="progress-bar" inner-class-prefix="progress-bar-"></div>
-                    <div class="form-group" ng-class="{ 'has-error': form.passwordRepeat.$dirty && form.passwordRepeat.$invalid, 'has-success' : form.passwordRepeat.$valid}">
-                      <label for="passwordRepeat">Upprepa lösenord</label>
-                      <input type="password" name="passwordRepeat" id="passwordRepeat" class="form-control" ng-model="vm.user.passwordRepeat" ui-validate=" '$value==vm.user.password' " ui-validate-watch=" 'vm.user.password' " required />
-                      <span ng-show="form.passwordRepeat.$dirty && form.passwordRepeat.$error.required" class="help-block">Måste upprepa lösenordet</span>
-                      <span ng-show="form.passwordRepeat.$dirty && form.passwordRepeat.$invalid" class="help-block">Lösenorden stämmer inte överrens</span>
-                    </div>
-                    <div class="form-actions noclick">
-                      <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Skapa konto</button>
-                      <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                      <span ng-click="vm.toggleCreate()" class="btn btn-link">Ångra</span>
-                    </div>
+                  <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$invalid, 'has-success' : form.username.$valid}">
+                    <label for="createUsername">Användarnamn</label>
+                    <input type="text" name="createUsername" id="createUsername" class="form-control" ng-model="vm.user.username" ng-minlength="3" required />
+                    <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Användarnamn är obligatoriskt</span>
+                    <span ng-show="form.username.$error.minlength" class="help-block">Användarnamn måste vara minst 3 tecken långt</span>
                   </div>
-                </form>
+                  <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$invalid, 'has-success' : form.password.$valid}">
+                    <label for="createPassword">Lösenord</label>
+                    <input type="password" name="createPassword" id="createPassword" class="form-control" ng-model="vm.user.password" ng-minlength="6" ng-maxlength="12" ng-pattern="/^((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*])).{6,12}$/" required />
+                    <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Lösenord är obligatoriskt</span>
+                    <span ng-show="form.password.$error.minlength" class="help-block">Lösenordet måste vara minst 6 tecken långt</span>
+                    <span ng-show="form.password.$error.maxlength" class="help-block">Lösenordet får vara max 12 tecken långt</span>
+                    <span ng-show="form.password.$error.pattern" class="help-block">Lösenordet måste innehålla en siffra[0-9], en liten bokstav [a-z], en stor bokstav [A-Z] och en av karraktärerna [!@#$%&]</span>
+                  </div>
+                  <div ng-password-strength="vm.user.password" strength="passStrength" inner-class="progress-bar" inner-class-prefix="progress-bar-"></div>
+                  <div class="form-group" ng-class="{ 'has-error': form.passwordRepeat.$dirty && form.passwordRepeat.$invalid, 'has-success' : form.passwordRepeat.$valid}">
+                    <label for="passwordRepeat">Upprepa lösenord</label>
+                    <input type="password" name="passwordRepeat" id="passwordRepeat" class="form-control" ng-model="vm.user.passwordRepeat" ui-validate=" '$value==vm.user.password' " ui-validate-watch=" 'vm.user.password' " required />
+                    <span ng-show="form.passwordRepeat.$dirty && form.passwordRepeat.$error.required" class="help-block">Måste upprepa lösenordet</span>
+                    <span ng-show="form.passwordRepeat.$dirty && form.passwordRepeat.$invalid" class="help-block">Lösenorden stämmer inte överrens</span>
+                  </div>
+                  <div class="form-actions noclick">
+                    <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Skapa konto</button>
+                    <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                    />
+                    <span ng-click="vm.toggleCreate()" class="btn btn-link">Ångra</span>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
@@ -244,9 +252,9 @@
   </div>
 
   <!-- Final script referencing -->
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script>
-    window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')
+    window.jQuery || document.write('<script src="js/vendor/jquery-2.1.4.min.js"><\/script>')
   </script>
 
   <script src="js/vendor/bootstrap.min.js"></script>
@@ -292,15 +300,15 @@
   <script src="js/app/controllers/recover.controller.js"></script>
 
   <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
 
-      $(function () {
-        $('.dropdown-menu, .dropdown-menu input, .noclick').click(function (event) {
+      $(function() {
+        $('.dropdown-menu, .dropdown-menu input, .noclick').click(function(event) {
           event.stopPropagation();
         });
       });
 
-      $('.close').click(function (event) {
+      $('.close').click(function(event) {
         angular.element(document.body).controller().clearAlertMessage();
       });
 
@@ -309,21 +317,21 @@
         autoClose: true
       });
 
-      $('.a-cog').hover(function () {
+      $('.a-cog').hover(function() {
         $('.fa.fa-cog.fa-2x').addClass("fa-spin");
-      }, function () {
+      }, function() {
         $('.fa.fa-cog.fa-2x').removeClass("fa-spin");
       });
 
-      $('.nav-side-menu ul .sub-menu li a, .nav-side-menu li .sub-menu li a').on('click', function () {
+      $('.nav-side-menu ul .sub-menu li a, .nav-side-menu li .sub-menu li a').on('click', function() {
         $('.toggler').click();
       });
 
-      $('div.dropdown-menu.user a').on('click', function () {
+      $('div.dropdown-menu.user a').on('click', function() {
         $('.menu-user').click();
       });
 
-      $(document).on('scroll', function () {
+      $(document).on('scroll', function() {
 
         if ($(window).scrollTop() > 100) {
           $('.scroll-top-wrapper').addClass('show');
@@ -335,11 +343,13 @@
       $('.scroll-top-wrapper').on('click', scrollToTop);
 
       function scrollToTop() {
-        verticalOffset = typeof (verticalOffset) != 'undefined' ? verticalOffset : 0;
+        verticalOffset = typeof(verticalOffset) != 'undefined' ? verticalOffset : 0;
         element = $('body');
         offset = element.offset();
         offsetTop = offset.top;
-        $('html, body').animate({ scrollTop: offsetTop }, 300, 'linear');
+        $('html, body').animate({
+          scrollTop: offsetTop
+        }, 300, 'linear');
       }
 
     });

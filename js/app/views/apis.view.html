@@ -1,4 +1,5 @@
-﻿<div class="container-fluid" style="padding-bottom: 200px">
+
+<div class="container-fluid" style="padding-bottom: 200px" ng-cloak>
   <div class="container">
     <div class="row">
       <h1 class="sub-header">Våra API</h1>
@@ -6,7 +7,9 @@
         <table class="table table-hover table-striped">
           <thead>
             <tr>
-              <th class="hidden-xs"><!--Img--></th>
+              <th class="hidden-xs">
+                <!--Img-->
+              </th>
               <th>Namn</th>
               <th>Beskrivning</th>
               <th class="hidden-xs">Context</th>
@@ -43,7 +46,10 @@
                 {{//entries.status}}
               </td>-->
               <td>
-                <a href="#/api/{{entries.name}}/{{entries.version}}/{{entries.provider}}" title="Visa detaljer"><span class="glyphicon glyphicon-cog"></span><span class="hidden-xs">Visa detaljer</span></a>
+                <span ng-click="vm.displayApi(entries.name, entries.version, entries.provider)" style="cursor: pointer" title="Visa detaljer">
+                  <span class="glyphicon glyphicon-cog"></span>
+                  <span class="hidden-xs">Visa detaljer</span>
+                </span>
               </td>
             </tr>
           </tbody>

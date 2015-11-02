@@ -5,9 +5,9 @@
     .module('vtPortal')
     .controller('ApplicationsCtrl', ApplicationsCtrl);
 
-  ApplicationsCtrl.$inject = ['$routeParams', '$scope', '$http', '$httpParamSerializer', '$q', '$location', 'APIService', 'AlertService'];
+  ApplicationsCtrl.$inject = ['$routeParams', '$scope', '$q', '$location', 'APIService', 'AlertService'];
 
-  function ApplicationsCtrl($routeParams, $scope, $http, $httpParamSerializer, $q, $location, APIService, AlertService) {
+  function ApplicationsCtrl($routeParams, $scope, $q, $location, APIService, AlertService) {
     var vm = this;
 
     vm.addApplication = addApplication;
@@ -21,19 +21,20 @@
     vm.resetDetailsApplicationForm = resetDetailsApplicationForm;
     vm.copySuccess = copySuccess;
 
-    vm.form = {};
-    vm.form.application = {};
+    (function init() {
+      vm.form = {};
+      vm.form.application = {};
 
-    getAllApplications()
-      .then(function() {
-        if ($routeParams.applicationId) {
-          // If an application has been specified, open its details
-          addApplicationDetails($routeParams.applicationId);
-          // Clean up url
-          $location.update_path('/applications');
-        }
-
-      });
+      getAllApplications()
+        .then(function() {
+          if ($routeParams.applicationId) {
+            // If an application has been specified, open its details
+            addApplicationDetails($routeParams.applicationId);
+            // Clean up url
+            $location.update_path('/applications');
+          }
+        });
+    })();
 
     function getAllApplications() {
       var deferred = $q.defer();
@@ -66,7 +67,6 @@
 
     function addApplicationDetails(applicationId) {
       for (var i = 0; i < vm.applications.length; i++) {
-        console.log("trying2" + applicationId);
         if (vm.applications[i].applicationId === applicationId) {
           vm.form.application.details = angular.copy(vm.applications[i]);
           vm.curl = {};
@@ -78,7 +78,6 @@
         }
       }
     }
-
 
     function addApplication() {
 

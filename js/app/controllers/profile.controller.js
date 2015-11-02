@@ -5,9 +5,9 @@
     .module('vtPortal')
     .controller('ProfileCtrl', ProfileCtrl);
 
-  ProfileCtrl.$inject = ['$scope', '$rootScope', '$timeout', '$location', '$http', '$httpParamSerializer', 'APIService', 'AlertService', 'UserService'];
+  ProfileCtrl.$inject = ['$scope', '$rootScope', '$timeout', '$location', '$http', 'APIService', 'AlertService', 'UserService'];
 
-  function ProfileCtrl($scope, $rootScope, $timeout, $location, $http, $httpParamSerializer, APIService, AlertService, UserService) {
+  function ProfileCtrl($scope, $rootScope, $timeout, $location, $http, APIService, AlertService, UserService) {
     var vm = this;
 
     vm.saveProfile = saveProfile;
@@ -15,9 +15,11 @@
     vm.resetProfileForm = resetProfileForm;
     vm.resetPasswordForm = resetPasswordForm;
 
-    vm.form = {};
+    (function init() {
+      vm.form = {};
 
-    resetProfileForm();
+      resetProfileForm();
+    })();
 
     function saveProfile() {
 
@@ -100,6 +102,5 @@
     }
 
   }
-
 
 })();

@@ -11,7 +11,7 @@
     .filter('camelize', function() {
       return function(input, all) {
         return input.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function(match, index) {
-          if (+match === 0) return ""; // or if (/\s+/.test(match)) for white spaces
+          if (+match === 0) return "";
           return index === 0 ? match.toLowerCase() : match.toUpperCase();
         });
       };
@@ -21,7 +21,7 @@
 
   config.$inject = ['$routeProvider', '$locationProvider'];
 
-  function config($routeProvider) {
+  function config($routeProvider, $locationProvider) {
 
     $routeProvider
 
@@ -141,33 +141,34 @@
     vm.togglePasswordRecovery = togglePasswordRecovery;
     vm.clearAlertMessage = AlertService.clearAlertMessageAndDigest;
 
-    APIService.userCall('claimsGet', ['http://wso2.org/claims', 'user'])
-      .then(claimsGetResponse);
+    (function init() {
+      APIService.userCall('claimsGet', ['http://wso2.org/claims', 'user'])
+        .then(claimsGetResponse);
 
-    function claimsGetResponse(response) {
-      // Only include claims set to be displayed by default
-      var claims = response.data.filter(function(a) {
-        return a.supportedByDefault === 'true';
-      });
+      function claimsGetResponse(response) {
+        // Only include claims set to be displayed by default
+        var claims = response.data.filter(function(a) {
+          return a.supportedByDefault === 'true';
+        });
 
-      // Sort the claims in correct order.
-      claims.sort(function(a, b) {
-        return a.displayOrder - b.displayOrder;
-      });
+        // Sort the claims in correct order.
+        claims.sort(function(a, b) {
+          return a.displayOrder - b.displayOrder;
+        });
 
-      vm.claims = claims;
-      vm.user = {};
+        vm.claims = claims;
+        vm.user = {};
 
-      for (var i = 0; i < vm.claims.length; i++) {
-        vm.claims[i].claimValue = $filter('camelize')(vm.claims[i].description);
-        vm.user[vm.claims[i].claimValue] = {};
-        vm.user[vm.claims[i].claimValue].claimUri = vm.claims[i].claimUri;
+        for (var i = 0; i < vm.claims.length; i++) {
+          vm.claims[i].claimValue = $filter('camelize')(vm.claims[i].description);
+          vm.user[vm.claims[i].claimValue] = {};
+          vm.user[vm.claims[i].claimValue].claimUri = vm.claims[i].claimUri;
+        }
+
       }
-
-    }
+    })();
 
     function login() {
-
       vm.dataLoading = true;
       AuthenticationService.login(vm.username, vm.password).then(
         function(response) {

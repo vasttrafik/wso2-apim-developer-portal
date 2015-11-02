@@ -45,8 +45,7 @@
           <h3>API:er</h3>
         </a>
         <p>
-          Här finner du alla våra publika api:er. Skapa ett konto följt av en applikation och du är klar för att
-          prenumerera på våra api:er.
+          Här finner du alla våra publika api:er. Skapa ett konto följt av en applikation och du är klar för att prenumerera på våra api:er.
         </p>
       </div>
 
@@ -240,15 +239,15 @@
 </div>
 
 <script>
-  $(document).ready(function () {
+  $(document).ready(function() {
 
-    $('#create-button').on('click', function (e) {
+    $('#create-button').on('click', function(e) {
       e.stopPropagation();
 
       var element = angular.element(document.body);
       var controller = element.controller();
 
-      element.scope().$apply(function () {
+      element.scope().$apply(function() {
         controller.toggleCreate(true);
       });
 

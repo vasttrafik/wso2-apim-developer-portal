@@ -4,7 +4,13 @@
   </div>
 </div>
 
-<div class="container">
+<div class="container" ng-show="vm.applications.length == 0">
+  <div class="row">
+    <h3>Du har för närvarande inga applikationer. Skapa en ny applikation genom att fylla i formuläret nedan.</h3>
+  </div>
+</div>
+
+<div class="container" ng-show="vm.applications.length > 0">
   <div class="row">
 
     <table class="table table-hover table-striped">
@@ -109,16 +115,16 @@
         <div class="form-group" ng-class="{ 'has-error': updateApplicationForm.name.$dirty && updateApplicationForm.name.$invalid,
     'has-success' : updateApplicationForm.name.$valid}">
           <label for="name">Namn</label>
-          <input type="text" name="name" id="name" class="form-control" ng-model="vm.form.application.update.name" required />
+          <input type="text" name="name" id="updateName" class="form-control" ng-model="vm.form.application.update.name" required />
           <span ng-show="updateApplicationForm.name.$dirty && updateApplicationForm.name.$error.required" class="help-block">Namn är obligatoriskt</span>
         </div>
         <div class="form-group">
           <label for="callbackUrl">Callback URL</label>
-          <input type="text" name="callbackUrl" id="callbackUrl" class="form-control" ng-model="vm.form.application.update.callbackUrl" />
+          <input type="text" name="callbackUrl" id="updateCallbackUrl" class="form-control" ng-model="vm.form.application.update.callbackUrl" />
         </div>
         <div class="form-group">
           <label for="description">Beskrivning</label>
-          <textarea id="description" maxlength="400" type="text" class="form-control" ng-model="vm.form.application.update.description"></textarea>
+          <textarea id="updateDescription" maxlength="400" type="text" class="form-control" ng-model="vm.form.application.update.description"></textarea>
         </div>
 
         <div class="form-actions noclick" style="padding-top: 20px">
@@ -146,22 +152,22 @@
       <form name="detailsApplicationForm" ng-submit="vm.detailsApplication(vm.form.application.details.applicationId)" role="form">
 
         <div class="form-group">
-          <label for="consumerkey">Nyckel</label>
-          <div id="consumersecret" class="form-data">{{vm.form.application.details.consumerKey}}
+          <label for="consumerKey">Nyckel</label>
+          <div id="consumerKey" class="form-data">{{vm.form.application.details.consumerKey}}
             <span clipboard text="vm.form.application.details.consumerKey" on-copied="vm.copySuccess('Nyckel')" class="fa fa-files-o" style="float:right; cursor: pointer"></span>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="consumersecret">Hemlighet</label>
-          <div id="consumersecret" class="form-data">{{vm.form.application.details.consumerSecret}}
+          <label for="consumerSecret">Hemlighet</label>
+          <div id="consumerSecret" class="form-data">{{vm.form.application.details.consumerSecret}}
             <span clipboard text="vm.form.application.details.consumerSecret" on-copied="vm.copySuccess('Hemlighet')" class="fa fa-files-o" style="float:right; cursor: pointer"></span>
           </div>
         </div>
 
         <div class="form-group">
           <label for="description">AccessToken</label>
-          <div id="consumersecret" class="form-data">{{vm.form.application.details.accessToken}}
+          <div id="accessToken" class="form-data">{{vm.form.application.details.accessToken}}
             <span clipboard text="vm.form.application.details.accessToken" on-copied="vm.copySuccess('AccessToken')" class="fa fa-files-o" style="float:right; cursor: pointer"></span>
           </div>
         </div>

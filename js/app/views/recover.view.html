@@ -64,8 +64,8 @@
       <div class="row well">
         <form name="passwordRecoveryNotificationForm" ng-submit="vm.passwordRecoveryNotification()" role="form">
           <div class="form-group">
-            <label for="name">Användarnamn</label>
-            <input type="text" name="username" id="username" class="form-control" ng-model="vm.form.username" disabled />
+            <label for="notificationUsername">Användarnamn</label>
+            <input type="text" name="notificationUsername" id="notificationUsername" class="form-control" ng-model="vm.form.username" disabled />
           </div>
           <div class="form-group" ng-class="{ 'has-error': passwordRecoveryNotificationForm.code.$dirty && passwordRecoveryNotificationForm.code.$invalid,
         'has-success' : passwordRecoveryNotificationForm.code.$valid}">
@@ -81,8 +81,8 @@
 
           <div class="form-group" ng-class="{ 'has-error': passwordRecoveryNotificationForm.captcha.$dirty && passwordRecoveryNotificationForm.captcha.$invalid,
   'has-success' : passwordRecoveryNotificationForm.captcha.$valid}">
-            <label for="name">Captcha</label>
-            <input type="text" name="captcha" id="captcha" class="form-control" ng-model="vm.form.captcha.captcha" required />
+            <label for="notificationCaptcha">Captcha</label>
+            <input type="text" name="notificationCaptcha" id="notificationCaptcha" class="form-control" ng-model="vm.form.captcha.captcha" required />
             <span ng-show="passwordRecoveryNotificationForm.captcha.$dirty && passwordRecoveryNotificationForm.captcha.$error.required" class="help-block">Captcha är obligatoriskt</span>
           </div>
 
@@ -108,7 +108,7 @@
           <div class="form-group" ng-class="{ 'has-error': passwordForm.password.$dirty && passwordForm.password.$invalid,
         'has-success' : passwordForm.password.$valid}">
             <label for="password">Nytt lösenord</label>
-            <input type="password" name="password" id="password" class="form-control" ng-model="vm.form.password.password" ng-minlength=6 ng-maxlength=12 ng-pattern="/^((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*])).{6,12}$/" required />
+            <input type="password" name="password" id="password" class="form-control" ng-model="vm.form.password.password" ng-minlength="6" ng-maxlength="12" ng-pattern="/^((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*])).{6,12}$/" required />
             <span ng-show="passwordForm.password.$dirty && passwordForm.password.$error.required" class="help-block">Lösenord är obligatoriskt</span>
             <span ng-show="passwordForm.password.$error.minlength" class="help-block">Lösenordet måste vara minst 6 tecken långt</span>
             <span ng-show="passwordForm.password.$error.maxlength" class="help-block">Lösenordet får vara max 12 tecken långt</span>

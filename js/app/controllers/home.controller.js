@@ -5,12 +5,10 @@
     .module('vtPortal')
     .controller('HomeCtrl', HomeCtrl);
 
-  HomeCtrl.$inject = ['$rootScope', 'AlertService'];
+  HomeCtrl.$inject = ['AlertService'];
 
-  function HomeCtrl($rootScope, AlertService) {
+  function HomeCtrl(AlertService) {
     var vm = this;
-
-    //AlertService.Success('Some info you need to see!');
 
   }
 

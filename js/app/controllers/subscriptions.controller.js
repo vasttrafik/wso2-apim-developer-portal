@@ -5,9 +5,9 @@
     .module('vtPortal')
     .controller('SubscriptionsCtrl', SubscriptionsCtrl);
 
-  SubscriptionsCtrl.$inject = ['$scope', '$http', '$httpParamSerializer', 'APIService', 'AlertService'];
+  SubscriptionsCtrl.$inject = ['$scope', '$http', 'APIService', 'AlertService'];
 
-  function SubscriptionsCtrl($scope, $http, $httpParamSerializer, APIService, AlertService) {
+  function SubscriptionsCtrl($scope, $http, APIService, AlertService) {
     var vm = this;
 
     vm.addSubscription = addSubscription;
@@ -17,11 +17,19 @@
     vm.resetAddSubscriptionForm = resetAddSubscriptionForm;
     vm.resetUpdateSubscriptionForm = resetUpdateSubscriptionForm;
 
-    vm.form = {};
-    vm.form.subscription = {};
+    (function init() {
+      vm.form = {};
+      vm.form.subscription = {};
 
-    APIService.call('subscriptionsGet', [0.0, 0.0])
-      .then(subscriptionsGetResponse);
+      APIService.call('subscriptionsGet', [0.0, 0.0])
+        .then(subscriptionsGetResponse);
+
+      APIService.call('applicationsGet', [0.0, 0.0])
+        .then(applicationsGetResponse);
+
+      APIService.call('apisGet', [0.0, 0.0])
+        .then(aPIsGetResponse);
+    })();
 
     function subscriptionsGetResponse(response) {
       if (response.status === 200) {
@@ -31,9 +39,6 @@
       }
     }
 
-    APIService.call('applicationsGet', [0.0, 0.0])
-      .then(applicationsGetResponse);
-
     function applicationsGetResponse(response) {
       if (response.status === 200) {
         vm.applications = response.data.list;
@@ -41,9 +46,6 @@
         AlertService.error("Problem retrieving application list");
       }
     }
-
-    APIService.call('apisGet', [0.0, 0.0])
-      .then(aPIsGetResponse);
 
     function aPIsGetResponse(response) {
       if (response.status === 200) {
@@ -99,7 +101,6 @@
         }
         vm.dataLoadingAddSubscription = false;
       }
-
     }
 
     function updateSubscription() {
