@@ -31,6 +31,12 @@
       controllerAs: 'vm'
     })
 
+    .when('/contact', {
+      controller: 'ContactCtrl',
+      templateUrl: 'js/app/views/contact.view.html',
+      controllerAs: 'vm'
+    })
+
     .when('/guides/:guide', {
       controller: 'GuidesCtrl',
       templateUrl: 'js/app/views/guides.view.html',
