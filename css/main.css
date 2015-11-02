@@ -14,7 +14,7 @@ body {
   font-family: 'FoundersGroteskWeb-Regular','Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 18px;
   line-height: 1.42857;
-  padding-top: 90px;
+  padding-top: 120px;
 }
 
 .container {
@@ -357,18 +357,18 @@ span.btn.btn-link {
 
  span.btn.btn-link:hover,
  span.btn.btn-link:active {
-    
+
     background-color: #39464E
-  } 
+  }
 
 
 .text-uppercase {
   text-transform: uppercase;
 }
 
-a, 
-button, 
-a .icon, 
+a,
+button,
+a .icon,
 a .panel-body,
 span.btn.btn-link {
   -moz-transition: color 500ms ease-out 0s, background-color 500ms ease-out 0s, box-shadow 500ms ease-out 0s, opacity 500ms linear 0s, transform 500ms ease-in-out 0s;
