@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html ng-app="vtPortal" class="no-js" lang="">
 
@@ -176,7 +175,6 @@
         </div>
       </div>
     </div>
-
     <div ng-class="{ 'alert': alert, 'alert-success': alert.type === 'success', 'alert-danger': alert.type === 'error' }" ng-show="alert" style="margin-bottom: 0; border-radius: 0">
       <div class="container" style="padding: 0">
         <span ng-show="alert" ng-bind="alert.heading" style="font-weight: bold; margin-right: 5px;"></span>
@@ -184,8 +182,8 @@
         <button type="button" class="close" ng-show="alert">×</button>
       </div>
     </div>
-  <div id="top"></div>
-</div>
+    <div id="top"></div>
+  </div>
   <div ng-view></div>
 
   <footer class="bs-docs-footer" role="contentinfo">
@@ -275,6 +273,7 @@
   <script src="js/vendor/ng-password-strength.js"></script>
   <script src="js/vendor/lodash.min.js"></script>
   <script src="js/vendor/BootSideMenu.js"></script>
+  <script src="js/vendor/ng-ScrollSpy.js"></script>
 
   <script src="js/main.js"></script>
 
