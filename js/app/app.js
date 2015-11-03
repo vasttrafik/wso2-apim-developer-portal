@@ -125,7 +125,7 @@
     $rootScope.$on('$locationChangeStart', function(event, next, current) {
 
       // redirect to startpage page if not logged in and trying to access a restricted page
-      var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api', 'guides', 'activation', 'recover']) === -1;
+      var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api', 'guides', 'activation', 'recover', 'contact']) === -1;
 
       if (restrictedPage && !$rootScope.user.loggedIn) {
         $location.path('/');
@@ -204,7 +204,7 @@
     function create() {
       vm.dataLoading = true;
       AuthenticationService.create(vm.user, vm.claims).then(function(response) {
-        AlertService.success('Du kommer få ett mail med instruktioner för att akivera ditt konto', 'Registrering skickad!', 10000);
+        AlertService.success('Du kommer få ett mail med instruktioner för att aktivera ditt konto', 'Registrering skickad!', 10000);
         $rootScope.user.create = false;
         vm.dataLoading = false;
       }).catch(function(response) {

@@ -38,7 +38,7 @@
             Folkungagatan 20, Göteborg<br />
             <i class="fa fa-phone adress"></i> 031-62 92 00<br />
             <i class="fa fa-fax adress"></i> Fax: 031-62 92 01<br />
-              <i class="fa fa-envelope adress"></i> E-post:<a href="mailto:api@vasttrafik.se"> api@vasttrafik.se</a>
+            <i class="fa fa-envelope adress"></i> E-post:<a href="mailto:api@vasttrafik.se"> api@vasttrafik.se</a>
           </address>
         </div>
       </div>
@@ -53,34 +53,45 @@
         </div>
         <div class="panel-body">
           <!-- Contact form -->
-          <form role="form" id="feedbackForm">
+          <form role="form" name="contactForm" ng-submit="vm.submitContact()">
 
-            <div class="form-group">
-              <label for="namn">Namn</label>
-              <input type="text" class="form-control" id="namn" name="namn" placeholder="Namn">
-              <span class="help-block" style="display: none;">Ange namn</span>
+            <div class="form-group" ng-class="{ 'has-error': contactForm.name.$dirty && contactForm.name.$invalid,
+                 'has-success' : contactForm.name.$valid}">
+              <label for="name">Namn</label>
+              <input type="text" class="form-control" id="name" name="name" ng-model="vm.form.contact.name" placeholder="Namn" required>
+              <span class="help-block" ng-show="contactForm.name.$dirty && contactForm.name.$error.required">Ange namn</span>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" ng-class="{'has-error': contactForm.email.$dirty && contactForm.email.$invalid,
+                 'has-success': contactForm.email.$valid}">
               <label for="email">Epostadress</label>
-              <input type="email" class="form-control" id="email" name="email" placeholder="Epostadress">
-              <span class="help-block" style="display: none;">Ange giltig epostadress</span>
+              <input type="email" class="form-control" id="email" name="email" ng-model="vm.form.contact.email" placeholder="Epostadress" required>
+              <span ng-show="contactForm.email.$dirty && contactForm.email.$error.required" class="help-block">Ange giltig epostadress</span>
+            </div>
+
+            <div class="form-group" ng-class="{'has-error': contactForm.message.$dirty && contactForm.message.$error.required ,
+                 'has-success': contactForm.message.$valid}">
+              <label for="message">Meddelande</label>
+              <textarea rows="6" cols="100" class="form-control" id="message" name="message" ng-model="vm.form.contact.message" placeholder="Meddelande" required></textarea>
+              <span class="help-block" ng-show="contactForm.message.$dirty && contactForm.message.$error.required">Var vänlig ange ett meddelande</span>
             </div>
 
             <div class="form-group">
-              <label for="message">Meddelande</label>
-              <textarea rows="10" cols="100" class="form-control" id="message" name="message" placeholder="Meddelande"></textarea>
-              <span class="help-block" style="display: none;">Meddelande</span>
+              <img src="{{vm.captcha}}" title="CAPTCHA-kod för verifiering" />
+              <i class="fa fa-refresh" style="margin-left: 20px; cursor: pointer" ng-click="vm.generateCaptcha()"></i>
             </div>
-            <img id="captcha" src="library/vender/securimage/securimage_show.php" alt="CAPTCHA-bild" />
-            <a href="#" onclick="document.getElementById('captcha').src = 'library/vender/securimage/securimage_show.php?' + Math.random(); return false" class="btn btn-info btn-sm">Visa annan bild</a><br />
 
-            <div class="form-group" style="margin-top: 10px;">
-              <label for="captcha_code">Ange säkerhetskod</label>
-              <input type="text" class="form-control" name="captcha_code" id="captcha_code" placeholder="Var vänlig, ange säkerhetskoden från bilden" />
-              <span class="help-block" style="display: none;">Var vänlig, ange säkerhetskoden från bilden</span>
+            <div class="form-group" ng-class="{'has-error': contactForm.captcha.$dirty && contactForm.captcha.$invalid,
+                 'has-success' : contactForm.captcha.$valid}">
+              <label for="captcha">Ange säkerhetskod</label>
+              <input type="text" name="captcha" id="captcha" class="form-control" ng-model="vm.form.contact.captcha" required/>
+              <span ng-show="contactForm.captcha.$dirty && contactForm.captcha.$error.required" class="help-block">Captcha är obligatoriskt</span>
             </div>
-            <button type="submit" id="feedbackSubmit" class="btn btn-primary btn-lg" style="display: block; margin-top: 10px;">Skicka meddelande</button>
+
+            <div class="form-actions noclick" style="padding-top: 20px">
+              <button type="submit" ng-disabled="contactForm.$invalid || vm.dataLoadingActivation" class="btn btn-primary">Skicka meddelande</button>
+              <img ng-if="vm.dataLoadingUpdateApplication" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+            </div>
           </form>
           <!-- END Contact form -->
         </div>
