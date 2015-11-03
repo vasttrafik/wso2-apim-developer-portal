@@ -13,7 +13,6 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    text-align: center
   }
 
   nav li,
@@ -22,7 +21,7 @@
   }
 
   nav a {
-    padding: 20px;
+    padding: 15px;
     color: #333;
     text-decoration: none;
   }
@@ -37,30 +36,37 @@
   }
 </style>
 <div class="wrap ng-scope">
+
   <nav>
+  <div class="container" style="padding-top: 5px">
     <ul>
-      <li><a href="#create-account" du-smooth-scroll="" du-scrollspy="" offset="160" class="">1. Skapa konto</a></li>
-      <li><a href="#create-application" du-smooth-scroll="" du-scrollspy="" offset="40">2. Skapa applikation</a></li>
-      <li><a href="#create-subscription" du-smooth-scroll="" du-scrollspy="" offset="160">3. Skapa prenumeration</a></li>
+      <li>  <h1 style="margin-top: 5px">Guide: Kom igång</h1></li>
+      <span style="float:right">
+      <li><a href="#create-account" du-smooth-scroll="" du-scrollspy="" offset="180" class="">1. Skapa konto</a></li>
+      <li><a href="#create-application" du-smooth-scroll="" du-scrollspy="" offset="10">2. Skapa applikation</a></li>
+      <li><a href="#create-subscription" du-smooth-scroll="" du-scrollspy="" offset="190">3. Skapa prenumeration</a></li>
+    </span>
     </ul>
+    </div>
   </nav>
+
   <div class="container-fluid" style="margin-top:60px;">
-    <div class="container" style="padding-top:0;">
+    <div class="container" style="padding-top:0;line-height: 2em;">
       <!-- Account management -->
       <section id="create-account">
         <div class="row">
 
-          <h1>Guide: Kom igång</h1>
 
 
-          <div class="col-xs-12 col-md-12">
+
+          <div class="col-xs-12 col-md-12" style="margin-top: 60px">
             <h2>1. Skapa konto</h2>
             <h3>Ange kontoinformation</h3>
           </div>
 
           <div class="col-xs-12 col-md-12">
             <p>
-              Skapa konto för utvecklarportalen når du på två sätt: via Skapa konto på startsidan eller menyalternativet Logga in -> Skapa konto.
+              Skapa konto för utvecklarportalen når du på två sätt: via Skapa konto på startsidan eller menyalternativet Logga in -&gt; Skapa konto.
             </p>
             <p>
               I formuläret som visas fyller du i efterfrågade uppgifter och väljer Skapa konto.
@@ -93,7 +99,7 @@
       </section>
       <!--Application management-->
       <section id="create-application">
-        <div class="row">
+        <div class="row" style="margin-top: 100px">
           <div class="col-xs-12 col-md-12">
             <h2>Mina applikationer</h2>
           </div>
@@ -121,7 +127,7 @@
         </div>
 
         <!--API Management-->
-        <div class="row">
+        <div class="row" style="margin-top: 100px">
           <div class="col-xs-12 col-md-12">
             <h2>Mina prenumerationer</h2>
           </div>
@@ -165,7 +171,7 @@
               Alternativ 2 innebär att skapa prenumeration på sidan Mina prenumerationer. I formuläret Skapa ny prenumeration väljer du först applikation och sedan API och klickar sedan på Skapa. Prenumerationen skapas och återfinns nu i listan överst på sidan..
             </p>
           </div>
-          <div class="col-xs-12 col-md-12">
+          <div class="col-xs-12 col-md-12" style="margin-bottom: 100px">
             <img src="/img/png/create_sub.png" class="img-responsive marked" />
           </div>
 
