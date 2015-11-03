@@ -1,22 +1,4 @@
-﻿<style type="text/css">
-  .google-maps {
-    position: relative;
-    padding-bottom: 60%;
-    height: 0;
-    overflow: hidden;
-  }
-
-  .google-maps iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100% !important;
-    height: 100% !important;
-  }      
-
-</style>
-
-<div class="jumbotron">
+﻿<div class="jumbotron" style="background-color:white;">
   <div class="container">
     <div class="row">
       <div class="col-sm-12 col-lg-12">
@@ -31,21 +13,18 @@
     <div class="col-sm-12 col-lg-12">
       <div class="panel">
         <div class="panel-heading">
-          <h3><i class="icon-map-marker main-color"></i> Adress</h3>
+          <h3><i class="glyphicon glyphicon-map-marker"></i> Adress</h3>
         </div>
         <div class="panel-body">
-          <!-- gMap script container !Do not remove!! -->
           <div class="google-maps">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d2131.5092842809736!2d11.983085315757151!3d57.70780644699487!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ssv!2sse!4v1446475440919" width="600" height="250" frameborder="0" style="border:0"></iframe>
+            <iframe width="600" height="300" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=V%C3%A4sttrafik%2C%20Folkungagatan%20G%C3%B6teborg&key=AIzaSyD_kjI6iCMgI8zWldFt9A06SmqEIml3CEc" allowfullscreen></iframe>
           </div>
-          <!--<div id="map"></div>-->
-          <!-- gMap script container !Do not remove!! -->
         </div>
       </div>
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-4 col-lg-4">
+    <div class="col-xs-12 col-md-4 col-lg-4">
       <div class="panel">
         <div class="panel-heading">
           <h3><i class="glyphicon glyphicon-map-marker"></i> Vårt kontor</h3>
@@ -53,91 +32,59 @@
         <div class="panel-body">
           <address>
             <strong>Göteborg</strong><br />
-            Postadress: Box 123, 541 23 Skövde<br />
-            Besöksadress: Folkungagatan 20, Göteborg<br />
-            <i class="icon-phone-sign"></i> 031-62 92 00<br />
-            Fax: 031-62 92 01
+            Postadress:<br />
+            Box 123, 541 23 Skövde<br />
+            Besöksadress:<br />
+            Folkungagatan 20, Göteborg<br />
+            <i class="fa fa-phone adress"></i> 031-62 92 00<br />
+            <i class="fa fa-fax adress"></i> Fax: 031-62 92 01<br />
+              <i class="fa fa-envelope adress"></i> E-post:<a href="mailto:api@vasttrafik.se"> api@vasttrafik.se</a>
           </address>
         </div>
       </div>
     </div>
 
-    <div class="col-12 col-lg-8">
+    <div class="col-xs-12 col-md-8 col-lg-8">
       <div class="panel">
         <div class="panel-heading">
           <h3 style="vertical-align:middle">
-            <i class="glyphicon glyphicon-envelope"></i> Kontakta oss
+            <i class="fa fa-envelope"></i> Kontakta oss
           </h3>
         </div>
         <div class="panel-body">
-          <!-- CONTACT FORM https://github.com/jonmbake/bootstrap3-contact-form -->
-
+          <!-- Contact form -->
           <form role="form" id="feedbackForm">
+
             <div class="form-group">
-              <label for="name">Namn</label>
-              <input type="text" class="form-control" id="name" name="name" placeholder="Namn">
+              <label for="namn">Namn</label>
+              <input type="text" class="form-control" id="namn" name="namn" placeholder="Namn">
               <span class="help-block" style="display: none;">Ange namn</span>
             </div>
+
             <div class="form-group">
               <label for="email">Epostadress</label>
               <input type="email" class="form-control" id="email" name="email" placeholder="Epostadress">
               <span class="help-block" style="display: none;">Ange giltig epostadress</span>
             </div>
+
             <div class="form-group">
+              <label for="message">Meddelande</label>
               <textarea rows="10" cols="100" class="form-control" id="message" name="message" placeholder="Meddelande"></textarea>
               <span class="help-block" style="display: none;">Meddelande</span>
             </div>
-            <img id="captcha" src="library/vender/securimage/securimage_show.php" alt="CAPTCHA Image" />
-            <a href="#" onclick="document.getElementById('captcha').src = 'library/vender/securimage/securimage_show.php?' + Math.random(); return false" class="btn btn-info btn-sm">Show a Different Image</a><br />
-            <div class="form-group" style="margin-top: 10px;">
-              <input type="text" class="form-control" name="captcha_code" id="captcha_code" placeholder="Var vänlig, ange koden angiven ovan" />
-              <span class="help-block" style="display: none;">Var vänlig ange koden från bilden</span>
-            </div>
+            <img id="captcha" src="library/vender/securimage/securimage_show.php" alt="CAPTCHA-bild" />
+            <a href="#" onclick="document.getElementById('captcha').src = 'library/vender/securimage/securimage_show.php?' + Math.random(); return false" class="btn btn-info btn-sm">Visa annan bild</a><br />
 
-            <span class="help-block" style="display: none;">Var vänlig, ange säkerhetskoden från bilden.</span>
+            <div class="form-group" style="margin-top: 10px;">
+              <label for="captcha_code">Ange säkerhetskod</label>
+              <input type="text" class="form-control" name="captcha_code" id="captcha_code" placeholder="Var vänlig, ange säkerhetskoden från bilden" />
+              <span class="help-block" style="display: none;">Var vänlig, ange säkerhetskoden från bilden</span>
+            </div>
             <button type="submit" id="feedbackSubmit" class="btn btn-primary btn-lg" style="display: block; margin-top: 10px;">Skicka meddelande</button>
           </form>
-          <!-- END CONTACT FORM -->
+          <!-- END Contact form -->
         </div>
       </div>
     </div>
   </div>
-</div> <!-- /container -->
-
-
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-<script type="text/javascript" src="assets/js/jquery.gmap.js"></script>
-<script>
-  $(document).ready(function () {
-
-    $('#map').gMap({
-      address: 'Gothenburg',
-      panControl: true,
-      zoomControl: true,
-      zoomControlOptions: {
-        style: google.maps.ZoomControlStyle.SMALL
-      },
-      mapTypeControl: true,
-      scaleControl: true,
-      streetViewControl: false,
-      overviewMapControl: true,
-      scrollwheel: true,
-      icon: {
-        image: "http://www.google.com/mapfiles/marker.png",
-        shadow: "http://www.google.com/mapfiles/shadow50.png",
-        iconsize: [20, 34],
-        shadowsize: [37, 34],
-        iconanchor: [9, 34],
-        shadowanchor: [19, 34]
-      },
-      zoom: 14,
-      markers: [
-   { 'address': 'Göteborg' }
-      ]
-
-
-    });
-  });
-
-
-</script>
+</div>

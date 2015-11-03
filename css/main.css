@@ -168,8 +168,8 @@ i.fa.fa-question.fa-stack-1x {
 
 .panel {
   background-color: #ffffff;
-  border: 1px solid transparent;
-  border-radius: 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
   margin-bottom: 25px;
 }
@@ -618,4 +618,32 @@ i.fa.fa-bars {
 
 .scroll-top-wrapper i.fa {
   line-height: inherit;
+}
+.fa.fa-envelope,
+.glyphicon.glyphicon-map-marker,
+.fa.fa-phone,
+.fa.fa-fax {
+  color:#00aaeb;
+} 
+
+.fa.fa-envelope.adress,
+.glyphicon.glyphicon-map-marker.adress,
+.fa.fa-phone.adress,
+.fa.fa-fax.adress{
+  color:#3C4650;
+}
+
+.google-maps {
+   position: relative;
+   padding-bottom: 60%;
+   height: 0;
+   overflow: hidden;
+ }
+
+.google-maps iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
 }

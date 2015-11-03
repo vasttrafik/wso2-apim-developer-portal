@@ -33,8 +33,6 @@
     line-height: 50px;
     cursor: pointer;
 }
-/*.nav-side-menu ul:not(.collapsed) .arrow:before,
-.nav-side-menu li:not(.collapsed) .arrow:before,*/ 
 .nav-side-menu ul .arrow:before,
 .nav-side-menu li .arrow:before {
     font-family: FontAwesome;
@@ -83,14 +81,6 @@
     background-color: #3c4650;
     color: #00AAEB;
 }
-
-/*.nav-side-menu ul .sub-menu li:before,
-        .nav-side-menu li .sub-menu li:before {
-            padding-left: 10px;
-            padding-right: 10px;
-            vertical-align: middle;
-        }*/
-
 .nav-side-menu li {
     padding-left: 0;
     border-left: 3px solid #2e353d;
