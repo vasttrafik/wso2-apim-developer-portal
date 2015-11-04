@@ -63,7 +63,7 @@
     </div>
   </div>
 
-  <div class="navbar navbar-fixed-top" style="border: 0px">
+  <div class="navbar navbar-fixed-top">
     <div class="navbar-inverse">
       <div class="container">
         <div class="navbar-header">
@@ -179,7 +179,7 @@
         </div>
       </div>
     </div>
-    <div style="height: 50px; background: #fff">
+    <div style="height: 50px; background: #fff;">
       <div ng-class="{ 'alert': alert, 'alert-success': alert.type === 'success', 'alert-danger': alert.type === 'error' }" ng-show="alert" style="margin-bottom: 0; border-radius: 0">
         <div class="container" style="padding: 0px">
           <span ng-show="alert" ng-bind="alert.heading" style="font-weight: bold; margin-right: 5px;"></span>
@@ -188,7 +188,6 @@
         </div>
       </div>
     </div>
-    <div id="top"></div>
   </div>
   <div ng-view autoscroll="true"></div>
 
