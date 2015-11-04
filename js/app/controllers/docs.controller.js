@@ -14,7 +14,7 @@
 
       vm.template = {
         name: $routeParams.doc + '.view.html',
-        url: 'js/app/views/docs/' + $routeParams.guide + '.view.html'
+        url: 'js/app/views/docs/' + $routeParams.doc + '.view.html'
       };
     })();
 
