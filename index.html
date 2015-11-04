@@ -53,10 +53,10 @@
           </ul>
 
           <li>
-            <a href="#">Support</a>
+            <a class="leaf"  href="#">Support</a>
           </li>
           <li>
-            <a href="#/contact">Kontakta oss</a>
+            <a class="leaf" href="#/contact">Kontakta oss</a>
           </li>
         </ul>
       </div>
@@ -329,7 +329,7 @@
         $('.fa.fa-cog.fa-2x').removeClass("fa-spin");
       });
 
-      $('.nav-side-menu ul .sub-menu li a, .nav-side-menu li .sub-menu li a').on('click', function() {
+      $('.nav-side-menu ul .sub-menu li a, .nav-side-menu li .sub-menu li a, ul#menu-content li a.leaf').on('click', function () {
         $('.toggler').click();
       });
 

@@ -1,26 +1,30 @@
 <div class="wrap ng-scope">
+  <div class="jumbotron" style="background-color:#fff;">
+    <nav id="scroller">
+      <div class="container" style="padding-top: 45px; padding-bottom:10px;">
+        <h1>Kom igång</h1><br />
 
-  <nav id="scroller">
-    <div class="container" style="padding-top: 45px; padding-bottom:10px;">
-      <h1 style="font-size:64px">Guide: Kom igång</h1><br />
-
-      <div class="card" style="border-top:none;box-shadow:none;">
-        <ul class="nav nav-tabs" role="tablist">
-          <li>
-            <a href="#create-account" du-smooth-scroll="" du-scrollspy="" offset="380" class="">1. Skapa konto</a>
-          </li>
-          <li role="presentation">
-            <a href="#create-application" du-smooth-scroll="" du-scrollspy="" offset="170">2. Skapa applikation</a>
-          </li>
-          <li role="presentation">
-            <a href="#create-subscription" du-smooth-scroll="" du-scrollspy="" offset="40">3. Skapa prenumeration</a>
-          </li>
-        </ul>
+        <div class="card" style="border-top:none;box-shadow:none;">
+          <ul class="nav nav-tabs" role="tablist">
+            <li>
+              <a class="hidden-xs" href="#create-account" du-smooth-scroll="" du-scrollspy="" offset="380">1. Skapa konto</a>
+              <a class="hidden-sm hidden-md hidden-lg" href="#create-account" du-smooth-scroll="" du-scrollspy="" offset="380">1. Konto</a>
+            </li>
+            <li role="presentation">
+              <a class="hidden-xs" href="#create-application" du-smooth-scroll="" du-scrollspy="" offset="170">2. Skapa applikation</a>
+              <a class="hidden-sm hidden-md hidden-lg" href="#create-application" du-smooth-scroll="" du-scrollspy="" offset="170">2. App</a>
+            </li>
+            <li role="presentation">
+              <a class="hidden-xs" href="#create-subscription" du-smooth-scroll="" du-scrollspy="" offset="40">3. Skapa prenumeration</a>
+              <a class="hidden-sm hidden-md hidden-lg" href="#create-subscription" du-smooth-scroll="" du-scrollspy="" offset="40">3. Prenumeration</a>
+            </li>
+          </ul>
+        </div>
       </div>
-    </div>
-  </nav>
+    </nav>
+  </div>
 
-  <div class="container-fluid" style="margin-top:100px;">
+  <div class="container-fluid" style="margin-top:60px;">
     <div class="container">
       <!-- Account management -->
       <section id="create-account">
