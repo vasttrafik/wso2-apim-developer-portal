@@ -1,10 +1,6 @@
 ﻿<div class="jumbotron" style="background-color:white;">
   <div class="container">
-    <div class="row">
-      <div class="col-sm-12 col-lg-12">
-        <h1>Kontakta oss</h1>
-      </div>
-    </div>
+    <h1 style="margin-bottom:-80px">Kontakta oss</h1>
   </div>
 </div>
 
@@ -33,12 +29,14 @@
           <address>
             <strong>Göteborg</strong><br />
             Postadress:<br />
-            Box 123, 541 23 Skövde<br />
+            Box 123, 541 23 Skövde<br /><br />
             Besöksadress:<br />
             Folkungagatan 20, Göteborg<br />
-            <i class="fa fa-phone adress"></i> 031-62 92 00<br />
-            <i class="fa fa-fax adress"></i> Fax: 031-62 92 01<br />
-            <i class="fa fa-envelope adress"></i> E-post:<a href="mailto:api@vasttrafik.se"> api@vasttrafik.se</a>
+            <br />
+              <i class="fa fa-phone adress"></i> 031-62 92 00<br />
+              <i class="fa fa-fax adress"></i> Fax: 031-62 92 01<br />
+              <i class="fa fa-envelope adress"></i> E-post:<a href="mailto:api@vasttrafik.se"> api@vasttrafik.se</a>
+            
           </address>
         </div>
       </div>
@@ -84,7 +82,7 @@
             <div class="form-group" ng-class="{'has-error': contactForm.captcha.$dirty && contactForm.captcha.$invalid,
                  'has-success' : contactForm.captcha.$valid}">
               <label for="captcha">Ange säkerhetskod</label>
-              <input type="text" name="captcha" id="captcha" class="form-control" ng-model="vm.form.contact.captcha" required/>
+              <input type="text" name="captcha" id="captcha" class="form-control" ng-model="vm.form.contact.captcha" required />
               <span ng-show="contactForm.captcha.$dirty && contactForm.captcha.$error.required" class="help-block">Captcha är obligatoriskt</span>
             </div>
 
