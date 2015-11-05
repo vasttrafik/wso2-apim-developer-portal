@@ -1,65 +1,35 @@
-<style type="text/css">
-  nav {
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    right: 0;
-    top: 120px;
-    background: #fff;
-  }
-
-  nav li,
-  nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  nav li,
-  nav a {
-    display: inline-block;
-  }
-
-  nav a {
-    padding: 15px;
-    color: #333;
-    text-decoration: none;
-  }
-
-  a:hover {
-    background: #fff;
-  }
-
-  a.active {
-    background: #00AAEB;
-    color: #fff;
-  }
-</style>
 <div class="wrap ng-scope">
+  <div class="jumbotron" style="background-color:#fff;">
+    <nav id="scroller">
+      <div class="container" style="padding-top: 45px; padding-bottom:10px;">
+        <h1>Kom igång</h1><br />
 
-  <nav>
-  <div class="container" style="padding-top: 5px">
-    <ul>
-      <li>  <h1 style="margin-top: 5px">Guide: Kom igång</h1></li>
-      <span style="float:right">
-      <li><a href="#create-account" du-smooth-scroll="" du-scrollspy="" offset="180" class="">1. Skapa konto</a></li>
-      <li><a href="#create-application" du-smooth-scroll="" du-scrollspy="" offset="10">2. Skapa applikation</a></li>
-      <li><a href="#create-subscription" du-smooth-scroll="" du-scrollspy="" offset="190">3. Skapa prenumeration</a></li>
-    </span>
-    </ul>
-    </div>
-  </nav>
+        <div class="card" style="border-top:none;box-shadow:none;">
+          <ul class="nav nav-tabs" role="tablist">
+            <li>
+              <a class="hidden-xs" href="#create-account" du-smooth-scroll="" du-scrollspy="" offset="380">1. Skapa konto</a>
+              <a class="hidden-sm hidden-md hidden-lg" href="#create-account" du-smooth-scroll="" du-scrollspy="" offset="380">1. Konto</a>
+            </li>
+            <li role="presentation">
+              <a class="hidden-xs" href="#create-application" du-smooth-scroll="" du-scrollspy="" offset="170">2. Skapa applikation</a>
+              <a class="hidden-sm hidden-md hidden-lg" href="#create-application" du-smooth-scroll="" du-scrollspy="" offset="170">2. App</a>
+            </li>
+            <li role="presentation">
+              <a class="hidden-xs" href="#create-subscription" du-smooth-scroll="" du-scrollspy="" offset="40">3. Skapa prenumeration</a>
+              <a class="hidden-sm hidden-md hidden-lg" href="#create-subscription" du-smooth-scroll="" du-scrollspy="" offset="40">3. Prenumeration</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
 
   <div class="container-fluid" style="margin-top:60px;">
-    <div class="container" style="padding-top:0;line-height: 2em;">
+    <div class="container">
       <!-- Account management -->
       <section id="create-account">
-        <div class="row">
-
-
-
-
-          <div class="col-xs-12 col-md-12" style="margin-top: 60px">
+        <div class="row" style="margin-top:60px">
+          <div class="col-xs-12 col-md-12" >
             <h2>1. Skapa konto</h2>
             <h3>Ange kontoinformation</h3>
           </div>
@@ -97,9 +67,10 @@
           </div>
         </div>
       </section>
-      <!--Application management-->
+
+      <!--Application management -->
       <section id="create-application">
-        <div class="row" style="margin-top: 100px">
+        <div class="row" style="margin-top: 60px">
           <div class="col-xs-12 col-md-12">
             <h2>Mina applikationer</h2>
           </div>
@@ -113,7 +84,7 @@
           <!--Create-->
 
           <div class="col-xs-12 col-md-12">
-            <h3>2. Skapa applikation</h3>
+            <h2>2. Skapa applikation</h2>
           </div>
           <div class="col-xs-12 col-md-12">
             <p>
@@ -125,9 +96,11 @@
           </div>
 
         </div>
+      </section>
 
-        <!--API Management-->
-        <div class="row" style="margin-top: 100px">
+      <!--API Management-->
+      <section id="create-subscription">'
+        <div class="row" style="margin-top: 60px">
           <div class="col-xs-12 col-md-12">
             <h2>Mina prenumerationer</h2>
           </div>
@@ -142,12 +115,10 @@
             </p>
           </div>
         </div>
-      </section>
-      <section id="create-subscription">
-        <div class="row">
 
+        <div class="row">
           <div class="col-xs-12 col-md-12">
-            <h3>3. Skapa prenumeration</h3>
+            <h2>3. Skapa prenumeration</h2>
             <p>
               Utvecklarportalen erbjuder två sätt att skapa prenumeration.
               <ol>

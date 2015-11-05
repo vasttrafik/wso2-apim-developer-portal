@@ -649,3 +649,39 @@ i.fa.fa-bars {
   width: 100% !important;
   height: 100% !important;
 }
+
+ nav#scroller {
+   position: fixed;
+   z-index: 1;
+   left: 0;
+   right: 0;
+   top: 84px;
+   background: #fff;
+   padding-top:-15px;
+   margin-top:-15px;
+ }
+
+ nav#scroller li a.active {
+  border-bottom: 3px solid #00AAEB;
+  color: #00AAEB !important;
+  background: transparent;
+  font-weight: bold;
+ }
+
+ nav#scroller li a:hover {
+  border-bottom: inset 3px solid #00AAEB;
+  color: #00AAEB !important;
+  background: transparent;
+  font-weight: bold;
+ }
+
+ nav#scroller li:hover {
+  border-bottom: none;
+ }
+
+
+ nav#scroller li a:not(.active) {
+   background-color:white;
+   color: rgb(120,120,120);
+ }
+
