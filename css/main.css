@@ -22,7 +22,14 @@ body {
   padding-top: 120px;
   margin-bottom: 426px; /*Same as footer*/
 }
-
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family:FoundersGroteskWeb-Regular;
+}
 .container {
   padding-bottom: 20px;
   padding-top: 20px;
@@ -75,15 +82,19 @@ div.navbar-header > a.logo {
 }
 
 .marked {
-  padding:20px 0 20px 0;
-  margin: 20px 0 20px 0;
-  /*box-shadow: 2px 2px 5px 0 rgba(100, 100, 100, 0.9); */
+  padding:20px 0;
+  margin: 20px 0;
 }
 
 /* Jumbotron */
 .jumbotron {
   background-color: #fff;
   padding: 0;
+}
+
+.imgJumbo {
+  min-height:300px;
+
 }
 
 /* Hero */
@@ -282,43 +293,43 @@ footer {
   background-color: #00394d;
 }
 
-  footer h1,
-  footer .h1,
-  footer h2,
-  footer .h2,
-  footer h3,
-  footer .h3,
-  footer .copyright {
-    color: #aaaaaa;
-  }
+footer h1,
+footer .h1,
+footer h2,
+footer .h2,
+footer h3,
+footer .h3,
+footer .copyright {
+  color: #aaaaaa;
+}
 
-  footer a,
-  footer .logo {
-    color: white;
-  }
+footer a,
+footer .logo {
+  color: white;
+}
 
-    footer a:hover,
-    footer a:focus {
-      color: #00aaeb;
-    }
+footer a:hover,
+footer a:focus {
+  color: #00aaeb;
+}
 
-  footer,
-  footer .info {
-    padding-top: 20px;
-    padding-bottom: 20px;
-  }
+footer,
+footer .info {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
 
-    footer .info {
-      line-height: 2;
-    }
+footer .info {
+  line-height: 2;
+}
 
-      footer .info .logo {
-        float: right;
-      }
+footer .info .logo {
+  float: right;
+}
 
-        footer .info .logo .icon {
-          font-size: 54px;
-        }
+footer .info .logo .icon {
+  font-size: 54px;
+}
 /* End Footer */
 
 
