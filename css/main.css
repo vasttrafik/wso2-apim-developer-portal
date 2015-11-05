@@ -9,12 +9,18 @@
   src: url('../fonts/Founders/FoundersGroteskWeb-Regular.woff') format('woff');
 }
 
+html{
+  position: relative;
+  min-height:100%;
+}
+
 body {
   color: #3C4650;
   font-family: 'FoundersGroteskWeb-Regular','Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 18px;
   line-height: 1.42857;
   padding-top: 120px;
+  margin-bottom: 426px; /*Same as footer*/
 }
 
 .container {
@@ -76,7 +82,8 @@ div.navbar-header > a.logo {
 
 /* Jumbotron */
 .jumbotron {
-  padding-top: 0;
+  background-color: #fff;
+  padding: 0;
 }
 
 /* Hero */
@@ -263,6 +270,13 @@ ul.list-unstyled {
   }
 
 /* Footer */
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  min-height: 426px;
+}
 
 footer {
   background-color: #00394d;
@@ -309,9 +323,6 @@ footer {
 
 
 /* Button styles */
-
-
-
 button.btn {
   border: 1px solid transparent;
   padding-bottom: 10px;

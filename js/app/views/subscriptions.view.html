@@ -1,4 +1,4 @@
-<div class="jumbotron" style="background: #ffffff">
+<div class="jumbotron">
   <div class="container" style="padding-left: 0">
     <h1 style="margin-bottom: -80px;">Mina prenumerationer</h1>
   </div>
@@ -32,9 +32,6 @@
           <td>
             <span><a href="#/api/{{entries.api.name}}/{{entries.api.version}}/{{entries.api.provider}}">{{entries.api.name}} {{entries.api.version}}</a></span>
           </td>
-          <!--<td>
-            <span>{{//entries.status}}</span>
-          </td>-->
           <td>
             <span ng-click="vm.addSubscriptionUpdate(entries.subscriptionId)" style="cursor: pointer" title="Uppdatera">
               <span class="glyphicon glyphicon-edit"></span>
@@ -55,7 +52,7 @@
 </div>
 
 <div ng-show="!vm.form.subscription.update">
-  <div class="jumbotron" style="background: #ffffff; padding: 0">
+  <div class="jumbotron">
     <div class="container" style="padding-left: 0">
       <h2 style="margin-bottom: -50px;">Skapa ny prenumeration</h2>
     </div>
@@ -101,7 +98,7 @@
 </div>
 
 <div ng-show="vm.form.subscription.update">
-  <div class="jumbotron" style="background: #ffffff; padding: 0">
+  <div class="jumbotron">
     <div class="container" style="padding-left: 0">
       <h2 style="margin-bottom: -50px;">Uppdatera prenumeration</h2>
     </div>
