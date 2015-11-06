@@ -105,18 +105,7 @@ div.navbar-header > a.logo {
 
 }
 
-/* Alert bar */
-.alerter{
-  height: 50px; 
-  background: #fff;
-}
-div.alerter > div .container {
-  padding: 0;
-}
-.alertHeading{
-  font-weight: bold; 
-  margin-right: 5px;
-}
+
 
 /* Hero */
 .hero {
@@ -735,3 +724,21 @@ i.fa.fa-bars {
    padding-top: 20px;
  }
 
+ /* Alert bar */
+.alerter{
+  height:0; 
+  background: #fff;
+}
+div.alerter > div .container {
+  padding: 0;
+}
+.alertHeading{
+  font-weight: bold; 
+  margin-right: 5px;
+}
+.alert {
+  height:0;
+}
+.alert-success {
+  height:55px;
+}
