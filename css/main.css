@@ -55,6 +55,7 @@ a {
   background-image: none;
   border-color: #0085B8;
   margin-bottom: 0;
+  min-height:88px;
 }
 
   .navbar-inverse .navbar-brand {
@@ -95,6 +96,19 @@ div.navbar-header > a.logo {
 .imgJumbo {
   min-height:300px;
 
+}
+
+/* Alert bar */
+.alerter{
+  height: 50px; 
+  background: #fff;
+}
+div.alerter > div .container {
+  padding: 0;
+}
+.alertHeading{
+  font-weight: bold; 
+  margin-right: 5px;
 }
 
 /* Hero */
@@ -708,5 +722,9 @@ i.fa.fa-bars {
  nav#scroller li a:not(.active) {
    background-color:white;
    color: rgb(120,120,120);
+ }
+
+ div.form-actions.noclick {
+   padding-top: 20px;
  }
 

@@ -43,7 +43,6 @@
       </div>
 
       <div ng-show="vm.applications.length">
-        <!-- Copied from subscriptions -->
         <form name="addSubscriptionForm" ng-submit="vm.addSubscription()" role="form" class="ng-pristine ng-invalid ng-invalid-required">
           <input type="hidden" name="apiId" ng-model="vm.apiId" value="{{vm.apiId}}" />
           <div class="form-group" ng-class="{ 'has-error': addSubscriptionForm.application.$dirty && addSubscriptionForm.application.$invalid, 'has-success' : addSubscriptionForm.application.$valid}">
@@ -54,14 +53,13 @@
             </select>
             <span ng-show="addSubscriptionForm.application.$dirty && addSubscriptionForm.application.$error.required" class="help-block">Applikation är obligatoriskt</span>
           </div>
-          <div class="form-actions noclick" style="padding-top: 20px">
+          <div class="form-actions noclick">
             <button type="submit" ng-disabled="addSubscriptionForm.$invalid || vm.dataLoading" class="btn btn-primary" disabled="disabled">Skapa prenumeration</button>
             <img ng-if="vm.dataLoadingAddApplication" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
             />
             <span ng-click="vm.resetAddSubscriptionForm()" class="btn btn-link">Ångra</span>
           </div>
         </form>
-        <!-- END Copied from subscriptions -->
       </div>
     </div>
   </div>

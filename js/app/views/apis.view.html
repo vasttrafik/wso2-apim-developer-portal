@@ -1,5 +1,5 @@
 
-<div class="container-fluid" style="padding-bottom: 200px" ng-cloak>
+<div class="container-fluid" ng-cloak>
   <div class="container">
     <div class="row">
       <h1 class="sub-header">Våra API</h1>
@@ -15,14 +15,13 @@
               <th class="hidden-xs">Context</th>
               <th>Version</th>
               <th class="hidden-xs">Provider</th>
-              <!--<th class="hidden-xs">Status</th>-->
               <th>
                 Aktioner
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="entries in vm.apis">
+            <tr ng-repeat="entries in vm.apis"  class="nga-default nga-fade">
               <td class="hidden-xs">
                 <img src="{{entries.imageUrl}}" style="width:40px;height:40px" alt="link to img..." />
               </td>
@@ -42,9 +41,6 @@
                 {{entries.provider}}
 
               </td>
-              <!--<td class="hidden-xs">
-                {{//entries.status}}
-              </td>-->
               <td>
                 <span ng-click="vm.displayApi(entries.name, entries.version, entries.provider)" style="cursor: pointer" title="Visa detaljer">
                   <span class="glyphicon glyphicon-cog"></span>
