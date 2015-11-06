@@ -285,7 +285,7 @@ ul.list-unstyled {
   position: absolute;
   bottom: 0;
   width: 100%;
-  /* Set the fixed height of the footer here */
+  /* Fixed height of footer, adjusted in @media */
   min-height: 426px;
 }
 
@@ -549,6 +549,9 @@ i.glyphicon.glyphicon-info-sign.text-info {
 }
 
 @media (max-width: 767px) {
+  body {
+    margin-bottom: 935px; /*Same as footer*/
+  }
   div.navbar-collapse.collapse {
     display: inline-block;
     float: right;
