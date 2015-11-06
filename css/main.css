@@ -725,9 +725,14 @@ i.fa.fa-bars {
  }
 
  /* Alert bar */
-.alerter{
+.alerter {
+  position:relative;
+  top:0; 
   height:0; 
-  background: #fff;
+  left:0;
+  background:#fff;
+  z-index:1000;
+  padding:0;
 }
 div.alerter > div .container {
   padding: 0;
@@ -739,6 +744,7 @@ div.alerter > div .container {
 .alert {
   height:0;
 }
-.alert-success {
-  height:55px;
+.alert-success,
+.alert-danger {
+  height: 55px;
 }

@@ -22,7 +22,7 @@
 </head>
 
 <body id="body" ng-controller="MainCtrl as vm">
-
+  
   <div id="menu_left" class="container sidebar sidebar-left">
     <div class="nav-side-menu" data-side="left">
       <div class="brand"><i class="fa fa-home fa-lg"></i> Start</div>
@@ -162,6 +162,7 @@
         </div>
       </div>
     </div>
+    
     <div class="alerter">
       <div ng-class="{ 'alert': alert, 'alert-success': alert.type === 'success', 'alert-danger': alert.type === 'error' }" ng-show="alert" style="margin-bottom: 0; border-radius: 0">
         <div class="container">
@@ -172,6 +173,7 @@
       </div>
     </div>
   </div>
+
   <div ng-view autoscroll="true"></div>
 
   <footer class="footer bs-docs-footer" role="contentinfo">
