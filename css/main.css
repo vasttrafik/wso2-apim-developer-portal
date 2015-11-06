@@ -1,4 +1,11 @@
-
+@font-face {
+  font-family: 'FoundersGroteskWeb-Semibold';
+  src: url('../fonts/Founders/FoundersGroteskWeb-Semibold.eot') format('embedded-opentype');
+}
+@font-face {
+  font-family: 'FoundersGroteskWeb-Semibold';
+  src: url('../fonts/Founders/FoundersGroteskWeb-Semibold.woff') format('woff');
+}
 @font-face {
   font-family: 'FoundersGroteskWeb-Regular';
   src: url('../fonts/Founders/FoundersGroteskWeb-Regular.eot') format('embedded-opentype');
