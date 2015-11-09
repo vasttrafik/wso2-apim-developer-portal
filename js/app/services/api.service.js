@@ -47,7 +47,7 @@ Handles calls towards backend api.
 
             AuthenticationService.Logout();
             AlertService.error("User not authenticated", false);
-            deferred.reject('User not authenticated');
+            apiErrorResponse('User not authenticated', deferred);
 
           } else {
             // TODO: Change to reject
@@ -76,8 +76,8 @@ Handles calls towards backend api.
           if (response.status === 401) {
 
             AuthenticationService.logout();
-            AlertService.error("User not authenticated", false);
-            deferred.reject('User not authenticated');
+            AlertService.error("User not authenticated");
+            apiErrorResponse(response, deferred);
 
           } else {
             // TODO: Change to reject
@@ -116,6 +116,14 @@ callback({success: true});
 */
 
     }
+  }
+
+  function apiErrorResponse(apiResponse, deferred) {
+    var response = {
+      status: apiResponse.status,
+      message: apiResponse.data.message
+    };
+    deferred.reject(response);
   }
 
 })();

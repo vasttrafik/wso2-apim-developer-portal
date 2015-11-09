@@ -1,5 +1,4 @@
-﻿
-(function() {
+﻿(function() {
   'use strict';
 
   angular
@@ -24,7 +23,7 @@
         .then(getDocumentsForApi);
 
       if ($rootScope.user.loggedIn) {
-        APIService.call('applicationsGet', [0.0, 0.0])
+        APIService.call('applicationsGet', [0, 0])
           .then(applicationsGetResponse);
       }
     })();

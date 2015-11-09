@@ -125,6 +125,7 @@ Handles authentication of the user.
         });
 
       UserService.clearUser();
+      $location.path('/');
       return deferred.promise;
     }
 

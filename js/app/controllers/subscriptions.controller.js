@@ -21,13 +21,13 @@
       vm.form = {};
       vm.form.subscription = {};
 
-      APIService.call('subscriptionsGet', [0.0, 0.0])
+      APIService.call('subscriptionsGet', [0, 0])
         .then(subscriptionsGetResponse);
 
-      APIService.call('applicationsGet', [0.0, 0.0])
+      APIService.call('applicationsGet', [0, 0])
         .then(applicationsGetResponse);
 
-      APIService.call('apisGet', [0.0, 0.0])
+      APIService.call('apisGet', [0, 0])
         .then(aPIsGetResponse);
     })();
 
