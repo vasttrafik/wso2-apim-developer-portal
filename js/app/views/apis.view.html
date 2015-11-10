@@ -28,8 +28,7 @@
               <td>
                 {{entries.name}}
               </td>
-              <td>
-                {{entries.description}}
+              <td ng-bind-html="entries.description">
               </td>
               <td class="hidden-xs">
                 {{entries.context}}
