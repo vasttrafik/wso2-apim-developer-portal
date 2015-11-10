@@ -1,6 +1,6 @@
-<div class="jumbotron">
+<div class="jumbotron title">
   <div class="container" style="padding-left: 0">
-    <h1 style="margin-bottom: -60px;">Mina applikationer</h1>
+    <h1>Mina applikationer</h1>
   </div>
 </div>
 
@@ -12,21 +12,21 @@
 
 <div class="container" ng-show="vm.applications.length > 0">
   <div class="row">
-
     <table class="table table-hover table-striped">
       <thead class="table-header">
         <tr>
-          <th>Applikations Id</th>
+          <th class="hidden-xs">Applikations Id</th>
+          <th class="hidden-sm hidden-md hidden-lg">App Id</th>
           <th>Namn</th>
           <th>Beskrivning</th>
           <th colspan="3">Aktioner</th>
         </tr>
       </thead>
-
       <tbody>
         <tr ng-repeat="entries in vm.applications" class="nga-default nga-fade">
           <td>
-            <span>{{entries.applicationId}}
+            <span>
+              {{entries.applicationId}}
             </span>
           </td>
           <td>
@@ -49,7 +49,7 @@
           </td>
           <td>
             <span ng-click="vm.removeApplication(entries.applicationId)" style="cursor: pointer" title="Ta bort">
-              <span class="glyphicon glyphicon-trash" style="margin-left: 10px;"></span>
+              <span class="glyphicon glyphicon-trash"></span>
               <span class="hidden-xs">Ta bort</span>
             </span>
           </td>
@@ -61,14 +61,13 @@
 </div>
 
 <div ng-show="!vm.form.application.update && !vm.form.application.details">
-  <div class="jumbotron">
+  <div class="jumbotron title">
     <div class="container" style="padding-left: 0">
-      <h2 style="margin-bottom: -50px;">Skapa ny applikation</h2>
+      <h2>Skapa ny applikation</h2>
     </div>
   </div>
 
-
-  <div class="container" style="padding-bottom: 100px;">
+  <div class="container" style="padding-bottom: 20px;">
     <div class="row well">
       <form name="addApplicationForm" ng-submit="vm.addApplication()" role="form">
         <div class="form-group" ng-class="{ 'has-error': addApplicationForm.name.$dirty && addApplicationForm.name.$invalid,
@@ -88,8 +87,7 @@
 
         <div class="form-actions noclick">
           <button type="submit" ng-disabled="addApplicationForm.$invalid || vm.dataLoadingAddApplication" class="btn btn-primary">Skapa</button>
-          <img ng-if="vm.dataLoadingAddApplication" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
-          />
+          <img ng-if="vm.dataLoadingAddApplication" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
           <span ng-click="vm.resetAddApplicationForm();" class="btn btn-link">Ångra</span>
         </div>
       </form>
@@ -98,14 +96,13 @@
 </div>
 
 <div ng-show="vm.form.application.update">
-  <div class="jumbotron">
+  <div class="jumbotron title">
     <div class="container" style="padding-left: 0">
-      <h2 style="margin-bottom: -50px;">Uppdatera applikation {{vm.form.application.update.applicationId}}</h2>
+      <h2>Uppdatera applikation {{vm.form.application.update.applicationId}}</h2>
     </div>
   </div>
-
-
-  <div class="container" style="padding-bottom: 100px;">
+  
+  <div class="container" style="padding-bottom: 20px;">
     <div class="row well">
       <form name="updateApplicationForm" ng-submit="vm.updateApplication()" role="form">
         <div class="form-group" ng-class="{ 'has-error': updateApplicationForm.name.$dirty && updateApplicationForm.name.$invalid,
@@ -125,8 +122,7 @@
 
         <div class="form-actions noclick">
           <button type="submit" ng-disabled="updateApplicationForm.$invalid || vm.dataLoadingUpdateApplication" class="btn btn-primary">Uppdatera</button>
-          <img ng-if="vm.dataLoadingUpdateApplication" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
-          />
+          <img ng-if="vm.dataLoadingUpdateApplication" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
           <span ng-click="vm.resetUpdateApplicationForm();" class="btn btn-link">Ångra</span>
         </div>
       </form>
@@ -134,36 +130,37 @@
   </div>
 </div>
 
-
 <div ng-show="!vm.form.application.update && vm.form.application.details">
-  <div class="jumbotron">
+  <div class="jumbotron title">
     <div class="container" style="padding-left: 0">
-      <h2 style="margin-bottom: -50px;">Detaljer för applikation {{vm.form.application.details.name}}</h2>
+      <h2>Detaljer för applikation {{vm.form.application.details.name}}</h2>
     </div>
   </div>
 
-
-  <div class="container" style="padding-bottom: 100px;">
+  <div class="container" style="padding-bottom: 20px;">
     <div class="row well">
       <form name="detailsApplicationForm" ng-submit="vm.detailsApplication(vm.form.application.details.applicationId)" role="form">
 
         <div class="form-group">
           <label for="consumerKey">Nyckel</label>
-          <div id="consumerKey" class="form-data">{{vm.form.application.details.consumerKey}}
+          <div id="consumerKey" class="form-data">
+            {{vm.form.application.details.consumerKey}}
             <span clipboard text="vm.form.application.details.consumerKey" on-copied="vm.copySuccess('Nyckel')" class="fa fa-files-o" style="float:right; cursor: pointer"></span>
           </div>
         </div>
 
         <div class="form-group">
           <label for="consumerSecret">Hemlighet</label>
-          <div id="consumerSecret" class="form-data">{{vm.form.application.details.consumerSecret}}
+          <div id="consumerSecret" class="form-data">
+            {{vm.form.application.details.consumerSecret}}
             <span clipboard text="vm.form.application.details.consumerSecret" on-copied="vm.copySuccess('Hemlighet')" class="fa fa-files-o" style="float:right; cursor: pointer"></span>
           </div>
         </div>
 
         <div class="form-group">
           <label for="description">AccessToken</label>
-          <div id="accessToken" class="form-data">{{vm.form.application.details.accessToken}}
+          <div id="accessToken" class="form-data">
+            {{vm.form.application.details.accessToken}}
             <span clipboard text="vm.form.application.details.accessToken" on-copied="vm.copySuccess('AccessToken')" class="fa fa-files-o" style="float:right; cursor: pointer"></span>
           </div>
         </div>
@@ -181,8 +178,7 @@
 
         <div class="form-actions noclick">
           <button type="submit" ng-disabled="detailsApplicationForm.$invalid || vm.dataLoadingdetailsApplication" class="btn btn-primary">Generera ny access token</button>
-          <img ng-if="vm.dataLoadingAddApplication" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
-          />
+          <img ng-if="vm.dataLoadingAddApplication" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
           <span ng-click="vm.resetDetailsApplicationForm();" class="btn btn-link">Stäng</span>
         </div>
       </form>
