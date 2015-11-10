@@ -13,7 +13,7 @@
     vm.displayApi = displayApi;
 
     (function init() {
-      APIService.call('apisGet', [0.0, 0.0])
+      APIService.call('apisGet', [0, 0])
         .then(aPIsGetResponse);
 
     })();

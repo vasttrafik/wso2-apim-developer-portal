@@ -42,6 +42,8 @@
         if (response.data.verified) {
           AlertService.success("Nu kan du logga in", "Ditt konto är aktiverat!");
           $location.path('/');
+          $location.search('username', null);
+          $location.search('code', null);
         } else {
           AlertService.error("Problem vid verifiering av konto, försök igen");
           generateCaptcha();

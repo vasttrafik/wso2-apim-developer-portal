@@ -71,21 +71,27 @@
       UserService.getUser()
         .then(function(response) {
 
-          response.credential = vm.form.password.password;
-          response.newCredential = vm.form.password.passwordRepeat;
+          var request = {};
+          request.id = response.userId;
+          request.password = {};
+          request.password.password = vm.form.password.password;
+          request.password.newPassword = vm.form.password.passwordRepeat;
+          request.userName = response.userName;
 
-          APIService.call('usersUserIdPut', ['updateCredential', response, response.userId])
+          APIService.userCall('usersUserIdPut', [response.userId, 'updatePassword', '*/*', 'Bearer ' + response.token.token, 'application/json', request])
             .then(usersUserIdPutResponse);
         });
 
       function usersUserIdPutResponse(response) {
 
-        $timeout(function() {
-          vm.dataLoadingPassword = false;
+        if(response.status === 200) {
+
           resetPasswordForm();
           AlertService.success("Ditt lösenord är uppdaterat!");
-
-        }, 1000);
+        } else {
+          AlertService.error(response.data.message);
+        }
+        vm.dataLoadingPassword = false;
       }
 
     }
