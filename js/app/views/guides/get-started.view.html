@@ -1,22 +1,18 @@
 <div class="wrap ng-scope">
-  <div class="jumbotron">
+  <div class="jumbotron title">
     <nav id="scroller">
-      <div class="container" style="padding-top: 45px; padding-bottom:10px;">
-        <h1>Kom igång</h1><br />
-
-        <div class="card" style="border-top:none;box-shadow:none;">
+      <div class="container" style="padding-bottom:0;">
+        <h1>Kom igång</h1>
+        <div class="card" style="box-shadow:none;" >
           <ul class="nav nav-tabs" role="tablist">
             <li>
-              <a class="hidden-xs" href="#create-account" du-smooth-scroll="" du-scrollspy="" offset="380">1. Skapa konto</a>
-              <a class="hidden-sm hidden-md hidden-lg" href="#create-account" du-smooth-scroll="" du-scrollspy="" offset="380">1. Konto</a>
+              <a href="#create-account" du-smooth-scroll="" du-scrollspy="" offset="140">1. Konto</a>
             </li>
             <li role="presentation">
-              <a class="hidden-xs" href="#create-application" du-smooth-scroll="" du-scrollspy="" offset="170">2. Skapa applikation</a>
-              <a class="hidden-sm hidden-md hidden-lg" href="#create-application" du-smooth-scroll="" du-scrollspy="" offset="170">2. App</a>
+              <a href="#create-application" du-smooth-scroll="" du-scrollspy="" offset="140">2. App</a>
             </li>
             <li role="presentation">
-              <a class="hidden-xs" href="#create-subscription" du-smooth-scroll="" du-scrollspy="" offset="40">3. Skapa prenumeration</a>
-              <a class="hidden-sm hidden-md hidden-lg" href="#create-subscription" du-smooth-scroll="" du-scrollspy="" offset="40">3. Prenumeration</a>
+              <a href="#create-subscription" du-smooth-scroll="" du-scrollspy="" offset="140">3. Prenumeration</a>
             </li>
           </ul>
         </div>
@@ -24,130 +20,119 @@
     </nav>
   </div>
 
-  <div class="container-fluid" style="margin-top:60px;">
-    <div class="container">
-      <!-- Account management -->
-      <section id="create-account">
-        <div class="row" style="margin-top:60px">
-          <div class="col-xs-12 col-md-12" >
-            <h2>1. Skapa konto</h2>
-            <h3>Ange kontoinformation</h3>
-          </div>
+  <div class="container" id="guides" style="padding-top:80px;">
+    <!-- Account management -->
+    <section id="create-account">
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+          <h2>1. Skapa konto</h2>
+        </div>
+        <div class="col-xs-12 col-md-12">
+          <p>
+            Skapa konto för utvecklarportalen når du på två sätt: via Skapa konto på startsidan eller menyalternativet Logga in -&gt; Skapa konto.
+          </p>
+          <p>
+            I formuläret som visas fyller du i efterfrågade uppgifter och väljer Skapa konto.
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-12" style="margin:20px 0;">
+          <img class="img-responsive marked" src="/img/png/create_user.png" alt="Formulär Skapa konto" style="margin:auto;" />
+        </div>
+      </div>
 
-          <div class="col-xs-12 col-md-12">
-            <p>
-              Skapa konto för utvecklarportalen når du på två sätt: via Skapa konto på startsidan eller menyalternativet Logga in -&gt; Skapa konto.
-            </p>
-            <p>
-              I formuläret som visas fyller du i efterfrågade uppgifter och väljer Skapa konto.
-            </p>
-          </div>
-          <div class="col-xs-12 col-md-12 text-center">
-            <img class="img-responsive marked" src="/img/png/create_user.png" alt="Formulär Skapa konto" style="margin:auto; margin-top:20px;margin-bottom:20px;" />
-          </div>
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+          <h3>Verifiering av konto</h3>
+        </div>
+        <div class="col-xs-12 col-md-12">
+          <p>
+            Ett epostmeddelande kommer nu att skickas till den epostadress du angav i formuläret. I detta meddelande finns en länk bifogad. Klicka på densamma varpå du dirigeras till aktiveringsidan här på utvecklingsportalen.
+          </p>
+          <p>
+            Formuläret innehåller nu kompletta uppgifter för verifiering av kontot. Det som återstår är att ange rätt CAPTCHA och sedan välja Aktivera konto. Dina uppgifter verifieras och givet att du fyllt i korrekt information aktiveras ditt konto och du har nu
+            tillgång till alla tjänster på utvecklarportalen.
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-12">
+          <img class="img-responsive marked" src="/img/png/captcha.png" alt="Formulär Aktivera konto" style="width:auto" />
+        </div>
+      </div>
+    </section>
 
+    <!--Application management -->
+    <section id="create-application">
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+          <h2>Mina applikationer</h2>
+        </div>
+        <div class="col-xs-12 col-md-12">
+          <p>
+            Tillgång till information kring dina applikationer når du från profilmenys alternativ Mina applikationer. Här administrerar du allt som har med en applikation att göra. Skapa ny, uppdatera, ta bort, visa detaljer samt hantera nycklar. Sidan ger dig även
+            möjlighet att testa CURL-kommandon för grant och credential grant vilka du återfinner längst ner på sidan.
+          </p>
         </div>
 
-        <div class="row">
-          <div class="col-xs-12 col-md-12">
-            <h3>Verifiering av konto</h3>
-          </div>
-
-          <div class="col-xs-12 col-md-12">
-            <p>
-              Ett epostmeddelande kommer nu att skickas till den epostadress du angav i formuläret. I detta meddelande finns en länk bifogad. Klicka på densamma varpå du dirigeras till aktiveringsidan här på utvecklingsportalen.
-            </p>
-            <p>
-              Formuläret innehåller nu kompletta uppgifter för verifiering av kontot. Det som återstår är att ange rätt CAPTCHA och sedan välja Aktivera konto. Dina uppgifter verifieras och givet att du fyllt i korrekt information aktiveras ditt konto och du har nu
-              tillgång till alla tjänster på utvecklarportalen.
-            </p>
-          </div>
-          <div class="col-xs-12 col-md-12">
-            <img class="img-responsive marked" src="/img/png/captcha.png" alt="Formulär Aktivera konto" style="width:auto" />
-          </div>
+        <!--Create-->
+        <div class="col-xs-12 col-md-12">
+          <h2>2. Skapa applikation</h2>
         </div>
-      </section>
-
-      <!--Application management -->
-      <section id="create-application">
-        <div class="row" style="margin-top: 60px">
-          <div class="col-xs-12 col-md-12">
-            <h2>Mina applikationer</h2>
-          </div>
-          <div class="col-xs-12 col-md-12">
-            <p>
-              Tillgång till information kring dina applikationer når du från profilmenys alternativ Mina applikationer. Här administrerar du allt som har med en applikation att göra. Skapa ny, uppdatera, ta bort, visa detaljer samt hantera nycklar. Sidan ger dig även
-              möjlighet att testa CURL-kommandon för grant och credential grant vilka du återfinner längst ner på sidan.
-            </p>
-          </div>
-
-          <!--Create-->
-
-          <div class="col-xs-12 col-md-12">
-            <h2>2. Skapa applikation</h2>
-          </div>
-          <div class="col-xs-12 col-md-12">
-            <p>
-              I formuläret anger du namn, callback url samt beskrivning och väljer sedan Skapa. Applikationen skapas och du återfinner den nu i listan överst på sidan. finns nu tillgänglig i listan överst på sidan.
-            </p>
-          </div>
-          <div class="col-xs-12 col-md-12">
-            <img class="img-responsive marked" src="/img/png/create_app.png" alt="Formulär Skapa applikationer" />
-          </div>
-
+        <div class="col-xs-12 col-md-12">
+          <p>
+            I formuläret anger du namn, callback url samt beskrivning och väljer sedan Skapa. Applikationen skapas och du återfinner den nu i listan överst på sidan. finns nu tillgänglig i listan överst på sidan.
+          </p>
         </div>
-      </section>
-
-      <!--API Management-->
-      <section id="create-subscription">'
-        <div class="row" style="margin-top: 60px">
-          <div class="col-xs-12 col-md-12">
-            <h2>Mina prenumerationer</h2>
-          </div>
-
-          <div class="col-xs-12 col-md-12">
-            <p>
-              Mina prenumerationer är en samlingsida för alla dina prenumerationer. Sidan erbjuder möjlighet att bl.a uppdatera, skapa ny och ta bort prenumeration. Överst på sidan visas en lista med existerande prenumerationer. Härifrån ges du möjlighet att direkt
-              navigera till både applikation såväl som API som ingår i en prenumeration via direktlänkar i listan.
-            </p>
-            <p>
-              Observera att du måste vara inloggad och ha en applikation för att kunna skapa en prenumeration.
-            </p>
-          </div>
+        <div class="col-xs-12 col-md-12">
+          <img class="img-responsive marked" src="/img/png/create_app.png" alt="Formulär Skapa applikationer" />
         </div>
 
-        <div class="row">
-          <div class="col-xs-12 col-md-12">
-            <h2>3. Skapa prenumeration</h2>
-            <p>
-              Utvecklarportalen erbjuder två sätt att skapa prenumeration.
-              <ol>
-                <li>Via detaljsidan för ett API</li>
-                <li>Via sidan Mina prenumerationer</li>
-              </ol>
-            </p>
-          </div>
-          <div class="col-xs-12 col-md-12">
-            <p>
-              Alternativ 1 finner du på detaljsidan för valfritt API. Till höger på sidan återfinns en lista med dina applikationer. Ur denna väljer du en och klickar sedan på Skapa prenumeration varpå du dirigeras till sidan Mina prenumerationer där din prenumeration
-              nu presenteras i listan överst på sidan.
-            </p>
-          </div>
-          <div class="col-xs-12 col-md-12">
-            <img src="/img/png/spp.png" class="img-responsive marked" />
-          </div>
+      </div>
+    </section>
 
-          <div class="col-xs-12 col-md-12">
-            <p>
-              Alternativ 2 innebär att skapa prenumeration på sidan Mina prenumerationer. I formuläret Skapa ny prenumeration väljer du först applikation och sedan API och klickar sedan på Skapa. Prenumerationen skapas och återfinns nu i listan överst på sidan..
-            </p>
-          </div>
-          <div class="col-xs-12 col-md-12" style="margin-bottom: 100px">
-            <img src="/img/png/create_sub.png" class="img-responsive marked" />
-          </div>
-
+    <!--API Management-->
+    <section id="create-subscription">
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+          <h2>Mina prenumerationer</h2>
         </div>
-      </section>
-    </div>
+        <div class="col-xs-12 col-md-12">
+          <p>
+            Mina prenumerationer är en samlingsida för alla dina prenumerationer. Sidan erbjuder möjlighet att bl.a uppdatera, skapa ny och ta bort prenumeration. Överst på sidan visas en lista med existerande prenumerationer. Härifrån ges du möjlighet att direkt
+            navigera till både applikation såväl som API som ingår i en prenumeration via direktlänkar i listan.
+          </p>
+          <p>
+            Observera att du måste vara inloggad och ha en applikation för att kunna skapa en prenumeration.
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-md-12">
+          <h2>3. Skapa prenumeration</h2>
+          <p>
+            Utvecklarportalen erbjuder två sätt att skapa prenumeration.
+            <ol>
+              <li>Via detaljsidan för ett API</li>
+              <li>Via sidan Mina prenumerationer</li>
+            </ol>
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-12">
+          <p>
+            Alternativ 1 finner du på detaljsidan för valfritt API. Till höger på sidan återfinns en lista med dina applikationer. Ur denna väljer du en och klickar sedan på Skapa prenumeration varpå du dirigeras till sidan Mina prenumerationer där din prenumeration
+            nu presenteras i listan överst på sidan.
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-12">
+          <img src="/img/png/spp.png" class="img-responsive marked" />
+        </div>
+        <div class="col-xs-12 col-md-12">
+          <p>
+            Alternativ 2 innebär att skapa prenumeration på sidan Mina prenumerationer. I formuläret Skapa ny prenumeration väljer du först applikation och sedan API och klickar sedan på Skapa. Prenumerationen skapas och återfinns nu i listan överst på sidan..
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-12">
+          <img src="/img/png/create_sub.png" class="img-responsive marked" />
+        </div>
+      </div>
+    </section>
   </div>
 </div>

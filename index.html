@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="css/slidemenu.css" />
   <link rel="stylesheet" href="css/bootsnipp.css" />
   <link rel="stylesheet" href="css/nga.all.min.css">
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/main.min.css">
   <link rel="stylesheet" href="css/font-awesome.min.css">
 </head>
 
@@ -310,9 +310,9 @@
       });
 
       $('.a-cog').hover(function() {
-        $('.fa.fa-cog.fa-2x').toggleClass("fa-spin");
+        $('.fa.fa-cog.fa-2x').addClass("fa-spin");
       }, function() {
-        $('.fa.fa-cog.fa-2x').toggleClass("fa-spin");
+        $('.fa.fa-cog.fa-2x').removeClass("fa-spin");
       });
 
       $('.nav-side-menu ul .sub-menu li a, .nav-side-menu li .sub-menu li a, ul#menu-content li a.leaf').on('click', function () {
@@ -332,18 +332,15 @@
         }
       });
 
-      $('.scroll-top-wrapper').on('click', scrollToTop);
-
-      function scrollToTop() {
+      $('.scroll-top-wrapper').on('click', function () {
         verticalOffset = typeof(verticalOffset) != 'undefined' ? verticalOffset : 0;
         element = $('body');
         offset = element.offset();
-        offsetTop = offset.top;
+        offsetTop = (offset.top-50);
         $('html, body').animate({
           scrollTop: offsetTop
         }, 300, 'linear');
-      }
-
+      });
     });
   </script>
 </body>

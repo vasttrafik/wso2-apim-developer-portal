@@ -27,6 +27,7 @@ body {
   font-size: 18px;
   line-height: 1.42857;
   padding-top: 120px;
+  /*margin-top:120px;*/
   margin-bottom: 426px; /*Same as footer*/
 }
 h1,
@@ -633,7 +634,6 @@ i.fa.fa-bars {
   line-height: 48px;
   right: 20px;
   bottom: 20px;
-  padding-top: 2px;
   border-radius: 30px;
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
@@ -644,7 +644,6 @@ i.fa.fa-bars {
 .scroll-top-wrapper:hover {
   background-color: #00AAEB;
   opacity: 1.0 !important;
-  /*box-shadow: 2px 2px 5px 0 rgba(100, 100, 100, 0.9);*/
 }
 
 .scroll-top-wrapper.show {
@@ -692,8 +691,8 @@ i.fa.fa-bars {
    right: 0;
    top: 84px;
    background: #fff;
-   padding-top:-15px;
-   margin-top:-15px;
+   /*padding-top:-15px;
+   margin-top:-15px;*/
  }
 
  nav#scroller li a.active {
@@ -713,7 +712,6 @@ i.fa.fa-bars {
  nav#scroller li:hover {
   border-bottom: none;
  }
-
 
  nav#scroller li a:not(.active) {
    background-color:white;
@@ -748,3 +746,7 @@ div.alerter > div .container {
 .alert-danger {
   height: 55px;
 }
+
+#guides > section {padding-top:100px;}
+
+.title {margin-bottom: -50px;}
