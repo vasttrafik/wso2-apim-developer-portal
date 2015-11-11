@@ -9,7 +9,7 @@ var API;
             function DefaultApi($http, basePath, $httpParamSerializer) {
                 this.$http = $http;
                 this.$httpParamSerializer = $httpParamSerializer;
-                this.basePath = 'http://localhost:8080';
+                this.basePath = 'http://192.168.166.4:9764/portal/api';
                 if (basePath) {
                     this.basePath = basePath;
                 }
@@ -110,17 +110,17 @@ var API;
                 var headerParams = {};
 
                 // verify required parameter 'limit' is set
-                if (!limit) {
+                if (limit == null) {
                     throw new Client.Error('Missing required parameter limit when calling apisApiIdDocumentsGet');
                 }
 
                 // verify required parameter 'offset' is set
-                if (!offset) {
+                if (offset == null) {
                     throw new Client.Error('Missing required parameter offset when calling apisApiIdDocumentsGet');
                 }
 
                 // verify required parameter 'apiId' is set
-                if (!apiId) {
+                if (apiId == null) {
                     throw new Client.Error('Missing required parameter apiId when calling apisApiIdDocumentsGet');
                 }
 
