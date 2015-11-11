@@ -11,10 +11,10 @@
     var vm = this;
 
     (function init() {
-      APIService.call('applicationsGet', [0, 0])
+      APIService.call('applicationsGet', [100, 0, null, 'application/json'])
         .then(applicationsGetResponse);
 
-      APIService.call('subscriptionsGet', [0, 0])
+      APIService.call('subscriptionsGet', [])
         .then(subscriptionsGetResponse);
     })();
 

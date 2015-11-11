@@ -21,17 +21,18 @@
       vm.form = {};
       vm.form.subscription = {};
 
-      APIService.call('subscriptionsGet', [0, 0])
+      APIService.call('subscriptionsGet', [])
         .then(subscriptionsGetResponse);
 
-      APIService.call('applicationsGet', [0, 0])
+      APIService.call('applicationsGet', [100, 0, null, 'application/json'])
         .then(applicationsGetResponse);
 
-      APIService.call('apisGet', [0, 0])
+      APIService.call('apisGet', [100, 0, null, 'application/json'])
         .then(aPIsGetResponse);
     })();
 
     function subscriptionsGetResponse(response) {
+      console.log(response.status);
       if (response.status === 200) {
         vm.subscriptions = response.data.list;
       } else {

@@ -13,13 +13,13 @@
     vm.displayApi = displayApi;
 
     (function init() {
-      APIService.call('apisGet', [0, 0])
+      APIService.call('apisGet', [100, 0])
         .then(aPIsGetResponse);
 
     })();
 
     function aPIsGetResponse(response) {
-      if (response.status === 200) {
+      if (response.status === 200) {        
         vm.apis = response.data.list;
       } else {
         AlertService.error("Problem retrieving application list");

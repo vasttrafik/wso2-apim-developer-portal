@@ -18,12 +18,12 @@
       vm.documents = {};
       vm.applications = {};
 
-      APIService.call('apisApiIdGet', [$routeParams.apiName + '/' + $routeParams.apiVersion + '/' + $routeParams.apiProvider])
+      APIService.call('apisApiIdGet', [$routeParams.apiName + '--' + $routeParams.apiVersion + '_' + $routeParams.apiProvider])
         .then(aPIsIdGetResponse)
         .then(getDocumentsForApi);
 
       if ($rootScope.user.loggedIn) {
-        APIService.call('applicationsGet', [0, 0])
+        APIService.call('applicationsGet', [100, 0])
           .then(applicationsGetResponse);
       }
     })();
@@ -37,7 +37,7 @@
     }
 
     function getDocumentsForApi() {
-      APIService.call('apisApiIdDocumentsGet', [10, 10, $routeParams.apiName + '/' + $routeParams.apiVersion + '/' + $routeParams.apiProvider])
+      APIService.call('apisApiIdDocumentsGet', [100, 0, $routeParams.apiName + '--' + $routeParams.apiVersion + '_' + $routeParams.apiProvider])
         .then(apisApiIdDocumentsGetResponse);
     }
 

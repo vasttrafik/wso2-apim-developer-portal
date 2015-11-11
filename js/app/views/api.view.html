@@ -1,6 +1,6 @@
 <div class="jumbotron title">
   <div class="container" style="padding-left: 0">
-    <h1>{{vm.api.name}} - v.{{vm.api.version}}</h1>
+    <h1>{{vm.api.name}} {{vm.api.version}}</h1>
   </div>
 </div>
 
@@ -15,7 +15,7 @@
   <div class="row col-md-6">
     <div class="row">
       <label for="desc" class="col-xs-4 col-md-3">Beskrivning:</label>
-      <div id="#desc" class="col-xs-8 col-md-9">{{vm.api.description}}</div>
+      <div id="#desc" class="col-xs-8 col-md-9" ng-bind-html="vm.api.description"></div>
     </div>
 
     <div class="row">

@@ -36,12 +36,14 @@ Handles authentication of the user.
       apiClient.securityPost(action, refreshToken, {
           userName: username,
           credential: password
-        })
+        }, 'application/json')
         .then(function(authenticatedUserObject) {
           if (authenticatedUserObject.status === 200 || authenticatedUserObject.status === 201) {
             response = {
               user: authenticatedUserObject.data
             };
+          } else {
+            apiErrorResponse(authenticatedUserObject, deferred);
           }
         }).then(function() {
           // Retrieve further user information based on userId from login response

@@ -39,7 +39,7 @@
     function getAllApplications() {
       var deferred = $q.defer();
 
-      APIService.call('applicationsGet', [0, 0])
+      APIService.call('applicationsGet', [100, 0, null, 'application/json'])
         .then(applicationsGetResponse);
 
       function applicationsGetResponse(response) {
