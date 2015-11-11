@@ -660,7 +660,7 @@ i.fa.fa-bars {
 .fa.fa-phone,
 .fa.fa-fax {
   color:#00aaeb;
-} 
+}
 
 .fa.fa-envelope.adress,
 .glyphicon.glyphicon-map-marker.adress,
@@ -725,8 +725,8 @@ i.fa.fa-bars {
  /* Alert bar */
 .alerter {
   position:relative;
-  top:0; 
-  height:0; 
+  top:0;
+  height:0;
   left:0;
   background:#fff;
   z-index:1000;
@@ -736,10 +736,10 @@ div.alerter > div .container {
   padding: 0;
 }
 .alertHeading{
-  font-weight: bold; 
+  font-weight: bold;
   margin-right: 5px;
 }
-.alert {
+.top-alert .alert {
   height:0;
 }
 .alert-success,
@@ -750,3 +750,7 @@ div.alerter > div .container {
 #guides > section {padding-top:100px;}
 
 .title {margin-bottom: -50px;}
+
+.main-content{
+  padding-bottom: 100px;
+}
