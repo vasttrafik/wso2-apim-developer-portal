@@ -141,6 +141,10 @@ div.navbar-header > a.logo {
   text-align: center;
 }
 
+div.area.overview {
+  margin: 20px 0 0 0;
+}
+
 .blueRow {
   background-color: #EBF7F7;
 }
@@ -600,6 +604,18 @@ i.glyphicon.glyphicon-info-sign.text-info {
   .dropdown-menu.create{
     margin-left:-320px;
   }
+
+  div.area.overview {
+  margin: auto;
+  
+  }
+
+  div.col-md-3.col-sm-6.overview {
+    margin:auto;
+    text-align:center;
+    margin-bottom:20px;
+  }
+
 }
 
 .code-highlight {

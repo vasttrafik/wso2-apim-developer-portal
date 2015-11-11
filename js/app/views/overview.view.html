@@ -1,59 +1,54 @@
 <!-- Areas -->
 <div class="container-fluid" style="padding-bottom: 100px">
-  <div class="container">
-    <div class="row">
-      <p class="heading-small">Mina sidor</p>
+
+  <div class="jumbotron title">
+    <div class="container" style="padding-left: 0">
+      <h3 class="heading-small">Mina sidor</h3>
       <h1 class="heading-large">Översikt</h1>
     </div>
-    <div class="row">
-      <div class="col-md-3 col-sm-6">
+  </div>
 
-        <div class="area" style="margin: 20px 0 0 0">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-sm-6 overview">
+
+        <div class="area overview">
           <span class="fa fa-user fa-2x" aria-hidden="true"></span>
         </div>
         <h3>Profil</h3>
 
         <p>{{globals.currentUser.firstName + ' ' + globals.currentUser.lastName}}</p>
         <p>{{globals.currentUser.email}}</p>
-        <br/>
+
         <a href="#/profile" title="Profil">
           <strong>Redigera</strong>
         </a>
       </div>
 
-      <div class="col-md-3 col-sm-6">
-        <div class="area" style="margin: 20px 0 0 0">
+      <div class="col-md-3 col-sm-6 overview">
+        <div class="area overview">
           <span class="fa fa-star fa-2x" aria-hidden="true"></span>
         </div>
         <h3>Mina applikationer</h3>
-
-        <span ng-repeat="entries in vm.applications">
-          <p>{{entries.name}}</p>
-        </span>
-        <br/>
+        <p ng-repeat="entries in vm.applications">{{entries.name}}</p>
         <a href="#/applications" title="Mina applikationer">
           <strong>Redigera</strong>
         </a>
       </div>
 
-      <div class="col-md-3 col-sm-6">
-
-        <div class="area" style="margin: 20px 0 0 0">
+      <div class="col-md-3 col-sm-6 overview">
+        <div class="area overview">
           <span class="fa fa-paper-plane fa-2x" aria-hidden="true"></span>
         </div>
         <h3>Mina prenumerationer</h3>
-
-        <span ng-repeat="entries in vm.subscriptions">
-          <p>{{entries.api.name}}</p>
-        </span>
-        <br/>
+        <p ng-repeat="entries in vm.subscriptions">{{entries.api.name}}</p>
         <a href="#/subscriptions" title="Prenumerationer">
           <strong>Redigera</strong>
         </a>
       </div>
 
-      <div class="col-md-3 col-sm-6">
-        <div class="area" style="margin: 20px 0 0 0">
+      <div class="col-md-3 col-sm-6 overview">
+        <div class="area overview">
           <span class="fa fa-bar-chart fa-2x" aria-hidden="true"></span>
         </div>
         <h3>Statistik</h3>
