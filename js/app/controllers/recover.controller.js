@@ -23,9 +23,16 @@
       vm.form = {};
       vm.form.captcha = {};
       vm.form.username = $location.search().username;
+
+      vm.form.notification = {};
+      vm.user = {};
+
+      if ((vm.form.notification.code = $location.search().code) != null) { // jshint ignore:line
+        vm.user.notification = true;
+      }
+
       vm.form.captcha.recoveryType = 'notification';
 
-      vm.user = {};
     })();
 
     function passwordRecoveryCaptcha() {
@@ -70,11 +77,11 @@
 
       function notificationsPostResponse(response) {
         if (response.status === 200) {
-          AlertService.success("Lyckad verifiering! Du kommer få ett mail med vidare instruktioner");
+          AlertService.success("Du kommer få ett mail med vidare instruktioner", "Lyckad verifiering!", 10000);
           vm.user.notification = true;
           generateCaptcha();
         } else {
-          AlertService.error("Problem att skicka ut mail med instruktioner. Kontakta ic-support@vasttrafik.se och beskriv problemet");
+          AlertService.error("Kontakta ic-support@vasttrafik.se och beskriv problemet", "Problem att skicka ut mail med instruktioner");
         }
       }
 
@@ -91,6 +98,7 @@
             secretKey: vm.form.captcha.secretKey,
             userAnswer: vm.form.captcha.captcha
           },
+          code: vm.form.notification.code,
           tenantDomain: "carbon.super"
 
         }])
@@ -100,10 +108,11 @@
         if (response.status === 200) {
           AlertService.success("Lyckad verifiering!");
           vm.user.password = true;
-          vm.form.password.userId = response.data.userId;
+          vm.form.password = {};
+          vm.form.password.userId = 1; // Recover password doesn't look at the userId
           vm.form.password.code = response.data.key;
         } else {
-          AlertService.error("Problem vid verifieringen av captcha, försök igen");
+          AlertService.error("Försök igen", "Problem vid verifieringen av captcha");
           generateCaptcha();
           vm.form.captcha.captcha = '';
           $scope.passwordRecoveryNotificationForm.$setPristine();
@@ -132,7 +141,10 @@
 
       function usersUserIdPutResponse(response) {
         if (response.status === 200) {
-          AlertService.success("Lösenordet är uppdaterat! Du kan nu logga in");
+          AlertService.success("Du kan nu logga in", "Lösenordet är uppdaterat!",10000);
+          $location.path('/');
+          $location.search('username', null);
+          $location.search('code', null);
         } else {
           AlertService.error(response.data.message, "Problem att uppdatera lösenord");
           resetPasswordForm();
