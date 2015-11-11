@@ -152,6 +152,7 @@
     vm.toggleCreate = toggleCreate;
     vm.togglePasswordRecovery = togglePasswordRecovery;
     vm.clearAlertMessage = AlertService.clearAlertMessageAndDigest;
+    vm.clearMenuAlertMessage = AlertService.clearMenuAlertMessageAndDigest;
 
     (function init() {
       APIService.userCall('claimsGet', ['http://wso2.org/claims', 'user'])
@@ -186,14 +187,14 @@
         function(response) {
           $rootScope.user.loggedIn = true;
           vm.dataLoading = false;
-          AlertService.clearAlertMessage();
+          AlertService.clearMenuAlertMessage();
           $location.path('/overview');
 
         }).catch(function(response) {
         if (response.status === 401) {
-          AlertService.error("användarnamn och lösenord stämmer inte.", "Problem att logga in: ");
+          AlertService.menuError("Användarnamn och lösenord stämmer inte.", "Problem att logga in");
         } else {
-          AlertService.error(response.message, "Problem att logga in: ");
+          AlertService.menuError(response.message, "Problem att logga in");
         }
         vm.dataLoading = false;
       });
@@ -210,11 +211,11 @@
     function create() {
       vm.dataLoading = true;
       AuthenticationService.create(vm.user, vm.claims).then(function(response) {
-        AlertService.success('Du kommer få ett mail med instruktioner för att aktivera ditt konto', 'Registrering skickad!', 10000);
+        AlertService.menuSuccess('Du kommer få ett mail med instruktioner för att aktivera ditt konto', 'Registrering skickad!', 10000);
         $rootScope.user.create = false;
         vm.dataLoading = false;
       }).catch(function(response) {
-        AlertService.error(response.message);
+        AlertService.menuError(response.message);
         vm.dataLoading = false;
       });
     }
@@ -228,6 +229,7 @@
         $rootScope.user.create = !$rootScope.user.create;
       }
       delete $rootScope.alert;
+      delete $rootScope.menuAlert;
     }
 
     function togglePasswordRecovery() {

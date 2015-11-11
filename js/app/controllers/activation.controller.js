@@ -40,12 +40,12 @@
       function usersPutResponse(response) {
 
         if (response.data.verified) {
-          AlertService.success("Nu kan du logga in", "Ditt konto är aktiverat!");
+          AlertService.success("Nu kan du logga in", "Ditt konto är aktiverat!", 10000);
           $location.path('/');
           $location.search('username', null);
           $location.search('code', null);
         } else {
-          AlertService.error("Problem vid verifiering av konto, försök igen");
+          AlertService.error("försök igen", "Problem vid verifiering av konto");
           generateCaptcha();
           vm.form.activation.captcha = '';
           $scope.activateAccountForm.$setPristine();

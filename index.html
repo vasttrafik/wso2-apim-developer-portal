@@ -17,12 +17,12 @@
   <link rel="stylesheet" href="css/slidemenu.css" />
   <link rel="stylesheet" href="css/bootsnipp.css" />
   <link rel="stylesheet" href="css/nga.all.min.css">
-  <link rel="stylesheet" href="css/main.min.css">
+  <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/font-awesome.min.css">
 </head>
 
 <body id="body" ng-controller="MainCtrl as vm">
-  
+
   <div id="menu_left" class="container sidebar sidebar-left">
     <div class="nav-side-menu" data-side="left">
       <div class="brand"><i class="fa fa-home fa-lg"></i> Start</div>
@@ -58,6 +58,7 @@
 
         <div class="navbar-collapse collapse">
           <div class="navbar-right">
+
             <!-- Logged in -->
             <div class="btn-group" ng-show="user.loggedIn">
               <a class="menu-user dropdown-toggle" data-toggle="dropdown">
@@ -99,6 +100,13 @@
                 </span>
               </a>
               <div class="dropdown-menu create">
+
+                  <div class="top-alert" ng-class="{ 'alert': menuAlert, 'alert-success': menuAlert.type === 'success', 'alert-danger': menuAlert.type === 'error' }" ng-show="menuAlert" style="margin-bottom: 20px; padding: 10px; border-radius: 0">
+                      <button type="button" class="close" ng-show="menuAlert">×</button>
+                      <div ng-show="menuAlert" ng-bind="menuAlert.heading" class="alertHeading"></div>
+                      <div ng-show="menuAlert" ng-bind="menuAlert.message"></div>
+                  </div>
+
                 <form name="form" ng-submit="user.create ? vm.create() : vm.login()" role="form">
                   <div ng-if="!user.create">
                     <div class="form-group" ng-class="{ 'has-error': login-form.username.$dirty && login-form.username.$error.required }">
@@ -116,7 +124,7 @@
                       <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Logga in</button>
                       <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
                       />
-                      <span ng-click="vm.toggleCreate()" class="btn btn-link">Skapa konto</span>
+                      <span ng-click="vm.toggleCreate()" class="btn btn-link" style="float: right">Skapa konto</span>
                     </div>
                   </div>
 
@@ -152,7 +160,7 @@
                       <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Skapa konto</button>
                       <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
                       />
-                      <span ng-click="vm.toggleCreate()" class="btn btn-link">Ångra</span>
+                      <span ng-click="vm.toggleCreate()" class="btn btn-link" style="float: right">Logga in</span>
                     </div>
                   </div>
                 </form>
@@ -162,9 +170,9 @@
         </div>
       </div>
     </div>
-    
+
     <div class="alerter">
-      <div ng-class="{ 'alert': alert, 'alert-success': alert.type === 'success', 'alert-danger': alert.type === 'error' }" ng-show="alert" style="margin-bottom: 0; border-radius: 0">
+      <div class="top-alert" ng-class="{ 'alert': alert, 'alert-success': alert.type === 'success', 'alert-danger': alert.type === 'error' }" ng-show="alert" style="margin-bottom: 0; border-radius: 0">
         <div class="container">
           <span ng-show="alert" ng-bind="alert.heading" class="alertHeading"></span>
           <span ng-show="alert" ng-bind="alert.message"></span>
@@ -174,7 +182,7 @@
     </div>
   </div>
 
-  <div ng-view autoscroll="true"></div>
+  <div ng-view autoscroll="true" class="main-content"></div>
 
   <footer class="footer bs-docs-footer" role="contentinfo">
     <div class="container">
@@ -302,6 +310,7 @@
 
       $('.close').click(function(event) {
         angular.element(document.body).controller().clearAlertMessage();
+        angular.element(document.body).controller().clearMenuAlertMessage();
       });
 
       $('#menu_left').BootSideMenu({
