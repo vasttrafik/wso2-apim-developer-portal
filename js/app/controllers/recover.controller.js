@@ -76,7 +76,7 @@
 
       function notificationsPostResponse(response) {
         if (response.status === 200) {
-          AlertService.success('Du kommer få ett mail med vidare instruktioner", "Lyckad verifiering!', 10000);
+          AlertService.success('Du kommer få ett mail med vidare instruktioner', 'Lyckad verifiering!', 10000);
           vm.user.notification = true;
           generateCaptcha();
         } else {
