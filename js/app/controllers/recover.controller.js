@@ -27,7 +27,7 @@
       vm.form.notification = {};
       vm.user = {};
 
-      if ((vm.form.notification.code = $location.search().code) != null) { // jshint ignore:line
+      if ((vm.form.notification.code = $location.search().code) != null) {
         vm.user.notification = true;
       }
 
@@ -36,7 +36,6 @@
     })();
 
     function passwordRecoveryCaptcha() {
-
       vm.dataLoadingCaptcha = true;
 
       APIService.userCall('captchasPut', ['*/*', 'application/json', 'verifyUser', {
@@ -71,7 +70,6 @@
         }
 
         vm.dataLoadingCaptcha = false;
-
       }
 
       function notificationsPostResponse(response) {
@@ -83,11 +81,9 @@
           AlertService.error('Kontakta ic-support@vasttrafik.se och beskriv problemet", "Problem att skicka ut mail med instruktioner');
         }
       }
-
     }
 
     function passwordRecoveryNotification() {
-
       vm.dataLoadingNotification = true;
 
       APIService.userCall('captchasPut', ['*/*', 'application/json', 'verifyCode', {
@@ -118,12 +114,10 @@
         }
 
         vm.dataLoadingNotification = false;
-
       }
     }
 
     function passwordRecovery() {
-
       vm.dataLoadingPassword = true;
 
       APIService.userCall('usersUserIdPut', [vm.form.password.userId, 'recoverPassword', '*/*', null, 'application/json', {
@@ -150,7 +144,6 @@
         }
 
         vm.dataLoadingPassword = false;
-
       }
     }
 

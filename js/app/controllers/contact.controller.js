@@ -18,7 +18,6 @@
       vm.form.contact = {};
 
       generateCaptcha();
-
     })();
 
     function generateCaptcha() {
@@ -40,5 +39,7 @@
       //TODO Error handling and service endpoint to save contact.
 
     }
+
   }
+
 })();

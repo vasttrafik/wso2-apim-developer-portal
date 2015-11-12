@@ -22,7 +22,6 @@
     })();
 
     function saveProfile() {
-
       vm.dataLoadingProfile = true;
 
       UserService.getUser()
@@ -45,7 +44,6 @@
         });
 
       function usersUserIdPutResponse(response) {
-
         $timeout(function() {
           UserService.getUser()
             .then(function(userResponse) {
@@ -61,11 +59,9 @@
 
         }, 1000);
       }
-
     }
 
     function savePassword() {
-
       vm.dataLoadingPassword = true;
 
       UserService.getUser()
@@ -83,7 +79,6 @@
         });
 
       function usersUserIdPutResponse(response) {
-
         if (response.status === 200) {
 
           resetPasswordForm();
@@ -93,7 +88,6 @@
         }
         vm.dataLoadingPassword = false;
       }
-
     }
 
     function resetProfileForm() {

@@ -26,7 +26,6 @@
     return service;
 
     function clearAlertMessage() {
-
       var alert = $rootScope.alert;
       if (alert) {
         delete $rootScope.alert;
@@ -43,7 +42,6 @@
     }
 
     function success(message, heading, timeout) {
-
       var timeoutValue = 4000;
       if (timeout != null) { // jshint ignore:line
         timeoutValue = timeout;
@@ -59,7 +57,6 @@
     }
 
     function error(message, heading, timeout) { // jshint ignore:line
-
       var timeoutValue = 10000;
       if (timeout != null) { // jshint ignore:line
         timeoutValue = timeout;
@@ -75,7 +72,6 @@
     }
 
     function clearMenuAlertMessage() {
-
       var menuAlert = $rootScope.menuAlert;
       if (menuAlert) {
         delete $rootScope.menuAlert;
@@ -92,7 +88,6 @@
     }
 
     function menuSuccess(message, heading, timeout) {
-
       var timeoutValue = 4000;
       if (timeout != null) { // jshint ignore:line
         timeoutValue = timeout;
@@ -108,7 +103,6 @@
     }
 
     function menuError(message, heading, timeout) { // jshint ignore:line
-
       var timeoutValue = 10000;
       if (timeout != null) { // jshint ignore:line
         timeoutValue = timeout;

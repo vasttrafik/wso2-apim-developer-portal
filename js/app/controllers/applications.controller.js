@@ -30,7 +30,7 @@
         .then(function() {
           if ($routeParams.applicationId) {
             // If an application has been specified, open its details
-            addApplicationDetails($routeParams.applicationId);
+            addApplicationDetails(parseInt($routeParams.applicationId));
             // Clean up url
             $location.update_path('/applications'); // jshint ignore:line
           }
@@ -73,11 +73,11 @@
           vm.curl.client = 'curl -k -d "grant_type=client_credentials" -H "Authorization: Basic ' +
             btoa(vm.applications[i].consumerKey +
               ':' + vm.applications[i].consumerSecret) +
-            ', Content-Type: application/x-www-form-urlencoded" https://wso2api.vasttrafik.se:443/token';
+            ', Content-Type: application/x-www-form-urlencoded" https://api.vasttrafik.se:443/token';
           vm.curl.password = 'curl -k -d "grant_type=password&username=<USER>&password=<PASSWORD>" -H "Authorization: Basic ' +
             btoa(vm.applications[i].consumerKey +
               ':' + vm.applications[i].consumerSecret) +
-            ', Content-Type: application/x-www-form-urlencoded" https://wso2api.vasttrafik.se:443/token';
+            ', Content-Type: application/x-www-form-urlencoded" https://api.vasttrafik.se:443/token';
 
           resetUpdateApplicationForm();
           break;
@@ -86,7 +86,6 @@
     }
 
     function addApplication() {
-
       vm.dataLoadingAddApplication = true;
 
       APIService.call('applicationsPost', [{
@@ -113,7 +112,6 @@
     }
 
     function updateApplication() {
-
       vm.dataLoadingUpdateApplication = true;
 
       APIService.call('applicationsApplicationIdPut', [{
@@ -147,7 +145,6 @@
     }
 
     function removeApplication(applicationId) {
-
       var i = 0;
       for (i; i < vm.applications.length; i++) {
         if (vm.applications[i].id === applicationId) {
@@ -164,10 +161,10 @@
 
           AlertService.success('Applikationen ' + vm.applications[i].name + ' borttagen!');
 
-          if (vm.form.application.update != null && vm.form.application.update.id === applicationId) { // jshint ignore:line
+          if (vm.form.application.update != null && vm.form.application.update.id === applicationId) {
             resetUpdateApplicationForm();
           }
-          if (vm.form.application.details != null && vm.form.application.details.id === applicationId) { // jshint ignore:line
+          if (vm.form.application.details != null && vm.form.application.details.id === applicationId) {
             resetDetailsApplicationForm();
           }
 
@@ -181,7 +178,6 @@
     }
 
     function detailsApplication(applicationId) {
-
       APIService.call('applicationsApplicationIdTokensPost', [vm.form.application.details.validityTime, applicationId, 'application/json'])
         .then(applicationsApplicationIdTokensPostResponse);
 
@@ -204,20 +200,16 @@
     }
 
     function resetAddApplicationForm() {
-
       vm.form.application.add.name = '';
       vm.form.application.add.callbackUrl = '';
       vm.form.application.add.description = '';
 
       $scope.addApplicationForm.$setPristine();
-
     }
 
     function resetUpdateApplicationForm() {
-
       vm.form.application.update = null;
       $scope.updateApplicationForm.$setPristine();
-
     }
 
     function resetDetailsApplicationForm() {

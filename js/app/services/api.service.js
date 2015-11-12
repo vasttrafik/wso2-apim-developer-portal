@@ -1,5 +1,5 @@
 /*
-Handles calls towards backend api.
+  Handles calls towards backend api.
 */
 
 (function() {

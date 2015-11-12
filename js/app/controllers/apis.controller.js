@@ -15,7 +15,6 @@
     (function init() {
       APIService.call('apisGet', [100, 0])
         .then(aPIsGetResponse);
-
     })();
 
     function aPIsGetResponse(response) {

@@ -1,5 +1,5 @@
 /*
-Handles authentication of the user.
+  Handles authentication of the user.
 */
 
 (function() {
