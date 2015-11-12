@@ -961,83 +961,8 @@
      border-color: #b9e5ff;
    }
 
-   .header {
-     background: #999999;
-   }
-
-   .footer .wrapper {
-     background: #ebebeb;
-   }
-
-   .footer h5 {
-     padding-bottom: 10px;
-   }
-
-   table.columns .text-pad {
-     padding-left: 10px;
-     padding-right: 10px;
-   }
-
-   table.columns .left-text-pad {
-     padding-left: 10px;
-   }
-
-   table.columns .right-text-pad {
-     padding-right: 10px;
-   }
-
-   @media only screen and (max-width: 600px) {
-
-     table[class="body"] .right-text-pad {
-       padding-left: 10px !important;
-     }
-
-     table[class="body"] .left-text-pad {
-       padding-right: 10px !important;
-     }
-   }
-  </style>
-  <style type="text/css">
-   table.facebook td {
-     background: #3b5998;
-     border-color: #2d4473;
-   }
-
-   table.facebook:hover td {
-     background: #2d4473 !important;
-   }
-
-   table.twitter td {
-     background: #00acee;
-     border-color: #0087bb;
-   }
-
-   table.twitter:hover td {
-     background: #0087bb !important;
-   }
-
-   table.google-plus td {
-     background-color: #DB4A39;
-     border-color: #CC0000;
-   }
-
-   table.google-plus:hover td {
-     background: #CC0000 !important;
-   }
-
-   .template-label {
-     color: #ffffff;
-     font-weight: bold;
-     font-size: 11px;
-   }
-
    .callout .wrapper {
      padding-bottom: 20px;
-   }
-
-   .callout .panel {
-     background: #ECF8FF;
-     border-color: #b9e5ff;
    }
 
    .header {
@@ -1065,6 +990,11 @@
      padding-right: 10px;
    }
 
+   span.template-label a,
+   span.template-label a:visited,
+   span.template-label a:hover {
+     color:#fff !important;
+   }
    @media only screen and (max-width: 600px) {
 
      table[class="body"] .right-text-pad {
@@ -1095,10 +1025,14 @@
                         <table class="twelve columns">
                           <tr>
                             <td class="six sub-columns" style="color: #ffffff">
-                              <img src="https://dl.dropboxusercontent.com/u/72313/vt_brand_logo.png">
+                              <img alt="" src="https://dl.dropboxusercontent.com/u/72313/vt_brand_logo.png" />
                             </td>
-                            <td class="six sub-columns last" style="text-align:right; vertical-align:middle;">
-                              <span class="template-label">Aktivera konto</span>
+                            <td class="six sub-columns last" style="text-align:left; vertical-align:middle;">
+                              <span class="template-label" style="white-space:nowrap">
+                                <a title="Aktivera konto" href="http://developer.vasttrafik.se/#/activation?username={user-name}&code={confirmation-code}">
+                                  Aktivera  konto
+                                </a>
+                              </span>
                             </td>
                             <td class="expander"></td>
                           </tr>
@@ -1123,12 +1057,7 @@
 
                       <table class="twelve columns">
                         <tr>
-                          <td>
-                            <h1 style="margin-bottom: 20px">Hej!</h1>
-                            <p class="lead">
-                              Tack för att du valt att skapa ett konto på Västtrafiks utvecklarportal med användarnamn {user-name}.<br />
-                            </p>
-                          </td>
+                          <td></td>
                           <td class="expander"></td>
                         </tr>
                       </table>
@@ -1144,6 +1073,10 @@
                       <table class="twelve columns">
                         <tr>
                           <td class="panel">
+                            <h1 style="margin-bottom: 20px">Hej!</h1>
+                            <p class="lead">
+                              Tack för att du valt att skapa ett konto på Västtrafiks utvecklarportal med användarnamn {user-name}.<br />
+                            </p>
                             <p>
                               Klicka på följande länk för att aktivera ditt konto:<br /><br />
                               <a title="Aktivering" href="http://developer.vasttrafik.se/#/activation?username={user-name}&code={confirmation-code}">
