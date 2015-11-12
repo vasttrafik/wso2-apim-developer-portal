@@ -18,6 +18,9 @@
     vm.resetUpdateSubscriptionForm = resetUpdateSubscriptionForm;
 
     (function init() {
+      vm.initialized = false;
+      vm.counter = 0;
+
       vm.form = {};
       vm.form.subscription = {};
 
@@ -29,10 +32,17 @@
 
       APIService.call('apisGet', [100, 0, null, 'application/json'])
         .then(aPIsGetResponse);
+
+      // Wait until both applications and apis have been loaded
+      $scope.$watch('vm.counter', function() {
+        if (vm.counter === 2) {
+          vm.initialized = true;
+        }
+      });
+
     })();
 
     function subscriptionsGetResponse(response) {
-      console.log(response.status);
       if (response.status === 200) {
         vm.subscriptions = response.data.list;
       } else {
@@ -43,6 +53,7 @@
     function applicationsGetResponse(response) {
       if (response.status === 200) {
         vm.applications = response.data.list;
+        vm.counter++;
       } else {
         AlertService.error('Problem att hämta listan över applikationer');
       }
@@ -51,6 +62,7 @@
     function aPIsGetResponse(response) {
       if (response.status === 200) {
         vm.apis = response.data.list;
+        vm.counter++;
       } else {
         AlertService.error('Problem att hämta listan över APIer');
       }
