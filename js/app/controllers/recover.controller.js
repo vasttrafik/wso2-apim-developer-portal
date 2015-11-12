@@ -46,11 +46,10 @@
             secretKey: vm.form.captcha.secretKey,
             userAnswer: vm.form.captcha.captcha
           },
-          tenantDomain: "carbon.super"
+          tenantDomain: 'carbon.super'
 
         }])
         .then(captchasPutUserResponse);
-
 
       function captchasPutUserResponse(response) {
         if (response.status === 200) {
@@ -65,7 +64,7 @@
           }
 
         } else {
-          AlertService.error("Problem vid verifieringen av captcha, försök igen");
+          AlertService.error('Problem vid verifieringen av captcha, försök igen');
           generateCaptcha();
           vm.form.captcha.captcha = '';
           $scope.passwordRecoveryCaptchaForm.$setPristine();
@@ -77,11 +76,11 @@
 
       function notificationsPostResponse(response) {
         if (response.status === 200) {
-          AlertService.success("Du kommer få ett mail med vidare instruktioner", "Lyckad verifiering!", 10000);
+          AlertService.success('Du kommer få ett mail med vidare instruktioner", "Lyckad verifiering!', 10000);
           vm.user.notification = true;
           generateCaptcha();
         } else {
-          AlertService.error("Kontakta ic-support@vasttrafik.se och beskriv problemet", "Problem att skicka ut mail med instruktioner");
+          AlertService.error('Kontakta ic-support@vasttrafik.se och beskriv problemet", "Problem att skicka ut mail med instruktioner');
         }
       }
 
@@ -99,20 +98,20 @@
             userAnswer: vm.form.captcha.captcha
           },
           code: vm.form.notification.code,
-          tenantDomain: "carbon.super"
+          tenantDomain: 'carbon.super'
 
         }])
         .then(captchasPutCodeResponse);
 
       function captchasPutCodeResponse(response) {
         if (response.status === 200) {
-          AlertService.success("Lyckad verifiering!");
+          AlertService.success('Lyckad verifiering!');
           vm.user.password = true;
           vm.form.password = {};
           vm.form.password.userId = 1; // Recover password doesn't look at the userId
           vm.form.password.code = response.data.key;
         } else {
-          AlertService.error("Försök igen", "Problem vid verifieringen av captcha");
+          AlertService.error('Försök igen', 'Problem vid verifieringen av captcha');
           generateCaptcha();
           vm.form.captcha.captcha = '';
           $scope.passwordRecoveryNotificationForm.$setPristine();
@@ -134,19 +133,19 @@
             password: vm.form.password.password,
           },
           profileName: 'default',
-          tenantDomain: "carbon.super"
+          tenantDomain: 'carbon.super'
 
         }])
         .then(usersUserIdPutResponse);
 
       function usersUserIdPutResponse(response) {
         if (response.status === 200) {
-          AlertService.success("Du kan nu logga in", "Lösenordet är uppdaterat!",10000);
+          AlertService.success('Du kan nu logga in', 'Lösenordet är uppdaterat!',10000);
           $location.path('/');
           $location.search('username', null);
           $location.search('code', null);
         } else {
-          AlertService.error(response.data.message, "Problem att uppdatera lösenord");
+          AlertService.error(response.data.message, 'Problem att uppdatera lösenord');
           resetPasswordForm();
         }
 

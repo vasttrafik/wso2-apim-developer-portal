@@ -34,7 +34,7 @@
     }
 
     function submitContact() {
-      var alertResponse = " Vi kommer kontakta dig på adress " + vm.form.contact.email;
+      var alertResponse = 'Vi kommer kontakta dig på adress ' + vm.form.contact.email;
       AlertService.success(alertResponse, 'Kontakt mottagen!', 5000);
       vm.dataLoading = false;
       //TODO Error handling and service endpoint to save contact.

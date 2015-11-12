@@ -55,7 +55,7 @@
                 .then(function() {
                   resetProfileForm(); // At this stage the rootScope is updated
                   vm.dataLoadingProfile = false;
-                  AlertService.success("Din profil är uppdaterad!");
+                  AlertService.success('Din profil är uppdaterad!');
                 });
             });
 
@@ -84,10 +84,10 @@
 
       function usersUserIdPutResponse(response) {
 
-        if(response.status === 200) {
+        if (response.status === 200) {
 
           resetPasswordForm();
-          AlertService.success("Ditt lösenord är uppdaterat!");
+          AlertService.success('Ditt lösenord är uppdaterat!');
         } else {
           AlertService.error(response.data.message);
         }

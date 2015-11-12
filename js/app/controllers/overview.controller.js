@@ -22,7 +22,7 @@
       if (response.status === 200) {
         vm.subscriptions = response.data.list;
       } else {
-        AlertService.error("Problem retrieving subscription list");
+        AlertService.error('Problem att hämta lista med prenumerationer');
       }
     }
 
@@ -30,7 +30,7 @@
       if (response.status === 200) {
         vm.applications = response.data.list;
       } else {
-        AlertService.error("Problem retrieving application list");
+        AlertService.error('Problem att hämta lista med applikationer');
       }
     }
 

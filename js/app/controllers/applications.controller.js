@@ -1,3 +1,4 @@
+// jscs:disable requireCamelCaseOrUpperCaseIdentifiers
 (function() {
   'use strict';
 
@@ -47,7 +48,7 @@
           vm.applications = response.data.list;
           deferred.resolve();
         } else {
-          AlertService.error("Problem retrieving application list");
+          AlertService.error('Problem att hämta lista med applikationer');
           deferred.reject();
         }
       }
@@ -57,7 +58,7 @@
 
     function addApplicationUpdate(applicationId) {
       for (var i = 0; i < vm.applications.length; i++) {
-        if (vm.applications[i].applicationId === applicationId) {
+        if (vm.applications[i].id === applicationId) {
           vm.form.application.update = angular.copy(vm.applications[i]);
           break;
         }
@@ -67,11 +68,17 @@
 
     function addApplicationDetails(applicationId) {
       for (var i = 0; i < vm.applications.length; i++) {
-        if (vm.applications[i].applicationId === applicationId) {
+        if (vm.applications[i].id === applicationId) {
           vm.form.application.details = angular.copy(vm.applications[i]);
           vm.curl = {};
-          vm.curl.client = 'curl -k -d "grant_type=client_credentials" -H "Authorization: Basic ' + btoa(vm.applications[i].consumerKey + ':' + vm.applications[i].consumerSecret) + ', Content-Type: application/x-www-form-urlencoded" https://wso2api.vasttrafik.se:443/token';
-          vm.curl.password = 'curl -k -d "grant_type=password&username=<USER>&password=<PASSWORD>" -H "Authorization: Basic ' + btoa(vm.applications[i].consumerKey + ':' + vm.applications[i].consumerSecret) + ', Content-Type: application/x-www-form-urlencoded" https://wso2api.vasttrafik.se:443/token';
+          vm.curl.client = 'curl -k -d "grant_type=client_credentials" -H "Authorization: Basic ' +
+            btoa(vm.applications[i].consumerKey +
+              ':' + vm.applications[i].consumerSecret) +
+            ', Content-Type: application/x-www-form-urlencoded" https://wso2api.vasttrafik.se:443/token';
+          vm.curl.password = 'curl -k -d "grant_type=password&username=<USER>&password=<PASSWORD>" -H "Authorization: Basic ' +
+            btoa(vm.applications[i].consumerKey +
+              ':' + vm.applications[i].consumerSecret) +
+            ', Content-Type: application/x-www-form-urlencoded" https://wso2api.vasttrafik.se:443/token';
 
           resetUpdateApplicationForm();
           break;
@@ -86,20 +93,21 @@
       APIService.call('applicationsPost', [{
           name: vm.form.application.add.name,
           description: vm.form.application.add.description,
-          callbackUrl: vm.form.application.add.callbackUrl
-        }])
+          callbackUrl: vm.form.application.add.callbackUrl,
+          throttlingTier: 'Unlimited'
+        }, 'application/json'])
         .then(applicationsPostResponse);
 
       function applicationsPostResponse(response) {
-        if (response.status === 200) {
+        if (response.status === 201) {
           vm.applications.push(response.data);
 
-          AlertService.success("Applikationen " + vm.form.application.add.name + " skapad!");
+          AlertService.success('Applikationen ' + vm.form.application.add.name + ' skapad!');
 
           resetAddApplicationForm();
 
         } else {
-          AlertService.error("Problem att skapa ny applikation");
+          AlertService.error('Problem att skapa ny applikation');
         }
         vm.dataLoadingAddApplication = false;
       }
@@ -112,30 +120,30 @@
       APIService.call('applicationsApplicationIdPut', [{
           name: vm.form.application.update.name,
           description: vm.form.application.update.description,
-          callbackUrl: vm.form.application.update.callbackUrl
-        }, vm.form.application.update.applicationId])
+          callbackUrl: vm.form.application.update.callbackUrl,
+          tier: 'Unlimited'
+        }, vm.form.application.update.id, 'application/json'])
         .then(applicationsApplicationIdPutResponse);
 
       function applicationsApplicationIdPutResponse(response) {
         if (response.status === 200) {
 
-          AlertService.success("Applikationen " + vm.form.application.update.name + " uppdaterad!");
-
-          //getAllApplications(); // To ensure consistency
+          AlertService.success('Applikationen ' + vm.form.application.update.name + ' uppdaterad!');
 
           // Simply in order to mock update
           //TODO: Remove this handling
           for (var i = 0; i < vm.applications.length; i++) {
-            if (vm.applications[i].applicationId === vm.form.application.update.applicationId) {
+            if (vm.applications[i].id === vm.form.application.update.id) {
               vm.applications[i] = response.data;
               break;
             }
           }
+
           resetUpdateApplicationForm();
           resetDetailsApplicationForm();
 
         } else {
-          AlertService.error("Problem att uppdatera applikationen");
+          AlertService.error('Problem att uppdatera applikationen');
         }
         vm.dataLoadingUpdateApplication = false;
       }
@@ -145,35 +153,34 @@
 
       var i = 0;
       for (i; i < vm.applications.length; i++) {
-        if (vm.applications[i].applicationId === applicationId) {
-          if (confirm("Är du säker på att du vill ta bort applikation " + vm.applications[i].name + "? Betänk att även relaterade prenumerationer för applikationen kommer tas bort") === true) {
-            APIService.call('applicationsApplicationIdDelete', [vm.applications[i].applicationId])
+        if (vm.applications[i].id === applicationId) {
+          if (confirm('Är du säker på att du vill ta bort applikation ' + vm.applications[i].name + '? Betänk att även relaterade prenumerationer för applikationen kommer tas bort') === true) {
+            APIService.call('applicationsApplicationIdDelete', [vm.applications[i].id])
               .then(applicationsApplicationIdDeleteResponse);
             break;
           }
         }
-
       }
 
       function applicationsApplicationIdDeleteResponse(response) {
         if (response.status === 200) {
 
-          AlertService.success("Applikationen " + vm.applications[i].name + " borttagen!");
+          AlertService.success('Applikationen ' + vm.applications[i].name + ' borttagen!');
 
-          if (vm.form.application.update != null && vm.form.application.update.applicationId === applicationId) { // jshint ignore:line
+          if (vm.form.application.update != null && vm.form.application.update.id === applicationId) { // jshint ignore:line
             resetUpdateApplicationForm();
           }
-          if (vm.form.application.details != null && vm.form.application.details.applicationId === applicationId) { // jshint ignore:line
+          if (vm.form.application.details != null && vm.form.application.details.id === applicationId) { // jshint ignore:line
             resetDetailsApplicationForm();
           }
-          //getAllApplications(); // To ensure consistency
+          getAllApplications(); // To ensure consistency
 
           // Simply in order to mock update
           //TODO: Remove this handling
-          vm.applications.splice(i, 1);
+          //vm.applications.splice(i, 1);
 
         } else {
-          AlertService.error("Problem att ta bort applikationen");
+          AlertService.error('Problem att ta bort applikationen');
         }
       }
 
@@ -181,15 +188,15 @@
 
     function detailsApplication(applicationId) {
 
-      APIService.call('applicationsApplicationIdTokensPost', [vm.form.application.details.validityTime, applicationId])
+      APIService.call('applicationsApplicationIdTokensPost', [vm.form.application.details.validityTime, applicationId, 'application/json'])
         .then(applicationsApplicationIdTokensPostResponse);
 
       function applicationsApplicationIdTokensPostResponse(response) {
         if (response.status === 200) {
 
-          AlertService.success("Ny nyckel genererad!");
+          AlertService.success('Ny nyckel genererad!');
           for (var i = 0; i < vm.applications.length; i++) {
-            if (vm.applications[i].applicationId === applicationId) {
+            if (vm.applications[i].id === applicationId) {
               vm.applications[i] = response.data;
             }
           }
@@ -197,7 +204,7 @@
           $scope.detailsApplicationForm.$setPristine();
 
         } else {
-          AlertService.error("Problem att uppdatera applikationen");
+          AlertService.error('Problem att uppdatera applikationen');
         }
       }
     }
@@ -225,7 +232,7 @@
     }
 
     function copySuccess(leadingText) {
-      AlertService.success(leadingText + " kopierad till urklipp");
+      AlertService.success(leadingText + ' kopierad till urklipp');
       $scope.$apply();
     }
 

@@ -46,8 +46,8 @@ Handles calls towards backend api.
           if (response.status === 401) {
 
             AuthenticationService.Logout();
-            AlertService.error("User not authenticated", false);
-            apiErrorResponse('User not authenticated', deferred);
+            AlertService.error('Användaren är inte autentiserad', false);
+            apiErrorResponse('Användaren är inte autentiserad', deferred);
 
           } else {
             // TODO: Change to reject
@@ -76,7 +76,7 @@ Handles calls towards backend api.
           if (response.status === 401) {
 
             AuthenticationService.logout();
-            AlertService.error("User not authenticated");
+            AlertService.error('Användaren är inte autentiserad');
             apiErrorResponse(response, deferred);
 
           } else {

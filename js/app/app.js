@@ -11,7 +11,9 @@
     .filter('camelize', function() {
       return function(input, all) {
         return input.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function(match, index) {
-          if (+match === 0) return "";
+          if (+match === 0) {
+            return '';
+          }
           return index === 0 ? match.toLowerCase() : match.toUpperCase();
         });
       };
@@ -127,7 +129,6 @@
         }
       });
 
-
     $rootScope.$on('$locationChangeStart', function(event, next, current) {
 
       // redirect to startpage page if not logged in and trying to access a restricted page
@@ -192,9 +193,9 @@
 
         }).catch(function(response) {
         if (response.status === 401) {
-          AlertService.menuError("Användarnamn och lösenord stämmer inte.", "Problem att logga in");
+          AlertService.menuError('Användarnamn och lösenord stämmer inte.', 'Problem att logga in');
         } else {
-          AlertService.menuError(response.message, "Problem att logga in");
+          AlertService.menuError(response.message, 'Problem att logga in');
         }
         vm.dataLoading = false;
       });

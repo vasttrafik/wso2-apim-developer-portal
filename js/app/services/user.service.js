@@ -56,14 +56,14 @@
       $rootScope.globals = {
         currentUser: {
           userName: user.userName,
-          email: user.claims.filter(function(el){
-            return el.claimURI === "http://wso2.org/claims/emailaddress";
+          email: user.claims.filter(function(el) {
+            return el.claimURI === 'http://wso2.org/claims/emailaddress';
           })[0].value,
-          firstName: user.claims.filter(function(el){
-            return el.claimURI === "http://wso2.org/claims/givenname";
+          firstName: user.claims.filter(function(el) {
+            return el.claimURI === 'http://wso2.org/claims/givenname';
           })[0].value,
-          lastName: user.claims.filter(function(el){
-            return el.claimURI === "http://wso2.org/claims/lastname";
+          lastName: user.claims.filter(function(el) {
+            return el.claimURI === 'http://wso2.org/claims/lastname';
           })[0].value,
         }
       };
@@ -92,23 +92,25 @@
       $http.defaults.headers.common.Authorization = 'Bearer ';
     }
 
-
     function setOrUpdateClaim(userObject, claimURI, claimValue) {
       var deferred = $q.defer();
 
       var claimsList = userObject.claims;
       var updated = false;
 
-      if(!claimsList.isEmpty()) {
-        for(var i = 0; i < claimsList.length; i++) {
-          if(claimsList[i].claimURI === claimURI) {
-            claimsList.splice(i,1);
+      if (!claimsList.isEmpty()) {
+        for (var i = 0; i < claimsList.length; i++) {
+          if (claimsList[i].claimURI === claimURI) {
+            claimsList.splice(i, 1);
             break;
           }
         }
       }
 
-      claimsList.push({claimURI: claimURI, value: claimValue});
+      claimsList.push({
+        claimURI: claimURI,
+        value: claimValue
+      });
       deferred.resolve(claimsList);
 
       return deferred.promise;

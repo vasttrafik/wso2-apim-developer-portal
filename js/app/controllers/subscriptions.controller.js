@@ -36,7 +36,7 @@
       if (response.status === 200) {
         vm.subscriptions = response.data.list;
       } else {
-        AlertService.error("Problem retrieving subscription list");
+        AlertService.error('Problem att hämta listan över prenumerationer');
       }
     }
 
@@ -44,7 +44,7 @@
       if (response.status === 200) {
         vm.applications = response.data.list;
       } else {
-        AlertService.error("Problem retrieving application list");
+        AlertService.error('Problem att hämta listan över applikationer');
       }
     }
 
@@ -52,7 +52,7 @@
       if (response.status === 200) {
         vm.apis = response.data.list;
       } else {
-        AlertService.error("Problem retrieving apis list");
+        AlertService.error('Problem att hämta listan över APIer');
       }
     }
 
@@ -63,7 +63,7 @@
       for (var i = 0; i < vm.subscriptions.length; i++) {
         if (vm.subscriptions[i].subscriptionId === subscriptionId) {
           vm.form.subscription.update.subscriptionId = vm.subscriptions[i].subscriptionId;
-          vm.form.subscription.update.api = vm.subscriptions[i].api.name + "/" + vm.subscriptions[i].api.version + "/" + vm.subscriptions[i].api.provider;
+          vm.form.subscription.update.api = vm.subscriptions[i].api.name + '/' + vm.subscriptions[i].api.version + '/' + vm.subscriptions[i].api.provider;
           vm.form.subscription.update.application = vm.subscriptions[i].application.applicationId;
           break;
         }
@@ -75,7 +75,7 @@
 
       vm.dataLoadingAddSubscription = true;
 
-      var apiDef = vm.form.subscription.add.api.split("/");
+      var apiDef = vm.form.subscription.add.api.split('/');
 
       APIService.call('subscriptionsPost', [{
           application: {
@@ -93,12 +93,12 @@
         if (response.status === 200) {
           vm.subscriptions.push(response.data);
 
-          AlertService.success("Prenumerationen skapad!");
+          AlertService.success('Prenumerationen skapad!');
 
           resetAddSubscriptionForm();
 
         } else {
-          AlertService.error("Problem att skapa ny prenumeration");
+          AlertService.error('Problem att skapa ny prenumeration');
         }
         vm.dataLoadingAddSubscription = false;
       }
@@ -108,7 +108,7 @@
 
       vm.dataLoadingUpdateSubscription = true;
 
-      var apiDef = vm.form.subscription.update.api.split("/");
+      var apiDef = vm.form.subscription.update.api.split('/');
 
       APIService.call('subscriptionsSubscriptionIdPut', [{
           application: {
@@ -125,7 +125,7 @@
       function subscriptionsSubscriptionIdPutResponse(response) {
         if (response.status === 200) {
 
-          AlertService.success("Prenumerationen uppdaterad!");
+          AlertService.success('Prenumerationen uppdaterad!');
 
           //getAllApplications(); // To ensure consistency
 
@@ -141,7 +141,7 @@
           resetUpdateSubscriptionForm();
 
         } else {
-          AlertService.error("Problem att uppdatera prenumerationen");
+          AlertService.error('Problem att uppdatera prenumerationen');
         }
         vm.dataLoadingUpdateSubscription = false;
       }
@@ -152,7 +152,8 @@
       var i = 0;
       for (i; i < vm.subscriptions.length; i++) {
         if (vm.subscriptions[i].subscriptionId === subscriptionId) {
-          if (confirm("Är du säker på att du vill ta bort prenumerationen mellan applikation " + vm.subscriptions[i].application.name + " och API " + vm.subscriptions[i].api.name + " " + vm.subscriptions[i].api.version) === true) {
+          if (confirm('Är du säker på att du vill ta bort prenumerationen mellan applikation ' +
+              vm.subscriptions[i].application.name + ' och API ' + vm.subscriptions[i].api.name + ' ' + vm.subscriptions[i].api.version) === true) {
             APIService.call('subscriptionsSubscriptionIdDelete', [vm.subscriptions[i].subscriptionId])
               .then(subscriptionsSubscriptionIdDeleteResponse);
             break;
@@ -167,7 +168,8 @@
             resetUpdateSubscriptionForm();
           }
 
-          AlertService.success("Prenumerationen mellan applikation " + vm.subscriptions[i].application.name + " och API " + vm.subscriptions[i].api.name + " " + vm.subscriptions[i].api.version + " borttagen!");
+          AlertService.success('Prenumerationen mellan applikation ' +
+            vm.subscriptions[i].application.name + ' och API ' + vm.subscriptions[i].api.name + ' ' + vm.subscriptions[i].api.version + ' borttagen!');
 
           //getAllApplications(); // To ensure consistency
 
@@ -176,7 +178,7 @@
           vm.subscriptions.splice(i, 1);
 
         } else {
-          AlertService.error("Problem att ta bort prenumerationen");
+          AlertService.error('Problem att ta bort prenumerationen');
         }
       }
 
