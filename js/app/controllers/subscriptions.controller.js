@@ -69,7 +69,6 @@
     }
 
     function addSubscriptionUpdate(subscriptionId) {
-
       vm.form.subscription.update = {};
 
       for (var i = 0; i < vm.subscriptions.length; i++) {
@@ -83,7 +82,6 @@
     }
 
     function addSubscription() {
-
       vm.dataLoadingAddSubscription = true;
 
       var apiDef = vm.form.subscription.add.api.split('/');
@@ -116,7 +114,6 @@
     }
 
     function updateSubscription() {
-
       vm.dataLoadingUpdateSubscription = true;
 
       var apiDef = vm.form.subscription.update.api.split('/');
@@ -171,7 +168,7 @@
       function subscriptionsSubscriptionIdDeleteResponse(response) {
         if (response.status === 200) {
 
-          if (vm.form.subscription.update != null && vm.form.subscription.update.subscriptionId === subscriptionId) { // jshint ignore:line
+          if (vm.form.subscription.update != null && vm.form.subscription.update.subscriptionId === subscriptionId) {
             resetUpdateSubscriptionForm();
           }
 
@@ -188,18 +185,14 @@
     }
 
     function resetAddSubscriptionForm() {
-
       vm.form.subscription.add.api = null;
       vm.form.subscription.add.application = null;
 
       $scope.addSubscriptionForm.$setPristine();
-
     }
 
     function resetUpdateSubscriptionForm() {
-
       vm.form.subscription.update = null;
-
     }
 
   }

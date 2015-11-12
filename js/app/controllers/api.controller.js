@@ -63,7 +63,6 @@
     }
 
     function addSubscription() {
-
       var apiDef = vm.apiId.split('/');
 
       APIService.call('subscriptionsPost', [{
@@ -93,6 +92,7 @@
       vm.selectedApplicationId = null;
       $scope.addSubscriptionForm.$setPristine();
     }
+
   }
 
 })();

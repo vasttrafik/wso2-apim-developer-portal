@@ -36,7 +36,6 @@
         .then(usersPutResponse);
 
       function usersPutResponse(response) {
-
         if (response.data.verified) {
           AlertService.success('Nu kan du logga in", "Ditt konto är aktiverat!', 10000);
           $location.path('/');
