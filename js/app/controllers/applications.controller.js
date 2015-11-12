@@ -63,7 +63,6 @@
           break;
         }
       }
-
     }
 
     function addApplicationDetails(applicationId) {
@@ -130,8 +129,6 @@
 
           AlertService.success('Applikationen ' + vm.form.application.update.name + ' uppdaterad!');
 
-          // Simply in order to mock update
-          //TODO: Remove this handling
           for (var i = 0; i < vm.applications.length; i++) {
             if (vm.applications[i].id === vm.form.application.update.id) {
               vm.applications[i] = response.data;
@@ -173,11 +170,8 @@
           if (vm.form.application.details != null && vm.form.application.details.id === applicationId) { // jshint ignore:line
             resetDetailsApplicationForm();
           }
-          getAllApplications(); // To ensure consistency
 
-          // Simply in order to mock update
-          //TODO: Remove this handling
-          //vm.applications.splice(i, 1);
+          vm.applications.splice(i, 1);
 
         } else {
           AlertService.error('Problem att ta bort applikationen');

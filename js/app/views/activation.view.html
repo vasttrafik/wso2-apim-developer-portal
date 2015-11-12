@@ -18,14 +18,10 @@
             <label for="code">Kod</label>
             <input type="text" name="code" id="code" class="form-control" ng-model="vm.form.activation.code" disabled required />
           </div>
-
           <div class="form-group">
-
             <img src="{{vm.captcha}}">
             <i class="fa fa-refresh" style="margin-left: 20px; cursor: pointer" ng-click="vm.generateCaptcha()"></i>
-
           </div>
-
           <div class="form-group" ng-class="{ 'has-error': activateAccountForm.captcha.$dirty && activateAccountForm.captcha.$invalid,
   'has-success' : activateAccountForm.captcha.$valid}">
             <label for="name">Captcha</label>
