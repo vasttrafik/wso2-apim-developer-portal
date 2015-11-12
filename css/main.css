@@ -607,7 +607,7 @@ i.glyphicon.glyphicon-info-sign.text-info {
 
   div.area.overview {
   margin: auto;
-  
+
   }
 
   div.col-md-3.col-sm-6.overview {
@@ -765,8 +765,11 @@ div.alerter > div .container {
 
 #guides > section {padding-top:100px;}
 
-.title {margin-bottom: -50px;}
+.title {
+  margin-bottom: -10px;
+  color: #50B746;
+}
 
-.main-content{
+.main-content {
   padding-bottom: 100px;
 }
