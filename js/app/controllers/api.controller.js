@@ -18,6 +18,10 @@
       vm.documents = {};
       vm.applications = {};
 
+      // To make loading of this data faster
+      vm.apiName = $routeParams.apiName;
+      vm.apiVersion = $routeParams.apiVersion;
+
       APIService.call('apisApiIdGet', [$routeParams.apiName + '--' + $routeParams.apiVersion + '_' + $routeParams.apiProvider])
         .then(aPIsIdGetResponse)
         .then(getDocumentsForApi);
@@ -32,7 +36,7 @@
       if (response.status === 200) {
         vm.applications = response.data.list;
       } else {
-        AlertService.error("Problem retrieving application list");
+        AlertService.error('Problem att hämta lista med applikationer');
       }
     }
 
@@ -46,7 +50,7 @@
         vm.api = response.data;
         vm.apiId = vm.api.name + '/' + vm.api.version + '/' + vm.api.provider;
       } else {
-        AlertService.error("Problem retrieving api details");
+        AlertService.error('Problem att hämta detaljer för API');
       }
     }
 
@@ -54,13 +58,13 @@
       if (docResponse.status == 200) {
         vm.documents = docResponse.data.list;
       } else {
-        AlertService.error("Could not retrieve document list for API");
+        AlertService.error('Problem att hämta lista med dokument för API');
       }
     }
 
     function addSubscription() {
 
-      var apiDef = vm.apiId.split("/");
+      var apiDef = vm.apiId.split('/');
 
       APIService.call('subscriptionsPost', [{
           application: {
@@ -76,11 +80,11 @@
 
       function subscriptionsPostResponse(response) {
         if (response.status === 200) {
-          AlertService.success("Prenumerationen skapad!");
-          $location.path("/subscriptions");
+          AlertService.success('Prenumerationen skapad!');
+          $location.path('/subscriptions');
 
         } else {
-          AlertService.error("Problem att skapa ny prenumeration");
+          AlertService.error('Problem att skapa ny prenumeration');
         }
       }
     }
