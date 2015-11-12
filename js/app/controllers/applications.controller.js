@@ -32,7 +32,7 @@
             // If an application has been specified, open its details
             addApplicationDetails($routeParams.applicationId);
             // Clean up url
-            $location.update_path('/applications');
+            $location.update_path('/applications'); // jshint ignore:line
           }
         });
     })();

@@ -13,8 +13,8 @@ Handles authentication of the user.
 
   function AuthenticationService($http, $location, UserService, $httpParamSerializer, $q) {
     var service = {};
-    var apiClient = new API.Client.DefaultApi($http, null, $httpParamSerializer);
-    var userApiClient = new UserAPI.Client.UserApi($http, null, $httpParamSerializer);
+    var apiClient = new API.Client.DefaultApi($http, null, $httpParamSerializer); // jshint ignore:line
+    var userApiClient = new UserAPI.Client.UserApi($http, null, $httpParamSerializer); // jshint ignore:line
 
     service.login = login;
     service.logout = logout;
@@ -80,9 +80,11 @@ Handles authentication of the user.
       }
 
       var response;
-      userApiClient.usersPost('*/*','application/json',{
+      userApiClient.usersPost('*/*', 'application/json', {
           userName: userFormObj.username,
-          password: {password: userFormObj.password},
+          password: {
+            password: userFormObj.password
+          },
           claims: claims,
           profileName: 'default',
           tenantDomain: 'carbon.super'

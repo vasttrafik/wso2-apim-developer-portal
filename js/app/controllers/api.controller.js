@@ -46,7 +46,7 @@
     }
 
     function aPIsIdGetResponse(response) {
-      if (response.status == 200) {
+      if (response.status === 200) {
         vm.api = response.data;
         vm.apiId = vm.api.name + '/' + vm.api.version + '/' + vm.api.provider;
       } else {
@@ -55,7 +55,7 @@
     }
 
     function apisApiIdDocumentsGetResponse(docResponse) {
-      if (docResponse.status == 200) {
+      if (docResponse.status === 200) {
         vm.documents = docResponse.data.list;
       } else {
         AlertService.error('Problem att hämta lista med dokument för API');

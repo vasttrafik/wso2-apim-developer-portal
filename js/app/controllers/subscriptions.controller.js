@@ -68,7 +68,6 @@
           break;
         }
       }
-
     }
 
     function addSubscription() {
@@ -127,10 +126,6 @@
 
           AlertService.success('Prenumerationen uppdaterad!');
 
-          //getAllApplications(); // To ensure consistency
-
-          // Simply in order to mock update
-          //TODO: Remove this handling
           for (var i = 0; i < vm.subscriptions.length; i++) {
             if (vm.subscriptions[i].subscriptionId === vm.form.subscription.update.subscriptionId) {
               vm.subscriptions[i] = response.data;
@@ -171,10 +166,6 @@
           AlertService.success('Prenumerationen mellan applikation ' +
             vm.subscriptions[i].application.name + ' och API ' + vm.subscriptions[i].api.name + ' ' + vm.subscriptions[i].api.version + ' borttagen!');
 
-          //getAllApplications(); // To ensure consistency
-
-          // Simply in order to mock update
-          //TODO: Remove this handling
           vm.subscriptions.splice(i, 1);
 
         } else {

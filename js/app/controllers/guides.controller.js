@@ -20,7 +20,7 @@
       };
     })();
 
-    function scrollTo(hash) {
+    function scrollTo(hash) { // jshint ignore:line
       if ($location.hash() !== hash) {
         $location.hash(hash);
       } else {

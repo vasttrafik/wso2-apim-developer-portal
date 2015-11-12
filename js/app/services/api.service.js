@@ -13,8 +13,8 @@ Handles calls towards backend api.
 
   function APIService($http, AuthenticationService, AlertService, $q, $httpParamSerializer) {
     var service = {};
-    var apiClient = new API.Client.DefaultApi($http, null, $httpParamSerializer);
-    var userApiClient = new UserAPI.Client.UserApi($http, null, $httpParamSerializer);
+    var apiClient = new API.Client.DefaultApi($http, null, $httpParamSerializer); // jshint ignore:line
+    var userApiClient = new UserAPI.Client.UserApi($http, null, $httpParamSerializer); // jshint ignore:line
 
     service.call = call;
     service.userCall = userCall;
