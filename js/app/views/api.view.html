@@ -1,6 +1,6 @@
 <div class="jumbotron title">
   <div class="container" style="padding-left: 0">
-    <h1>{{vm.api.name}} {{vm.api.version}}</h1>
+    <h1>{{vm.apiName}} {{vm.apiVersion}}</h1>
   </div>
 </div>
 
@@ -99,9 +99,26 @@
         </div>
 
         <div role="tabpanel" class="tab-pane" id="apiDocs">
-          <ul ng-show="vm.documents.length > 0">
-            <li ng-repeat="doc in vm.documents"><a href="{{doc.url}}" title="{{doc.type}}">{{doc.name}}</a></li>
-          </ul>
+
+          <table class="table table-hover table-striped" ng-show="vm.documents.length > 0">
+            <thead class="table-header">
+              <tr>
+                <th>Namn</th>
+                <th>Beskrivning</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="doc in vm.documents" class="nga-default nga-fade">
+                <td>
+                  <span><a href="{{doc.url}}" title="{{doc.type}}">{{doc.name}}</a></span>
+                </td>
+                <td>
+                  <span>{{doc.summary}}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
           <div ng-show="!(vm.documents.length > 0)" class="alert alert-warning" role="alert">
             <span class="glyphicon glyphicon-info-sign">&nbsp;</span>Det finns inga dokument associerade till detta API!
           </div>

@@ -7,7 +7,7 @@
 <div class="container" ng-show="!vm.user.notification">
   <div class="row">
     <h2>Steg 1 av 3. Fyll i användarnamn och lös captchan.</h2>
-    <div class="container" style="padding-bottom: 100px;">
+    <div class="container">
       <div class="row well">
         <form name="passwordRecoveryCaptchaForm" ng-submit="vm.passwordRecoveryCaptcha()" role="form">
           <div class="form-group" ng-class="{ 'has-error': passwordRecoveryCaptchaForm.username.$dirty && passwordRecoveryCaptchaForm.username.$invalid,
@@ -60,7 +60,7 @@
 <div class="container" ng-show="vm.user.notification && !vm.user.password">
   <div class="row">
     <h2>Steg 2 av 3. Fyll i koden ifrån utskickat mail och lös captchan.</h2>
-    <div class="container" style="padding-bottom: 100px;">
+    <div class="container">
       <div class="row well">
         <form name="passwordRecoveryNotificationForm" ng-submit="vm.passwordRecoveryNotification()" role="form">
           <div class="form-group">
@@ -101,7 +101,7 @@
 <div class="container" ng-show="vm.user.notification && vm.user.password">
   <div class="row">
     <h2>Steg 3 av 3. Uppdatera lösenord.</h2>
-    <div class="container" style="padding-bottom: 100px;">
+    <div class="container">
       <div class="row well">
         <form name="passwordForm" ng-submit="vm.passwordRecovery()" role="form">
 
