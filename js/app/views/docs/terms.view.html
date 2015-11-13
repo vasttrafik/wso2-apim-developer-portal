@@ -1,13 +1,179 @@
-﻿<div class="jumbotron">
+﻿<div class="jumbotron title">
   <div class="container">
-    <h1>Villkor</h1>
+    <h1 class="sub-header">Villkor</h1>
     <img class="img-responsive" src="/img/terms_red.jpg" title="Villkor" />
   </div>
-  <div class="container" style="padding-top:0">
-    <section>
-      <article>
-        <p>Coming soon...</p>
-      </article>
-    </section>
-  </div>
+</div>
+<div class="container" style="padding-top: 0">
+  <section>
+    <article>
+      <h2>Introduktion</h2>
+      <p style="font-weight: bold;">
+        Tack för ditt intresse för Västtrafiks öppna API:r, vilka syftar till att tillhandahålla 
+        öppen information om kollektivtrafiken i Västra Götaland. Denna information samlas in, bearbetas, 
+        sammanställs och publiceras av Västtrafik och dess partners i syfte att främja utvecklingen av applikationer, 
+        webbtjänster och liknande som bidrar till att förbättra kollektivtrafiken för alla.
+      </p>
+    </article>
+    <article>
+      <h2>Handhavande</h2>
+      <ul>
+        <li>Du behöver skapa ett konto hos Västtrafiks Utvecklarportal på https://developer.vasttrafik.se.</li>
+        <li>Du behöver skapa en applikation för att kunna prenumerera på ett eller flera API:r.</li>
+        <li>Du behöver för varje applikation generera en unik nyckel som du sedan använder för att skapa åtkomst till de API:r du vill prenumerera på.</li>
+        <li>Du behöver skapa en prenumeration på de API:r du vill använda och knyta denna till en applikation.</li>
+        <li>Du behöver använda den API-nyckel du har skapat i alla anrop till våra API:r.</li>
+      </ul>
+    </article>
+    <article>
+      <h2>Licens</h2>
+      <p>
+        Under förutsättning att du uppfyller de krav som listas nedan beviljas du en licens att använda Västtrafiks 
+        API:r enligt de villkor som anges under avsnittet benämnt Villkor. 
+      </p>
+    </article>
+    <article>
+      <h2>Villkor</h2>
+      <p>
+        Med förbehåll för de villkor och begränsningar som anges i dessa Villkor, ger Västtrafik dig en global, 
+        icke-exklusiv, icke-överförbar, icke-överlåtbar licens för användning av Västtrafiks API:r, i syfte att få tillgång till, 
+        använda och offentligt visa tillhandahållen information i din applikation, webserver eller liknande tillämpning.
+      </p>
+      <p>
+        Licensen är baserad på principerna i Creative Commons Attribution-licensen, vilket gör det möjligt att dela 
+        (kopiera, distribuera och sända) och remixa (dvs. ändra, anpassa och ändra, inklusive integration med annan information 
+        och/eller inställningar), även för kommersiella ändamål, dock under förutsättning att du tillskriver arbetet som anges 
+        i avsnitt 4.1 nedan. Villkor och begränsningar utöver Creative Commons Attribution-licens gäller även, i enlighet med dessa villkor.
+      </p>
+      <p>
+        Nämnda licens, eller någon utveckling som grundar sig på detta, skall inte på något sätt tolkas som en begränsning av 
+        Västtrafiks och dess ursprungliga källors rätt att fritt utnyttja, utveckla eller avveckla dessa API:r, den tillhandahållna 
+        informationen eller produkter eller tjänster som grundar sig på detta.
+      </p>
+    </article>
+    <article>
+      <h2>Tekniska krav</h2>
+      <p>
+        För att säkerställa tillgängligheten och prestandan i Västtrafiks API:r och tillhandahållen information måste all 
+        utveckling som bygger på användningen av sagda API:r utgå ifrån principen att minimera användingen till vad som kan anses 
+        vara nödvändigt för att uppnå syftet med användningen.  Av denna anledning kan vissa tekniska krav och begränsningar anges 
+        i den tekniska dokumentation som åtföljer varje API ("den tekniska dokumentationen"). Den tekniska dokumentationen ska 
+        betraktas som en integrerad del av dessa villkor och således, genom att gå med på att acceptera dessa villkor godkänner 
+        du att iaktta de begränsningar som anges i den tekniska dokumentationen enligt API med ditt val.
+      </p>
+      <p>
+        Användning som överstiger, eller på annat sätt som strider mot de tekniska begränsningar som finns i respektive API:s 
+        tekniska dokumentation, kan blockeras av Västtrafik, och Västtrafik förbehåller sig rätten att säga upp beviljad licens i 
+        enlighet stycket Giltighetstid och uppsägning nedan.
+      </p>
+    </article>
+    <article>
+      <h2>Krav på användning</h2>
+      <p>
+        Tillämpningar, webbtjänster och liknande utveckling som innehåller information som hämtas via Västtrafiks API:r skall 
+        uttryckligen ange att produkten eller tjänsten är baserad på information som hämtas från Västtrafik och, när så är möjligt, 
+        ska en hyperlänk till developer.vasttrafik.se lämnas.
+      </p>
+      <p>
+        Västtrafiks API:r får inte användas för applikationer, webbtjänster eller liknande utveckling som ger användarna möjlighet 
+        att köpa biljetter till kollektivtrafiken, såvida detta inte tidigare godkänts skriftligen av Västtrafik. 
+      </p>
+      <p>
+        Som ett villkor för att använda Västtrafiks API:r i din applikation, webbtjänst eller liknande samtycker du dessutom till att inte:
+      </p>
+      <ul>
+        <li>tilldela, överlåta eller avslöja API-nyckel till tredje part.</li>
+        <li>störa, avlyssna, filtrera eller inaktivera någon funktion i API eller tillhandahållna uppgifter.</li>
+        <li>överföra virus, maskar, defekter, trojanska hästar eller liknande skadlig kod av destruktiv karaktär.</li>
+        <li>bidra till/använda eller utöva intrång på tredje parts immateriella rättigheter utan tredje parts explicita medgivande härom.</li>
+        <li>tillgång till eller använda API eller någon lämnat uppgifter genom någon teknik eller andra medel än  de som föreskrivs genom Trafiklab.se.</li>
+        <li>använda API eller lämnat uppgifter på ett sätt som direkt eller indirekt motsätter sig eller hindrar syftet med developer.vasttrafik.se och Västtrafik, det vill säga att öka den lagliga användningen av kollektivtrafiken i Sverige.</li>
+        <li>använda API eller tillhandahållna uppgifter på ett sätt som enligt Västtrafiks mening nedvärderar, strider mot eller späder Västtrafik eller dess partners namn, varumärke, logotyp, domännamn och andra distinkta varumärkes funktioner.</li>
+        <li>använda API eller tillhandahållna uppgifter på något annat sätt än vad som är lagligt, korrekt och i enlighet med dessa villkor.</li>
+      </ul>
+      <p>
+        Skulle du bryta mot något av ovanstående villkor förbehåller sig Västtrafik rätten att säga upp din prenumeration i enlighet 
+        med stycket Giltighetstid och uppsägning nedan och, om så bedöms lämpligt av Västtrafik, att vidta rättsliga åtgärder.
+      </p>
+    </article>
+    <article>
+      <h2>Tillhandahållande av API</h2>
+      <p>
+        API och tillhandahållna uppgifter tillhandahålls i "befintligt skick" och "som tillgängligt" basis, med inga garantier alls avseende 
+        säkerhet, tillförlitlighet, aktualitet, tillgänglighet och prestanda. Den tekniska dokumentationen innehåller inte, och skall således 
+        inte heller tolkas som bindande åtaganden i dessa avseenden.
+      </p>
+      <p>
+        Västtrafik kan efter eget gottfinnande ändra eller släppa nyare versioner av API:r, tillhandahållna uppgifter, teknisk dokumentation 
+        och villkor. Fortsatt användning av dessa API:r innebär att du automatisk accepterar dessa förändringar. 
+      </p>
+    </article>
+    <article>
+      <h2>Immateriella rättigheter</h2>
+      <p>
+        Du godkänner att Västtrafik och dess partners äger alla juridiska rättigheter, titlar och intressen, inklusive men utan begränsning 
+        alla immateriella rättigheter, API:r och tillhandahållna uppgifter, och att du inte får förvärva någon rättighet, titel eller intresse 
+        i API eller de lämnat uppgifter utom såsom anges i dessa villkor.
+      </p>
+      <p>
+        För tillämpningen av dessa villkor, beviljar Västtrafik dig härmed en icke-överförbar, icke-vidare-licensierbar, icke-exklusiv 
+        licens under giltighetstiden för dessa villkor för att visa Västtrafiks varumärke, logotyp och domännamn, för att annonsera att 
+        du använder API. Du ger härmed Västtrafik motsvarande rättigheter att använda dina varumärken, logotyper och domännamn för att 
+        annonsera att du använder API. 
+      </p>
+      <p>
+        Förutom vad som anges i detta avsnitt, skall inget i dessa villkor bevilja eller anses bevilja en part någon rättighet, titel 
+        eller intresse för namn, varumärken, logotyper, namn den andra partens domän och andra särskiljande kännetecken.
+      </p>
+    </article>
+    <article>
+      <h2>Ansvarsbegränsning</h2>
+      <p>
+        Du förstår och accepterar att du använder Västtrafiks API:r på eget ansvar och risk, och är införstådd med att Västtrafik 
+        och dess partner inte kan anses vara ansvariga gentemot dig för eventuella direkta, indirekta eller andra skador - inklusive 
+        men inte begränsat till skadestånd för förlust av data, utebliven vinst, förlust av användning eller förlust av goodwill - till 
+        följd av användning eller oförmåga att använda API.
+      </p>
+    </article>
+    <article>
+      <h2>Ersättning</h2>
+      <p>
+        Du samtycker till att gottgöra och hålla Västtrafik och dess partners skadelösa mot alla anspråk från tredje part till 
+            följd av eller på annat sätt relaterat till din användning av API i strid med dessa villkor, eller andra åtgärder i samband 
+            med din användning av API eller tillhandahållna uppgifter, inklusive ansvar eller kostnad till följd av anspråk, förluster, 
+            skador, stämningar, domar, rättegångs- och advokatarvoden av varje art.
+      </p>
+    </article>
+    <article>
+      <h2>Behandling av personuppgifter</h2>
+      <p>
+        Du förstår och samtycker till att alla personuppgifter som du lämnar till Västtrafik kan behandlas av Västtrafik i syfte att 
+        administrera, övervaka och göra din användning av API effektivare. I en sådan behandling är Västtrafik ansvarig för 
+        personuppgifterna i enlighet med Personuppgiftslag (1998: 204).
+      </p>
+      <p>
+        Du har rätt till information om Västtrafiks behandling av dina personuppgifter, och att kräva att felaktig personuppgift 
+        rättas, blockeras eller raderas genom att kontakta Västtrafik på api@vasttrafik.se. Borttag av någon uppgift kommer dock att 
+        föranleda ett avslutande av ditt konto varpå tillgång till tjänster automatiskt upphör.
+      </p>
+    </article>
+    <article>
+      <h2>Giltighetstid och uppsägning</h2>
+      <p>
+        Giltigheten för dessa villkor skall börja det datum då du godkänner Villkoren (sker i samband med skapande av konto), och skall 
+        fortsätta att gälla därefter såvida det inte sägs upp eller ändras enligt nedan. Endera parten kan säga upp dessa villkor när 
+        som helst, och Västtrafik förbehåller sig därmed rätten att avsluta din prenumeration på ett API med omedelbar verkan. 
+      </p>
+      <p>
+        Västtrafik förbehåller sig rätten att, oavsett anledning, närsomhelst ändra, avbryta eller avsluta hela eller någon del av 
+        API eller lämnade uppgifter. I sådant fall kommer Västtrafik att sträva efter att meddela sådan ändring, avstängning eller 
+        avbrytande inom en rimlig tid innan den genomförs.
+      </p>
+      <p>
+        Vid uppsägning av dessa villkor av någon anledning, skall alla licensrättigheter som beviljats häri avslutas, och du måste 
+        omedelbart upphöra att använda API, övriga tillhandahållna uppgifter och varumärken som tillhör Västtrafik.
+      </p>
+    </article>
+  </section>
+
 </div>
