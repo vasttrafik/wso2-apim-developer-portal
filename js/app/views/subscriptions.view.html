@@ -50,7 +50,7 @@
   </div>
 </div>
 
-<div ng-show="!vm.form.subscription.update && vm.initialized">
+<div ng-show="!vm.form.subscription.update">
   <div class="container" style="padding-left: 0; padding-bottom: 0px">
     <h2>Skapa ny prenumeration</h2>
   </div>
@@ -62,8 +62,8 @@
         <div class="form-group" ng-class="{ 'has-error': addSubscriptionForm.application.$dirty && addSubscriptionForm.application.$invalid,
   'has-success' : addSubscriptionForm.application.$valid}">
           <label for="application">Applikation</label>
-          <div ng-show="!vm.applications.length" style="margin-bottom: 20px">Du har inga registrerade applikationer. <a href="#/applications">Skapa en applikation först</a>, skapa sedan en prenumeration här!</div>
-          <div ng-show="vm.applications.length">
+          <div ng-show="vm.applications.length == 0" style="margin-bottom: 20px">Du har inga registrerade applikationer. <a href="#/applications">Skapa en applikation först</a>, skapa sedan en prenumeration här!</div>
+          <div ng-show="vm.applications.length > 0">
             <select name="application" id="application" ng-model="vm.form.subscription.add.application" class="form-control" required>
               <option ng-repeat="entry in vm.applications" value="{{entry.id}}">{{entry.name}}</option>
             </select>
@@ -74,8 +74,8 @@
         <div class="form-group" ng-class="{ 'has-error': addSubscriptionForm.api.$dirty && addSubscriptionForm.api.$invalid,
   'has-success' : addSubscriptionForm.api.$valid}">
           <label for="api">API</label>
-          <div ng-show="!vm.apis.length" style="margin-bottom: 20px">Det finns inga tillgängliga APIer att skapa en prenumeration emot</div>
-          <div ng-show="vm.apis.length">
+          <div ng-show="vm.apis.length == 0" style="margin-bottom: 20px">Det finns inga tillgängliga APIer att skapa en prenumeration emot</div>
+          <div ng-show="vm.apis.length > 0">
             <select name="api" id="api" ng-model="vm.form.subscription.add.api" class="form-control" required>
               <option ng-repeat="entry in vm.apis" value="{{entry.name}}/{{entry.version}}/{{entry.provider}}">{{entry.name}} {{entry.version}}</option>
             </select>
@@ -94,7 +94,7 @@
   </div>
 </div>
 
-<div ng-show="vm.form.subscription.update && vm.initialized">
+<div ng-show="vm.form.subscription.update">
   <div class="container" style="padding-left: 0; padding-bottom: 0px">
     <h2>Uppdatera prenumeration</h2>
   </div>
