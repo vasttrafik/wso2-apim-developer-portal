@@ -101,11 +101,11 @@
               </a>
               <div class="dropdown-menu create">
 
-                  <div class="top-alert" ng-class="{ 'alert': menuAlert, 'alert-success': menuAlert.type === 'success', 'alert-danger': menuAlert.type === 'error' }" ng-show="menuAlert" style="margin-bottom: 20px; padding: 10px; border-radius: 0">
-                      <button type="button" class="close" ng-show="menuAlert">×</button>
-                      <div ng-show="menuAlert" ng-bind="menuAlert.heading" class="alertHeading"></div>
-                      <div ng-show="menuAlert" ng-bind="menuAlert.message"></div>
-                  </div>
+                <div class="top-alert" ng-class="{ 'alert': menuAlert, 'alert-success': menuAlert.type === 'success', 'alert-danger': menuAlert.type === 'error' }" ng-show="menuAlert" style="margin-bottom: 20px; padding: 10px; border-radius: 0">
+                    <button type="button" class="close" ng-show="menuAlert">×</button>
+                    <div ng-show="menuAlert" ng-bind="menuAlert.heading" class="alertHeading"></div>
+                    <div ng-show="menuAlert" ng-bind="menuAlert.message"></div>
+                </div>
 
                 <form name="form" ng-submit="user.create ? vm.create() : vm.login()" role="form">
                   <div ng-if="!user.create">
@@ -157,19 +157,18 @@
                       <span ng-show="form.passwordRepeat.$dirty && form.passwordRepeat.$invalid" class="help-block">Lösenorden stämmer inte överrens</span>
                     </div>
 
-                    <!-- Terms and conditions -->
+                    <!-- Approve terms -->
                     <div class="checkbox">
                       <label>
-                        <input class="small" type="checkbox" name="accept-terms" ng-model="vm.user.acceptTerms"" required /> Jag har tagit del av och godkänner villkor för konto på Utvecklarportalen
+                        <input class="small" type="checkbox" name="accept-terms" ng-model="vm.user.acceptTerms"" required /> 
+                        Jag har tagit del av och godkänner <a href="#/docs/terms">villkoren</a> för konto på Utvecklarportalen
                       </label>
                     </div>
-
 
                     <div class="form-actions noclick">
                       <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Skapa konto</button>
                       <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
                       />
-                      <span class="btn btn-link">Visa villkor</span>
                       <span ng-click="vm.toggleCreate()" class="btn btn-link" style="float: right">Logga in</span>
                     </div>
                   </div>
