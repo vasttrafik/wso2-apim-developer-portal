@@ -45,7 +45,7 @@
         }, function(response) {
           if (response.status === 401) {
 
-            AuthenticationService.Logout();
+            AuthenticationService.logout();
             AlertService.error('Användaren är inte autentiserad', false);
             apiErrorResponse('Användaren är inte autentiserad', deferred);
 
