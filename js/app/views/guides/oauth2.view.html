@@ -1,0 +1,163 @@
+﻿<div class="jumbotron title">
+  <div class="container">
+    <h1 class="sub-header">OAuth 2, hur fungerar det?</h1>
+  </div>
+</div>
+
+<div class="container" style="padding-top: 0">
+  <section>
+    <article>
+      <h2>OAuth 2 beskrivning</h2>
+      <p style="font-weight: bold;">
+        OAuth 2 är ramverk som gör att program kan få begränsad tillgång till användarkonton för HTTP-tjänster. 
+        Det fungerar genom att delegera användarautentisering till tjänsten som är värd för användarkontot, 
+        och aktoriserar tredjepartsprogram för att komma åt användarkontot.
+      </p>
+      <p>
+        Denna enkla guide är riktad till applikationsutvecklare och syftar till att ge en enkel beskrivning
+        och översikt av roller, olika typer av auktorisering ("authorization grant types") och flöden som används av OAuth2.
+      </p>
+    </article>
+    <article>
+      <h2>OAuth roller</h2>
+      OAuth definierar 4 roller:
+      <ol>
+        <li>Resursägare</li>
+        <li>Klient</li>
+        <li>Resursserver</li>
+        <li>Auktoriseringsserver</li>
+      </ol>
+    </article>
+
+    <article>
+      <h2>Resursägare: Användare</h2>
+      <p>
+        Resursägare är användaren som godkänner en applikation att accessa dess konto.
+        Vilken access till användarens konto som applikationen har bestäms av omfattningen (scope)
+        av den beviljade accessen.
+
+        <!--The resource owner is the user who authorizes an application to access their account. 
+        The application's access to the user's account is limited to the "scope" of the authorization 
+        granted (e.g. read or write access).-->
+        
+        
+      </p>
+    </article>
+    <article>
+      <h2>Resurs-/Auktoriseringsserver: API</h2>
+      <p>
+        Resursservern är värd för dom skyddade användarkontona, och auktoriseringsservern verifierar 
+        identiteten för användaren, och utfärdar access token för applikationen.
+      </p>
+      <p>
+        För en applikationsutvecklare innebär detta att API:et för en tjänst uppfyller båda rollerna, 
+        dvs agerar såväl resurs- som hanterar auktorisering (service eller api-roll).
+      </p>
+    </article>
+    <article>
+      <h2>Klient: Applikationen</h2>
+      <p>
+        Klienten är applikationen som vill ha åtkomst till användarens konto.
+        Före så kan ske, måste applikationen auktoriseras av användaren, och auktoriseringen måste 
+        valideras av API:et. 
+      </p>
+    </article>
+
+    <article>
+      <h2>Authorization grant types: Vilka alternativ finns?</h2>
+        Enligt <a href="http://tools.ietf.org/html/rfc6749#section-1.3" target="_blank">RFC6749</a> erbjuds 4 olika typer:
+        <ol>
+          <li>Authorization code</li>
+          <li>Implicit</li>
+          <li>Resource owner password credentials (ROPC)</li>
+          <li>Client credentials</li>
+        </ol>
+        Västtrafik Utvecklarportalen supportar alla grant types men föredrar client credentials, vilket är det som denna guide kommer att 
+        använda sig av i sina exempel.
+    </article>
+
+    <article>
+      <h2>OAuth2 Client credentials grant</h2>
+      Autentisera och få access-token i 1 steg, med följande information:
+      <ul>
+        <li><strong>URL</strong> till autentiseringsserver</li>
+        <li><strong>Consumer key</strong> och...</li>
+        <li><strong>Consumer secret</strong></li>
+        <li><strong>Authorization header</strong> (m.hj.a consumer key och consumer secret):<br />
+          Authorization: Basic Base64_encode(consumer-key:consumer-secret)</li>
+      </ul>
+      Notera att värdet för authorization header är en Base64-kodad teckensträng.
+      <i>[Referens till CURL-kommando vid applikationsregistrering]</i>
+    </article>
+
+    <article>
+      <h2>Steg 1: Generera token</h2>
+      <p>
+        <pre class="code-highlight">
+          POST <strong>https://api.vasttrafik.se/token</strong> HTTP/1.1
+          Accept-Encoding: gzip,deflate
+          User-Agent: SoapUI/5.0.0
+          Content-Type: <strong>application/x-www-form-urlencoded</strong>
+          Authorization: <strong>Basic UmJseEkyeTFsWVNFTTZ0Z2J6anBTa2E0R1pzYTpaTWdKRHRjSlpEZXg5MmV1TGlBR1g4UTFSdVFh</strong>
+          Content-Length: xx
+          Host: auth.vasttrafik.se
+          Connection: Keep-Alive
+
+          <strong>grant_type=client_credentials&scope=device&lt;device_id&gt;</strong>
+        </pre>
+      </p>
+      Detta anrop ger följande svar från servern (default expiry = 60min):
+      <p>
+        <pre class="code-highlight">
+          {
+            "scope": ”&lt;scope&gt;",
+            "token_type": "Bearer",
+            "expires_in": 3600,
+            "refresh_token": "ebfc4b5bd6a531ccdee49b407341293d",
+            "access_token": "766b697f4462ca3878b05597ff19313"
+          }
+        </pre>
+      </p>
+    </article>
+
+    <article>
+      <h2>Steg 2: Använd token</h2>
+      <p>
+        <pre class="code-highlight">
+          GET http://api.vasttrafik.se/bin/rest.exe/v1/location.name?input=ols&format=json HTTP/1.1
+          Accept-Encoding: gzip,deflate
+          User-Agent: SoapUI/5.0.0
+          Authorization: <strong>Bearer 766b697f4462ca3878b05597ff19313</strong>
+          Host: api.vasttrafik.se
+          Connection: Keep-Alive
+        </pre>
+      </p>
+    </article>
+
+    <article>
+      <h2>Steg 3: Förnya token</h2>
+      <p>
+        Förnya token sker i steg 1 när authorization grant type är satt till client credentials.
+      </p>
+    </article>
+
+    <article>
+      <h2>Steg 4: Återkalla token</h2>
+      <p>
+        <pre class="code-highlight">
+          POST <strong>http://api.vasttrafik.se/revoke</strong> HTTP/1.1
+          Accept-Encoding: gzip,deflate
+          User-Agent: SoapUI/5.0.0
+          Content-Type: <strong>application/x-www-form-urlencoded</strong>
+          Authorization: <strong>Basic UmJseEkyeTFsWVNFTTZ0Z2J6anBTa2E0R1pzYTpaTWdKRHRjSlpEZXg5MmV1TGlBR1g4UTFSdVFh</strong>
+          Content-Length: xx
+          Host: auth.vasttrafik.se
+          Connection: Keep-Alive
+
+          <strong>token=ebfc4b5bd6a531ccdee49b407341293d</strong>
+        </pre>
+      </p>
+    </article>
+
+  </section>
+</div>
