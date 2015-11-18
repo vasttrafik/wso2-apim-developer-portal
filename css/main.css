@@ -774,3 +774,11 @@ div.alerter > div .container {
 .main-content {
   padding-bottom: 100px;
 }
+
+ul.fa-ul {margin-left:5px;}
+
+a.ext:after {
+  font-family: FontAwesome;
+  content: "\f08e";
+  font-size:12px;
+}
