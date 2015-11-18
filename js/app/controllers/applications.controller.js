@@ -28,6 +28,11 @@
 
       getAllApplications()
         .then(function() {
+
+          // Need to check subscriptions in order to be able to generate a new key
+          APIService.call('subscriptionsGet', [])
+            .then(subscriptionsGetResponse);
+
           if ($routeParams.applicationId) {
             // If an application has been specified, open its details
             addApplicationDetails(parseInt($routeParams.applicationId));
@@ -66,6 +71,17 @@
     }
 
     function addApplicationDetails(applicationId) {
+
+      if (vm.subscriptionsRetrieved) {
+        vm.notAllowedToGenerateToken = false;
+        for (var j = 0; j < vm.subscriptions.length; j++) {
+          if (vm.subscriptions[j].application.id === applicationId && vm.subscriptions[j].api.status.toUpperCase() === 'DEPRECATED') {
+            vm.notAllowedToGenerateToken = true;
+            break;
+          }
+        }
+      }
+
       for (var i = 0; i < vm.applications.length; i++) {
         if (vm.applications[i].id === applicationId) {
           vm.form.application.details = angular.copy(vm.applications[i]);
@@ -178,6 +194,7 @@
     }
 
     function detailsApplication(applicationId) {
+
       APIService.call('applicationsApplicationIdTokensPost', [vm.form.application.details.validityTime, applicationId, 'application/json'])
         .then(applicationsApplicationIdTokensPostResponse);
 
@@ -196,6 +213,15 @@
         } else {
           AlertService.error('Problem att uppdatera applikationen');
         }
+      }
+    }
+
+    function subscriptionsGetResponse(response) {
+      if (response.status === 200) {
+        vm.subscriptions = response.data.list;
+        vm.subscriptionsRetrieved = true;
+      } else {
+        AlertService.error('Problem att hämta lista med prenumerationer. Det kommer tyvärr inte gå att skapa någon ny nyckel för någon applikation så länge problemet kvarstår');
       }
     }
 

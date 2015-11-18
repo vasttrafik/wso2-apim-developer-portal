@@ -11,11 +11,8 @@
     var vm = this;
 
     vm.addSubscription = addSubscription;
-    vm.addSubscriptionUpdate = addSubscriptionUpdate;
-    vm.updateSubscription = updateSubscription;
     vm.removeSubscription = removeSubscription;
     vm.resetAddSubscriptionForm = resetAddSubscriptionForm;
-    vm.resetUpdateSubscriptionForm = resetUpdateSubscriptionForm;
 
     (function init() {
       vm.form = {};
@@ -49,22 +46,14 @@
 
     function aPIsGetResponse(response) {
       if (response.status === 200) {
-        vm.apis = response.data.list;
+        // Not possible to create a subscription against deprecated or prototyped apis
+        vm.apis = response.data.list.filter(function(el) {
+          return el.status.toUpperCase() !== 'DEPRECATED' &&
+            el.status.toUpperCase() !== 'PROTOTYPED';
+        });
+
       } else {
         AlertService.error('Problem att hämta listan över APIer');
-      }
-    }
-
-    function addSubscriptionUpdate(subscriptionId) {
-      vm.form.subscription.update = {};
-
-      for (var i = 0; i < vm.subscriptions.length; i++) {
-        if (vm.subscriptions[i].subscriptionId === subscriptionId) {
-          vm.form.subscription.update.subscriptionId = vm.subscriptions[i].subscriptionId;
-          vm.form.subscription.update.api = vm.subscriptions[i].api.name + '/' + vm.subscriptions[i].api.version + '/' + vm.subscriptions[i].api.provider;
-          vm.form.subscription.update.application = vm.subscriptions[i].application.applicationId;
-          break;
-        }
       }
     }
 
@@ -100,44 +89,6 @@
       }
     }
 
-    function updateSubscription() {
-      vm.dataLoadingUpdateSubscription = true;
-
-      var apiDef = vm.form.subscription.update.api.split('/');
-
-      APIService.call('subscriptionsSubscriptionIdPut', [{
-          application: {
-            applicationId: vm.form.subscription.update.application
-          },
-          api: {
-            name: apiDef[0],
-            version: apiDef[1],
-            provider: apiDef[2]
-          }
-        }, vm.form.subscription.update.subscriptionId])
-        .then(subscriptionsSubscriptionIdPutResponse);
-
-      function subscriptionsSubscriptionIdPutResponse(response) {
-        if (response.status === 200) {
-
-          AlertService.success('Prenumerationen uppdaterad!');
-
-          for (var i = 0; i < vm.subscriptions.length; i++) {
-            if (vm.subscriptions[i].subscriptionId === vm.form.subscription.update.subscriptionId) {
-              vm.subscriptions[i] = response.data;
-              break;
-            }
-          }
-
-          resetUpdateSubscriptionForm();
-
-        } else {
-          AlertService.error('Problem att uppdatera prenumerationen');
-        }
-        vm.dataLoadingUpdateSubscription = false;
-      }
-    }
-
     function removeSubscription(subscriptionId) {
 
       var i = 0;
@@ -154,10 +105,6 @@
 
       function subscriptionsSubscriptionIdDeleteResponse(response) {
         if (response.status === 200) {
-
-          if (vm.form.subscription.update != null && vm.form.subscription.update.subscriptionId === subscriptionId) {
-            resetUpdateSubscriptionForm();
-          }
 
           AlertService.success('Prenumerationen mellan applikation ' +
             vm.subscriptions[i].application.name + ' och API ' + vm.subscriptions[i].api.name + ' ' + vm.subscriptions[i].api.version + ' borttagen!');
@@ -176,10 +123,6 @@
       vm.form.subscription.add.application = null;
 
       $scope.addSubscriptionForm.$setPristine();
-    }
-
-    function resetUpdateSubscriptionForm() {
-      vm.form.subscription.update = null;
     }
 
   }

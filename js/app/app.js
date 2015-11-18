@@ -123,7 +123,7 @@
           $rootScope.user.loggedIn = true;
           UserService.setUser(user); // Since this also sets the user scope
 
-          $http.defaults.headers.common.Authorization = 'Bearer ' + user.token.token;
+          $http.defaults.headers.common.Authorization = 'Bearer ' + user.accessToken.token;
         } else {
           $rootScope.user.loggedIn = false;
         }

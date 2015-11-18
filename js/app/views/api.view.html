@@ -14,23 +14,13 @@
 
   <div class="row col-md-6">
     <div class="row">
-      <label for="desc" class="col-xs-4 col-md-3">Beskrivning:</label>
-      <div id="#desc" class="col-xs-8 col-md-9" ng-bind-html="vm.api.description"></div>
-    </div>
-
-    <div class="row">
       <label for="version" class="col-xs-4 col-md-3">Version:</label>
-      <div id="#version" class="col-xs-8 col-md-9">{{vm.api.version}}</div>
+      <div id="version" class="col-xs-8 col-md-9">{{vm.api.version}}</div>
     </div>
 
     <div class="row">
       <label for="status" class="col-xs-4 col-md-3">Status:</label>
       <div class="col-xs-8 col-md-9">{{vm.api.status}}</div>
-    </div>
-
-    <div class="row">
-      <label for="updated" class="col-xs-4 col-md-3">Uppdaterad:</label>
-      <div class="col-xs-8 col-md-9">{{vm.api.lastModifiedDate}}</div>
     </div>
   </div>
 
@@ -53,9 +43,8 @@
           <input type="hidden" name="apiId" ng-model="vm.apiId" value="{{vm.apiId}}" />
           <div class="form-group" ng-class="{ 'has-error': addSubscriptionForm.application.$dirty && addSubscriptionForm.application.$invalid, 'has-success' : addSubscriptionForm.application.$valid}">
             <label for="application">Applikation</label>
-            <select name="application" id="applications" ng-model="vm.selectedApplicationId" class="form-control" required>
-              <option value=""></option>
-              <option ng-repeat="entry in vm.applications" value="{{entry.applicationId}}">{{entry.name}}</option>
+            <select name="application" id="application" ng-model="vm.selectedApplicationId" class="form-control" required>
+              <option ng-repeat="entry in vm.applications" value="{{entry.id}}">{{entry.name}}</option>
             </select>
             <span ng-show="addSubscriptionForm.application.$dirty && addSubscriptionForm.application.$error.required" class="help-block">Applikation är obligatoriskt</span>
           </div>
@@ -69,9 +58,7 @@
       </div>
     </div>
   </div>
-</div>
 
-<div class="container">
   <div class="row col-md-12">
     <div class="card">
       <ul class="nav nav-tabs" role="tablist">
@@ -90,12 +77,12 @@
       <div class="tab-content">
 
         <div role="tabpanel" class="tab-pane active" id="apiOverview">
-          <h3>URL:er</h3>
-          <label for="production">Produktion</label>
-          <div id="production" class="well well-sm">{{vm.api.endpoint.production[0]}}</div>
 
-          <label for="sandbox">Test</label>
-          <div id="sandbox" class="well well-sm">{{vm.api.endpoint.sandbox[0]}}</div>
+          <h3>Beskrivning</h3>
+          <div id="desc" ng-bind-html="vm.api.description"></div>
+
+          <h3>URL</h3>
+          <div id="url">https://api.vasttrafik.se/{{vm.api.version + vm.api.context}}</div>
         </div>
 
         <div role="tabpanel" class="tab-pane" id="apiDocs">

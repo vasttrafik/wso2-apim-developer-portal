@@ -9,9 +9,9 @@
     .module('vtPortal')
     .factory('AuthenticationService', AuthenticationService);
 
-  AuthenticationService.$inject = ['$http', '$location', 'UserService', '$httpParamSerializer', '$q'];
+  AuthenticationService.$inject = ['$http', '$location', '$httpParamSerializer', '$q', 'UserService', 'AlertService'];
 
-  function AuthenticationService($http, $location, UserService, $httpParamSerializer, $q) {
+  function AuthenticationService($http, $location, $httpParamSerializer, $q, UserService, AlertService) {
     var service = {};
     var apiClient = new API.Client.DefaultApi($http, null, $httpParamSerializer); // jshint ignore:line
     var userApiClient = new UserAPI.Client.UserApi($http, null, $httpParamSerializer); // jshint ignore:line
@@ -45,9 +45,17 @@
           } else {
             apiErrorResponse(authenticatedUserObject, deferred);
           }
-        }).then(function() {
+        }).then(function(authenticatedUserObject) {
+          UserService.setUser(response.user)
+            .catch(function(response) {
+              AlertService.error(response.message);
+            });
+
+          deferred.resolve(response);
+
+          /*
           // Retrieve further user information based on userId from login response
-          apiClient.usersUserIdGet(response.user.userId)
+          userApiClient.usersUserIdGet(response.user.userId, 'application/json', 'Bearer ' + response.user.accessToken.token, null, null)
             .then(function(userAccountObject) {
               if (userAccountObject.status === 200) {
                 response.user.claims = userAccountObject.data.claims;
@@ -57,6 +65,7 @@
             }).catch(function(apiResponse) {
               apiErrorResponse(apiResponse, deferred);
             });
+            */
 
         }).catch(function(apiResponse) {
           apiErrorResponse(apiResponse, deferred);

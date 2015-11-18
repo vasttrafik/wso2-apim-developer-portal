@@ -18,7 +18,7 @@
         <tr>
           <th>Applikation</th>
           <th>API</th>
-          <th colspan="2">Aktioner</th>
+          <th>Aktioner</th>
         </tr>
       </thead>
 
@@ -30,12 +30,6 @@
           </td>
           <td>
             <span><a href="#/api/{{entries.api.name}}/{{entries.api.version}}/{{entries.api.provider}}">{{entries.api.name}} {{entries.api.version}}</a></span>
-          </td>
-          <td>
-            <span ng-click="vm.addSubscriptionUpdate(entries.subscriptionId)" style="cursor: pointer" title="Uppdatera">
-              <span class="glyphicon glyphicon-edit"></span>
-              <span class="hidden-xs">Uppdatera</span>
-            </span>
           </td>
           <td>
             <span ng-click="vm.removeSubscription(entries.subscriptionId)" style="cursor: pointer" title="Ta bort">
