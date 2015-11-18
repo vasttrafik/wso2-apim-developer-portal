@@ -42,7 +42,7 @@
           $location.search('username', null);
           $location.search('code', null);
         } else {
-          AlertService.error('försök igen", "Problem vid verifiering av konto');
+          AlertService.error('Försök igen', 'Problem vid verifiering av konto');
           generateCaptcha();
           vm.form.activation.captcha = '';
           $scope.activateAccountForm.$setPristine();
