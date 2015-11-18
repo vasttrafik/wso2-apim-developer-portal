@@ -46,7 +46,12 @@
 
     function aPIsGetResponse(response) {
       if (response.status === 200) {
-        vm.apis = response.data.list;
+        // Not possible to create a subscription against deprecated or prototyped apis
+        vm.apis = response.data.list.filter(function(el) {
+          return el.status.toUpperCase() !== 'DEPRECATED' &&
+            el.status.toUpperCase() !== 'PROTOTYPED';
+        });
+
       } else {
         AlertService.error('Problem att hämta listan över APIer');
       }
