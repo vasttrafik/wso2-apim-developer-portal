@@ -14,23 +14,13 @@
 
   <div class="row col-md-6">
     <div class="row">
-      <label for="desc" class="col-xs-4 col-md-3">Beskrivning:</label>
-      <div id="#desc" class="col-xs-8 col-md-9" ng-bind-html="vm.api.description"></div>
-    </div>
-
-    <div class="row">
       <label for="version" class="col-xs-4 col-md-3">Version:</label>
-      <div id="#version" class="col-xs-8 col-md-9">{{vm.api.version}}</div>
+      <div id="version" class="col-xs-8 col-md-9">{{vm.api.version}}</div>
     </div>
 
     <div class="row">
       <label for="status" class="col-xs-4 col-md-3">Status:</label>
       <div class="col-xs-8 col-md-9">{{vm.api.status}}</div>
-    </div>
-
-    <div class="row">
-      <label for="updated" class="col-xs-4 col-md-3">Uppdaterad:</label>
-      <div class="col-xs-8 col-md-9">{{vm.api.lastModifiedDate}}</div>
     </div>
   </div>
 
@@ -69,9 +59,7 @@
       </div>
     </div>
   </div>
-</div>
 
-<div class="container">
   <div class="row col-md-12">
     <div class="card">
       <ul class="nav nav-tabs" role="tablist">
@@ -90,12 +78,12 @@
       <div class="tab-content">
 
         <div role="tabpanel" class="tab-pane active" id="apiOverview">
-          <h3>URL:er</h3>
-          <label for="production">Produktion</label>
-          <div id="production" class="well well-sm">{{vm.api.endpoint.production[0]}}</div>
 
-          <label for="sandbox">Test</label>
-          <div id="sandbox" class="well well-sm">{{vm.api.endpoint.sandbox[0]}}</div>
+          <h3>Beskrivning</h3>
+          <div id="desc" ng-bind-html="vm.api.description"></div>
+
+          <h3>URL</h3>
+          <div id="production">https://api.vasttrafik.se/{{vm.api.version + vm.api.context}}</div>
         </div>
 
         <div role="tabpanel" class="tab-pane" id="apiDocs">
