@@ -49,28 +49,46 @@
 
     function setUser(user) {
       var deferred = $q.defer();
-      $http.defaults.headers.common.Authorization = 'Bearer ' + user.token.token;
+      $http.defaults.headers.common.Authorization = 'Bearer ' + user.accessToken.token;
       localStorage.user = JSON.stringify(user);
       localStorage.tokenGrantedTime = new Date();
 
-      $rootScope.globals = {
-        currentUser: {
-          userName: user.userName,
-          email: user.claims.filter(function(el) {
-            return el.claimURI === 'http://wso2.org/claims/emailaddress';
-          })[0].value,
-          firstName: user.claims.filter(function(el) {
-            return el.claimURI === 'http://wso2.org/claims/givenname';
-          })[0].value,
-          lastName: user.claims.filter(function(el) {
-            return el.claimURI === 'http://wso2.org/claims/lastname';
-          })[0].value,
-        }
-      };
+      try {
+        $rootScope.globals = {
+          currentUser: {
+            userName: user.userName,
+            email: user.claims.filter(function(el) {
+              return el.claimURI === 'http://wso2.org/claims/emailaddress';
+            })[0].value,
+            firstName: user.claims.filter(function(el) {
+              return el.claimURI === 'http://wso2.org/claims/givenname';
+            })[0].value,
+            lastName: user.claims.filter(function(el) {
+              return el.claimURI === 'http://wso2.org/claims/lastname';
+            })[0].value,
+          }
+        };
 
-      deferred.resolve({
-        success: true
-      });
+        deferred.resolve({
+          success: true
+        });
+
+      } catch (err) {
+
+        $rootScope.globals = {
+          currentUser: {
+            userName: user.userName,
+            email: 'john.doe@nowhere.com',
+            firstName: 'John',
+            lastName: 'Doe'
+          }
+        };
+
+        deferred.reject({
+          success: false,
+          message: 'Problem att läsa utökade uppgifter för användaren'
+        });
+      }
 
       return deferred.promise;
     }
