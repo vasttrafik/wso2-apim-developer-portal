@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="css/font-awesome.min.css">
 </head>
 
-<body id="body" ng-controller="MainCtrl as vm">
+<body id="body" ng-controller="MainCtrl as vm" ng-cloak>
 
   <div id="menu_left" class="container sidebar sidebar-left">
     <div class="nav-side-menu" data-side="left">
@@ -166,7 +166,7 @@
                     <!-- Approve terms -->
                     <div class="checkbox">
                       <label>
-                        <input class="small" type="checkbox" name="accept-terms" ng-model="vm.user.acceptTerms" required /> 
+                        <input class="small" type="checkbox" name="accept-terms" ng-model="vm.user.acceptTerms" required />
                         Jag har tagit del av och godkänner <a href="#/docs/terms">villkoren</a> för konto på Utvecklarportalen
                       </label>
                     </div>
