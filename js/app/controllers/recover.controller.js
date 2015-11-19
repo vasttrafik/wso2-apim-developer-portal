@@ -60,7 +60,8 @@
               }])
               .then(notificationsPostResponse);
           } else if (vm.form.captcha.recoveryType === 'secretQuestion') {
-            APIService.userCall('challengequestionsGet', ['application/json', response.data.userId, response.data.key])
+
+            APIService.userCall('challengequestionsGet', ['application/json', response.data.userId, response.data.key, encodeURIComponent('http://wso2.org/claims/challengeQuestion1')])
               .then(challengeQuestionsGetResponse);
           }
 
@@ -86,16 +87,14 @@
 
       function challengeQuestionsGetResponse(response) {
 
+        console.log(JSON.stringify(response, null, 4));
+
         AlertService.success('Svara på frågan för att kunna återställa ditt lösenord', 'Lyckad verifiering!', 10000);
 
-        var challengeQuestion = response.data.filter(function(el) {
-          return el.id === 'http://wso2.org/claims/challengeQuestion1';
-        })[0];
-
         vm.form.question = {};
-        vm.form.question.challengeQuestion = challengeQuestion.question;
-        vm.form.question.id = challengeQuestion.id;
-        vm.form.question.key = challengeQuestion.key;
+        vm.form.question.challengeQuestion = response.data[0].question;
+        vm.form.question.id = response.data[0].id;
+        vm.form.question.key = response.data[0].key;
 
         vm.user.question = true;
       }
@@ -138,21 +137,21 @@
     function passwordRecoverySecretQuestion() {
       vm.dataLoadingNotification = true;
 
-      APIService.userCall('challengequestionsIdAnswersPost', [encodeURIComponent(vm.form.question.id), 'application/json', 'application/json', {
+      APIService.userCall('challengequestionsPut', ['application/json', 'application/json', {
           userName: vm.form.username,
           confirmation: vm.form.question.key,
           questionId: vm.form.question.id,
           answer: vm.form.question.answer
         }])
-        .then(challengequestionsIdAnswersPost);
+        .then(challengequestionsPutResponse);
 
-      function challengequestionsIdAnswersPost(response) {
+      function challengequestionsPutResponse(response) {
         if (response.status === 200) {
           AlertService.success('Rätt svar på frågan!');
           vm.user.password = true;
           vm.form.password = {};
           vm.form.password.userId = 1; // Recover password doesn't look at the userId
-          vm.form.password.code = response.data.Verification.key;
+          vm.form.password.code = response.data.key;
         } else {
           AlertService.error('Försök igen', 'Felaktigt svar på frågan');
         }
@@ -168,7 +167,7 @@
           userName: vm.form.username,
           password: {
             confirmationCode: vm.form.password.code,
-            password: vm.form.password.password,
+            newPassword: vm.form.password.password,
           },
           profileName: 'default',
           tenantDomain: 'carbon.super'
