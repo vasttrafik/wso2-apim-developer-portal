@@ -14,9 +14,11 @@
             <label for="name">Användarnamn</label>
             <input type="text" name="username" id="username" class="form-control" ng-model="vm.form.activation.username" disabled required />
           </div>
-          <div class="form-group">
+          <div class="form-group" ng-class="{ 'has-error': activateAccountForm.code.$dirty && activateAccountForm.code.$invalid,
+  'has-success' : activateAccountForm.code.$valid}">
             <label for="code">Kod</label>
-            <input type="text" name="code" id="code" class="form-control" ng-model="vm.form.activation.code" disabled required />
+            <input type="text" name="code" id="code" class="form-control" ng-model="vm.form.activation.code" required />
+            <span ng-show="activateAccountForm.code.$dirty && activateAccountForm.code.$error.required" class="help-block">Kod är obligatoriskt</span>
           </div>
           <div class="form-group">
             <img src="{{vm.captcha}}">

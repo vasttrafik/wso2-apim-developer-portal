@@ -407,7 +407,7 @@ var API;
         return this.$http(httpRequestParams);
       };
 
-      DefaultApi.prototype.applicationsApplicationIdTokensPost = function(validityTime, applicationId, contentType, extraHttpRequestParams) {
+      DefaultApi.prototype.applicationsApplicationIdTokensPost = function(body, validityTime, applicationId, contentType, extraHttpRequestParams) {
         var path = this.basePath + '/applications/{applicationId}/tokens';
 
         path = path.replace('{' + 'applicationId' + '}', String(applicationId));
@@ -435,6 +435,7 @@ var API;
           method: 'POST',
           url: path,
           json: true,
+          data: body,
           params: queryParameters,
           headers: headerParams
         };

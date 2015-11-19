@@ -127,7 +127,45 @@
   </div>
 
   <div class="container" style="padding-bottom: 20px;">
-    <div class="row well">
+
+    <div class="row well" ng-show="!vm.form.application.details.consumerKey">
+      <form name="detailsApplicationGenerateTokenForm" ng-submit="vm.detailsApplicationGenerateToken(vm.form.application.details.id)" role="form">
+
+        <div ng-if="!vm.notAllowedToGenerateToken && vm.subscriptions">
+          <div class="form-group" ng-class="{ 'has-error': detailsApplicationGenerateTokenForm.validityTimeGenerateToken.$dirty && detailsApplicationGenerateTokenForm.validityTimeGenerateToken.$invalid,
+    'has-success' : detailsApplicationGenerateTokenForm.validityTimeGenerateToken.$valid}">
+            <label for="validityTime">Giltighetstid</label>
+            <div class="input-group">
+
+              <input type="number" name="validityTimeGenerateToken" id="validityTimeGenerateToken" class="form-control" ng-model="vm.form.application.details.generateToken.validityTime" required min="1" />
+              <span class="input-group-addon">Sekunder</span>
+            </div>
+            <span ng-show="detailsApplicationGenerateTokenForm.validityTimeGenerateToken.$dirty && detailsApplicationGenerateTokenForm.validityTimeGenerateToken.$invalid" class="help-block">Måste vara ett nummer större än 0</span>
+            <span ng-show="detailsApplicationGenerateTokenForm.validityTimeGenerateToken.$dirty && detailsApplicationGenerateTokenForm.validityTimeGenerateToken.$error.required" class="help-block">Giltighetstid är obligatoriskt</span>
+          </div>
+
+          <div class="form-actions noclick">
+            <button type="submit" ng-disabled="detailsApplicationGenerateTokenForm.$invalid || vm.dataLoadingDetailsApplication" class="btn btn-primary">Generera ny access token</button>
+            <img ng-if="vm.dataLoadingDetailsApplication" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+            />
+            <span ng-click="vm.resetDetailsApplicationForm();" class="btn btn-link">Stäng</span>
+          </div>
+
+        </div>
+
+        <div ng-if="vm.notAllowedToGenerateToken" style="color: #a94442">
+          Din applikation prenumererar på ett API med status DEPRECATED. Det gör det inte möjligt att skapa en ny nyckel för din applikation.
+        </div>
+
+        <div ng-if="!vm.subscriptions" style="color: #a94442">
+          Det är inte möjligt att generera en ny nyckel när det är problem att hämta listan med prenumerationer.
+        </div>
+
+      </form>
+    </div>
+
+
+    <div class="row well" ng-show="vm.form.application.details.consumerKey">
       <form name="detailsApplicationForm" ng-submit="vm.detailsApplication(vm.form.application.details.id)" role="form">
 
         <div class="form-group">
@@ -154,22 +192,22 @@
           </div>
         </div>
 
-        <div ng-if="!vm.notAllowedToGenerateToken">
-          <div class="form-group" ng-class="{ 'has-error': detailsApplicationForm.validitytime.$dirty && detailsApplicationForm.validitytime.$invalid,
-    'has-success' : detailsApplicationForm.validitytime.$valid}">
+        <div ng-if="!vm.notAllowedToGenerateToken && vm.subscriptions">
+          <div class="form-group" ng-class="{ 'has-error': detailsApplicationForm.validityTime.$dirty && detailsApplicationForm.validityTime.$invalid,
+    'has-success' : detailsApplicationForm.validityTime.$valid}">
             <label for="description">Giltighetstid</label>
             <div class="input-group">
 
-              <input type="number" name="validitytime" id="validitytime" class="form-control" ng-model="vm.form.application.details.validityTime" required min="1" />
+              <input type="number" name="validityTime" id="validityTime" class="form-control" ng-model="vm.form.application.details.validityTime" required min="1" />
               <span class="input-group-addon">Sekunder</span>
             </div>
-            <span ng-show="detailsApplicationForm.validitytime.$dirty && detailsApplicationForm.validitytime.$invalid" class="help-block">Måste vara ett nummer större än 0</span>
-            <span ng-show="detailsApplicationForm.validitytime.$dirty && detailsApplicationForm.validitytime.$error.required" class="help-block">Giltighetstid är obligatoriskt</span>
+            <span ng-show="detailsApplicationForm.validityTime.$dirty && detailsApplicationForm.validityTime.$invalid" class="help-block">Måste vara ett nummer större än 0</span>
+            <span ng-show="detailsApplicationForm.validityTime.$dirty && detailsApplicationForm.validityTime.$error.required" class="help-block">Giltighetstid är obligatoriskt</span>
           </div>
 
           <div class="form-actions noclick">
-            <button type="submit" ng-disabled="detailsApplicationForm.$invalid || vm.dataLoadingdetailsApplication" class="btn btn-primary">Generera ny access token</button>
-            <img ng-if="vm.dataLoadingAddApplication" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+            <button type="submit" ng-disabled="detailsApplicationForm.$invalid || vm.dataLoadingDetailsApplication" class="btn btn-primary">Generera ny access token</button>
+            <img ng-if="vm.dataLoadingDetailsApplication" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
             />
             <span ng-click="vm.resetDetailsApplicationForm();" class="btn btn-link">Stäng</span>
           </div>
@@ -180,17 +218,21 @@
           Din applikation prenumererar på ett API med status DEPRECATED. Det gör det inte möjligt att skapa en ny nyckel för din applikation.
         </div>
 
+        <div ng-if="!vm.subscriptions" style="color: #a94442">
+          Det är inte möjligt att generera en ny nyckel när det är problem att hämta listan med prenumerationer.
+        </div>
+
       </form>
     </div>
 
-    <div class="row" ng-if="!vm.notAllowedToGenerateToken">
+    <div class="row" ng-if="!vm.notAllowedToGenerateToken && vm.form.application.details.consumerKey">
       <h3>Curl kommando för client credential grant</h3>
       <div class="code-highlight">
         <span clipboard text="vm.curl.client" on-copied="vm.copySuccess('Grant')" class="fa fa-files-o" style="float:right; cursor: pointer"></span>
         {{vm.curl.client}}
       </div>
     </div>
-    <div class="row" ng-if="!vm.notAllowedToGenerateToken">
+    <div class="row" ng-if="!vm.notAllowedToGenerateToken && vm.form.application.details.consumerKey">
       <h3>Curl kommando för lösenord grant</h3>
       <div class="code-highlight">
         <span clipboard text="vm.curl.password" on-copied="vm.copySuccess('Grant')" class="fa fa-files-o" style="float:right; cursor: pointer; margin-left: 20px;"></span>

@@ -4,7 +4,7 @@
   </div>
 </div>
 
-<div class="container" ng-show="!vm.user.notification">
+<div class="container" ng-show="!vm.user.notification && !vm.user.question">
   <div class="row">
     <h2>Steg 1 av 3. Fyll i användarnamn och lös captchan.</h2>
     <div class="container">
@@ -17,22 +17,19 @@
             <span ng-show="passwordRecoveryCaptchaForm.username.$dirty && passwordRecoveryCaptchaForm.username.$error.required" class="help-block">Användarnamn är obligatoriskt</span>
           </div>
 
-          <!-- <div class="form-group">
-            <label for="name">Återställningstyp</label>
-
+          <div class="form-group">
+            <label for="recoveryType">Återställningstyp</label>
             <div class="radio">
               <label>
-              <input type="radio" ng-model="vm.form.captcha.recoveryType" value="notification">
-                Via e-post
+                <input type="radio" name="recoveryType" ng-model="vm.form.captcha.recoveryType" value="notification" required> Via e-post
               </label>
             </div>
             <div class="radio">
               <label>
-                <input type="radio" ng-model="vm.form.captcha.recoveryType" value="secretQuestion">
-                Via frågor
+                <input type="radio" name="recoveryType" ng-model="vm.form.captcha.recoveryType" value="secretQuestion" required> Via fråga
               </label>
             </div>
-          </div> -->
+          </div>
 
           <div class="form-group">
             <img src="{{vm.captcha}}">
@@ -97,6 +94,37 @@
   </div>
 </div>
 
+<div class="container" ng-show="vm.user.question && !vm.user.password">
+  <div class="row">
+    <h2>Steg 2 av 3. Svara på frågan.</h2>
+    <div class="container">
+      <div class="row well">
+        <form name="passwordRecoverySecretQuestionForm" ng-submit="vm.passwordRecoverySecretQuestion()" role="form">
+          <div class="form-group">
+            <label for="passwordRecoverySecretQuestionUsername">Användarnamn</label>
+            <input type="text" name="passwordRecoverySecretQuestionUsername" id="passwordRecoverySecretQuestionUsername" class="form-control" ng-model="vm.form.username" disabled />
+          </div>
+          <div class="form-group">
+            <label for="passwordRecoverySecretQuestionQuestion">Fråga</label>
+            <input type="text" name="passwordRecoverySecretQuestionQuestion" id="passwordRecoverySecretQuestionQuestion" class="form-control" ng-model="vm.form.question.challengeQuestion" disabled />
+          </div>
+          <div class="form-group" ng-class="{ 'has-error': passwordRecoverySecretQuestionForm.answer.$dirty && passwordRecoverySecretQuestionForm.answer.$invalid,
+        'has-success' : passwordRecoverySecretQuestionForm.answer.$valid}">
+            <label for="answer">Svar</label>
+            <input type="text" name="answer" id="answer" class="form-control" ng-model="vm.form.question.answer" required />
+            <span ng-show="passwordRecoverySecretQuestionForm.answer.$dirty && passwordRecoverySecretQuestionForm.answer.$error.required" class="help-block">Svar är obligatoriskt</span>
+          </div>
+
+          <div class="form-actions noclick">
+            <button type="submit" ng-disabled="passwordRecoverySecretQuestionForm.$invalid || vm.dataLoadingActivation" class="btn btn-primary">Skicka</button>
+            <img ng-if="vm.dataLoadingNotification" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="container" ng-show="vm.user.notification && vm.user.password">
   <div class="row">

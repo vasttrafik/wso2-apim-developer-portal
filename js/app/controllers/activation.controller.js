@@ -23,7 +23,7 @@
     })();
 
     function activateAccount() {
-      APIService.userCall('usersPut', [{
+      APIService.userCall('usersPut', ['application/json', 'application/json', {
           username: vm.form.activation.username,
           code: vm.form.activation.code,
           captcha: {
@@ -37,7 +37,7 @@
 
       function usersPutResponse(response) {
         if (response.data.verified) {
-          AlertService.success('Nu kan du logga in", "Ditt konto är aktiverat!', 10000);
+          AlertService.success('Nu kan du logga in', 'Ditt konto är aktiverat!', 10000);
           $location.path('/');
           $location.search('username', null);
           $location.search('code', null);

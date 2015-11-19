@@ -15,6 +15,7 @@
     vm.updateApplication = updateApplication;
     vm.removeApplication = removeApplication;
     vm.detailsApplication = detailsApplication;
+    vm.detailsApplicationGenerateToken = detailsApplicationGenerateToken;
     vm.addApplicationUpdate = addApplicationUpdate;
     vm.addApplicationDetails = addApplicationDetails;
     vm.resetAddApplicationForm = resetAddApplicationForm;
@@ -195,7 +196,7 @@
 
     function detailsApplication(applicationId) {
 
-      APIService.call('applicationsApplicationIdTokensPost', [vm.form.application.details.validityTime, applicationId, 'application/json'])
+      APIService.call('applicationsApplicationIdTokensPost', [vm.form.application.details, vm.form.application.details.validityTime, applicationId, 'application/json'])
         .then(applicationsApplicationIdTokensPostResponse);
 
       function applicationsApplicationIdTokensPostResponse(response) {
@@ -211,7 +212,30 @@
           $scope.detailsApplicationForm.$setPristine();
 
         } else {
-          AlertService.error('Problem att uppdatera applikationen');
+          AlertService.error('Problem att generera ny nyckel');
+        }
+      }
+    }
+
+    function detailsApplicationGenerateToken(applicationId) {
+
+      APIService.call('applicationsApplicationIdTokensPost', [{}, vm.form.application.details.generateToken.validityTime, applicationId, 'application/json'])
+        .then(applicationsApplicationIdTokensPostResponse);
+
+      function applicationsApplicationIdTokensPostResponse(response) {
+        if (response.status === 200) {
+
+          AlertService.success('Ny nyckel genererad!');
+          for (var i = 0; i < vm.applications.length; i++) {
+            if (vm.applications[i].id === applicationId) {
+              vm.applications[i] = response.data;
+              vm.addApplicationDetails(applicationId);
+              break;
+            }
+          }
+
+        } else {
+          AlertService.error('Problem att generera ny nyckel');
         }
       }
     }

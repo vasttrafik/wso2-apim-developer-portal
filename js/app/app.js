@@ -212,7 +212,8 @@
     function create() {
       vm.dataLoading = true;
       AuthenticationService.create(vm.user, vm.claims).then(function(response) {
-        AlertService.menuSuccess('Du kommer få ett mail med instruktioner för att aktivera ditt konto', 'Registrering skickad!', 10000);
+        AlertService.success('Du kommer få ett mail med instruktioner för att aktivera ditt konto', 'Registrering skickad!', 10000);
+        $location.path('/activation').search('username', vm.user.username);
         $rootScope.user.create = false;
         vm.dataLoading = false;
       }).catch(function(response) {
@@ -224,7 +225,7 @@
     function toggleCreate(create) {
       vm.dataLoading = false;
 
-      if (create != null) { // jshint ignore:line
+      if (create != null) {
         $rootScope.user.create = create;
       } else {
         $rootScope.user.create = !$rootScope.user.create;
