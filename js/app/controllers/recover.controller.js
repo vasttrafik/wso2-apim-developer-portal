@@ -61,7 +61,7 @@
               .then(notificationsPostResponse);
           } else if (vm.form.captcha.recoveryType === 'secretQuestion') {
 
-            APIService.userCall('challengequestionsGet', ['application/json', response.data.userId, response.data.key, encodeURIComponent('http://wso2.org/claims/challengeQuestion1')])
+            APIService.userCall('challengequestionsGet', ['application/json', response.data.userId, response.data.key])
               .then(challengeQuestionsGetResponse);
           }
 
@@ -87,17 +87,26 @@
 
       function challengeQuestionsGetResponse(response) {
 
-        console.log(JSON.stringify(response, null, 4));
+        if (response.data.length < 1) {
+          AlertService.error('Det finns inga inställda frågor att svara på. Tyvärr går det inte att uppdatera lösenordet med hjälp av fråga');
+        } else {
+          vm.challengeQuestions = response.data;
+          setChallengeQuestion();
+        }
 
-        AlertService.success('Svara på frågan för att kunna återställa ditt lösenord', 'Lyckad verifiering!', 10000);
-
-        vm.form.question = {};
-        vm.form.question.challengeQuestion = response.data[0].question;
-        vm.form.question.id = response.data[0].id;
-        vm.form.question.key = response.data[0].key;
-
-        vm.user.question = true;
       }
+    }
+
+    function setChallengeQuestion() {
+
+      AlertService.success('Svara på frågan för att kunna återställa ditt lösenord', 'Lyckad verifiering!', 10000);
+
+      vm.form.question = {};
+      vm.form.question.challengeQuestion = vm.challengeQuestions[0].question;
+      vm.form.question.id = vm.challengeQuestions[0].id;
+      vm.form.question.key = vm.challengeQuestions[0].key;
+
+      vm.user.question = true;
     }
 
     function passwordRecoveryNotification() {
@@ -148,10 +157,16 @@
       function challengequestionsPutResponse(response) {
         if (response.status === 200) {
           AlertService.success('Rätt svar på frågan!');
-          vm.user.password = true;
-          vm.form.password = {};
-          vm.form.password.userId = 1; // Recover password doesn't look at the userId
-          vm.form.password.code = response.data.key;
+          vm.challengeQuestions.shift();
+          if (vm.challengeQuestions > 0) {
+            setChallengeQuestion();
+          } else {
+            vm.user.password = true;
+            vm.form.password = {};
+            vm.form.password.userId = 1; // Recover password doesn't look at the userId
+            vm.form.password.code = response.data.key;
+          }
+
         } else {
           AlertService.error('Försök igen', 'Felaktigt svar på frågan');
         }
