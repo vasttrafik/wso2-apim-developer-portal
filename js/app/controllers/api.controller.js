@@ -74,7 +74,7 @@
             version: apiDef[1],
             provider: apiDef[2]
           }
-        }])
+        }, 'application/json'])
         .then(subscriptionsPostResponse);
 
       function subscriptionsPostResponse(response) {

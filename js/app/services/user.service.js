@@ -3,9 +3,9 @@
   It's a combination of a UserAccountObject and an AuthenticatedUserObject.
 
   {
-  "userId": "string",
+  "id": "string",
   "userName": "string",
-  "token": {
+  "accessToken": {
     "token": "string",
     "refreshToken": "string",
     "expiresIn": number
@@ -49,23 +49,24 @@
 
     function setUser(user) {
       var deferred = $q.defer();
-      $http.defaults.headers.common.Authorization = 'Bearer ' + user.accessToken.token;
-      localStorage.user = JSON.stringify(user);
-      localStorage.tokenGrantedTime = new Date();
 
       try {
+        $http.defaults.headers.common.Authorization = 'Bearer ' + user.accessToken.token;
+        localStorage.user = JSON.stringify(user);
+        localStorage.tokenGrantedTime = new Date();
+
         $rootScope.globals = {
           currentUser: {
             userName: user.userName,
             email: user.claims.filter(function(el) {
-              return el.claimURI === 'http://wso2.org/claims/emailaddress';
-            })[0].value,
+              return el.claimUri === 'http://wso2.org/claims/emailaddress';
+            })[0].claimValue,
             firstName: user.claims.filter(function(el) {
-              return el.claimURI === 'http://wso2.org/claims/givenname';
-            })[0].value,
+              return el.claimUri === 'http://wso2.org/claims/givenname';
+            })[0].claimValue,
             lastName: user.claims.filter(function(el) {
-              return el.claimURI === 'http://wso2.org/claims/lastname';
-            })[0].value,
+              return el.claimUri === 'http://wso2.org/claims/lastname';
+            })[0].claimValue,
           }
         };
 
@@ -74,19 +75,9 @@
         });
 
       } catch (err) {
-
-        $rootScope.globals = {
-          currentUser: {
-            userName: user.userName,
-            email: 'john.doe@nowhere.com',
-            firstName: 'John',
-            lastName: 'Doe'
-          }
-        };
-
         deferred.reject({
           success: false,
-          message: 'Problem att läsa utökade uppgifter för användaren'
+          message: 'Problem att hämta utökad användarinfo'
         });
       }
 

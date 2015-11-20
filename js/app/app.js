@@ -148,9 +148,9 @@
 
   }
 
-  MainCtrl.$inject = ['$location', '$rootScope', '$filter', 'AuthenticationService', 'AlertService', 'APIService'];
+  MainCtrl.$inject = ['$location', '$rootScope', '$scope', '$filter', 'AuthenticationService', 'AlertService', 'APIService'];
 
-  function MainCtrl($location, $rootScope, $filter, AuthenticationService, AlertService, APIService) {
+  function MainCtrl($location, $rootScope, $scope, $filter, AuthenticationService, AlertService, APIService) {
     var vm = this;
 
     vm.login = login;
@@ -196,10 +196,15 @@
           vm.dataLoading = false;
           AlertService.clearMenuAlertMessage();
           $location.path('/overview');
+          vm.username = '';
+          vm.password = '';
+          $scope.form.$setPristine();
 
         }).catch(function(response) {
         if (response.status === 401) {
           AlertService.menuError('Användarnamn och lösenord stämmer inte.', 'Problem att logga in');
+          vm.password = '';
+          $scope.form.$setPristine();
         } else {
           AlertService.menuError(response.message, 'Problem att logga in');
         }
@@ -222,6 +227,7 @@
         $location.path('/activation').search('username', vm.user.username);
         $rootScope.user.create = false;
         vm.dataLoading = false;
+        $('.menu-user').click();
       }).catch(function(response) {
         AlertService.menuError(response.message);
         vm.dataLoading = false;
@@ -242,6 +248,7 @@
 
     function togglePasswordRecovery() {
       $location.path('/recover').search('username', vm.username);
+      $('.menu-user').click();
     }
   }
 

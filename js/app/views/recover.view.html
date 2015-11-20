@@ -126,7 +126,7 @@
   </div>
 </div>
 
-<div class="container" ng-show="vm.user.notification && vm.user.password">
+<div class="container" ng-show="(vm.user.notification || vm.user.question) && vm.user.password">
   <div class="row">
     <h2>Steg 3 av 3. Uppdatera lösenord.</h2>
     <div class="container">

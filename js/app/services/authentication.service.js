@@ -31,7 +31,7 @@
         action = 'refreshToken';
       }
 
-      var response;
+      var userObject = {};
 
       apiClient.securityPost(action, refreshToken, {
           userName: username,
@@ -39,33 +39,32 @@
         }, 'application/json')
         .then(function(authenticatedUserObject) {
           if (authenticatedUserObject.status === 200 || authenticatedUserObject.status === 201) {
-            response = {
-              user: authenticatedUserObject.data
-            };
+            userObject = authenticatedUserObject.data;
           } else {
             apiErrorResponse(authenticatedUserObject, deferred);
           }
-        }).then(function(authenticatedUserObject) {
-          UserService.setUser(response.user)
-            .catch(function(response) {
-              AlertService.error(response.message);
-            });
+        }).then(function() {
 
-          deferred.resolve(response);
-
-          /*
           // Retrieve further user information based on userId from login response
-          userApiClient.usersUserIdGet(response.user.userId, 'application/json', 'Bearer ' + response.user.accessToken.token, null, null)
+          userApiClient.usersUserIdGet(userObject.userId, 'application/json', 'Bearer ' + userObject.accessToken.token, null, null)
             .then(function(userAccountObject) {
+
               if (userAccountObject.status === 200) {
-                response.user.claims = userAccountObject.data.claims;
-                UserService.setUser(response.user);
-                deferred.resolve(response);
+
+                // Add token info from previous call
+                userAccountObject.data.accessToken = userObject.accessToken;
+
+                UserService.setUser(userAccountObject.data)
+                  .then(function(response) {
+                    deferred.resolve(response);
+                  })
+                  .catch(function(response) {
+                    deferred.reject(response);
+                  });
               }
             }).catch(function(apiResponse) {
               apiErrorResponse(apiResponse, deferred);
             });
-            */
 
         }).catch(function(apiResponse) {
           apiErrorResponse(apiResponse, deferred);
