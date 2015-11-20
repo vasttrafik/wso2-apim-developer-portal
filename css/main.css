@@ -762,13 +762,12 @@ article.newsItem h3 {
 
   padding: 15px 0 20px 0;
   margin-top:10px;
-
    -webkit-transition: max-height 1s;
   -moz-transition: max-height 1s;
   -o-transition: max-height 1s;
   transition: max-height 1s;
   overflow: hidden;
-  max-height: 100px;
+  max-height: 50px;
   
 }
 
@@ -789,8 +788,6 @@ div.thickDivider {
   height:4px;
   margin-top:-5px;
 }
-  
-  
 
 section.card {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
@@ -903,33 +900,14 @@ section.cardSection.greenCard span.help-block{
 }
 
 /*#region Article collapse styles */
-
-
-.accordion {
-  height: 200px;
-  display: inline-block;
-  text-align: left;
-  margin: 1%;
-  width: 70%;
-}
-
-
-  .accordion:hover .accordion-content {
-    max-height: 1300px;
-  }
-
-  .accordion-content {
-  -webkit-transition: max-height 1s;
-  -moz-transition: max-height 1s;
-  -o-transition: max-height 1s;
-  transition: max-height 1s;
-  background: #e5feff;
-  overflow: hidden;
-  max-height: 100px;
-}
+  
+.newsItem .selectedItem {max-height:1300px;}
 
 .newsItem {
   padding: 0 15px;
+  max-height: 100px; /*Nytt*/
+  display:inline-table;
+  width:100%;
 }
 
 .accordion-toggle {
