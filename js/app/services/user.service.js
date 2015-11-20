@@ -3,9 +3,9 @@
   It's a combination of a UserAccountObject and an AuthenticatedUserObject.
 
   {
-  "userId": "string",
+  "id": "string",
   "userName": "string",
-  "token": {
+  "accessToken": {
     "token": "string",
     "refreshToken": "string",
     "expiresIn": number
