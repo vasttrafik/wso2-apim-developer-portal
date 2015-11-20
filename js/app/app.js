@@ -99,6 +99,12 @@
       controllerAs: 'vm'
     })
 
+    .when('/news', {
+      controller: 'NewsCtrl',
+      templateUrl: 'js/app/views/news.view.html',
+      controllerAs: 'vm'
+    })
+
     .otherwise({
       redirectTo: '/'
     });
@@ -132,7 +138,7 @@
     $rootScope.$on('$locationChangeStart', function(event, next, current) {
 
       // redirect to startpage page if not logged in and trying to access a restricted page
-      var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api', 'guides', 'docs', 'activation', 'recover', 'contact']) === -1;
+      var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api', 'guides', 'docs', 'news', 'activation', 'recover', 'contact']) === -1;
 
       if (restrictedPage && !$rootScope.user.loggedIn) {
         $location.path('/');
