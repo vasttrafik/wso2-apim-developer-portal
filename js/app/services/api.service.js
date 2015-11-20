@@ -52,7 +52,6 @@
           } else {
             // TODO: Change to reject
             deferred.resolve(response);
-
           }
         });
 

@@ -64,14 +64,14 @@
 
       APIService.call('subscriptionsPost', [{
           application: {
-            applicationId: vm.form.subscription.add.application
+            id: vm.form.subscription.add.application
           },
           api: {
             name: apiDef[0],
             version: apiDef[1],
             provider: apiDef[2]
           }
-        }])
+        }, 'application/json'])
         .then(subscriptionsPostResponse);
 
       function subscriptionsPostResponse(response) {

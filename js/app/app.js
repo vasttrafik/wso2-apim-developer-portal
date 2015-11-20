@@ -119,8 +119,6 @@
     UserService.getUser()
       .then(function(user) {
 
-        console.log(JSON.stringify(user, null, 4));
-
         if (!$.isEmptyObject(user)) {
           $rootScope.user.loggedIn = true;
           UserService.setUser(user); // Since this also sets the user scope
