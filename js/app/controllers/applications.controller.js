@@ -200,7 +200,7 @@
         .then(applicationsApplicationIdTokensPostResponse);
 
       function applicationsApplicationIdTokensPostResponse(response) {
-        if (response.status === 200) {
+        if (response.status === 200 || response.status === 201) {
 
           AlertService.success('Ny nyckel genererad!');
           for (var i = 0; i < vm.applications.length; i++) {

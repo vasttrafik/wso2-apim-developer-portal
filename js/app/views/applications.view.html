@@ -21,7 +21,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="entries in vm.applications" class="nga-default nga-fade">
+        <tr ng-repeat="entries in vm.applications | orderBy:'name'" class="nga-default nga-fade">
           <td>
             <span>{{entries.name}}</span>
           </td>
