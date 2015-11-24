@@ -1,4 +1,5 @@
 /// <reference path="api.d.ts" />
+/* global defaultBaseUrl */
 var API;
 (function(API) {
   /* tslint:disable:no-unused-variable member-ordering */
@@ -9,7 +10,7 @@ var API;
       function DefaultApi($http, basePath, $httpParamSerializer) {
         this.$http = $http;
         this.$httpParamSerializer = $httpParamSerializer;
-        this.basePath = 'http://192.168.166.4:9764/portal/api';
+        this.basePath = defaultBaseUrl;
         //this.basePath = 'http://localhost:8080';
         if (basePath) {
           this.basePath = basePath;
@@ -202,6 +203,51 @@ var API;
           }
         }
 
+        return this.$http(httpRequestParams);
+      };
+
+      DefaultApi.prototype.apisApiIdImageGet = function(apiId, accept, extraHttpRequestParams) {
+        var path = this.basePath + '/apis/{apiId}/image'
+          .replace('{' + 'apiId' + '}', String(apiId));
+        var queryParameters = {};
+        var headerParams = this.extendObj({}, this.defaultHeaders);
+        // verify required parameter 'apiId' is set
+        if (!apiId) {
+          throw new Error('Missing required parameter apiId when calling apisApiIdImageGet');
+        }
+        headerParams['Accept'] = accept;
+        var httpRequestParams = {
+          method: 'GET',
+          url: path,
+          json: true,
+          params: queryParameters,
+          headers: headerParams
+        };
+        if (extraHttpRequestParams) {
+          httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+        }
+        return this.$http(httpRequestParams);
+      };
+      DefaultApi.prototype.apisApiIdSwaggerGet = function(apiId, accept, extraHttpRequestParams) {
+        var path = this.basePath + '/apis/{apiId}/swagger'
+          .replace('{' + 'apiId' + '}', String(apiId));
+        var queryParameters = {};
+        var headerParams = this.extendObj({}, this.defaultHeaders);
+        // verify required parameter 'apiId' is set
+        if (!apiId) {
+          throw new Error('Missing required parameter apiId when calling apisApiIdSwaggerGet');
+        }
+        headerParams['Accept'] = accept;
+        var httpRequestParams = {
+          method: 'GET',
+          url: path,
+          json: true,
+          params: queryParameters,
+          headers: headerParams
+        };
+        if (extraHttpRequestParams) {
+          httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+        }
         return this.$http(httpRequestParams);
       };
 
