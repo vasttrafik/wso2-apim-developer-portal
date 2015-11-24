@@ -1,0 +1,160 @@
+﻿<div class="jumbotron title">
+  <div class="container" style="padding-left: 0">
+    <h1 class="sub-header">Nyheter</h1>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <div class="container">
+    <div class="row col-md-9">
+      <section id="newsItemsList">
+        <article class="newsItem" style="">
+          <div class="glyphicon glyphicon-chevron-down toggleItem" style="float:right;cursor:default;display:inline-block;margin:8px 10px;"></div>
+          <h2>Utvecklarportalen - Ny version 1</h2>
+          <div class="thickDivider"></div>
+
+          <div class="articleContent">
+            With a Suunto Ambit3 Sport you can still track your workout’s distance, speed, elevation and heart rate (with a heart rate belt), but also:
+            <ol>
+              <li>Go Longer:  The battery on the Ambit3 lasts up to 200 hours while using gps</li>
+              <li>Go More: Track more sports more easily, including swimming</li>
+              <li>Go Lighter: Leave your phone at home and still get real time updates</li>
+            </ol>
+            Just connect your Suunto Movescount account to your Sports Tracker one. It will then automatically transfer all the new data, so you don’t have to worry about that later on.
+            <p>
+              All you need to do is to connect your Suunto watch to your Movescount account after each
+            </p>
+          </div>
+
+          <div class="thinDivider"></div>
+          <footer>
+            Taggad som:
+            <span class="label label-default">API</span>
+            <span class="label label-success">NEWS</span>
+            <span class="label label-info">PRENUMERATION</span>
+            <span>Publicerad av: Mikael, 2015-11-20</span>
+            <span data-toggle="collapse" data-target="#toggleDemo" class="glyphicon glyphicon-chevron-down" style="float:right;margin:8px 10px;"></span>
+          </footer>
+        </article>
+
+        <article class="newsItem">
+          <div class="glyphicon glyphicon-chevron-down toggleItem" style="float:right;cursor:default;display:inline-block;margin:8px 10px;"></div>
+          <h2>Utvecklarportalen - Ny version med lång rubrik för att se radbryt hanteras</h2>
+          <div class="thickDivider"></div>
+
+          <div class="articleContent">
+            With a Suunto Ambit3 Sport you can still track your workout’s distance, speed, elevation and heart rate (with a heart rate belt), but also:
+            <ol>
+              <li>Go Longer:  The battery on the Ambit3 lasts up to 200 hours while using gps</li>
+              <li>Go More: Track more sports more easily, including swimming</li>
+              <li>Go Lighter: Leave your phone at home and still get real time updates</li>
+            </ol>
+            Just connect your Suunto Movescount account to your Sports Tracker one. It will then automatically transfer all the new data, so you don’t have to worry about that later on.
+            <p>
+              All you need to do is to connect your Suunto watch to your Movescount account after each
+            </p>
+          </div>
+
+          <div class="thinDivider"></div>
+          <footer>
+            Taggad som:
+            <span class="label label-default">API</span>
+            <span class="label label-success">NEWS</span>
+            <span class="label label-info">PRENUMERATION</span>
+            <span>Publicerad av: Mikael, 2015-11-20</span>
+            <span data-toggle="collapse" data-target="#toggleDemo" class="glyphicon glyphicon-chevron-down" style="float:right;margin:8px 10px;"></span>
+          </footer>
+        </article>
+
+        <article class="newsItem">
+          <h2></h2>
+          Article three...
+        </article>
+
+        <article class="newsItem">
+          <h2></h2>
+          Article four...
+        </article>
+
+        <article class="newsItem">
+          <h2></h2>
+          Article five...
+        </article>
+
+      </section>
+    </div>
+    <div class="row col-md-3">
+      <aside>
+        <section class="card cardSection greenCard" style="padding-top:5px;">
+          <h1 style="margin-top:0">Nyhetsbrev <i class="fa fa-envelope"></i></h1>
+          <p>Prenumerera på vårt nyhets-brev för att inte riskera att missa senaste nytt!</p>
+          <form name="subscribeForm" ng-submit="" role="form" class="ng-pristine ng-invalid ng-invalid-required">
+            <div class="form-group" ng-class="{ 'has-error': subscribeForm.name.$dirty && subscribeForm.name.$invalid, 'has-success' : subscribeForm.name.$valid}">
+              <label for="name">Namn</label>
+              <input type="text" name="name" id="name" ng-model="vm.name" class="form-control" required>
+              <span ng-show="subscribeForm.name.$dirty && subscribeForm.name.$error.required" class="help-block">Namn är obligatoriskt</span>
+            </div>
+            
+            <div class="form-group" ng-class="{ 'has-error': subscribeForm.email.$dirty && subscribeForm.email.$invalid, 'has-success' : subscribeForm.email.$valid}">
+              <label for="name">Epostadress</label>
+              <input type="email" name="email" id="email" ng-model="vm.email" class="form-control" required>
+              <!--<span ng-show="subscribeForm.email.$dirty && subscribeForm.email.$error.required" class="help-block">Epost är obligatoriskt</span>-->
+            </div>
+
+            <div class="form-actions noclick">
+              <button type="submit" ng-disabled="subscribeForm.$invalid || vm.dataLoading" class="btn btn-primary" disabled="disabled">Prenumerera</button>
+              <!--<img ng-if="vm.dataLoadingAddApplication" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />-->
+              <span class="btn btn-link">Ångra</span>
+            </div>
+          </form>
+        </section>
+
+        <section>
+          <h3>Arkiv (månadsvy)</h3>
+          Kalender...
+        </section>
+
+        <section>
+          <h3>Senaste nyheter</h3>
+          <i>Lista, kort format...</i>
+          <ul>
+            <li><a href="#/news/1">Nyhet 1</a></li>
+            <li><a href="#/news/1">Nyhet 2</a></li>
+            <li><a href="#/news/1">Nyhet 3</a></li>
+            <li><a href="#/news/1">Nyhet 4</a></li>
+            <li><a href="#/news/1">Nyhet 5</a></li>
+          </ul>
+          <a class="more" href="#/news">Fler</a>
+        </section>
+
+        <section style="padding-top:30px;">
+          <h3>Taggar</h3>
+          <span class="label label-default">API</span>
+          <span class="label label-success">NEWS</span>
+          <span class="label label-info">PRENUMERATION</span>
+          <span class="label label-warning">NY VERSION</span>
+          <span class="label label-default">API</span>
+          <span class="label label-success">NEWS</span>
+          <span class="label label-danger">PRENUMERATION</span>
+          <span class="label label-warning">NY VERSION</span>
+
+          <span class="label label-default">New Code</span>
+          <span class="label label-primary">Primary</span>
+          <span class="label label-success">Success story</span>
+          <span class="label label-info">Reseplaneraren</span>
+          <span class="label label-warning">SPP</span>
+          <span class="label label-danger">VFB</span>
+        </section>
+      </aside>
+
+      Side content...
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function () {
+    $('.toggleItem').on('click', function (e) {
+      $(this).parents('.newsItem').find('.articleContent').toggleClass('selectedItem');
+    });
+  });
+</script>
