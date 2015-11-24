@@ -9,7 +9,7 @@
 
   <div class="row col-md-2">
     <!--Image-->
-    <img src="{{vm.api.imageUrl}}" alt="image..." style="width: 80%;" />
+    <img src="{{vm.defaultBaseUrl + '/' + vm.api.imageUrl}}" style="width: 70%; padding-bottom: 20px" />
   </div>
 
   <div class="row col-md-6">
@@ -124,7 +124,7 @@
           </div>-->
 
           <div class="row" style="padding:20px;">
-            <div swagger-ui url="vm.swaggerUrl" api-explorer="true" parser="json"></div>
+            <div swagger-ui url="vm.swaggerUrl" api-explorer="false" parser="json" validator-url="false"></div>
           </div>
         </div>
       </div>

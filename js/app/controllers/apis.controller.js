@@ -1,9 +1,12 @@
+/*global defaultBaseUrl*/
+
 (function() {
   'use strict';
 
   angular
     .module('vtPortal')
-    .controller('ApisCtrl', ApisCtrl);
+    .controller('ApisCtrl', ApisCtrl)
+    .constant('defaultBaseUrl', defaultBaseUrl);
 
   ApisCtrl.$inject = ['$http', '$location', 'APIService', 'AlertService'];
 
@@ -15,6 +18,8 @@
     (function init() {
       APIService.call('apisGet', [100, 0])
         .then(aPIsGetResponse);
+
+      vm.defaultBaseUrl = defaultBaseUrl;
     })();
 
     function aPIsGetResponse(response) {
