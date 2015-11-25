@@ -64,7 +64,7 @@
 
       APIService.call('subscriptionsPost', [{
           application: {
-            id: vm.form.subscription.add.application
+            applicationName: vm.form.subscription.add.application
           },
           api: {
             name: apiDef[0],

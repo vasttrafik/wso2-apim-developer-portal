@@ -23,10 +23,10 @@
       <tbody>
         <tr ng-repeat="entries in vm.applications | orderBy:'name'" class="nga-default nga-fade">
           <td>
-            <span>{{entries.name}}</span>
+            <span>{{entries.name | limitTo:50}}</span>
           </td>
           <td>
-            <span>{{entries.description}}</span>
+            <span>{{entries.description | limitTo:60}}</span>
           </td>
           <td>
             <span ng-click="vm.addApplicationDetails(entries.id)" style="cursor: pointer" title="Visa detaljer">

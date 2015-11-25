@@ -25,7 +25,7 @@
       <tbody>
         <tr ng-repeat="entries in vm.subscriptions" class="nga-default nga-fade">
           <td>
-            <span><a href="#/applications/{{entries.application.applicationId}}">{{entries.application.name}}</a>
+            <span><a href="#/applications/{{entries.application.id}}">{{entries.application.name}}</a>
             </span>
           </td>
           <td>
@@ -59,7 +59,7 @@
           <div ng-show="vm.applications.length == 0" style="margin-bottom: 20px">Du har inga registrerade applikationer. <a href="#/applications">Skapa en applikation först</a>, skapa sedan en prenumeration här!</div>
           <div ng-show="vm.applications.length > 0">
             <select name="application" id="application" ng-model="vm.form.subscription.add.application" class="form-control" required>
-              <option ng-repeat="entry in vm.applications" value="{{entry.id}}">{{entry.name}}</option>
+              <option ng-repeat="entry in vm.applications" value="{{entry.name}}">{{entry.name}}</option>
             </select>
             <span ng-show="addSubscriptionForm.application.$dirty && addSubscriptionForm.application.$error.required" class="help-block">Applikation är obligatoriskt</span>
           </div>
