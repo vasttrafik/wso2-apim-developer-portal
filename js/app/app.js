@@ -168,7 +168,7 @@
       function claimsGetResponse(response) {
         // Only include claims set to be displayed by default
         var claims = response.data.filter(function(a) {
-          return a.supportedByDefault === 'true';
+          return a.supportedByDefault === 'true' && a.claimUri !== 'http://wso2.org/claims/challengeQuestion1';
         });
 
         // Sort the claims in correct order.
