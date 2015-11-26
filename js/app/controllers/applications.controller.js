@@ -86,6 +86,11 @@
       for (var i = 0; i < vm.applications.length; i++) {
         if (vm.applications[i].id === applicationId) {
           vm.form.application.details = angular.copy(vm.applications[i]);
+
+          vm.form.application.details.generateToken = {};
+          vm.form.application.details.generateToken.validityTime = 3600;
+          vm.form.application.details.validityTime = 3600;
+
           vm.curl = {};
           vm.curl.client = 'curl -k -d "grant_type=client_credentials" -H "Authorization: Basic ' +
             btoa(vm.applications[i].consumerKey +
