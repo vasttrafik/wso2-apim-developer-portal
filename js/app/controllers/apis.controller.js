@@ -24,7 +24,9 @@
 
     function aPIsGetResponse(response) {
       if (response.status === 200) {
-        vm.apis = response.data.list;
+        vm.apis = response.data.list.filter(function(el) {
+          return el.status.toUpperCase() !== 'BLOCKED';
+        });
       } else {
         AlertService.error('Problem att hämta lista med applikationer');
       }
