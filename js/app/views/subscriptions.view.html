@@ -1,5 +1,10 @@
 <div class="jumbotron title">
   <div class="container" style="padding-left: 0">
+    <ol class="breadcrumb">
+      <li><a href="/#/" target="_self">Hem</a></li>
+      <li><a href="/#/overview" target="_self">Mina sidor</a></li>
+      <li class="active">Mina prenumerationer</li>
+    </ol>
     <h1>Mina prenumerationer</h1>
   </div>
 </div>
@@ -17,22 +22,28 @@
       <thead class="table-header">
         <tr>
           <th>Applikation</th>
+          <th class="hidden-xs" style="width: 25px;">
+            <!--Img-->
+          </th>
           <th>API</th>
           <th>Aktioner</th>
         </tr>
       </thead>
 
       <tbody>
-        <tr ng-repeat="entries in vm.subscriptions" class="nga-default nga-fade">
+        <tr ng-repeat="entries in vm.subscriptions | orderBy:'application.name'" class="nga-default nga-fade">
           <td>
             <span><a href="#/applications/{{entries.application.id}}">{{entries.application.name}}</a>
             </span>
+          </td>
+          <td class="hidden-xs">
+            <img src="{{vm.defaultBaseUrl + '/' + entries.api.imageUrl}}" style="width:25px;height:25px" />
           </td>
           <td>
             <span><a href="#/api/{{entries.api.name}}/{{entries.api.version}}/{{entries.api.provider}}">{{entries.api.name}} {{entries.api.version}}</a></span>
           </td>
           <td>
-            <span ng-click="vm.removeSubscription(entries.subscriptionId)" style="cursor: pointer" title="Ta bort">
+            <span ng-click="vm.removeSubscription(entries.id)" style="cursor: pointer" title="Ta bort">
               <span class="glyphicon glyphicon-trash" style="margin-left: 10px;"></span>
               <span class="hidden-xs">Ta bort</span>
             </span>
@@ -59,7 +70,7 @@
           <div ng-show="vm.applications.length == 0" style="margin-bottom: 20px">Du har inga registrerade applikationer. <a href="#/applications">Skapa en applikation först</a>, skapa sedan en prenumeration här!</div>
           <div ng-show="vm.applications.length > 0">
             <select name="application" id="application" ng-model="vm.form.subscription.add.application" class="form-control" required>
-              <option ng-repeat="entry in vm.applications" value="{{entry.name}}">{{entry.name}}</option>
+              <option ng-repeat="entry in vm.applications" value="{{entry.id}}">{{entry.name}}</option>
             </select>
             <span ng-show="addSubscriptionForm.application.$dirty && addSubscriptionForm.application.$error.required" class="help-block">Applikation är obligatoriskt</span>
           </div>
@@ -79,8 +90,6 @@
 
         <div class="form-actions noclick" ng-show="vm.applications.length && vm.apis.length">
           <button type="submit" ng-disabled="addSubscriptionForm.$invalid || vm.dataLoadingAddSubscription" class="btn btn-primary">Skapa</button>
-          <img ng-if="vm.dataLoadingAddSubscription" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
-          />
           <span ng-click="vm.resetAddSubscriptionForm();" class="btn btn-link">Ångra</span>
         </div>
       </form>
@@ -116,8 +125,6 @@
 
         <div class="form-actions noclick">
           <button type="submit" ng-disabled="updateSubscriptionForm.$invalid || vm.dataLoadingUpdateSubscription" class="btn btn-primary">Uppdatera</button>
-          <img ng-if="vm.dataLoadingUpdateSubscription" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
-          />
           <span ng-click="vm.resetUpdateSubscriptionForm();" class="btn btn-link">Ångra</span>
         </div>
       </form>

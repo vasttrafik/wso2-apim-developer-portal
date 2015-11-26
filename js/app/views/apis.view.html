@@ -1,5 +1,9 @@
 <div class="jumbotron title">
   <div class="container" style="padding-left: 0">
+    <ol class="breadcrumb">
+      <li><a href="/#/" target="_self">Hem</a></li>
+      <li class="active">Våra API</li>
+    </ol>
     <h1 class="sub-header">Våra API</h1>
   </div>
 </div>
@@ -19,16 +23,16 @@
               <th>Status</th>
               <th class="hidden-xs">Context</th>
               <th class="hidden-xs">Version</th>
-              <th class="hidden-xs">Provider</th>
+              <th class="hidden-xs">Utgivare</th>
               <th>Aktioner</th>
             </tr>
           </thead>
           <tbody>
             <tr ng-repeat="entries in vm.apis"  class="nga-default nga-fade">
               <td class="hidden-xs">
-                <img src="{{vm.defaultBaseUrl + '/' + entries.imageUrl}}" style="width:40px;height:40px" />
+                <img src="{{vm.defaultBaseUrl + '/' + entries.imageUrl}}" style="width:25px;height:25px" />
               </td>
-              <td>{{entries.name}}</td>
+              <td><span ng-click="vm.displayApi(entries.name, entries.version, entries.provider)" style="cursor: pointer" title="Visa detaljer">{{entries.name}}</span></td>
               <td class="hidden-xs" ng-bind-html="entries.description"></td>
               <td>
                 <span class="label" ng-class="{ 'label-danger': entries.status=='DEPRECATED','label-success':entries.status=='PUBLISHED','label-warning':entries.status == 'PROTOTYPED'}">
