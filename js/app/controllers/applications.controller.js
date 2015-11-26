@@ -86,6 +86,11 @@
       for (var i = 0; i < vm.applications.length; i++) {
         if (vm.applications[i].id === applicationId) {
           vm.form.application.details = angular.copy(vm.applications[i]);
+
+          vm.form.application.details.generateToken = {};
+          vm.form.application.details.generateToken.validityTime = 3600;
+          vm.form.application.details.validityTime = 3600;
+
           vm.curl = {};
           vm.curl.client = 'curl -k -d "grant_type=client_credentials" -H "Authorization: Basic ' +
             btoa(vm.applications[i].consumerKey +
@@ -200,9 +205,9 @@
         .then(applicationsApplicationIdTokensPostResponse);
 
       function applicationsApplicationIdTokensPostResponse(response) {
-        if (response.status === 200) {
+        if (response.status === 200 || response.status === 201) {
 
-          AlertService.success('Ny nyckel genererad!');
+          AlertService.success('Ny access token genererad!');
           for (var i = 0; i < vm.applications.length; i++) {
             if (vm.applications[i].id === applicationId) {
               vm.applications[i] = response.data;
@@ -212,7 +217,7 @@
           $scope.detailsApplicationForm.$setPristine();
 
         } else {
-          AlertService.error('Problem att generera ny nyckel');
+          AlertService.error('Problem att generera ny access token');
         }
       }
     }
@@ -223,9 +228,9 @@
         .then(applicationsApplicationIdTokensPostResponse);
 
       function applicationsApplicationIdTokensPostResponse(response) {
-        if (response.status === 200) {
+        if (response.status === 200 || response.status === 201) {
 
-          AlertService.success('Ny nyckel genererad!');
+          AlertService.success('Ny access token genererad!');
           for (var i = 0; i < vm.applications.length; i++) {
             if (vm.applications[i].id === applicationId) {
               vm.applications[i] = response.data;
@@ -235,7 +240,7 @@
           }
 
         } else {
-          AlertService.error('Problem att generera ny nyckel');
+          AlertService.error('Problem att generera ny access token');
         }
       }
     }
@@ -245,7 +250,7 @@
         vm.subscriptions = response.data.list;
         vm.subscriptionsRetrieved = true;
       } else {
-        AlertService.error('Problem att hämta lista med prenumerationer. Det kommer tyvärr inte gå att skapa någon ny nyckel för någon applikation så länge problemet kvarstår');
+        AlertService.error('Problem att hämta lista med prenumerationer. Det kommer tyvärr inte gå att skapa någon ny access token för någon applikation så länge problemet kvarstår');
       }
     }
 

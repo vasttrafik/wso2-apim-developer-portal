@@ -1,5 +1,10 @@
 <div class="jumbotron title">
   <div class="container" style="padding-left: 0">
+    <ol class="breadcrumb">
+      <li><a href="/#/" target="_self">Hem</a></li>
+      <li><a href="/#/overview" target="_self">Mina sidor</a></li>
+      <li class="active">Min profil</li>
+    </ol>
     <h1>Uppdatera profil</h1>
   </div>
 </div>
@@ -64,8 +69,6 @@
 
             <div class="form-actions noclick">
               <button type="submit" ng-disabled="profileForm.$invalid || vm.dataLoading" class="btn btn-primary">Uppdatera</button>
-              <img ng-if="vm.dataLoadingProfile" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
-              />
               <span ng-click="vm.resetProfileForm()" class="btn btn-link">Ångra</span>
             </div>
           </form>
@@ -103,13 +106,40 @@
             </div>
 
             <div class="form-actions noclick">
-              <button type="submit" ng-disabled="passwordForm.$invalid || vm.dataLoading" class="btn btn-primary">Uppdatera</button>
-              <img ng-if="vm.dataLoadingPassword" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
-              />
+              <button type="submit" ng-disabled="passwordForm.$invalid || vm.dataLoadingPassword" class="btn btn-primary">Uppdatera</button>
               <span ng-click="vm.resetPasswordForm();" class="btn btn-link">Ångra</span>
             </div>
 
           </form>
+        </div>
+
+        <div role="tabpanel" class="tab-pane" id="_security">
+          <h3>Lägg till ny/uppdatera säkerhetsfråga</h3>
+          <br/>
+
+          <form name="challengeQuestionForm" ng-submit="vm.addUpdateChallengeQuestion()" role="form">
+
+            <div class="form-group" ng-class="{ 'has-error': challengeQuestionForm.question.$dirty && challengeQuestionForm.question.$invalid,
+  'has-success' : challengeQuestionForm.question.$valid}">
+              <label for="question">Fråga</label>
+              <input type="question" name="question" id="question" class="form-control" ng-model="vm.form.question.question" value="{{vm.challengeQuestion.claimValue.substr(0, entries.claimValue.indexOf('!')) }}" required />
+              <span ng-show="challengeQuestionForm.question.$dirty && challengeQuestionForm.question.$error.required" class="help-block">Fråga är obligatoriskt</span>
+            </div>
+
+            <div class="form-group" ng-class="{ 'has-error': challengeQuestionForm.answer.$dirty && challengeQuestionForm.answer.$invalid,
+  'has-success' : challengeQuestionForm.answer.$valid}">
+              <label for="answer">Svar</label>
+              <input type="answer" name="answer" id="answer" class="form-control" ng-model="vm.form.question.answer" required />
+              <span ng-show="challengeQuestionForm.answer.$dirty && challengeQuestionForm.answer.$error.required" class="help-block">Svar är obligatoriskt</span>
+            </div>
+
+            <div class="form-actions noclick">
+              <button type="submit" ng-disabled="challengeQuestionForm.$invalid || vm.dataLoadingQuestion" class="btn btn-primary">Lägg till / uppdatera säkerhetsfråga</button>
+              <span ng-click="vm.resetChallengeQuestionForm();" class="btn btn-link">Ångra</span>
+            </div>
+
+          </form>
+
         </div>
 
       </div>

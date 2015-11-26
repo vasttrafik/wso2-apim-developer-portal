@@ -1,9 +1,12 @@
-﻿(function() {
+/*global defaultBaseUrl*/
+
+(function() {
   'use strict';
 
   angular
     .module('vtPortal')
-    .controller('ApiCtrl', ApiCtrl);
+    .controller('ApiCtrl', ApiCtrl)
+    .constant('defaultBaseUrl', defaultBaseUrl);
 
   ApiCtrl.$inject = ['$rootScope', '$scope', '$location', '$routeParams','APIService', 'AlertService'];
 
@@ -14,7 +17,7 @@
     vm.resetAddSubscriptionForm = resetAddSubscriptionForm;
 
     (function init() {
-      vm.swaggerUrl = 'http://petstore.swagger.io/v2/swagger.json';
+      vm.defaultBaseUrl = defaultBaseUrl;
       vm.documents = {};
       vm.applications = {};
 
@@ -48,7 +51,10 @@
     function aPIsIdGetResponse(response) {
       if (response.status === 200) {
         vm.api = response.data;
+        vm.imageUrl = response.data.imageUrl;
         vm.apiId = vm.api.name + '/' + vm.api.version + '/' + vm.api.provider;
+        vm.swaggerUrl = defaultBaseUrl + '/' + response.data.swagger;
+
       } else {
         AlertService.error('Problem att hämta detaljer för API');
       }

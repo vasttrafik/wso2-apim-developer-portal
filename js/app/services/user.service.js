@@ -5,7 +5,7 @@
   {
   "id": "string",
   "userName": "string",
-  "accessToken": {
+  "accessToken" : {
     "token": "string",
     "refreshToken": "string",
     "expiresIn": number
@@ -22,7 +22,11 @@
     {
 	   "claimURI" : "http://wso2.org/claims/emailaddress",
 	   "value" : "string"
-    }
+   },
+   {
+   "claimURI" : "http://wso2.org/claims/emailaddress",
+   "value" : "string"
+   }
   ]
   }
 
@@ -43,6 +47,7 @@
     service.setUser = setUser;
     service.getUser = getUser;
     service.clearUser = clearUser;
+    service.getClaim = getClaim;
     service.setOrUpdateClaim = setOrUpdateClaim;
 
     return service;
@@ -51,10 +56,9 @@
       var deferred = $q.defer();
 
       try {
-        $http.defaults.headers.common.Authorization = 'Bearer ' + user.accessToken.token;
         localStorage.user = JSON.stringify(user);
-        localStorage.tokenGrantedTime = new Date();
 
+        /* Update root scope globals object for easy access */
         $rootScope.globals = {
           currentUser: {
             userName: user.userName,
@@ -70,14 +74,11 @@
           }
         };
 
-        deferred.resolve({
-          success: true
-        });
+        deferred.resolve();
 
       } catch (err) {
         deferred.reject({
-          success: false,
-          message: 'Problem att hämta utökad användarinfo'
+          message: 'Problem att skapa utökad användarinfo'
         });
       }
 
@@ -87,7 +88,7 @@
     function getUser() {
       var deferred = $q.defer();
       if (!localStorage.user) {
-        localStorage.user = JSON.stringify([]);
+        localStorage.user = JSON.stringify({});
       }
 
       deferred.resolve(JSON.parse(localStorage.user));
@@ -97,31 +98,73 @@
     function clearUser() {
       $rootScope.globals = {};
       $rootScope.user.loggedIn = false;
-      localStorage.user = [];
-      $http.defaults.headers.common.Authorization = 'Bearer ';
+      delete localStorage.user;
+      delete $http.defaults.headers.common.Authorization;
     }
 
-    function setOrUpdateClaim(userObject, claimURI, claimValue) {
+    function setOrUpdateClaim(claimUri, claimValue) {
       var deferred = $q.defer();
 
-      var claimsList = userObject.claims;
-      var updated = false;
+      try {
+        getUser()
+          .then(function(userObject) {
+            var claimsList = userObject.claims;
 
-      if (!claimsList.isEmpty()) {
-        for (var i = 0; i < claimsList.length; i++) {
-          if (claimsList[i].claimURI === claimURI) {
-            claimsList.splice(i, 1);
-            break;
-          }
-        }
+            /* Remove claim from list if it exists */
+            for (var i = 0; i < userObject.claims.length; i++) {
+              if (userObject.claims[i].claimUri === claimUri) {
+                userObject.claims.splice(i, 1);
+                break;
+              }
+            }
+
+            /* Add claim to list */
+            userObject.claims.push({
+              claimUri: claimUri,
+              claimValue: claimValue
+            });
+
+            /* Update user with new list of claims */
+            setUser(userObject)
+              .then(function() {
+                deferred.resolve(claimsList);
+              })
+              .catch(function() {
+                deferred.reject({
+                  message: 'Problem att uppdatera UserObject'
+                });
+              });
+          });
+      } catch (err) {
+        deferred.reject({
+          message: 'Problem att skapa eller uppdatera claim'
+        });
       }
 
-      claimsList.push({
-        claimURI: claimURI,
-        value: claimValue
-      });
-      deferred.resolve(claimsList);
+      return deferred.promise;
+    }
 
+    function getClaim(claimUri) {
+      var deferred = $q.defer();
+
+      getUser()
+        .then(function(userObject) {
+          try {
+            var claim = userObject.claims.filter(function(el) {
+              return el.claimUri.indexOf(claimUri) > -1;
+            })[0];
+
+            deferred.resolve({
+              success: true,
+              object: claim
+            });
+          } catch (err) {
+            deferred.resolve({
+              success: true
+            });
+          }
+
+        });
       return deferred.promise;
     }
   }

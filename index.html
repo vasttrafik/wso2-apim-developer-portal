@@ -11,6 +11,7 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
   <link rel="stylesheet" href="css/angular-swagger-ui.css">
+  <link rel="stylesheet" href="css/angular-loading-bar.css">
 
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/bootstrap-theme.min.css">
@@ -68,7 +69,12 @@
             <!-- Logged in -->
             <div class="btn-group" ng-show="user.loggedIn">
               <a class="menu-user dropdown-toggle" data-toggle="dropdown">
-                {{globals.currentUser.firstName + ' ' + globals.currentUser.lastName}}
+                <span ng-if="globals.currentUser.firstName && globals.currentUser.lastName">
+                  {{globals.currentUser.firstName + ' ' + globals.currentUser.lastName}}
+                </span>
+                <span ng-if="!globals.currentUser.firstName && !globals.currentUser.lastName">
+                  {{globals.currentUser.userName}}
+                </span>
                 <span class="fa-stack fa-lg">
                   <i class="fa fa-circle fa-stack-2x"></i>
                   <i class="fa fa-user fa-stack-1x fa-inverse"></i>
@@ -80,8 +86,6 @@
                 <div class="row">
                   <div class="col-md-12">
                     <p>Mina sidor</p>
-                    <a href="#/overview">Översikt</a>
-                    <br />
                     <a href="#/profile">Min profil</a>
                     <br />
                     <a href="#/applications">Mina applikationer</a>
@@ -136,7 +140,7 @@
 
                   <div ng-if="user.create">
                     <div class="form-group" ng-class="{ 'has-error': form.{{entries.claimValue}}.$dirty && form.{{entries.claimValue}}.$invalid, 'has-success' : form.{{entries.claimValue}}.$valid}" ng-repeat="entries in vm.claims">
-                      <label for="{{entries.claimValue}}">{{entries.description}}</label>
+                      <label for="{{entries.claimValue}}">{{entries.displayTag}}</label>
                       <input type="text" name="{{entries.claimValue}}" id="{{entries.claimValue}}" class="form-control" ng-model="vm.user[entries.claimValue].value" required />
                       <span ng-show="form.{{entries.claimValue}}.$dirty && form.{{entries.claimValue}}.$error.required" class="help-block">{{entries.description}} är obligatoriskt</span>
                     </div>
@@ -213,7 +217,6 @@
             <li><a href="#/apis" title="...">API</a></li>
             <li><a href="" title="..." class="disabled">Showcase (v2)</a></li>
             <li><a href="" title="..." class="disabled">Statistik (v2)</a></li>
-            <li><a href="" title="..." class="disabled">Status (v2)</a></li>
             <li><a href="" title="..." class="disabled">Driftinfo (v2)</a></li>
           </ul>
         </div>
@@ -278,10 +281,11 @@
   <script src="js/vendor/angular-validate.min.js"></script>
   <script src="js/vendor/angular-location-update.min.js"></script>
   <script src="js/vendor/angular-clipboard.js"></script>
+  <script src="js/vendor/angular-loading-bar.min.js"></script>
 
-  <script src="js/vendor/angular-swagger-ui.min.js"></script>
+  <script src="js/vendor/angular-swagger-ui.js"></script>
   <script src="js/vendor/swagger-external-references.min.js"></script>
-  <script src="js/vendor/swagger1-to-swagger2-converter.min.js"></script>
+  <script src="js/vendor/swagger1-to-swagger2-converter.js"></script>
 
   <script src="js/vendor/ng-password-strength.js"></script>
   <script src="js/vendor/lodash.min.js"></script>

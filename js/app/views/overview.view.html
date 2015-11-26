@@ -3,47 +3,63 @@
 
   <div class="jumbotron title">
     <div class="container" style="padding-left: 0">
-      <h3 class="heading-small">Mina sidor</h3>
-      <h1 class="heading-large">Översikt</h1>
+      <ol class="breadcrumb">
+        <li><a href="/#/" target="_self">Hem</a></li>
+        <li class="active">Mina sidor</li>
+      </ol>
+      <h1 class="heading-large">Mina sidor</h1>
     </div>
   </div>
 
   <div class="container">
     <div class="row">
       <div class="col-md-3 col-sm-6 overview">
-
-        <div class="area overview">
-          <span class="fa fa-user fa-2x" aria-hidden="true"></span>
-        </div>
+        <a href="#/profile" title="Profil">
+          <div class="area overview">
+            <span class="fa fa-user fa-2x" aria-hidden="true"></span>
+          </div>
+        </a>
         <h3>Profil</h3>
 
-        <p>{{globals.currentUser.firstName + ' ' + globals.currentUser.lastName}}</p>
+        <p>
+          <span ng-if="globals.currentUser.firstName && globals.currentUser.lastName">
+            {{globals.currentUser.firstName + ' ' + globals.currentUser.lastName}}
+          </span>
+          <span ng-if="!globals.currentUser.firstName && !globals.currentUser.lastName">
+            {{globals.currentUser.userName}}
+          </span>
+        </p>
         <p>{{globals.currentUser.email}}</p>
 
         <a href="#/profile" title="Profil">
-          <strong>Redigera</strong>
+          <strong>Visa Detaljer</strong>
         </a>
       </div>
 
       <div class="col-md-3 col-sm-6 overview">
-        <div class="area overview">
-          <span class="fa fa-star fa-2x" aria-hidden="true"></span>
-        </div>
+        <a href="#/applications" title="Mina applikationer">
+          <div class="area overview">
+            <span class="fa fa-star fa-2x" aria-hidden="true"></span>
+          </div>
+        </a>
         <h3>Mina applikationer</h3>
         <p ng-repeat="entries in vm.applications">{{entries.name}}</p>
         <a href="#/applications" title="Mina applikationer">
-          <strong>Redigera</strong>
+          <strong>Visa Detaljer</strong>
         </a>
       </div>
 
       <div class="col-md-3 col-sm-6 overview">
-        <div class="area overview">
-          <span class="fa fa-paper-plane fa-2x" aria-hidden="true"></span>
-        </div>
+        <a href="#/subscriptions" title="Prenumerationer">
+          <div class="area overview">
+            <span class="fa fa-paper-plane fa-2x" aria-hidden="true"></span>
+
+          </div>
+        </a>
         <h3>Mina prenumerationer</h3>
         <p ng-repeat="entries in vm.subscriptions">{{entries.api.name}}</p>
         <a href="#/subscriptions" title="Prenumerationer">
-          <strong>Redigera</strong>
+          <strong>Visa Detaljer</strong>
         </a>
       </div>
 

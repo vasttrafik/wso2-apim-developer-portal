@@ -1,5 +1,10 @@
 <div class="jumbotron title">
   <div class="container" style="padding-left: 0">
+    <ol class="breadcrumb">
+      <li><a href="/#/" target="_self">Hem</a></li>
+      <li><a href="/#/apis" target="_self">Våra API</a></li>
+      <li class="active">{{vm.apiName}} {{vm.apiVersion}}</li>
+    </ol>
     <h1>{{vm.apiName}} {{vm.apiVersion}}</h1>
   </div>
 </div>
@@ -9,7 +14,7 @@
 
   <div class="row col-md-2">
     <!--Image-->
-    <img src="{{vm.api.imageUrl}}" alt="image..." style="width: 80%;" />
+    <img src="{{vm.defaultBaseUrl + '/' + vm.api.imageUrl}}" style="width: 70%; padding-bottom: 20px" />
   </div>
 
   <div class="row col-md-6">
@@ -22,23 +27,29 @@
       <label for="status" class="col-xs-4 col-md-3">Status:</label>
       <div class="col-xs-8 col-md-9">{{vm.api.status}}</div>
     </div>
+
+    <div class="row">
+      <label for="status" class="col-xs-4 col-md-3">Utgivare:</label>
+      <div class="col-xs-8 col-md-9">{{vm.api.provider}}</div>
+    </div>
   </div>
 
   <div ng-show="!user.loggedIn" class="row col-md-4">
     <div class="alert alert-warning" role="alert">
-      <span class="glyphicon glyphicon-info-sign">&nbsp;</span>Logga in för att kunna prenumerera på detta API!
+      <span ng-if="vm.api.status && vm.api.status.toUpperCase() === 'PUBLISHED'"><span class="glyphicon glyphicon-info-sign">&nbsp;</span>Logga in för att kunna prenumerera på detta API!</span>
+      <span ng-if="vm.api.status && vm.api.status.toUpperCase() !== 'PUBLISHED'"><span class="glyphicon glyphicon-info-sign">&nbsp;</span>Det är inte möjligt att prenumerera på detta API!</span>
     </div>
   </div>
 
-  <div ng-show="(user.loggedIn)" class="row col-md-4 well">
+  <div ng-show="user.loggedIn && vm.api.status.toUpperCase() === 'PUBLISHED'" class="row col-md-4 well">
     <div class="form-group" ng-class="{ 'has-error': addSubscriptionForm.application.$dirty && addSubscriptionForm.application.$invalid, 'has-success' : addSubscriptionForm.application.$valid}">
-      <div ng-show="!vm.applications.length">
+      <div ng-show="vm.applications.length == 0">
         Du har inga registrerade applikationer.
         <br />
         <a href="#/applications">Skapa en applikation först</a>, skapa sedan en prenumeration här!
       </div>
 
-      <div ng-show="vm.applications.length">
+      <div ng-show="vm.applications.length > 0">
         <form name="addSubscriptionForm" ng-submit="vm.addSubscription()" role="form" class="ng-pristine ng-invalid ng-invalid-required">
           <input type="hidden" name="apiId" ng-model="vm.apiId" value="{{vm.apiId}}" />
           <div class="form-group" ng-class="{ 'has-error': addSubscriptionForm.application.$dirty && addSubscriptionForm.application.$invalid, 'has-success' : addSubscriptionForm.application.$valid}">
@@ -49,9 +60,7 @@
             <span ng-show="addSubscriptionForm.application.$dirty && addSubscriptionForm.application.$error.required" class="help-block">Applikation är obligatoriskt</span>
           </div>
           <div class="form-actions noclick">
-            <button type="submit" ng-disabled="addSubscriptionForm.$invalid || vm.dataLoading" class="btn btn-primary" disabled="disabled">Skapa prenumeration</button>
-            <img ng-if="vm.dataLoadingAddApplication" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
-            />
+            <button type="submit" ng-disabled="addSubscriptionForm.$invalid || vm.dataLoadingAddSubscription" class="btn btn-primary" disabled="disabled">Skapa prenumeration</button>
             <span ng-click="vm.resetAddSubscriptionForm()" class="btn btn-link">Ångra</span>
           </div>
         </form>
@@ -82,7 +91,7 @@
           <div id="desc" ng-bind-html="vm.api.description"></div>
 
           <h3>URL</h3>
-          <div id="url">https://api.vasttrafik.se/{{vm.api.version + vm.api.context}}</div>
+          <div id="url">https://api.vasttrafik.se{{vm.api.context + '/' + vm.api.version}}</div>
         </div>
 
         <div role="tabpanel" class="tab-pane" id="apiDocs">
@@ -91,13 +100,23 @@
             <thead class="table-header">
               <tr>
                 <th>Namn</th>
+                <th>Typ</th>
                 <th>Beskrivning</th>
               </tr>
             </thead>
             <tbody>
               <tr ng-repeat="doc in vm.documents" class="nga-default nga-fade">
-                <td>
+                <td ng-if="doc.source === 'url'">
                   <span><a href="{{doc.url}}" title="{{doc.type}}">{{doc.name}}</a></span>
+                </td>
+                <td ng-if="doc.source === 'file'">
+                  <span><a href="{{vm.defaultBaseUrl + '/apis/' + vm.apiIdSingle + '/documents/' + doc.id + '/content/'}}" title="{{doc.type}}">{{doc.name}}</a></span>
+                </td>
+                <td ng-if="doc.type.type !== 'Other'">
+                  <span>{{doc.type.type}}</span>
+                </td>
+                <td ng-if="doc.type.type === 'Other'">
+                  <span>{{doc.type.otherType}}</span>
                 </td>
                 <td>
                   <span>{{doc.summary}}</span>
@@ -124,7 +143,7 @@
           </div>-->
 
           <div class="row" style="padding:20px;">
-            <div swagger-ui url="vm.swaggerUrl" api-explorer="true" parser="json"></div>
+            <div swagger-ui url="vm.swaggerUrl" api-explorer="false" parser="json" validator-url="false"></div>
           </div>
         </div>
       </div>

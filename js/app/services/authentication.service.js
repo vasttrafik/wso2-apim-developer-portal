@@ -40,26 +40,27 @@
         .then(function(authenticatedUserObject) {
           if (authenticatedUserObject.status === 200 || authenticatedUserObject.status === 201) {
             userObject = authenticatedUserObject.data;
+            $http.defaults.headers.common.Authorization = 'Bearer ' + userObject.accessToken.token;
           } else {
             apiErrorResponse(authenticatedUserObject, deferred);
           }
         }).then(function() {
 
           // Retrieve further user information based on userId from login response
-          userApiClient.usersUserIdGet(userObject.userId, 'application/json', 'Bearer ' + userObject.accessToken.token, null, null)
+          userApiClient.usersUserIdGet(userObject.userId, 'application/json', 'Bearer ' + userObject.accessToken.token)
             .then(function(userAccountObject) {
 
               if (userAccountObject.status === 200) {
 
-                // Add token info from previous call
                 userAccountObject.data.accessToken = userObject.accessToken;
 
                 UserService.setUser(userAccountObject.data)
                   .then(function(response) {
-                    deferred.resolve(response);
+                    deferred.resolve();
+
                   })
                   .catch(function(response) {
-                    deferred.reject(response);
+                    apiErrorResponse(response, deferred);
                   });
               }
             }).catch(function(apiResponse) {
@@ -119,7 +120,7 @@
       var deferred = $q.defer();
 
       var response;
-      apiClient.securityPost('logout', null, null)
+      apiClient.securityPost('logout')
         .then(function(apiResponse) {
           if (apiResponse.status === 204 || apiResponse.status === 200) {
 

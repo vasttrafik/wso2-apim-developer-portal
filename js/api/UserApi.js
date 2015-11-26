@@ -1,4 +1,5 @@
 /// <reference path="api.d.ts" />
+/* global userBaseUrl */
 var UserAPI;
 (function(UserAPI) {
   /* tslint:disable:no-unused-variable member-ordering */
@@ -9,7 +10,7 @@ var UserAPI;
       function UserApi($http, basePath, $httpParamSerializer) {
         this.$http = $http;
         this.$httpParamSerializer = $httpParamSerializer;
-        this.basePath = 'https://wso2publisher-test:9444/vt-wso2-identity-mgmt-api';
+        this.basePath = userBaseUrl;
         if (basePath) {
           this.basePath = basePath;
         }

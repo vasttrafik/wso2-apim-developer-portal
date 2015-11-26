@@ -46,13 +46,15 @@
           if (response.status === 401) {
 
             AuthenticationService.logout();
-            AlertService.error('Användaren är inte autentiserad', false);
-            apiErrorResponse('Användaren är inte autentiserad', deferred);
+            AlertService.error('Användaren är inte autentiserad');
+            apiErrorResponse(response, deferred);
 
           } else {
-            // TODO: Change to reject
-            deferred.resolve(response);
+            apiErrorResponse(response, deferred);
           }
+        })
+        .catch(function(apiResponse) {
+          apiErrorResponse(apiResponse, deferred);
         });
 
       return deferred.promise;
@@ -62,7 +64,6 @@
     /*
       Wrapper function for calls towards backend API
     */
-    // TODO: Change to reject
     function call(funcName, args) {
       var deferred = $q.defer();
 
@@ -79,10 +80,11 @@
             apiErrorResponse(response, deferred);
 
           } else {
-            // TODO: Change to reject
-            deferred.resolve(response);
-
+            apiErrorResponse(response, deferred);
           }
+        })
+        .catch(function(apiResponse) {
+          apiErrorResponse(apiResponse, deferred);
         });
 
       return deferred.promise;

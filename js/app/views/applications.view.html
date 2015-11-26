@@ -1,5 +1,10 @@
 <div class="jumbotron title">
   <div class="container" style="padding-left: 0">
+    <ol class="breadcrumb">
+      <li><a href="/#/" target="_self">Hem</a></li>
+      <li><a href="/#/overview" target="_self">Mina sidor</a></li>
+      <li class="active">Mina applikationer</li>
+    </ol>
     <h1>Mina applikationer</h1>
   </div>
 </div>
@@ -21,17 +26,17 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="entries in vm.applications" class="nga-default nga-fade">
+        <tr ng-repeat="entries in vm.applications | orderBy:'name'" class="nga-default nga-fade">
           <td>
-            <span>{{entries.name}}</span>
+            <span ng-click="vm.addApplicationUpdate(entries.id)" style="cursor: pointer">{{entries.name | limitTo:50}}</span>
           </td>
           <td>
-            <span>{{entries.description}}</span>
+            <span>{{entries.description | limitTo:60}}</span>
           </td>
           <td>
             <span ng-click="vm.addApplicationDetails(entries.id)" style="cursor: pointer" title="Visa detaljer">
               <span class="glyphicon glyphicon-cog"></span>
-              <span class="hidden-xs">Visa detaljer</span>
+              <span class="hidden-xs">Hantera nycklar</span>
             </span>
           </td>
           <td>
@@ -78,8 +83,6 @@
 
         <div class="form-actions noclick">
           <button type="submit" ng-disabled="addApplicationForm.$invalid || vm.dataLoadingAddApplication" class="btn btn-primary">Skapa</button>
-          <img ng-if="vm.dataLoadingAddApplication" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
-          />
           <span ng-click="vm.resetAddApplicationForm();" class="btn btn-link">Ångra</span>
         </div>
       </form>
@@ -112,8 +115,6 @@
 
         <div class="form-actions noclick">
           <button type="submit" ng-disabled="updateApplicationForm.$invalid || vm.dataLoadingUpdateApplication" class="btn btn-primary">Uppdatera</button>
-          <img ng-if="vm.dataLoadingUpdateApplication" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
-          />
           <span ng-click="vm.resetUpdateApplicationForm();" class="btn btn-link">Ångra</span>
         </div>
       </form>
@@ -123,21 +124,24 @@
 
 <div ng-show="!vm.form.application.update && vm.form.application.details">
   <div class="container" style="padding-left: 0; padding-bottom: 0px">
-    <h2>Detaljer för applikation {{vm.form.application.details.name}}</h2>
+    <h2>Nyckelhantering för applikation {{vm.form.application.details.name}}</h2>
   </div>
 
   <div class="container" style="padding-bottom: 20px;">
 
     <div class="row well" ng-show="!vm.form.application.details.consumerKey">
+
+      <h3>Generera dina första nycklar genom att fylla i formuläret nedan.</h3><br />
+
       <form name="detailsApplicationGenerateTokenForm" ng-submit="vm.detailsApplicationGenerateToken(vm.form.application.details.id)" role="form">
 
         <div ng-if="!vm.notAllowedToGenerateToken && vm.subscriptions">
           <div class="form-group" ng-class="{ 'has-error': detailsApplicationGenerateTokenForm.validityTimeGenerateToken.$dirty && detailsApplicationGenerateTokenForm.validityTimeGenerateToken.$invalid,
     'has-success' : detailsApplicationGenerateTokenForm.validityTimeGenerateToken.$valid}">
-            <label for="validityTime">Giltighetstid</label>
+            <label for="validityTime">Giltighetstid för access token</label>
             <div class="input-group">
 
-              <input type="number" name="validityTimeGenerateToken" id="validityTimeGenerateToken" class="form-control" ng-model="vm.form.application.details.generateToken.validityTime" required min="1" />
+              <input type="number" name="validityTimeGenerateToken" id="validityTimeGenerateToken" class="form-control" ng-model="vm.form.application.details.generateToken.validityTime" value="3600" required min="1" />
               <span class="input-group-addon">Sekunder</span>
             </div>
             <span ng-show="detailsApplicationGenerateTokenForm.validityTimeGenerateToken.$dirty && detailsApplicationGenerateTokenForm.validityTimeGenerateToken.$invalid" class="help-block">Måste vara ett nummer större än 0</span>
@@ -145,9 +149,7 @@
           </div>
 
           <div class="form-actions noclick">
-            <button type="submit" ng-disabled="detailsApplicationGenerateTokenForm.$invalid || vm.dataLoadingDetailsApplication" class="btn btn-primary">Generera ny access token</button>
-            <img ng-if="vm.dataLoadingDetailsApplication" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
-            />
+            <button type="submit" ng-disabled="detailsApplicationGenerateTokenForm.$invalid || vm.dataLoadingDetailsApplication" class="btn btn-primary">Generera initiala nycklar</button>
             <span ng-click="vm.resetDetailsApplicationForm();" class="btn btn-link">Stäng</span>
           </div>
 
@@ -195,7 +197,7 @@
         <div ng-if="!vm.notAllowedToGenerateToken && vm.subscriptions">
           <div class="form-group" ng-class="{ 'has-error': detailsApplicationForm.validityTime.$dirty && detailsApplicationForm.validityTime.$invalid,
     'has-success' : detailsApplicationForm.validityTime.$valid}">
-            <label for="description">Giltighetstid</label>
+            <label for="description">Giltighetstid för access token</label>
             <div class="input-group">
 
               <input type="number" name="validityTime" id="validityTime" class="form-control" ng-model="vm.form.application.details.validityTime" required min="1" />
@@ -207,8 +209,6 @@
 
           <div class="form-actions noclick">
             <button type="submit" ng-disabled="detailsApplicationForm.$invalid || vm.dataLoadingDetailsApplication" class="btn btn-primary">Generera ny access token</button>
-            <img ng-if="vm.dataLoadingDetailsApplication" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
-            />
             <span ng-click="vm.resetDetailsApplicationForm();" class="btn btn-link">Stäng</span>
           </div>
 

@@ -14,11 +14,15 @@
     vm.savePassword = savePassword;
     vm.resetProfileForm = resetProfileForm;
     vm.resetPasswordForm = resetPasswordForm;
+    vm.resetChallengeQuestionForm = resetChallengeQuestionForm;
+    vm.addUpdateChallengeQuestion = addUpdateChallengeQuestion;
 
     (function init() {
       vm.form = {};
 
       resetProfileForm();
+      resetChallengeQuestionForm();
+
     })();
 
     function saveProfile() {
@@ -52,12 +56,18 @@
 
         if (response.status === 200) {
 
-          UserService.setUser(newUserObject)
-            .then(function() {
-              resetProfileForm(); // At this stage the rootScope is updated
-              vm.dataLoadingProfile = false;
-              AlertService.success('Din profil är uppdaterad!');
+          UserService.getClaim('http://wso2.org/claims/challengeQuestion1')
+            .then(function(response) {
+              newUserObject.claims.push(response.object);
+
+              UserService.setUser(newUserObject)
+                .then(function() {
+                  resetProfileForm(); // At this stage the rootScope is updated
+                  vm.dataLoadingProfile = false;
+                  AlertService.success('Din profil är uppdaterad!');
+                });
             });
+
         } else {
           AlertService.error('Problem att uppdatera användaruppgifter');
         }
@@ -94,8 +104,62 @@
       }
     }
 
+    function addUpdateChallengeQuestion() {
+
+      var challengeQuestionId = 'http://wso2.org/claims/challengeQuestion1';
+      var challengeQuestionQuestion = vm.form.question.question;
+
+      var userObject = {};
+
+      UserService.getUser()
+        .then(function(response) {
+
+          APIService.userCall('challengequestionsPost', ['application/json', 'Bearer ' + response.accessToken.token, response.id, {
+              id: challengeQuestionId,
+              question: challengeQuestionQuestion,
+              answer: vm.form.question.answer
+            }])
+            .then(challengequestionsPutResponse);
+
+          function challengequestionsPutResponse(response) {
+            if (response.status === 200 || response.status === 201) {
+              AlertService.success('Säkerhetsfrågan skapad / uppdaterad!');
+
+              UserService.setOrUpdateClaim('http://wso2.org/claims/challengeQuestion1', challengeQuestionQuestion)
+                .then(function() {
+                  resetChallengeQuestionForm();
+                });
+
+            } else {
+              AlertService.error('Problem att skapa / uppdatera säkerhetsfrågan');
+            }
+          }
+        });
+    }
+
     function resetProfileForm() {
       vm.form.profile = angular.copy($rootScope.globals.currentUser);
+    }
+
+    function resetChallengeQuestionForm() {
+
+      UserService.getClaim('http://wso2.org/claims/challengeQuestion1')
+        .then(function(response) {
+
+          if (response.success) {
+            vm.form.question = {};
+
+            /* The challenge question isn't correctly formatted */
+            if (response.object.claimValue.indexOf('!') > -1) {
+              vm.form.question.question = response.object.claimValue.substring(0, response.object.claimValue.indexOf('!'));
+            } else {
+              vm.form.question.question = response.object.claimValue;
+            }
+          }
+        });
+      if ($scope.challengeQuestionForm != null) {
+        $scope.challengeQuestionForm.$setPristine();
+      }
     }
 
     function resetPasswordForm() {
