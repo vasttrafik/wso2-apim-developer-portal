@@ -50,7 +50,7 @@
         .then(captchasPutUserResponse);
 
       function captchasPutUserResponse(response) {
-        if (response.status === 200) {
+        if (response.status === 200 && response.data.verified) {
 
           if (vm.form.captcha.recoveryType === 'notification') {
             APIService.userCall('notificationsPost', ['application/json', 'application/json', {
@@ -76,7 +76,7 @@
       }
 
       function notificationsPostResponse(response) {
-        if (response.status === 200) {
+        if (response.status === 200 && response.data.verified) {
           AlertService.success('Du kommer få ett mail med vidare instruktioner', 'Lyckad verifiering!', 10000);
           vm.user.notification = true;
           generateCaptcha();
@@ -126,7 +126,7 @@
         .then(captchasPutCodeResponse);
 
       function captchasPutCodeResponse(response) {
-        if (response.status === 200) {
+        if (response.status === 200 && response.data.verified) {
           AlertService.success('Lyckad verifiering!');
           vm.user.password = true;
           vm.form.password = {};
@@ -155,7 +155,7 @@
         .then(challengequestionsPutResponse);
 
       function challengequestionsPutResponse(response) {
-        if (response.status === 200) {
+        if (response.status === 200 && response.data.verified) {
           AlertService.success('Rätt svar på frågan!');
           vm.challengeQuestions.shift();
           if (vm.challengeQuestions > 0) {
@@ -191,7 +191,7 @@
         .then(usersUserIdPutResponse);
 
       function usersUserIdPutResponse(response) {
-        if (response.status === 200) {
+        if (response.status === 200 && response.data.verified) {
           AlertService.success('Du kan nu logga in', 'Lösenordet är uppdaterat!', 10000);
           $location.path('/');
           $location.search('username', null);
