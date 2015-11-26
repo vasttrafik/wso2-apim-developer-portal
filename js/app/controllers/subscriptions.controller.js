@@ -1,9 +1,12 @@
+/*global defaultBaseUrl*/
+
 (function() {
   'use strict';
 
   angular
     .module('vtPortal')
-    .controller('SubscriptionsCtrl', SubscriptionsCtrl);
+    .controller('SubscriptionsCtrl', SubscriptionsCtrl)
+    .constant('defaultBaseUrl', defaultBaseUrl);
 
   SubscriptionsCtrl.$inject = ['$scope', '$http', 'APIService', 'AlertService'];
 
@@ -15,6 +18,8 @@
     vm.resetAddSubscriptionForm = resetAddSubscriptionForm;
 
     (function init() {
+      vm.defaultBaseUrl = defaultBaseUrl;
+
       vm.form = {};
       vm.form.subscription = {};
 
@@ -46,10 +51,9 @@
 
     function aPIsGetResponse(response) {
       if (response.status === 200) {
-        // Not possible to create a subscription against deprecated or prototyped apis
+        // Only possible to create a subscription towards a published api
         vm.apis = response.data.list.filter(function(el) {
-          return el.status.toUpperCase() !== 'DEPRECATED' &&
-            el.status.toUpperCase() !== 'PROTOTYPED';
+          return el.status.toUpperCase() === 'PUBLISHED';
         });
 
       } else {
@@ -64,7 +68,7 @@
 
       APIService.call('subscriptionsPost', [{
           application: {
-            applicationName: vm.form.subscription.add.application
+            id: vm.form.subscription.add.application
           },
           api: {
             name: apiDef[0],
@@ -72,10 +76,13 @@
             provider: apiDef[2]
           }
         }, 'application/json'])
-        .then(subscriptionsPostResponse);
+        .then(subscriptionsPostResponse)
+        .catch(function(response) {
+          AlertService.error('Problem att skapa ny prenumeration');
+        });
 
       function subscriptionsPostResponse(response) {
-        if (response.status === 200) {
+        if (response.status === 201) {
           vm.subscriptions.push(response.data);
 
           AlertService.success('Prenumerationen skapad!');
@@ -93,10 +100,10 @@
 
       var i = 0;
       for (i; i < vm.subscriptions.length; i++) {
-        if (vm.subscriptions[i].subscriptionId === subscriptionId) {
+        if (vm.subscriptions[i].id === subscriptionId) {
           if (confirm('Är du säker på att du vill ta bort prenumerationen mellan applikation ' +
               vm.subscriptions[i].application.name + ' och API ' + vm.subscriptions[i].api.name + ' ' + vm.subscriptions[i].api.version) === true) {
-            APIService.call('subscriptionsSubscriptionIdDelete', [vm.subscriptions[i].subscriptionId])
+            APIService.call('subscriptionsSubscriptionIdDelete', [vm.subscriptions[i].id])
               .then(subscriptionsSubscriptionIdDeleteResponse);
             break;
           }
