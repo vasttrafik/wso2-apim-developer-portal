@@ -5,27 +5,21 @@
     .module('vtPortal')
     .controller('NewsCtrl', NewsCtrl);
 
-  NewsCtrl.$inject = ['$routeParams', '$anchorScroll', '$location', '$scope'];
+  NewsCtrl.$inject = ['$routeParams', '$location', '$scope'];
 
-  function NewsCtrl($routeParams, $anchorScroll, $location, $scope) {
+  function NewsCtrl($routeParams, $location, $scope) {
     var vm = this;
-
-    vm.scrollTo = scrollTo;
-
+       
+    vm.toggleIngress = toggleIngress;
+    
     (function init() {
-      $anchorScroll.yOffset = 100;
-      vm.template = {
-        name: $routeParams.guide + '.view.html',
-        url: 'js/app/views/guides/' + $routeParams.guide + '.view.html'
-      };
+      vm.showIngress = true;
     })();
+    
 
-    function scrollTo(hash) { // jshint ignore:line
-      if ($location.hash() !== hash) {
-        $location.hash(hash);
-      } else {
-        $anchorScroll();
-      }
+    function toggleIngress()
+    {
+      vm.showIngress= !vm.showIngress;
     }
 
   }
