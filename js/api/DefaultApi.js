@@ -497,6 +497,26 @@ var API;
         return this.$http(httpRequestParams);
       };
 
+      DefaultApi.prototype.messagesPost = function(body, extraHttpRequestParams) {
+        var path = this.basePath + '/messages';
+        var queryParameters = {};
+        // verify required parameter 'body' is set
+        if (!body) {
+          throw new Error('Missing required parameter body when calling messagesPost');
+        }
+        var httpRequestParams = {
+          method: 'POST',
+          url: path,
+          json: true,
+          data: body,
+          params: queryParameters
+        };
+        if (extraHttpRequestParams) {
+          httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+        }
+        return this.$http(httpRequestParams);
+      };
+
       DefaultApi.prototype.securityPost = function(action, refreshToken, body, contentType, extraHttpRequestParams) {
         var path = this.basePath + '/security';
 
