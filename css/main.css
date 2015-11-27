@@ -656,7 +656,7 @@ article.newsItem h3 {
   display:inline-block;
   float:left;
   background-color: #fff;
-  margin: 5px 6px 0 0;
+  margin: -10px 6px 0 0;
   text-align:center;
   line-height:1em;
   vertical-align:middle;

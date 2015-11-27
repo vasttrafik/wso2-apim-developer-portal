@@ -10,7 +10,7 @@
       <section id="newsItemsList">
         <article class="newsItem" ng-repeat="newsItem in vm.newsItems | orderBy: 'publishedDate'">
           <div class="calDate">
-            <div class="month red">{{ newsItem.publishedDate | date:'MMM' }}</div>{{  newsItem.publishedDate | date:'dd' }}
+            <div class="month red">{{ newsItem.publishedDate | date:'MMM' }}</div>{{  newsItem.publishedDate | date:'d' }}
           </div>
           <span class="toggleItem">
             <span class="showMore"><i class="glyphicon glyphicon-chevron-down" ng-click="vm.toggleIngress($index)"></i></span>
