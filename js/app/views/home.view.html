@@ -34,7 +34,9 @@
 
           <h3>Kom igång</h3>
         </a>
-        <p>Här finner du instruktioner om hur du kommer igång med att använda våra api:er.</p>
+        <p class="full-justify">
+          Här finner du instruktioner om hur du kommer igång med att använda våra api:er.
+        </p>
       </div>
 
       <div class="col-md-3 col-sm-6 text-center">
@@ -44,8 +46,9 @@
           </div>
           <h3>API:er</h3>
         </a>
-        <p>
-          Här finner du alla våra publika api:er. Skapa ett konto följt av en applikation och du är klar för att prenumerera på våra api:er.
+        
+        <p class="full-justify">
+          Här finner du alla våra publika api:er. Skapa ett konto följt av en app-likation och du är klar för att prenumerera på våra api:er.
         </p>
       </div>
 
@@ -239,15 +242,15 @@
 </div>
 
 <script>
-  $(document).ready(function() {
+  $(document).ready(function () {
 
-    $('#create-button').on('click', function(e) {
+    $('#create-button').on('click', function (e) {
       e.stopPropagation();
 
       var element = angular.element(document.body);
       var controller = element.controller();
 
-      element.scope().$apply(function() {
+      element.scope().$apply(function () {
         controller.toggleCreate(true);
       });
 
