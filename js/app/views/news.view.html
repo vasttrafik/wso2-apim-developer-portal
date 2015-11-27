@@ -8,182 +8,41 @@
   <div class="container">
     <div class="row col-md-9">
       <section id="newsItemsList">
-        <article class="newsItem">
+        <article class="newsItem" ng-repeat="newsItem in vm.newsItems | orderBy: 'publishedDate'">
           <div class="calDate">
-            <div class="month red">Nov</div>23
+            <div class="month red">{{ newsItem.publishedDate | date:'MMM' }}</div>{{  newsItem.publishedDate | date:'dd' }}
           </div>
           <span class="toggleItem">
-            <span class="showMore"><i class="glyphicon glyphicon-chevron-down" ng-click="vm.toggleIngress()"></i></span>
-            <span class="showLess"><i class="glyphicon glyphicon-chevron-up" ng-click="vm.toggleIngress()"></i></span>
+            <span class="showMore"><i class="glyphicon glyphicon-chevron-down" ng-click="vm.toggleIngress($index)"></i></span>
+            <span class="showLess"><i class="glyphicon glyphicon-chevron-up" ng-click="vm.toggleIngress($index)"></i></span>
           </span>
-          <h2 class="ellipsis">Utvecklarportalen - Ny version 1 även den med lång rubrik och lite till för skojs skull</h2>
+          <h2 class="ellipsis">{{newsItem.title}}</h2>
 
           <div class="articleContent">
-            <div class="news-item-ingress animate-hide" ng-show="vm.showIngress">
-              See if we can catch different heights on this one and set it on load...
-              <br />
-              <p>
-                Adding another paragraph to ensure som more height...
-              </p>
-              <p>2:nd p...</p>
-              <p>3:rd p...</p>
-              <p>4:rd p...</p>
-              <p>5:rd p...</p>
+            <div id="{{$index + 'intro'}}" class="hidden animate-hide"  style="" ng-show="vm.showIngress">
+              {{newsItem.intro}}
             </div>
 
-            <div class="news-item-content animate-hide" ng-hide="vm.showIngress">
-              <p>
-                1.Nya utvecklarportalen är här. Genom att skapa ett konto i klubben för utvecklare kan du få del av
-                våra API:er och du får även möjlighet att diskutera utveckling med andra medlemmar. Vi kommer så fort vi
-                har möjlighet att även starta upp vår blogg. Missa inte att hålla ögonen öppna
-                för nyheter just här i vår kalender om datum när bloggen förväntas aktiveras.
-              </p>
-              With a Suunto Ambit3 Sport you can still track your workout’s distance, speed, elevation and heart rate (with a heart rate belt), but also:
-              <ol>
-                <li>Go Longer:  The battery on the Ambit3 lasts up to 200 hours while using gps</li>
-                <li>Go More: Track more sports more easily, including swimming</li>
-                <li>Go Lighter: Leave your phone at home and still get real time updates</li>
-              </ol>
-              Just connect your Suunto Movescount account to your Sports Tracker one. It will then automatically transfer all the new data, so you don’t have to worry about that later on.
-              <p>
-                All you need to do is to connect your Suunto watch to your Movescount account after each...
-              </p>
+            <div id="{{$index + 'content'}}" class="news-item-content animate-hide" ng-hide="vm.showIngress">
+              {{newsItem.content}}
             </div>
           </div>
 
           <footer>
             <div class="fader"></div>
             Taggad som:
-            <span class="label label-default">API</span>
-            <span class="label label-success">NEWS</span>
-            <span class="label label-info">PRENUMERATION</span>
-            <span>Publicerad av: Mikael, 2015-11-20</span>
+            <span class="label label-default" ng-repeat="tag in newsItem.tags">{{tag}}</span>&nbsp;
+            <span>Publicerad av: {{newsItem.publishedBy}}, {{newsItem.publishedDate}}</span>
             <span class="toggleItemBottom">
-              <span class="showMore" ng-click="vm.toggleIngress()">Visa mer <i class="glyphicon glyphicon-chevron-down"></i></span>
-              <span class="showLess" ng-click="vm.toggleIngress()">Visa mindre <i class="glyphicon glyphicon-chevron-up"></i></span>
+              <span class="showMore" ng-click="vm.toggleIngress($index)">Visa mer <i class="glyphicon glyphicon-chevron-down"></i></span>
+              <span class="showLess" ng-click="vm.toggleIngress($index)">Visa mindre <i class="glyphicon glyphicon-chevron-up"></i></span>
             </span>
 
           </footer>
         </article>
-
-        <article class="newsItem">
-          <div class="calDate">
-            <div class="month red">Nov</div>23
-          </div>
-          <span class="toggleItem">
-            <span class="showMore"><i class="glyphicon glyphicon-chevron-down" ng-click="vm.toggleIngress()"></i></span>
-            <span class="showLess"><i class="glyphicon glyphicon-chevron-up" ng-click="vm.toggleIngress()"></i></span>
-          </span>
-          <h2 class="ellipsis">Utvecklarportalen - Ny version 1 även den med lång rubrik och lite till för skojs skull</h2>
-
-          <div class="articleContent">
-            <div class="news-item-ingress animate-hide" ng-show="vm.showIngress">
-              See if we can catch different heights on this one and set it on load...
-              <br />
-              <p>
-                Adding another paragraph to ensure som more height...
-              </p>
-              <p>2:nd p...</p>
-              <p>3:rd p...</p>
-              <p>4:rd p...</p>
-              <p>5:rd p...</p>
-            </div>
-
-            <div class="news-item-content animate-hide" ng-hide="vm.showIngress">
-              <p>
-                1.Nya utvecklarportalen är här. Genom att skapa ett konto i klubben för utvecklare kan du få del av
-                våra API:er och du får även möjlighet att diskutera utveckling med andra medlemmar. Vi kommer så fort vi
-                har möjlighet att även starta upp vår blogg. Missa inte att hålla ögonen öppna
-                för nyheter just här i vår kalender om datum när bloggen förväntas aktiveras.
-              </p>
-              With a Suunto Ambit3 Sport you can still track your workout’s distance, speed, elevation and heart rate (with a heart rate belt), but also:
-              <ol>
-                <li>Go Longer:  The battery on the Ambit3 lasts up to 200 hours while using gps</li>
-                <li>Go More: Track more sports more easily, including swimming</li>
-                <li>Go Lighter: Leave your phone at home and still get real time updates</li>
-              </ol>
-              Just connect your Suunto Movescount account to your Sports Tracker one. It will then automatically transfer all the new data, so you don’t have to worry about that later on.
-              <p>
-                All you need to do is to connect your Suunto watch to your Movescount account after each...
-              </p>
-            </div>
-          </div>
-
-          <footer>
-            <div class="fader"></div>
-            Taggad som:
-            <span class="label label-default">API</span>
-            <span class="label label-success">NEWS</span>
-            <span class="label label-info">PRENUMERATION</span>
-            <span>Publicerad av: Mikael, 2015-11-20</span>
-            <span class="toggleItemBottom">
-              <span class="showMore" ng-click="vm.toggleIngress()">Visa mer <i class="glyphicon glyphicon-chevron-down"></i></span>
-              <span class="showLess" ng-click="vm.toggleIngress()">Visa mindre <i class="glyphicon glyphicon-chevron-up"></i></span>
-            </span>
-
-          </footer>
-        </article>
-
-        <article class="newsItem">
-          <div class="calDate">
-            <div class="month red">Nov</div>23
-          </div>
-          <span class="toggleItem">
-            <span class="showMore"><i class="glyphicon glyphicon-chevron-down" ng-click="vm.toggleIngress()"></i></span>
-            <span class="showLess"><i class="glyphicon glyphicon-chevron-up" ng-click="vm.toggleIngress()"></i></span>
-          </span>
-          <h2 class="ellipsis">Utvecklarportalen - Ny version 1 även den med lång rubrik och lite till för skojs skull</h2>
-
-          <div class="articleContent">
-            <div class="news-item-ingress animate-hide" ng-show="vm.showIngress">
-              See if we can catch different heights on this one and set it on load...
-              <br />
-              <p>
-                Adding another paragraph to ensure som more height...
-              </p>
-              <p>2:nd p...</p>
-              <p>3:rd p...</p>
-              <p>4:rd p...</p>
-              <p>5:rd p...</p>
-            </div>
-
-            <div class="news-item-content animate-hide" ng-hide="vm.showIngress">
-              <p>
-                1.Nya utvecklarportalen är här. Genom att skapa ett konto i klubben för utvecklare kan du få del av
-                våra API:er och du får även möjlighet att diskutera utveckling med andra medlemmar. Vi kommer så fort vi
-                har möjlighet att även starta upp vår blogg. Missa inte att hålla ögonen öppna
-                för nyheter just här i vår kalender om datum när bloggen förväntas aktiveras.
-              </p>
-              With a Suunto Ambit3 Sport you can still track your workout’s distance, speed, elevation and heart rate (with a heart rate belt), but also:
-              <ol>
-                <li>Go Longer:  The battery on the Ambit3 lasts up to 200 hours while using gps</li>
-                <li>Go More: Track more sports more easily, including swimming</li>
-                <li>Go Lighter: Leave your phone at home and still get real time updates</li>
-              </ol>
-              Just connect your Suunto Movescount account to your Sports Tracker one. It will then automatically transfer all the new data, so you don’t have to worry about that later on.
-              <p>
-                All you need to do is to connect your Suunto watch to your Movescount account after each...
-              </p>
-            </div>
-          </div>
-
-          <footer>
-            <div class="fader"></div>
-            Taggad som:
-            <span class="label label-default">API</span>
-            <span class="label label-success">NEWS</span>
-            <span class="label label-info">PRENUMERATION</span>
-            <span>Publicerad av: Mikael, 2015-11-20</span>
-            <span class="toggleItemBottom">
-              <span class="showMore" ng-click="vm.toggleIngress()">Visa mer <i class="glyphicon glyphicon-chevron-down"></i></span>
-              <span class="showLess" ng-click="vm.toggleIngress()">Visa mindre <i class="glyphicon glyphicon-chevron-up"></i></span>
-            </span>
-
-          </footer>
-        </article>
-
       </section>
     </div>
+
     <div class="row col-md-3">
       <aside>
         <section class="card cardSection greenCard" style="padding-top:5px;">
@@ -250,30 +109,30 @@
   </div>
 </div>
 <script>
-  
-$(document).ready(function () {
 
-  $('.toggleItem, .toggleItemBottom').on('click', function () {
-    var obj = $(this).parents('.newsItem').find('.articleContent');
-    $(obj).toggleClass('selectedItem').trigger('collapsed', obj);
+  $(document).ready(function () {
+
+    //$('.toggleItem, .toggleItemBottom').on('click', function () {
+    //  var obj = $(this).parents('.newsItem').find('.articleContent');
+    //  $(obj).toggleClass('selectedItem').trigger('collapsed', obj);
+    //});
+
+    //$('.newsItem').on('collapsed', function (event) {
+    //  var elem = event.target;
+    //  var parent = $(elem).parents('.newsItem');
+    //  var showLess = $(elem).hasClass('selectedItem');
+
+    //  if (showLess) {
+    //    $(parent).find('.showMore').css('display', 'none');
+    //    $(parent).find('.showLess').css('display', 'block');
+    //  }
+    //  else {
+    //    $(parent).find('.showMore').css('display', 'block');
+    //    $(parent).find('.showLess').css('display', 'none');
+    //  }
+    //});
+
+    //$('.toggleItem').first().trigger('click');
+
   });
-
-  $('.newsItem').on('collapsed', function (event) {
-    var elem = event.target;
-    var parent = $(elem).parents('.newsItem');
-    var showLess = $(elem).hasClass('selectedItem');
-
-    if (showLess) {
-      $(parent).find('.showMore').css('display', 'none');
-      $(parent).find('.showLess').css('display', 'block');
-    }
-    else {
-      $(parent).find('.showMore').css('display', 'block');
-      $(parent).find('.showLess').css('display', 'none');
-    }
-  });
-
-  //$('.toggleItem').first().trigger('click');
-  
-});
 </script>
