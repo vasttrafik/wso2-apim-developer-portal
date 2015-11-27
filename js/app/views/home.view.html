@@ -1,238 +1,184 @@
 <!-- Hero -->
-<div class="container-fluid" style="margin-top: 40px">
-  <div class="container">
-    <div class="row hero">
-      <div class="col-sm-7">
-        <h1 class="hidden-xs" ng-show="!user.loggedIn">Utveckla tillsammans</h1>
-        <h2 class="hidden-sm hidden-md hidden-lg" ng-show="!user.loggedIn">Utveckla tillsammans</h2>
+<div class="home">
+  <div class="container-fluid" style="margin-top: 40px; padding-top: 0px;">
+    <div class="container" style="margin-top: 40px; padding-top: 0px;">
+      <div class="row hero">
+        <div class="col-sm-7">
+          <h1 class="hidden-xs" ng-show="!user.loggedIn">Utveckla tillsammans</h1>
+          <h2 class="hidden-sm hidden-md hidden-lg" ng-show="!user.loggedIn">Utveckla tillsammans</h2>
 
-        <h1 class="hidden-xs" ng-show="user.loggedIn">Utveckling tillsammans</h1>
-        <h2 class="hidden-sm hidden-md hidden-lg" ng-show="user.loggedIn">Utveckling tillsammans</h2>
+          <h1 class="hidden-xs" ng-show="user.loggedIn">Utveckling tillsammans</h1>
+          <h2 class="hidden-sm hidden-md hidden-lg" ng-show="user.loggedIn">Utveckling tillsammans</h2>
 
-        <p ng-show="!user.loggedIn">Genom att skapa ett konto får du tillgång till våra publika API:er och kan dessutom diskutera utveckling med likasinnade och ta del av andra förmåner.</p>
-        <p ng-show="user.loggedIn">Tack för att du skapat ett konto! Här får du tillgång till våra publika API:er och kan dessutom diskutera utveckling med likasinnade och ta del av andra förmåner.</p>
-        <button id="create-button" class="text-uppercase btn btn-primary" ng-show="!user.loggedIn">
-          Skapa konto
-        </button>
-      </div>
-      <div class="hidden-xs col-sm-5">
-        <img class="img-responsive" src="img/png/hero.png" alt="Be a hero..." />
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Areas -->
-<div class="container-fluid blueRow">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-3 col-sm-6 text-center">
-        <a href="#/guides/get-started" title="Kom igång">
-          <div class="area">
-            <span class="fa fa-rocket fa-2x" aria-hidden="true"></span>
-          </div>
-
-          <h3>Kom igång</h3>
-        </a>
-        <p>Här finner du instruktioner om hur du kommer igång med att använda våra api:er.</p>
-      </div>
-
-      <div class="col-md-3 col-sm-6 text-center">
-        <a class="a-cog" href="#/apis" title="Våra API:er">
-          <div class="area">
-            <span class="fa fa-cog fa-2x" aria-hidden="true"></span>
-          </div>
-          <h3>API:er</h3>
-        </a>
-        <p>
-          Här finner du alla våra publika api:er. Skapa ett konto följt av en applikation och du är klar för att prenumerera på våra api:er.
-        </p>
-      </div>
-
-      <div class="col-md-3 col-sm-6 text-center">
-        <a href="#" title="Guider och manualer">
-          <div class="area">
-            <span class="fa fa-file-text fa-2x" aria-hidden="true"></span>
-          </div>
-          <h3>Guider</h3>
-        </a>
-        <p>
-          Kommer i version 2
-        </p>
-      </div>
-
-      <div class="col-md-3 col-sm-6 text-center">
-        <a href="#">
-          <div class="area">
-            <span class="fa fa-bar-chart fa-2x" aria-hidden="true"></span>
-          </div>
-          <h3>Statistik</h3>
-        </a>
-        <p>Kommer i version 2</p>
+          <p ng-show="!user.loggedIn">Genom att skapa ett konto får du tillgång till våra publika API:er och kan dessutom diskutera utveckling med likasinnade och ta del av andra förmåner.</p>
+          <p ng-show="user.loggedIn">Tack för att du skapat ett konto! Här får du tillgång till våra publika API:er och kan dessutom diskutera utveckling med likasinnade och ta del av andra förmåner.</p>
+          <button id="create-button" class="text-uppercase btn btn-primary" ng-show="!user.loggedIn" style="margin-top: 40px">
+            Skapa konto
+          </button>
+        </div>
+        <div class="hidden-xs col-sm-5">
+          <img class="img-responsive" src="img/png/hero.png" alt="Be a hero..." />
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- News -->
-<div class="container-fluid">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-4">
-        <div class="feed">
-          <h3>Nyheter</h3>
-          <ul class="list-unstyled truncate">
-            <li>
-              <a href="#" title="...">Nyheter...</a>
-            </li>
-          </ul>
+  <!-- Areas -->
+  <div class="container-fluid blueRow">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3 col-sm-6 text-center">
+          <a href="#/guides/get-started" title="Kom igång">
+            <div class="area">
+              <span class="fa fa-rocket fa-2x" aria-hidden="true"></span>
+            </div>
+
+            <h3>Kom igång</h3>
+          </a>
+          <p>Här finner du instruktioner om hur du kommer igång med att använda våra api:er.</p>
+        </div>
+
+        <div class="col-md-3 col-sm-6 text-center">
+          <a class="a-cog" href="#/apis" title="Våra API:er">
+            <div class="area">
+              <span class="fa fa-cog fa-2x" aria-hidden="true"></span>
+            </div>
+            <h3>API:er</h3>
+          </a>
           <p>
-            <a class="" href="#" title="...">Fler nyheter</a>
-            <br />
+            Här finner du alla våra publika api:er. Skapa ett konto följt av en applikation och du är klar för att prenumerera på våra api:er.
           </p>
         </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="feed">
-          <h3>Blogg</h3>
-          <p>Kommer i version 2</p>
-          <!--<ul class="list-unstyled truncate">
-            <li>
-              <a href="#" title="...">Detta är en nyhetsrubriklänk</a>
-            </li>
-          </ul>
+
+        <div class="col-md-3 col-sm-6 text-center">
+          <a href="#/guides/oauth2" title="Guider och manualer">
+            <div class="area">
+              <span class="fa fa-file-text fa-2x" aria-hidden="true"></span>
+            </div>
+            <h3>Guide kring OAuth 2</h3>
+          </a>
           <p>
-            <a class="" href="#" title="...">Fler nyheter</a>
-            <br />
-          </p>-->
+            Förklarande text kring säkerhets- implementationen alla våra nya api:er använder.
+          </p>
         </div>
-      </div>
-      <div class="col-sm-4">
-        <div class="feed">
-          <h3>Kalender</h3>
-          <p>Kommer i version 2</p>
-          <!--<ul class="list-unstyled truncate">
-            <li>
-              <span class="label label-info date-short">15 jun</span>
-              <a href="#" title="...">Detta är en nyhetsrubriklänk</a>
-            </li>
-          </ul>
-          <p>
-            <a class="" href="#" title="...">Fler nyheter</a>
-            <br />
-          </p>-->
+
+        <div class="col-md-3 col-sm-6 text-center">
+          <a href="#/" title="Guider och manualer">
+            <div class="area">
+              <span class="fa fa-bar-chart fa-2x" aria-hidden="true"></span>
+            </div>
+            <h3>Statistik</h3>
+          </a>
+          <p>Kommer i version 2 av portalen</p>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- Showcases -->
-<div class="container-fluid blueRow">
-  <div class="container">
-    <div class="no-row clearfix">
-      <h3 class="">
-        Showcase
-        <!--<a class="pull-right" href="#" title="...">Visa alla</a>-->
-      </h3>
+  <!-- News -->
+  <div class="container-fluid">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="hero feed" style="
+      /* text-align: center; */
+  ">
+            <h1 style="
+      padding-bottom: 20px;
+  ">Nyheter</h1>
+            <h3>2015-11-25 En till nyhet!</h3>
+            Then and well bluebird much and archly tearfully penguin naked unicorn thoroughly whistled fraternally picked hello racy purposefully over much under hummed a behind some one wombat ferret. Puerile chastely luxuriant out intimately the squinted barring
+            with hardily mammoth disbanded thus this lost with aside yikes and some vehemently but and humble leopard closed where far sedate ostrich this. According and from abusive due continual impeccably far more slapped much dear a a honey toucan
+            along warthog like goldfinch far jaguar when groomed unequivocally one.
+            <p></p>
+            <a href="#">Läs mer</a>
+            <p></p>
+            <br />
+            <h3>2015-11-30 Västtrafik lanserar utvecklarportalen!</h3>
+            Then and well bluebird much and archly tearfully penguin naked unicorn thoroughly whistled fraternally picked hello racy purposefully over much under hummed a behind some one wombat ferret. Puerile chastely luxuriant out intimately the squinted barring
+            with hardily mammoth disbanded thus this lost with aside yikes and some vehemently but and humble leopard closed where far sedate ostrich this. According and from abusive due continual impeccably far more slapped much dear a a honey toucan
+            along warthog like goldfinch far jaguar when groomed unequivocally one.
+            <p></p>
+            Immeasurable hello owing and oh far acceptable much well therefore opposite when besides alas far some far yet punctilious casually arguably goldfinch some convincing some ground turgid soothingly excepting house hello alas bawled.
+            <p></p>
+            <a href="#">Läs mer</a>
+
+            <p style="padding-top: 60px">
+              <a href="#/news">Läs fler nyheter</a>
+              <br />
+            </p>
+
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="row">
-      <div class="col-xs-4 col-sm-4 col-md-2">
-        <div class="showcase panel panel-default">
-          <a href="http://itunes.apple.com/se/app/reseplaneraren/id443149686?mt=8" title="Reseplaneraren i App Store (öppnas i eget fönster/flik)" target="_blank">
-            <div class="panel-body">
-              <img class="img-responsive" src="img/png/reseplaneraren_logo.png" alt="Reseplaneraren" />
-              <div class="text-center">
-                <br>
-                <p>
-                  <strong>Reseplaneraren</strong>
-                </p>
-                <div class="author hidden-sm">Västtrafik</div>
-              </div>
-            </div>
-          </a>
+  </div>
 
+  <!-- Showcases -->
+  <div class="container-fluid blueRow" style="margin-bottom: -100px;">
+    <div class="container">
+      <div class="no-row clearfix" style="margin-bottom: 20px">
+        <h1>
+          App showcase
+          <!--<a class="pull-right" href="#" title="...">Visa alla</a>-->
+        </h1>
+      </div>
+      <div class="row">
+        <div class="col-xs-4 col-sm-4 col-md-2">
+          <div class="showcase panel panel-default">
+            <a href="http://itunes.apple.com/se/app/reseplaneraren/id443149686?mt=8" title="Reseplaneraren i App Store (öppnas i eget fönster/flik)" target="_blank">
+              <div class="panel-body">
+                <img class="img-responsive" src="img/png/reseplaneraren_logo.png" alt="Reseplaneraren" />
+                <div class="text-center">
+                  <br>
+                  <p>
+                    <strong>Reseplaneraren</strong>
+                  </p>
+                  <div class="author hidden-sm">Västtrafik</div>
+                </div>
+              </div>
+            </a>
+
+          </div>
         </div>
-      </div>
-      <div class="col-xs-4 col-sm-4 col-md-2">
-        <div class="showcase panel panel-default">
-          <a href="https://itunes.apple.com/se/app/var-ar-bussen/id821541662?mt=8" title="Var är bussen i App Store (öppnas i eget fönster/flik)" target="_blank">
-            <div class="panel-body">
-              <img class="img-responsive" src="img/png/where_bus.png" alt="Var är bussen" />
-              <div class="text-center">
-                <br>
-                <p>
-                  <strong>Var är bussen</strong>
-                </p>
-                <div class="author hidden-sm">Västtrafik</div>
+        <div class="col-xs-4 col-sm-4 col-md-2">
+          <div class="showcase panel panel-default">
+            <a href="https://itunes.apple.com/se/app/var-ar-bussen/id821541662?mt=8" title="Var är bussen i App Store (öppnas i eget fönster/flik)" target="_blank">
+              <div class="panel-body">
+                <img class="img-responsive" src="img/png/where_bus.png" alt="Var är bussen" />
+                <div class="text-center">
+                  <br>
+                  <p>
+                    <strong>Var är bussen</strong>
+                  </p>
+                  <div class="author hidden-sm">Västtrafik</div>
+                </div>
               </div>
-            </div>
-          </a>
+            </a>
+          </div>
         </div>
-      </div>
-      <div class="col-xs-4 col-sm-4 col-md-2">
-        <div class="showcase panel panel-default">
-          <a href="https://itunes.apple.com/se/app/id443895564?mt=8" title="Spårvagnssightseeing i App Store (öppna i eget fönster/flik)" target="_blank">
-            <div class="panel-body">
-              <img class="img-responsive" src="img/png/tram_sightseeing.png" alt="Spårvagnssightseeing" />
-              <div class="text-center">
-                <br>
-                <p>
-                  <strong>Spårvagns-sightseeing</strong>
-                </p>
-                <div class="author hidden-sm">Västtrafik</div>
+        <div class="col-xs-4 col-sm-4 col-md-2">
+          <div class="showcase panel panel-default">
+            <a href="https://itunes.apple.com/se/app/id443895564?mt=8" title="Spårvagnssightseeing i App Store (öppna i eget fönster/flik)" target="_blank">
+              <div class="panel-body">
+                <img class="img-responsive" src="img/png/tram_sightseeing.png" alt="Spårvagnssightseeing" />
+                <div class="text-center">
+                  <br>
+                  <p>
+                    <strong>Spårvagns-sightseeing</strong>
+                  </p>
+                  <div class="author hidden-sm">Västtrafik</div>
+                </div>
               </div>
-            </div>
-          </a>
+            </a>
+          </div>
         </div>
-      </div>
-      <div class="col-xs-4 col-sm-4 col-md-2">
-        <!--<div class="showcase panel panel-default">
-          <a href="#" title="Västtrafik - JustInTime">
-            <div class="panel-body">
-              <img class="img-responsive" src="img/png/justintime.png" alt="" />
-              <div class="text-center">
-                <br>
-                <p>
-                  <strong>Västtrafik - JustInTime</strong>
-                </p>
-                <div class="author hidden-sm">Anders Ekvall</div>
-              </div>
-            </div>
-          </a>
-        </div>-->
-      </div>
-      <div class="col-xs-4 col-sm-4 col-md-2">
-        <!--<div class="showcase panel panel-default">
-          <a href="#" title="På Språng för Västtrafik">
-            <div class="panel-body">
-              <img class="img-responsive" src="img/png/onthemove.png" alt="" />
-              <div class="text-center">
-                <br>
-                <p>
-                  <strong>På Språng för Västtrafik</strong>
-                </p>
-                <div class="author hidden-sm">Anders Ekvall</div>
-              </div>
-            </div>
-          </a>
-        </div>-->
-      </div>
-      <div class="col-xs-4 col-sm-4 col-md-2">
-        <!--<div class="showcase panel panel-default">
-          <a href="#" title="Tidtabellen Väst">
-            <div class="panel-body">
-              <img class="img-responsive" src="img/png/timetablewest.png" alt="" />
-              <div class="text-center">
-                <br>
-                <p>
-                  <strong>Tidtabellen Väst</strong>
-                </p>
-                <div class="author hidden-sm">acreations</div>
-              </div>
-            </div>
-          </a>
-        </div>-->
+        <div class="col-xs-4 col-sm-4 col-md-2">
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-2">
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-2">
+        </div>
       </div>
     </div>
   </div>

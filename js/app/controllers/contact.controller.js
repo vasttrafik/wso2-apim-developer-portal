@@ -1,43 +1,64 @@
-﻿(function () {
+﻿
+(function() {
   'use strict';
 
   angular
     .module('vtPortal')
     .controller('ContactCtrl', ContactCtrl);
 
-  ContactCtrl.$inject = ['$location', '$scope', '$routeParams', 'AlertService', 'APIService'];
+  ContactCtrl.$inject = ['$location', '$scope', '$rootScope', '$routeParams', 'AlertService', 'APIService'];
 
-  function ContactCtrl($location, $scope, $routeParams, AlertService, APIService) {
+  function ContactCtrl($location, $scope, $rootScope, $routeParams, AlertService, APIService) {
     var vm = this;
 
-    vm.generateCaptcha = generateCaptcha;
     vm.submitContact = submitContact;
+    vm.resetContactForm = resetContactForm;
 
     (function init() {
+      resetContactForm();
+    })();
+
+    function submitContact() {
+      vm.dataLoadingContact = true;
+
+      APIService.call('messagesPost', [{
+          messageType: 'EMAIL',
+          from: vm.form.contact.email,
+          to: 'api@vasttrafik.se',
+          subject: 'Meddelande ifrån kontaktformulär',
+          body: vm.form.contact.message,
+          contentType: 'text/plain'
+        }])
+        .then(messagesPostResponse)
+        .catch(function(response) {
+          AlertService.error('Problem att skicka meddelandet!');
+        });
+
+      function messagesPostResponse(response) {
+        if (response.status === 201) {
+          AlertService.success('Meddelandet har mottagits!', 5000);
+          resetContactForm();
+        } else {
+          AlertService.error('Problem att skicka meddelandet!');
+        }
+
+        vm.dataLoadingContact = false;
+      }
+
+    }
+
+    function resetContactForm() {
       vm.form = {};
       vm.form.contact = {};
 
-      generateCaptcha();
-    })();
-
-    function generateCaptcha() {
-      APIService.userCall('captchasPost', [])
-        .then(captchasPostResponse);
-
-      function captchasPostResponse(response) {
-        vm.form.contact.imageId = response.data.imageId;
-        vm.form.contact.secretKey = response.data.secretKey;
-
-        vm.captcha = APIService.getUserApiBasePath() + '/captchas/' + response.data.imageId;
+      if ($rootScope.user.loggedIn) {
+        vm.form.contact.email = $rootScope.globals.currentUser.email;
       }
-    }
 
-    function submitContact() {
-      var alertResponse = 'Vi kommer kontakta dig på adress ' + vm.form.contact.email;
-      AlertService.success(alertResponse, 'Kontakt mottagen!', 5000);
-      vm.dataLoading = false;
-      //TODO Error handling and service endpoint to save contact.
-
+      vm.form.contact.message = null;
+      if ($scope.contactForm != null) {
+        $scope.contactForm.$setPristine();
+      }
     }
 
   }

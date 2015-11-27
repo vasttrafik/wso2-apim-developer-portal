@@ -202,6 +202,7 @@ div.feed p a:before, div.no-row.clearfix h3 a.pull-right:before, a.more:before {
   content: url('../img/png/icon_arrow_right16.png');
   height: 10px;
   width: 10px;
+  vertical-align: middle;
 }
 div.feed p a:hover:before, div.no-row.clearfix h3 a.pull-right:hover:before, a.more:hover:before {
   padding-right: 5px;
@@ -960,4 +961,8 @@ article.newsItem > h2 {
 }
 .sub-menu > li > a {
   margin-left: 20px;
+}
+.home .container {
+  padding-top: 80px;
+  padding-bottom: 80px;
 }
