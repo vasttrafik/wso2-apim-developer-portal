@@ -1,8 +1,8 @@
 <div class="jumbotron title">
   <div class="container" style="padding-left: 0">
     <ol class="breadcrumb">
-      <li><a href="/#/" target="_self">Hem</a></li>
-      <li><a href="/#/apis" target="_self">Våra API</a></li>
+      <li><a href="#/" target="_self">Hem</a></li>
+      <li><a href="#/apis" target="_self">Våra API</a></li>
       <li class="active">{{vm.apiName}} {{vm.apiVersion}}</li>
     </ol>
     <h1>{{vm.apiName}} {{vm.apiVersion}}</h1>
@@ -109,8 +109,8 @@
                 <td ng-if="doc.source === 'url'">
                   <span><a href="{{doc.url}}" title="{{doc.type}}">{{doc.name}}</a></span>
                 </td>
-                <td ng-if="doc.source === 'file'">
-                  <span><a href="{{vm.defaultBaseUrl + '/apis/' + vm.apiIdSingle + '/documents/' + doc.id + '/content/'}}" title="{{doc.type}}">{{doc.name}}</a></span>
+                <td ng-if="doc.source !== 'url'">
+                  <span><a href="{{vm.defaultBaseUrl + '/apis/' + vm.apiIdSingle + '/documents/' + doc.id + '/content/' + doc.fileName}}" title="{{doc.type}}">{{doc.name}}</a></span>
                 </td>
                 <td ng-if="doc.type.type !== 'Other'">
                   <span>{{doc.type.type}}</span>

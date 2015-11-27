@@ -1,8 +1,8 @@
 <div class="jumbotron title">
   <div class="container" style="padding-left: 0">
     <ol class="breadcrumb">
-      <li><a href="/#/" target="_self">Hem</a></li>
-      <li><a href="/#/overview" target="_self">Mina sidor</a></li>
+      <li><a href="#/" target="_self">Hem</a></li>
+      <li><a href="#/overview" target="_self">Mina sidor</a></li>
       <li class="active">Mina applikationer</li>
     </ol>
     <h1>Mina applikationer</h1>
@@ -92,7 +92,7 @@
 
 <div ng-show="vm.form.application.update">
   <div class="container" style="padding-left: 0; padding-bottom: 0px">
-    <h2>Uppdatera applikation {{vm.form.application.update.name}}</h2>
+    <h2>Uppdatera applikationen {{vm.form.application.update.name}}</h2>
   </div>
 
   <div class="container" style="padding-bottom: 20px;">
@@ -124,7 +124,7 @@
 
 <div ng-show="!vm.form.application.update && vm.form.application.details">
   <div class="container" style="padding-left: 0; padding-bottom: 0px">
-    <h2>Nyckelhantering för applikation {{vm.form.application.details.name}}</h2>
+    <h2>Nyckelhantering för applikationen {{vm.form.application.details.name}}</h2>
   </div>
 
   <div class="container" style="padding-bottom: 20px;">
@@ -141,7 +141,7 @@
             <label for="validityTime">Giltighetstid för access token</label>
             <div class="input-group">
 
-              <input type="number" name="validityTimeGenerateToken" id="validityTimeGenerateToken" class="form-control" ng-model="vm.form.application.details.generateToken.validityTime" value="3600" required min="1" />
+              <input type="number" name="validityTimeGenerateToken" id="validityTimeGenerateToken" class="form-control" ng-model="vm.form.application.details.generateToken.validityTime" required min="1" />
               <span class="input-group-addon">Sekunder</span>
             </div>
             <span ng-show="detailsApplicationGenerateTokenForm.validityTimeGenerateToken.$dirty && detailsApplicationGenerateTokenForm.validityTimeGenerateToken.$invalid" class="help-block">Måste vara ett nummer större än 0</span>
