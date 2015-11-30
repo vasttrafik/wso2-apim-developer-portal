@@ -1,5 +1,4 @@
-﻿
-(function() {
+﻿(function() {
   'use strict';
 
   angular
@@ -25,10 +24,10 @@
           messageType: 'EMAIL',
           from: vm.form.contact.email,
           to: 'api@vasttrafik.se',
-          subject: 'Meddelande ifrån kontaktformulär',
+          subject: 'Meddelande ifrån kontaktformulär: ' + vm.form.contact.subject,
           body: vm.form.contact.message,
           contentType: 'text/plain'
-        }])
+        }], true)
         .then(messagesPostResponse)
         .catch(function(response) {
           AlertService.error('Problem att skicka meddelandet!');
@@ -36,7 +35,7 @@
 
       function messagesPostResponse(response) {
         if (response.status === 201) {
-          AlertService.success('Meddelandet har mottagits!', 5000);
+          AlertService.success('Meddelandet har mottagits!', '', 5000);
           resetContactForm();
         } else {
           AlertService.error('Problem att skicka meddelandet!');

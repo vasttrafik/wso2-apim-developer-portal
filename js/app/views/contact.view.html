@@ -84,15 +84,22 @@
 
                     <div class="form-group" ng-class="{'has-error': contactForm.email.$dirty && contactForm.email.$invalid,
                          'has-success': contactForm.email.$valid}">
-                      <label for="email">Epostadress</label>
-                      <input type="email" class="form-control" id="email" name="email" ng-model="vm.form.contact.email" placeholder="Epostadress" required>
+                      <label for="email">Din Epostadress</label>
+                      <input type="email" class="form-control" id="email" name="email" ng-model="vm.form.contact.email" required>
                       <span ng-show="contactForm.email.$dirty && contactForm.email.$error.required" class="help-block">Ange giltig epostadress</span>
+                    </div>
+
+                    <div class="form-group" ng-class="{'has-error': contactForm.subject.$dirty && contactForm.subject.$invalid,
+                         'has-success': contactForm.subject.$valid}">
+                      <label for="subject">Rubrik</label>
+                      <input type="text" class="form-control" id="subject" name="subject" ng-model="vm.form.contact.subject" required>
+                      <span ng-show="contactForm.subject.$dirty && contactForm.subject.$error.required" class="help-block">Ange rubrik</span>
                     </div>
 
                     <div class="form-group" ng-class="{'has-error': contactForm.message.$dirty && contactForm.message.$error.required ,
                          'has-success': contactForm.message.$valid}">
                       <label for="message">Meddelande</label>
-                      <textarea rows="6" cols="100" class="form-control" id="message" name="message" ng-model="vm.form.contact.message" placeholder="Meddelande" required></textarea>
+                      <textarea rows="6" cols="100" class="form-control" id="message" name="message" ng-model="vm.form.contact.message" required></textarea>
                       <span class="help-block" ng-show="contactForm.message.$dirty && contactForm.message.$error.required">Var vänlig ange ett meddelande</span>
                     </div>
 
