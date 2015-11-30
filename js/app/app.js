@@ -8,6 +8,14 @@
   angular
     .module('vtPortal', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ngPasswordStrength', 'ui.validate', 'angular-clipboard', 'ngLocationUpdate', 'swaggerUi', 'duScroll', 'angular-loading-bar'])
     .config(config)
+    .factory('timeoutHttpIntercept', function($rootScope, $q) {
+      return {
+        'request': function(config) {
+          config.timeout = 20000;
+          return config;
+        }
+      };
+    })
     .filter('camelize', function() {
       return function(input, all) {
         return input.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function(match, index) {
@@ -21,9 +29,16 @@
     .run(run)
     .controller('MainCtrl', MainCtrl);
 
-  config.$inject = ['$routeProvider', '$locationProvider'];
+  config.$inject = ['$routeProvider', '$locationProvider', '$httpProvider'];
 
-  function config($routeProvider, $locationProvider) {
+  function config($routeProvider, $locationProvider, $httpProvider) {
+
+    // To enforce timeout property on $http
+    $httpProvider.interceptors.push('timeoutHttpIntercept');
+
+    // To prevent pre-flight options request
+    $httpProvider.defaults.useXDomain = true;
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
 
     $routeProvider
 
@@ -93,7 +108,7 @@
       controllerAs: 'vm'
     })
 
-    .when('/api/:apiName/:apiVersion/:apiProvider', {
+    .when('/api/:apiName/:apiVersion/:apiProvider/:direct?', {
       controller: 'ApiCtrl',
       templateUrl: 'js/app/views/api.view.html',
       controllerAs: 'vm'
@@ -111,12 +126,13 @@
 
   }
 
-  run.$inject = ['$rootScope', '$location', '$http', 'UserService', 'swaggerModules', 'swaggerUiExternalReferences', 'swagger1ToSwagger2Converter'];
+  run.$inject = ['$rootScope', '$location', '$http', 'UserService', 'AuthenticationService', 'swaggerModules', 'swaggerUiExternalReferences', 'swagger1ToSwagger2Converter', 'swaggerUiXmlFormatter'];
 
-  function run($rootScope, $location, $http, UserService, swaggerModules, swaggerUiExternalReferences, swagger1ToSwagger2Converter) {
+  function run($rootScope, $location, $http, UserService, AuthenticationService, swaggerModules, swaggerUiExternalReferences, swagger1ToSwagger2Converter, swaggerUiXmlFormatter) {
 
     swaggerModules.add(swaggerModules.BEFORE_PARSE, swaggerUiExternalReferences);
     swaggerModules.add(swaggerModules.BEFORE_PARSE, swagger1ToSwagger2Converter);
+    swaggerModules.add(swaggerModules.AFTER_EXPLORER_LOAD, swaggerUiXmlFormatter);
 
     $rootScope.user = {};
     $rootScope.user.create = false;
@@ -128,6 +144,7 @@
         if (!$.isEmptyObject(user)) {
           $rootScope.user.loggedIn = true;
           UserService.setUser(user); // Since this also sets the user scope
+          AuthenticationService.setLogoutTimer();
 
           $http.defaults.headers.common.Authorization = 'Bearer ' + user.accessToken.token;
         } else {
@@ -160,6 +177,8 @@
     vm.togglePasswordRecovery = togglePasswordRecovery;
     vm.clearAlertMessage = AlertService.clearAlertMessageAndDigest;
     vm.clearMenuAlertMessage = AlertService.clearMenuAlertMessageAndDigest;
+
+    var logoutPromise;
 
     (function init() {
       APIService.userCall('claimsGet', ['http://wso2.org/claims', 'user'])
