@@ -538,27 +538,26 @@ i.fa.fa-bars {
    z-index: 1;
    left: 0;
    right: 0;
-   top: 84px;
+   top: 88px;
    background: #fff;
-   /*padding-top:-15px;
-   margin-top:-15px;*/
+   padding-top: 48px;
  }
- nav#scroller li a.active {
+ nav#scroller .card li a.active {
   border-bottom: 3px solid #00AAEB;
   color: #00AAEB !important;
   background: transparent;
   font-weight: bold;
  }
- nav#scroller li a:hover {
+ nav#scroller .card li a:hover {
   border-bottom: inset 3px solid #00AAEB;
   color: #00AAEB !important;
   background: transparent;
   font-weight: bold;
  }
- nav#scroller li:hover {
+ nav#scroller .card li:hover {
   border-bottom: none;
  }
- nav#scroller li a:not(.active) {
+ nav#scroller .card li a:not(.active) {
   background-color: white;
   color: rgb(120, 120, 120);
  }
@@ -592,7 +591,7 @@ div.alerter > div .container {
 }
 
 #guides > section {
-  padding-top:100px;
+  padding-top:120px;
 }
 
 .title {
@@ -650,7 +649,7 @@ article.newsItem h3 {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   border-radius:2px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);  
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   height:40px;
   width:40px;
   display:inline-block;
@@ -661,7 +660,7 @@ article.newsItem h3 {
   line-height:1em;
   vertical-align:middle;
 }
-  
+
   .calDate div.month {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -719,7 +718,7 @@ div.fader {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#edf7f6',GradientType=0 );
 }
 
-.toggleItem, 
+.toggleItem,
 .toggleItemBottom {
   float:right;
   cursor:pointer;
@@ -796,7 +795,7 @@ section.tags-blue > span.label {
   color:#feefef;
 }
 
-label-green, 
+label-green,
 section.tags-green > span.label {
   background-color: #4db848;
   color: #fff9ae;
@@ -885,7 +884,7 @@ section.tags-green > span.label {
 }
 
 /*#region Article collapse styles */
-  
+
 .newsItem .selectedItem {
   max-height:1300px;
 }
@@ -968,7 +967,7 @@ article.newsItem > h2 {
 }
 
 .full-justify {
-  text-align: justify; 
-  -ms-text-justify: distribute; 
+  text-align: justify;
+  -ms-text-justify: distribute;
   text-justify:distribute;
 }
