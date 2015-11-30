@@ -1,7 +1,6 @@
 /*
   Handles authentication of the user.
 */
-
 (function() {
   'use strict';
 
@@ -9,9 +8,9 @@
     .module('vtPortal')
     .factory('AuthenticationService', AuthenticationService);
 
-  AuthenticationService.$inject = ['$http', '$location', '$httpParamSerializer', '$q', 'UserService', 'AlertService'];
+  AuthenticationService.$inject = ['$http', '$location', '$httpParamSerializer', '$q', '$timeout', 'UserService', 'AlertService'];
 
-  function AuthenticationService($http, $location, $httpParamSerializer, $q, UserService, AlertService) {
+  function AuthenticationService($http, $location, $httpParamSerializer, $q, $timeout, UserService, AlertService) {
     var service = {};
     var apiClient = new API.Client.DefaultApi($http, null, $httpParamSerializer); // jshint ignore:line
     var userApiClient = new UserAPI.Client.UserApi($http, null, $httpParamSerializer); // jshint ignore:line
@@ -19,6 +18,9 @@
     service.login = login;
     service.logout = logout;
     service.create = create;
+    service.setLogoutTimer = setLogoutTimer;
+
+    var logoutPromise;
 
     return service;
 
@@ -27,9 +29,11 @@
 
       var action = 'login';
 
+      /*
       if (refreshToken != null) { // jshint ignore:line
         action = 'refreshToken';
       }
+      */
 
       var userObject = {};
 
@@ -37,39 +41,44 @@
           userName: username,
           credential: password
         }, 'application/json')
-        .then(function(authenticatedUserObject) {
-          if (authenticatedUserObject.status === 200 || authenticatedUserObject.status === 201) {
-            userObject = authenticatedUserObject.data;
-            $http.defaults.headers.common.Authorization = 'Bearer ' + userObject.accessToken.token;
-          } else {
-            apiErrorResponse(authenticatedUserObject, deferred);
-          }
-        }).then(function() {
-
-          // Retrieve further user information based on userId from login response
-          userApiClient.usersUserIdGet(userObject.userId, 'application/json', 'Bearer ' + userObject.accessToken.token)
-            .then(function(userAccountObject) {
-
-              if (userAccountObject.status === 200) {
-
-                userAccountObject.data.accessToken = userObject.accessToken;
-
-                UserService.setUser(userAccountObject.data)
-                  .then(function(response) {
-                    deferred.resolve();
-
-                  })
-                  .catch(function(response) {
-                    apiErrorResponse(response, deferred);
-                  });
-              }
-            }).catch(function(apiResponse) {
-              apiErrorResponse(apiResponse, deferred);
-            });
-
-        }).catch(function(apiResponse) {
+        .then(securityPostResponse)
+        .then(usersUserIdGet)
+        .catch(function(apiResponse) {
           apiErrorResponse(apiResponse, deferred);
         });
+
+      function securityPostResponse(authenticatedUserObject) {
+        if (authenticatedUserObject.status === 200 || authenticatedUserObject.status === 201) {
+          userObject = authenticatedUserObject.data;
+          $http.defaults.headers.common.Authorization = 'Bearer ' + userObject.accessToken.token;
+        } else {
+          apiErrorResponse(authenticatedUserObject, deferred);
+        }
+      }
+
+      function usersUserIdGet() {
+
+        // Retrieve further user information based on userId from login response
+        userApiClient.usersUserIdGet(userObject.userId, 'application/json', 'Bearer ' + userObject.accessToken.token)
+          .then(usersUserIdGetResponse)
+          .catch(function(apiResponse) {
+            apiErrorResponse(apiResponse, deferred);
+          });
+
+        function usersUserIdGetResponse(userAccountObject) {
+
+          if (userAccountObject.status === 200) {
+
+            userAccountObject.data.accessToken = userObject.accessToken;
+
+            UserService.setUser(userAccountObject.data)
+              .then(function(response) {
+                setLogoutTimer();
+                deferred.resolve();
+              });
+          }
+        }
+      }
 
       return deferred.promise;
     }
@@ -98,20 +107,23 @@
           profileName: 'default',
           tenantDomain: 'carbon.super'
         })
-        .then(function(userAccountObject) {
-          if (userAccountObject.status === 200) {
-            response = {
-              status: userAccountObject.status,
-              user: userAccountObject.data
-            };
-            deferred.resolve(response);
-
-          } else {
-            apiErrorResponse(userAccountObject, deferred);
-          }
-        }).catch(function(apiResponse) {
+        .then(usersPostResponse)
+        .catch(function(apiResponse) {
           apiErrorResponse(apiResponse, deferred);
         });
+
+      function usersPostResponse(userAccountObject) {
+        if (userAccountObject.status === 200) {
+          response = {
+            status: userAccountObject.status,
+            user: userAccountObject.data
+          };
+          deferred.resolve(response);
+
+        } else {
+          apiErrorResponse(userAccountObject, deferred);
+        }
+      }
 
       return deferred.promise;
     }
@@ -121,33 +133,56 @@
 
       var response;
       apiClient.securityPost('logout')
-        .then(function(apiResponse) {
-          if (apiResponse.status === 204 || apiResponse.status === 200) {
-
-            response = {
-              status: apiResponse.status
-            };
-
-            deferred.resolve(response);
-          } else {
-            apiErrorResponse(apiResponse, deferred);
-          }
-
-        }).catch(function(apiResponse) {
+        .then(securityPostResponse)
+        .catch(function(apiResponse) {
           apiErrorResponse(apiResponse, deferred);
         });
 
+      function securityPostResponse(apiResponse) {
+        if (apiResponse.status === 204 || apiResponse.status === 200) {
+
+          response = {
+            status: apiResponse.status
+          };
+
+          deferred.resolve(response);
+        } else {
+          apiErrorResponse(apiResponse, deferred);
+        }
+      }
+
+      $timeout.cancel(logoutPromise); // Cancel the logout promise
       UserService.clearUser();
       $location.path('/');
       return deferred.promise;
     }
 
     function apiErrorResponse(apiResponse, deferred) {
+
       var response = {
         status: apiResponse.status,
-        message: apiResponse.data.message
+        message: 'Ett oväntat problem uppstod'
       };
+
+      if (apiResponse.data != null && apiResponse.data.message != null) {
+        response = {
+          status: apiResponse.status,
+          message: apiResponse.data.message
+        };
+      }
       deferred.reject(response);
+    }
+
+    function setLogoutTimer() {
+      // Automaticly logout the user after 30 minutes
+      $timeout.cancel(logoutPromise); // Cancel the logout promise
+      logoutPromise = $timeout(function() {
+        AlertService.error('Du kommer att bli automatiskt utloggad om 1 minut');
+        $timeout(function() {
+          AlertService.success('Du har blivit automatiskt utloggad. Var vänlig logga in igen');
+          logout();
+        }, 60000);
+      }, 1740000);
     }
 
   }

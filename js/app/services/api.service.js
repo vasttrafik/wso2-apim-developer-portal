@@ -9,9 +9,9 @@
     .module('vtPortal')
     .factory('APIService', APIService);
 
-  APIService.$inject = ['$http', 'AuthenticationService', 'AlertService', '$q', '$httpParamSerializer'];
+  APIService.$inject = ['$http', 'AuthenticationService', 'AlertService', 'UserService', '$q', '$httpParamSerializer'];
 
-  function APIService($http, AuthenticationService, AlertService, $q, $httpParamSerializer) {
+  function APIService($http, AuthenticationService, AlertService, UserService, $q, $httpParamSerializer) {
     var service = {};
     var apiClient = new API.Client.DefaultApi($http, null, $httpParamSerializer); // jshint ignore:line
     var userApiClient = new UserAPI.Client.UserApi($http, null, $httpParamSerializer); // jshint ignore:line
@@ -34,27 +34,17 @@
     /*
       Wrapper function for calls towards user backend API
     */
-    // TODO: Add error handling
     function userCall(funcName, args) {
       var deferred = $q.defer();
 
       userApiClient[funcName].apply(userApiClient, args)
         .then(function(response) {
           deferred.resolve(response);
-
         }, function(response) {
-          if (response.status === 401) {
-
-            AuthenticationService.logout();
-            AlertService.error('Användaren är inte autentiserad');
-            apiErrorResponse(response, deferred);
-
-          } else {
-            apiErrorResponse(response, deferred);
-          }
+          apiErrorResponse(response, deferred);
         })
-        .catch(function(apiResponse) {
-          apiErrorResponse(apiResponse, deferred);
+        .catch(function(response) {
+          apiErrorResponse(response, deferred);
         });
 
       return deferred.promise;
@@ -64,67 +54,46 @@
     /*
       Wrapper function for calls towards backend API
     */
-    function call(funcName, args) {
+    function call(funcName, args, doNotLogout) {
       var deferred = $q.defer();
 
       apiClient[funcName].apply(apiClient, args)
         .then(function(response) {
-
           deferred.resolve(response);
-
         }, function(response) {
-          if (response.status === 401) {
-
-            AuthenticationService.logout();
-            AlertService.error('Användaren är inte autentiserad');
-            apiErrorResponse(response, deferred);
-
-          } else {
-            apiErrorResponse(response, deferred);
-          }
+          apiErrorResponse(response, deferred, doNotLogout);
         })
-        .catch(function(apiResponse) {
-          apiErrorResponse(apiResponse, deferred);
+        .catch(function(response) {
+          apiErrorResponse(response, deferred);
         });
 
       return deferred.promise;
 
-      /*
-      Currently not supporting this refreshToken handling.
-
-      if((Math.abs((new Date() - new Date(localStorage.tokenGrantedTime)) / 1000) > JSON.parse(localStorage.user).token.expiresIn)) {
-
-      console.log("Our token has expired, need to retrieve a new one");
-
-      Login(null, null, function(response) {
-      if(response.success) {
-      authResponse = {success: true};
-      console.log("Retrieved new token");
-      SetUser(response.user);
     }
-    else {
-    authResponse = {success: false, message: response.message};
-    console.log("Failed to retrieved new token");
-  }
 
-  callback(authResponse);
+    function apiErrorResponse(apiResponse, deferred, doNotLogout) {
 
-}, JSON.parse(localStorage.user).token.refreshToken);
-} else {
-console.log("No need to retrieve new token");
-callback({success: true});
-}
-*/
+      var response = {
+        status: apiResponse.status,
+      };
 
+      if (apiResponse.status === 401) {
+        if (doNotLogout) {
+          UserService.clearUser();
+          AlertService.error('Du måste logga in för att få tillgång till denna resurs');
+        } else {
+          AuthenticationService.logout();
+          AlertService.error('Användaren är inte autentiserad');
+        }
+      } else if (apiResponse.status === -1) {
+        response.message = 'Frågan som ställdes fick inget svar inom utsatt tid';
+        AlertService.error('Frågan som ställdes fick inget svar inom utsatt tid', 'Timeout:');
+      } else {
+        response.message = apiResponse.data.message;
+      }
+
+      deferred.reject(response);
     }
-  }
-
-  function apiErrorResponse(apiResponse, deferred) {
-    var response = {
-      status: apiResponse.status,
-      message: apiResponse.data.message
-    };
-    deferred.reject(response);
   }
 
 })();
