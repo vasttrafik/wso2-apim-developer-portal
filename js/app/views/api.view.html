@@ -1,8 +1,14 @@
 <div class="jumbotron title">
   <div class="container" style="padding-left: 0">
-    <ol class="breadcrumb">
+    <ol class="breadcrumb" ng-if="!vm.direct">
       <li><a href="#/" target="_self">Hem</a></li>
-      <li><a href="#/apis" target="_self">Våra API</a></li>
+      <li><a href="#/apis" target="_self">Våra API:er</a></li>
+      <li class="active">{{vm.apiName}} {{vm.apiVersion}}</li>
+    </ol>
+    <ol class="breadcrumb" ng-if="vm.direct">
+      <li><a href="#/" target="_self">Hem</a></li>
+      <li><a href="#/overview" target="_self">Mina Sidor</a></li>
+      <li><a href="#/subscriptions" target="_self">Prenumerationer</a></li>
       <li class="active">{{vm.apiName}} {{vm.apiVersion}}</li>
     </ol>
     <h1>{{vm.apiName}} {{vm.apiVersion}}</h1>
@@ -143,7 +149,7 @@
           </div>-->
 
           <div class="row" style="padding:20px;">
-            <div swagger-ui url="vm.swaggerUrl" api-explorer="false" parser="json" validator-url="false"></div>
+            <div swagger-ui url="vm.swaggerUrl" api-explorer="true" parser="json" validator-url="false"></div>
           </div>
         </div>
       </div>

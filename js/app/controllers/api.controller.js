@@ -1,4 +1,5 @@
 /*global defaultBaseUrl*/
+// jscs:disable requireCamelCaseOrUpperCaseIdentifiers
 
 (function() {
   'use strict';
@@ -20,6 +21,13 @@
       vm.defaultBaseUrl = defaultBaseUrl;
       vm.documents = {};
       vm.applications = {};
+
+      if ($routeParams.direct) {
+        // Check if we're coming to this page directly or from api list.
+        vm.direct = true;
+        // Clean up url
+        $location.update_path('/api/' + $routeParams.apiName + '/' + $routeParams.apiVersion + '/' + $routeParams.apiProvider); // jshint ignore:line
+      }
 
       // To make loading of this data faster
       vm.apiName = $routeParams.apiName;
