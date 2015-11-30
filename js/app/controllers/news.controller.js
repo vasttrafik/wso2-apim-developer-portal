@@ -29,13 +29,13 @@
     }
     
     function initializeItems() {
-
+      
       vm.newsItems = [];
 
       vm.newsItems.push({
         id: "1", publishedDate: "2015-11-01",
         publishedBy: "Lars Andersson",
-        title: "Ny utvecklarportal",
+        title: "Nu lanserar vi vår nya utvecklarportal",
         intro: "1: En kort beskrivning som är det enda som visas...",
         content: "Ne adhuc aliquid propriae ius, ei ludus consul offendit usu, iusto dolor " +
           "no has. Id ullum lobortis sit, discere mandamus necessitatibus mea ea, alia errem " +
@@ -49,18 +49,65 @@
           "aliquando liberavisse definitiones vis id. Aliquip quaestio ea has.",
         tags: ["Api","Nytt"]
       });
-
       vm.newsItems.push({
           id: "2",
           publishedDate: "2015-11-27",
           publishedBy: "Mikael",
-          title: "Ny utvecklarportal 2",
-          intro: "2: En kort beskrivning som är det enda som visas...",
+          title: "Så kommer du åt ditt gamla konto!",
+          intro: "För dig som har ett konto som registrerades på den gamla versionen av utvecklarportalen, såhär gör du...",
           content: "<html>…</html>",
           tags: [
              "Api",
              "Nytt"
           ]
+      });
+      vm.newsItems.push({
+        id: "3",
+        publishedDate: "2015-11-27",
+        publishedBy: "Mikael",
+        title: "Smart pendelparkering (SPP) – Nytt API!",
+        intro: "SPP har fått ett uppdaterat API!",
+        content: "Lorem nytt api Ipsum dolar Sit och lite till...",
+        tags: [
+           "Api",
+           "Nytt"
+        ]
+      });
+      vm.newsItems.push({
+        id: "4",
+        publishedDate: "2015-11-27",
+        publishedBy: "Mikael",
+        title: "Förändringar i våra API:er",
+        intro: "Flera förändringar i våra api:er...som exempelvis...",
+        content: "<html>…</html>",
+        tags: [
+           "Api",
+           "Nytt"
+        ]
+      });
+      vm.newsItems.push({
+        id: "5",
+        publishedDate: "2015-11-27",
+        publishedBy: "Mikael",
+        title: "Livemap - ny funktion i Reseplaneraren!",
+        intro: "En levande karta...Live Map!",
+        content: "<html>…</html>",
+        tags: [
+           "Api",
+           "Nytt"
+        ]
+      });
+      vm.newsItems.push({
+        id: "6",
+        publishedDate: "2015-11-27",
+        publishedBy: "Mikael",
+        title: "Så byggde vi den nya portalen",
+        intro: "2: En kort beskrivning som är det enda som visas...",
+        content: "Med hammare och spik och skruvdragare, sen är allt lätt...",
+        tags: [
+           "Api",
+           "Nytt"
+        ]
       });
     }
   }
