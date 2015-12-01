@@ -682,6 +682,10 @@ article.newsItem h3 {
         background-color: #4DB848;
       }
 
+      .calDate div.month.blue {
+        background-color:#00AAEB;
+      }
+
 
 
 .articleContent {
