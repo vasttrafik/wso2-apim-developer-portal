@@ -1,0 +1,29 @@
+﻿<p>
+  När vi migrerade de gamla kontona från <i>labs.vasttrafik.se</i> till den nya portalen fick vi
+  inte med oss lösenorden då dessa låg krypterade i databasen utan möjlighet till dekryptering.
+  För att komma åt sitt gamla konto har vi därför byggt in 2 olika möjligheter, beroende på
+  om den mail-adress man angav när man skapade sitt konto på den gamla siten var en giltig adress eller inte:
+</p>
+<ul>
+  <li>
+    <strong>Giltig mailadress.</strong>
+    De som har en giltig mail-adress har fått ett mail med en länk som kan användas för att
+    återställa lösenordet för kontot. Om man inte har fått detta mail, eller har raderat det
+    av misstag är det bara att klicka på länken 'Glömt ditt lösenord?' på inloggningsrutan.
+  </li>
+  <li>
+    <strong>Ogiltig mailadress.</strong>
+    För att kunna återställa lösenordet på sitt konto har vi använt befintliga API-nycklar (authKey) och
+    skapat en hemlig fråga baserat på dessa. För att kunna återställa sitt lösenord behöver man då veta
+    sitt användarnamn och API-nyckel, och man väljer att återställa med hemlig fråga som alternativ.
+    Se figuren nedan.
+  </li>
+</ul>
+
+<p>
+  <img src="/img/png/restore-pwd.png" title="Återställ lösenord" class="img-responsive" />
+</p>
+<p>
+  Om du har problem att komma åt ditt gamla konto, hör av
+  dig till oss på <a href="mailto:api@vasttrafik.se">api(at)vasttrafik.se</a> så hjälper vi dig.
+</p>
