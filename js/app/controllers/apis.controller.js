@@ -1,5 +1,4 @@
 /*global defaultBaseUrl*/
-
 (function() {
   'use strict';
 

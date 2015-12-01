@@ -1,7 +1,6 @@
 /*
   Handles calls towards backend api.
 */
-
 (function() {
   'use strict';
 
