@@ -1,10 +1,45 @@
 <div class="jumbotron title" style="margin-bottom: -30px;">
   <div class="container" style="padding-left: 0">
-    <h1>Återställ lösenord</h1>
+    <h1 ng-if="!vm.user.username">Återställ lösenord</h1>
+    <h1 ng-if="vm.user.username">Återfå användarnamn</h1>
   </div>
 </div>
 
-<div class="container" ng-show="!vm.user.notification && !vm.user.question">
+<div class="container" ng-show="vm.user.username">
+  <div class="row">
+    <h2>Fyll i din emailadress och lös captchan.</h2>
+    <div class="container">
+      <div class="row well">
+        <form name="usernameRecoveryCaptchaForm" ng-submit="vm.usernameRecoveryCaptcha()" role="form">
+          <div class="form-group" ng-class="{ 'has-error': usernameRecoveryCaptchaForm.email.$dirty && usernameRecoveryCaptchaForm.email.$invalid,
+  'has-success' : usernameRecoveryCaptchaForm.email.$valid}">
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" class="form-control" ng-model="vm.form.username.email" required />
+            <span ng-show="usernameRecoveryCaptchaForm.email.$dirty && usernameRecoveryCaptchaForm.email.$error.required" class="help-block">Email är obligatoriskt</span>
+          </div>
+
+          <div class="form-group">
+            <img src="{{vm.captcha}}">
+            <i class="fa fa-refresh" style="margin-left: 20px; cursor: pointer" ng-click="vm.generateCaptcha()"></i>
+          </div>
+
+          <div class="form-group" ng-class="{ 'has-error': usernameRecoveryCaptchaForm.captcha.$dirty && usernameRecoveryCaptchaForm.captcha.$invalid,
+  'has-success' : usernameRecoveryCaptchaForm.captcha.$valid}">
+            <label for="usernameCaptcha">Captcha</label>
+            <input type="text" name="usernameCaptcha" id="usernameCaptcha" class="form-control" ng-model="vm.form.captcha.captcha" required />
+            <span ng-show="usernameRecoveryCaptchaForm.captcha.$dirty && usernameRecoveryCaptchaForm.captcha.$error.required" class="help-block">Captcha är obligatoriskt</span>
+          </div>
+
+          <div class="form-actions noclick">
+            <button type="submit" ng-disabled="usernameRecoveryCaptchaForm.$invalid || vm.dataLoadingUsername" class="btn btn-primary">Verifiera</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container" ng-show="!vm.user.notification && !vm.user.question && !vm.user.username">
   <div class="row">
     <h2>Steg 1 av 3. Fyll i användarnamn och lös captchan.</h2>
     <div class="container">
@@ -38,7 +73,7 @@
 
           <div class="form-group" ng-class="{ 'has-error': passwordRecoveryCaptchaForm.captcha.$dirty && passwordRecoveryCaptchaForm.captcha.$invalid,
   'has-success' : passwordRecoveryCaptchaForm.captcha.$valid}">
-            <label for="name">Captcha</label>
+            <label for="captcha">Captcha</label>
             <input type="text" name="captcha" id="captcha" class="form-control" ng-model="vm.form.captcha.captcha" required />
             <span ng-show="passwordRecoveryCaptchaForm.captcha.$dirty && passwordRecoveryCaptchaForm.captcha.$error.required" class="help-block">Captcha är obligatoriskt</span>
           </div>

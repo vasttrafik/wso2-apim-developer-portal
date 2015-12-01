@@ -175,6 +175,7 @@
     vm.create = create;
     vm.toggleCreate = toggleCreate;
     vm.togglePasswordRecovery = togglePasswordRecovery;
+    vm.toggleUsernameRecovery = toggleUsernameRecovery;
     vm.clearAlertMessage = AlertService.clearAlertMessageAndDigest;
     vm.clearMenuAlertMessage = AlertService.clearMenuAlertMessageAndDigest;
 
@@ -248,7 +249,7 @@
         vm.dataLoading = false;
         $('.menu-user').click();
       }).catch(function(response) {
-        AlertService.menuError(response.message);
+        AlertService.menuError(response.message, 'Problem att skapa kontot: ');
         vm.dataLoading = false;
       });
     }
@@ -266,7 +267,14 @@
     }
 
     function togglePasswordRecovery() {
-      $location.path('/recover').search('username', vm.username);
+      $location.path('/recover').search('username', vm.username || '');
+      $('.menu-user').click();
+    }
+
+    function toggleUsernameRecovery() {
+      $location.path('/recover');
+      $location.search('username', null);
+      $location.search('code', null);
       $('.menu-user').click();
     }
   }

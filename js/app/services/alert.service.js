@@ -1,7 +1,6 @@
 /*
   Handles alerts shown to the user.
 */
-
 (function() {
   'use strict';
 

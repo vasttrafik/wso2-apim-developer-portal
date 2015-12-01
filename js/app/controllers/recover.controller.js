@@ -12,6 +12,7 @@
 
     vm.generateCaptcha = generateCaptcha;
     vm.passwordRecoveryCaptcha = passwordRecoveryCaptcha;
+    vm.usernameRecoveryCaptcha = usernameRecoveryCaptcha;
     vm.passwordRecoveryNotification = passwordRecoveryNotification;
     vm.passwordRecoverySecretQuestion = passwordRecoverySecretQuestion;
     vm.passwordRecovery = passwordRecovery;
@@ -30,9 +31,44 @@
 
       if ((vm.form.notification.code = $location.search().code) != null) {
         vm.user.notification = true;
+      } else if ($location.search().username === undefined) {
+        vm.user.username = true;
       }
 
     })();
+
+    function usernameRecoveryCaptcha() {
+      vm.dataLoadingUsername = true;
+
+      APIService.userCall('captchasPut', ['application/json', 'application/json', 'verifyAccount', {
+          captcha: {
+            imageId: vm.form.captcha.imageId,
+            secretKey: vm.form.captcha.secretKey,
+            userAnswer: vm.form.captcha.captcha
+          },
+          claims: [{
+            claimUri: 'http://wso2.org/claims/emailaddress',
+            claimValue: vm.form.username.email
+          }],
+          tenantDomain: 'carbon.super'
+
+        }])
+        .then(captchasPutUsernameResponse);
+
+      function captchasPutUsernameResponse(response) {
+        if (response.status === 200 && response.data.verified) {
+          AlertService.success('Du kommer få ett email med ditt användarnamn', 'Lyckad verifiering!', 10000);
+          $location.path('/');
+        } else {
+          AlertService.error('Problem vid verifieringen av captcha, försök igen');
+          generateCaptcha();
+          vm.form.captcha.captcha = '';
+          $scope.usernameRecoveryCaptchaForm.$setPristine();
+        }
+
+        vm.dataLoadingUsername = false;
+      }
+    }
 
     function passwordRecoveryCaptcha() {
       vm.dataLoadingCaptcha = true;
