@@ -50,15 +50,6 @@
 'has-success' : profileForm.username.$valid}"></span>
             </div>
 
-            <div class="form-group" ng-class="{ 'has-error': profileForm.username.$dirty && profileForm.username.$invalid,
-'has-success' : profileForm.username.$valid}">
-              <label for="username">Användarnamn</label>
-
-              <input type="text" name="username" id="username" class="form-control" ng-model="vm.form.profile.userName" ng-minlength="3" required />
-              <span ng-show="profileForm.username.$dirty && profileForm.username.$error.required" class="help-block">Användarnamn är obligatoriskt</span>
-              <span ng-show="profileForm.username.$error.minlength" class="help-block">Användarnamn måste vara minst 3 tecken långt</span>
-            </div>
-
             <div class="form-group" ng-class="{ 'has-error': profileForm.email.$dirty && profileForm.email.$invalid,
 'has-success' : profileForm.email.$valid}">
               <label for="email">E-post</label>

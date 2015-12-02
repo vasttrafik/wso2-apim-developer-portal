@@ -33,7 +33,6 @@
       UserService.getUser()
         .then(function(response) {
 
-          response.userName = vm.form.profile.userName;
           response.claims = [{
             claimUri: 'http://wso2.org/claims/emailaddress',
             claimValue: vm.form.profile.email
@@ -47,9 +46,17 @@
           response.tenantDomain = 'carbon.super';
           newUserObject = angular.copy(response); // Keep a copy of the updated values
           delete response.accessToken;
+          delete response.userName;
 
           APIService.userCall('usersUserIdPut', [response.id, 'updateProfile', 'application/json', 'Bearer ' + newUserObject.accessToken.token, 'application/json', response])
-            .then(usersUserIdPutResponse);
+            .then(usersUserIdPutResponse)
+            .catch(function(response) {
+              if (response.status === 412) {
+                AlertService.error(response.message, 'Problem att uppdatera användaruppgifter');
+              } else {
+                AlertService.error('Problem att uppdatera användaruppgifter');
+              }
+            });
         });
 
       function usersUserIdPutResponse(response) {
@@ -150,7 +157,9 @@
             vm.form.question = {};
 
             /* The challenge question isn't correctly formatted */
-            if (response.object.claimValue.indexOf('!') > -1) {
+            if (response.object.claimValue == null) {
+              vm.form.question.question = '';
+            } else if (response.object.claimValue.indexOf('!') > -1) {
               vm.form.question.question = response.object.claimValue.substring(0, response.object.claimValue.indexOf('!'));
             } else {
               vm.form.question.question = response.object.claimValue;
