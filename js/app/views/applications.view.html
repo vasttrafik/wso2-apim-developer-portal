@@ -141,10 +141,10 @@
             <label for="validityTime">Giltighetstid för access token</label>
             <div class="input-group">
 
-              <input type="number" name="validityTimeGenerateToken" id="validityTimeGenerateToken" class="form-control" ng-model="vm.form.application.details.generateToken.validityTime" required min="1" />
+              <input type="number" name="validityTimeGenerateToken" id="validityTimeGenerateToken" class="form-control" ng-model="vm.form.application.details.generateToken.validityTime" required min="1" max="3600" />
               <span class="input-group-addon">Sekunder</span>
             </div>
-            <span ng-show="detailsApplicationGenerateTokenForm.validityTimeGenerateToken.$dirty && detailsApplicationGenerateTokenForm.validityTimeGenerateToken.$invalid" class="help-block">Måste vara ett nummer större än 0</span>
+            <span ng-show="detailsApplicationGenerateTokenForm.validityTimeGenerateToken.$dirty && detailsApplicationGenerateTokenForm.validityTimeGenerateToken.$invalid" class="help-block">Måste vara ett nummer större än 0 och som högst 3600 sekunder</span>
             <span ng-show="detailsApplicationGenerateTokenForm.validityTimeGenerateToken.$dirty && detailsApplicationGenerateTokenForm.validityTimeGenerateToken.$error.required" class="help-block">Giltighetstid är obligatoriskt</span>
           </div>
 
@@ -200,10 +200,10 @@
             <label for="description">Giltighetstid för access token</label>
             <div class="input-group">
 
-              <input type="number" name="validityTime" id="validityTime" class="form-control" ng-model="vm.form.application.details.validityTime" required min="1" />
+              <input type="number" name="validityTime" id="validityTime" class="form-control" ng-model="vm.form.application.details.validityTime" required min="1" max="3600" />
               <span class="input-group-addon">Sekunder</span>
             </div>
-            <span ng-show="detailsApplicationForm.validityTime.$dirty && detailsApplicationForm.validityTime.$invalid" class="help-block">Måste vara ett nummer större än 0</span>
+            <span ng-show="detailsApplicationForm.validityTime.$dirty && detailsApplicationForm.validityTime.$invalid" class="help-block">Måste vara ett nummer större än 0 och som högst 3600 sekunder</span>
             <span ng-show="detailsApplicationForm.validityTime.$dirty && detailsApplicationForm.validityTime.$error.required" class="help-block">Giltighetstid är obligatoriskt</span>
           </div>
 
