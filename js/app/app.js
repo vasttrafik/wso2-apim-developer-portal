@@ -114,7 +114,7 @@
       controllerAs: 'vm'
     })
 
-    .when('/news', {
+    .when('/news/:month?', {
       controller: 'NewsCtrl',
       templateUrl: 'js/app/views/news.view.html',
       controllerAs: 'vm'
@@ -126,13 +126,14 @@
 
   }
 
-  run.$inject = ['$rootScope', '$location', '$http', 'UserService', 'AuthenticationService', 'swaggerModules', 'swaggerUiExternalReferences', 'swagger1ToSwagger2Converter', 'swaggerUiXmlFormatter'];
+  run.$inject = ['$rootScope', '$location', '$http', 'UserService', 'AuthenticationService', 'swaggerModules', 'swaggerUiExternalReferences', 'swagger1ToSwagger2Converter', 'swaggerUiXmlFormatter', 'swaggerAuthentication'];
 
-  function run($rootScope, $location, $http, UserService, AuthenticationService, swaggerModules, swaggerUiExternalReferences, swagger1ToSwagger2Converter, swaggerUiXmlFormatter) {
+  function run($rootScope, $location, $http, UserService, AuthenticationService, swaggerModules, swaggerUiExternalReferences, swagger1ToSwagger2Converter, swaggerUiXmlFormatter, swaggerAuthentication) {
 
     swaggerModules.add(swaggerModules.BEFORE_PARSE, swaggerUiExternalReferences);
     swaggerModules.add(swaggerModules.BEFORE_PARSE, swagger1ToSwagger2Converter);
     swaggerModules.add(swaggerModules.AFTER_EXPLORER_LOAD, swaggerUiXmlFormatter);
+    swaggerModules.add(swaggerModules.BEFORE_EXPLORER_LOAD, swaggerAuthentication);
 
     $rootScope.user = {};
     $rootScope.user.create = false;

@@ -8,34 +8,32 @@
   <div class="container">
     <div class="row col-md-9">
       <section id="newsItemsList">
-        <article class="newsItem" ng-repeat="newsItem in vm.newsItems | orderBy: 'publishedDate'">
+        <div class="row" ng-if="vm.newsItems.length === 0">
+          <h3>Det finns inte några nyheter med valda sökkriterier. Välj en månad i listan till höger.</h3>
+        </div>
+        <article id="{{'newsArticle-' + $index}}" class="newsItem" ng-repeat="newsItem in vm.newsItems | orderBy: 'publishedDate'">
           <div class="calDate">
             <div class="month red">{{ newsItem.publishedDate | date:'MMM' }}</div>{{  newsItem.publishedDate | date:'d' }}
           </div>
           <span class="toggleItem">
-            <span class="showMore"><i class="glyphicon glyphicon-chevron-down" ng-click="vm.toggleIngress($index)"></i></span>
-            <span class="showLess"><i class="glyphicon glyphicon-chevron-up" ng-click="vm.toggleIngress($index)"></i></span>
+            <span class="showMore" ng-show="!vm.news[$index].showIngress"><i class="glyphicon glyphicon-chevron-down" ng-click="vm.toggleExpand($index)"></i></span>
+            <span class="showLess" ng-show="vm.news[$index].showIngress"><i class="glyphicon glyphicon-chevron-up" ng-click="vm.toggleExpand($index)"></i></span>
           </span>
           <h2 class="ellipsis">{{newsItem.title}}</h2>
-
           <div class="articleContent">
-            <div id="{{$index + 'intro'}}" class="hidden animate-hide"  style="" ng-show="vm.showIngress">
-              {{newsItem.intro}}
+            <div id="{{'newsIntro-' + $index}}" class="news-item-intro animate-hide" ng-hide="vm.newsItems[$index].expand" ng-include="vm.newsItems[$index].contentUrl">
             </div>
-
-            <div id="{{$index + 'content'}}" class="news-item-content animate-hide" ng-hide="vm.showIngress">
-              {{newsItem.content}}
+            <div id="{{'newsContent-' + $index}}" class="news-item-content animate-hide" ng-hide="!vm.newsItems[$index].expand" ng-include="vm.newsItems[$index].contentUrl">
             </div>
           </div>
-
           <footer>
             <div class="fader"></div>
             Taggad som:
             <span class="label label-default" ng-repeat="tag in newsItem.tags">{{tag}}</span>&nbsp;
             <span>Publicerad av: {{newsItem.publishedBy}}, {{newsItem.publishedDate}}</span>
             <span class="toggleItemBottom">
-              <span class="showMore" ng-click="vm.toggleIngress($index)">Visa mer <i class="glyphicon glyphicon-chevron-down"></i></span>
-              <span class="showLess" ng-click="vm.toggleIngress($index)">Visa mindre <i class="glyphicon glyphicon-chevron-up"></i></span>
+              <span class="showMore" ng-show="!vm.newsItems[$index].expand" ng-click="vm.toggleExpand($index)">Visa mer <i class="glyphicon glyphicon-chevron-down"></i></span>
+              <span class="showLess" ng-show="vm.newsItems[$index].expand" ng-click="vm.toggleExpand($index)">Visa mindre <i class="glyphicon glyphicon-chevron-up"></i></span>
             </span>
 
           </footer>
@@ -73,33 +71,14 @@
         </section>-->
 
         <section>
-          <h3>Senaste nyheter</h3>
-          <ul>
-            <li><a href="#/news/1">Nyhet 1</a></li>
-            <li><a href="#/news/1">Nyhet 2</a></li>
-            <li><a href="#/news/1">Nyhet 3</a></li>
-            <li><a href="#/news/1">Nyhet 4</a></li>
-            <li><a href="#/news/1">Nyhet 5</a></li>
-          </ul>
+          <h3>Månader</h3>
+            <span ng-repeat="entry in vm.months"><a href="#/news/{{entry + 1}}">{{vm.toMonth(entry)}}</a></span>
           <!--<a class="more" href="#/news">Fler</a>-->
         </section>
 
-        <section class="tags-dark-blue">
+        <section class="tags-dark-blue" ng-if="vm.tags.length > 0">
           <h3>Taggar</h3>
-          <span class="label">Api</span>
-          <span class="label">Nyheter</span>
-          <span class="label">SPP</span>
-          <span class="label">NY VERSION</span>
-          <span class="label">API</span>
-          <span class="label">NEWS</span>
-          <span class="label">Prenumerera</span>
-          <span class="label">RP</span>
-          <span class="label">New Code</span>
-          <span class="label">Primary</span>
-          <span class="label">Success story</span>
-          <span class="label">Reseplaneraren</span>
-          <span class="label">SPP</span>
-          <span class="label">VFB</span>
+          <span class="label" ng-repeat="entry in vm.tags" ng-click="vm.setTag(entry)" style="cursor: pointer">{{entry}}</span>
         </section>
 
       </aside>

@@ -10,6 +10,13 @@
   function HomeCtrl(AlertService) {
     var vm = this;
 
+    vm.newsItems = [];
+
+    (function init() {
+      vm.newsItems = newsItems;
+
+    })();
+
   }
 
 })();

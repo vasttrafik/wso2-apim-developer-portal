@@ -1,101 +1,104 @@
-﻿/// <reference path="../views/news/portal-how.view.html" />
-/// <reference path="../views/news/portal-how.view.html" />
-/// <reference path="../views/news/portal-how.view.html" />
+/*global newsItems*/
+/*global helper*/
 (function() {
   'use strict';
 
   angular
     .module('vtPortal')
-    .controller('NewsCtrl', NewsCtrl);
+    .controller('NewsCtrl', NewsCtrl)
+    .constant('newsItems', newsItems)
+    .constant('helper', helper);
 
-  NewsCtrl.$inject = ['$routeParams', '$location', '$scope'];
+  NewsCtrl.$inject = ['$routeParams', '$location', '$scope', '$timeout', '$document'];
 
-  function NewsCtrl($routeParams, $location, $scope) {
+  function NewsCtrl($routeParams, $location, $scope, $timeout, $document) {
     var vm = this;
 
     vm.newsItems = [];
+    vm.tags = [];
+    vm.months = [];
 
-    vm.toggleIngress = toggleIngress;
+    vm.toggleExpand = toggleExpand;
+    vm.setTag = setTag;
+    vm.toMonth = toMonth;
 
     (function init() {
-      vm.showIngress = true;
+      vm.newsItems = newsItems.filter(function(a) {
 
-      initializeItems();
+        vm.months.push(new Date(a.publishedDate).getMonth());
+
+        if ($routeParams.month && $location.search().tag) {
+          return (parseInt(new Date(a.publishedDate).getMonth()) + 1 === parseInt($routeParams.month)) && (a.tags.indexOf($location.search().tag) > -1);
+        } else if ($routeParams.month) {
+          return (parseInt(new Date(a.publishedDate).getMonth()) + 1 === parseInt($routeParams.month));
+        } else if ($location.search().tag) {
+          return (new Date(a.publishedDate).getMonth() === new Date().getMonth()) && (a.tags.indexOf($location.search().tag) > -1);
+        } else {
+          return new Date(a.publishedDate).getMonth() === new Date().getMonth();
+        }
+      });
+
+      angular.forEach(vm.newsItems, function(keys, values) {
+        vm.tags.push.apply(vm.tags, keys.tags);
+        if (keys.id === $location.search().id) {
+          keys.expand = true;
+        } else {
+          keys.expand = false;
+        }
+      });
+
+      vm.tags = helper.getUniqueArray(vm.tags);
+      vm.months = helper.getUniqueArray(vm.months);
+
+      $timeout(function() {
+        var idSection = angular.element(document.getElementById('newsArticle-' + $location.search().id));
+        $document.scrollToElement(idSection, 100, 100);
+      }, 1000);
 
     })();
 
-    function toggleIngress(index) {
-      vm.showIgress = !vm.showIngress;
+    function toggleExpand(index) {
+      if (vm.newsItems[index].expand != null) {
+        vm.newsItems[index].expand = !vm.newsItems[index].expand;
+      } else {
+        vm.newsItems[index].expand = true;
+      }
     }
 
-    function initializeItems() {
-
-      vm.newsItems = [];
-
-      vm.newsItems.push({
-        id: '1',
-        publishedDate: '2015-12-04',
-        publishedBy: 'Lars Andersson',
-        title: 'Nu lanserar vi vår nya utvecklarportal',
-        intro: '',
-        contentUrl: '/js/app/views/news/newportal.view.html',
-        content:'',
-        tags: ['Api', 'Nytt']
-      });
-      vm.newsItems.push({
-        id: '2',
-        publishedDate: '2015-12-04',
-        publishedBy: 'Lars Andersson',
-        title: 'Så kommer du åt ditt gamla konto!',
-        intro: '',
-        contentUrl: '/js/app/views/news/old-account.view.html',
-        content: '',
-        tags: ['Api', 'Nytt'
-        ]
-      });
-      vm.newsItems.push({
-        id: '3',
-        publishedDate: '2015-12-04',
-        publishedBy: 'Lars Andersson',
-        title: 'Smart pendelparkering (SPP) – Nytt API!',
-        intro: '',
-        contentUrl: '/js/app/views/news/spp-new-api.view.html',
-        content: '',
-        tags: ['Api', 'Nytt']
-      });
-      vm.newsItems.push({
-        id: '4',
-        publishedDate: '2015-12-04',
-        publishedBy: 'Lars Andersson',
-        title: 'Förändringar i våra API:er',
-        intro: '',
-        contentUrl: '/js/app/views/news/api-changes.view.html',
-        content: '',
-        tags: ['Api', 'Nytt']
-      });
-      vm.newsItems.push({
-        id: '5',
-        publishedDate: '2015-12-04',
-        publishedBy: 'Lars Andersson',
-        title: 'Livemap - ny funktion i Reseplaneraren!',
-        intro: '',
-        contentUrl: '/js/app/views/news/rp-livemap.view.html',
-        content: '',
-        tags: ['Api', 'Nytt']
-      });
-      vm.newsItems.push({
-        id: '6',
-        publishedDate: '2015-12-04',
-        publishedBy: 'Lars Andersson',
-        title: 'Så byggde vi den nya portalen',
-        intro: '',
-        contentUrl: '/js/app/views/news/portal-how.view.html',
-        content: '',
-        tags: ['Api', 'Nytt']
-      });
-
-      
+    function setTag(tag) {
+      $location.search('id', null);
+      $location.search('tag', tag);
     }
+
+    function toMonth(month) {
+      switch (month) {
+        case 0:
+          return 'Januari';
+        case 1:
+          return 'Februari';
+        case 2:
+          return 'Mars';
+        case 3:
+          return 'April';
+        case 4:
+          return 'Maj';
+        case 5:
+          return 'Juni';
+        case 6:
+          return 'Juli';
+        case 7:
+          return 'Augusti';
+        case 8:
+          return 'September';
+        case 9:
+          return 'Oktober';
+        case 10:
+          return 'Novermber';
+        case 11:
+          return 'December';
+      }
+    }
+
   }
 
 })();

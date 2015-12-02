@@ -85,64 +85,15 @@
         <div class="feed">
           <h3><i class="fa fa-newspaper-o"></i> Nyheter</h3>
           <ul class="list-unstyled truncate" style="line-height:2em">
-            <li>
-              <a href="#/news">
+            <li ng-repeat="entry in vm.newsItems">
+              <a href="#/news/{{entry.publishedDate | date:'M'}}?id={{entry.id}}">
                 <div class="calDate" style="margin-top:0;margin-bottom:2px;">
-                  <div class="month green">Dec</div>04
+                  <div class="month green">{{entry.publishedDate | date:'MMM'}}</div>{{entry.publishedDate | date:'d'}}
                 </div>
-                Nu lanserar vi vår nya utvecklarportal!
+                {{entry.title}}
               </a>
             </li>
 
-            <li>
-              <a href="#/news">
-                <div class="calDate" style="margin-top:0;margin-bottom:2px;">
-                  <div class="month red">Dec</div>04
-                </div>
-                Så kommer du åt ditt gamla konto
-              </a>
-            </li>
-
-            <li>
-              <a href="#/news">
-                <div class="calDate" style="margin-top:0;margin-bottom:2px;">
-                  <div class="month blue">Dec</div>04
-                </div>
-                Smart pendelparkering (SPP) – Nytt API!
-              </a>
-            </li>
-
-            <li>
-              <a href="#/news">
-                <div class="calDate" style="margin-top:0;margin-bottom:2px;">
-                  <div class="month red">Dec</div>04
-                </div>
-                Förändringar i våra API:er
-              </a>
-            </li>	
-
-            <li>
-              <a href="#/news">
-                <div class="calDate" style="margin-top:0;margin-bottom:2px;">
-                  <div class="month green">Dec</div>04
-                </div>
-                Livemap - ny funktion i Reseplaneraren!
-              </a>
-            </li>	
-
-            <li>
-              <a href="#/news">
-                <div class="calDate" style="margin-top:0;margin-bottom:2px;">
-                  <div class="month blue">Dec</div>04
-                </div>
-                Så byggde vi den nya portalen
-              </a>
-            </li>	
-          </ul>
-          <!--<p>
-            <a class="" href="#" title="...">Fler nyheter</a>
-            <br />
-          </p>-->
         </div>
       </div>
       <div class="col-sm-4">
