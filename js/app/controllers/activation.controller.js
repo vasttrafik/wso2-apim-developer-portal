@@ -33,20 +33,38 @@
           },
           tenantDomain: 'carbon.super'
         }, '*/*', 'application/json'])
-        .then(usersPutResponse);
+        .then(usersPutResponse)
+        .catch(activateAccountError);
 
       function usersPutResponse(response) {
         if (response.data.verified) {
-          AlertService.success('Nu kan du logga in', 'Ditt konto är aktiverat!', 10000);
-          $location.path('/');
-          $location.search('username', null);
-          $location.search('code', null);
+          activationSuccess();
         } else {
-          AlertService.error('Försök igen', 'Problem vid verifiering av konto');
-          generateCaptcha();
-          vm.form.activation.captcha = '';
-          $scope.activateAccountForm.$setPristine();
+          activationError();
         }
+      }
+
+      function activateAccountError(response) {
+        // To combat unique constraint violation
+        if ((response.status === 500) && (response.message.indexOf('Violation of UNIQUE KEY constraint') > -1)) {
+          activationSuccess();
+        } else {
+          activationError();
+        }
+      }
+
+      function activationSuccess() {
+        AlertService.success('Nu kan du logga in', 'Ditt konto är aktiverat!', 10000);
+        $location.path('/');
+        $location.search('username', null);
+        $location.search('code', null);
+      }
+
+      function activationError() {
+        AlertService.error('Försök igen', 'Problem vid verifiering av konto');
+        generateCaptcha();
+        vm.form.activation.captcha = '';
+        $scope.activateAccountForm.$setPristine();
       }
     }
 
