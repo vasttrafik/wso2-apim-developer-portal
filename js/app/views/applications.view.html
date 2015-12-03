@@ -31,7 +31,7 @@
             <span ng-click="vm.addApplicationUpdate(entries.id)" style="cursor: pointer">{{entries.name | limitTo:50}}</span>
           </td>
           <td>
-            <span>{{entries.description | limitTo:60}}</span>
+            <span ng-bind-html="entries.description | limitTo:60"></span>
           </td>
           <td>
             <span ng-click="vm.addApplicationDetails(entries.id)" style="cursor: pointer" title="Visa detaljer">
@@ -73,10 +73,6 @@
           <span ng-show="addApplicationForm.name.$dirty && addApplicationForm.name.$error.required" class="help-block">Namn är obligatoriskt</span>
         </div>
         <div class="form-group">
-          <label for="callbackUrl">Callback URL</label> <i class="glyphicon glyphicon-info-sign text-info" title="Callback URL ska anges i formatet..."></i>
-          <input type="text" name="callbackUrl" id="callbackUrl" class="form-control" ng-model="vm.form.application.add.callbackUrl" />
-        </div>
-        <div class="form-group">
           <label for="description">Beskrivning</label>
           <textarea id="description" maxlength="400" type="text" class="form-control" ng-model="vm.form.application.add.description"></textarea>
         </div>
@@ -103,10 +99,6 @@
           <label for="name">Namn</label>
           <input type="text" name="name" id="updateName" class="form-control" ng-model="vm.form.application.update.name" required />
           <span ng-show="updateApplicationForm.name.$dirty && updateApplicationForm.name.$error.required" class="help-block">Namn är obligatoriskt</span>
-        </div>
-        <div class="form-group">
-          <label for="callbackUrl">Callback URL</label>
-          <input type="text" name="callbackUrl" id="updateCallbackUrl" class="form-control" ng-model="vm.form.application.update.callbackUrl" />
         </div>
         <div class="form-group">
           <label for="description">Beskrivning</label>
@@ -159,7 +151,7 @@
           Din applikation prenumererar på ett API med status DEPRECATED. Det gör det inte möjligt att skapa en ny nyckel för din applikation.
         </div>
 
-        <div ng-if="!vm.subscriptions" style="color: #a94442">
+        <div ng-if="vm.subscriptionsRetrieved && !vm.subscriptions" style="color: #a94442">
           Det är inte möjligt att generera en ny nyckel när det är problem att hämta listan med prenumerationer.
         </div>
 
@@ -218,7 +210,7 @@
           Din applikation prenumererar på ett API med status DEPRECATED. Det gör det inte möjligt att skapa en ny nyckel för din applikation.
         </div>
 
-        <div ng-if="!vm.subscriptions" style="color: #a94442">
+        <div ng-if="vm.subscriptionsRetrieved && !vm.subscriptions" style="color: #a94442">
           Det är inte möjligt att generera en ny nyckel när det är problem att hämta listan med prenumerationer.
         </div>
 
