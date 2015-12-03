@@ -43,8 +43,8 @@
             claimUri: 'http://wso2.org/claims/lastname',
             claimValue: vm.form.profile.lastName
           }];
-          response.tenantDomain = 'carbon.super';
           newUserObject = angular.copy(response); // Keep a copy of the updated values
+          response.tenantDomain = 'carbon.super';
           delete response.accessToken;
           delete response.userName;
 

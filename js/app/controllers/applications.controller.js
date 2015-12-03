@@ -6,9 +6,9 @@
     .module('vtPortal')
     .controller('ApplicationsCtrl', ApplicationsCtrl);
 
-  ApplicationsCtrl.$inject = ['$routeParams', '$scope', '$q', '$location', 'APIService', 'AlertService'];
+  ApplicationsCtrl.$inject = ['$routeParams', '$rootScope', '$scope', '$q', '$location', 'APIService', 'AlertService'];
 
-  function ApplicationsCtrl($routeParams, $scope, $q, $location, APIService, AlertService) {
+  function ApplicationsCtrl($routeParams, $rootScope, $scope, $q, $location, APIService, AlertService) {
     var vm = this;
 
     vm.addApplication = addApplication;
@@ -27,12 +27,18 @@
       vm.form = {};
       vm.form.application = {};
 
+      vm.subscriptionsRetrieved = false;
+
       getAllApplications()
         .then(function() {
 
           // Need to check subscriptions in order to be able to generate a new key
           APIService.call('subscriptionsGet', [])
-            .then(subscriptionsGetResponse);
+            .then(subscriptionsGetResponse)
+            .catch(function() {
+              vm.subscriptionsRetrieved = true;
+              AlertService.error('Problem att hämta lista med prenumerationer. Det kommer tyvärr inte gå att skapa någon ny access token för någon applikation så länge problemet kvarstår');
+            });
 
           if ($routeParams.applicationId) {
             // If an application has been specified, open its details
@@ -41,6 +47,7 @@
             $location.update_path('/applications'); // jshint ignore:line
           }
         });
+
     })();
 
     function getAllApplications() {
@@ -113,10 +120,13 @@
       APIService.call('applicationsPost', [{
           name: vm.form.application.add.name,
           description: vm.form.application.add.description,
-          callbackUrl: vm.form.application.add.callbackUrl,
           throttlingTier: 'Unlimited'
-        }, 'application/json'])
-        .then(applicationsPostResponse);
+        }, 'application/json;charset=utf-8'])
+        .then(applicationsPostResponse)
+        .catch(function(response) {
+          AlertService.error('Problem att skapa applikationen');
+          vm.dataLoadingAddApplication = false;
+        });
 
       function applicationsPostResponse(response) {
         if (response.status === 201) {
@@ -246,9 +256,9 @@
     }
 
     function subscriptionsGetResponse(response) {
+      vm.subscriptionsRetrieved = true;
       if (response.status === 200) {
         vm.subscriptions = response.data.list;
-        vm.subscriptionsRetrieved = true;
       } else {
         AlertService.error('Problem att hämta lista med prenumerationer. Det kommer tyvärr inte gå att skapa någon ny access token för någon applikation så länge problemet kvarstår');
       }
