@@ -32,6 +32,16 @@
         .then(aPIsGetResponse);
     })();
 
+    /* Update dropdown with apis based on user choice of application */
+    $scope.$watch('vm.form.subscription.add.application', function() {
+      updateApis();
+    });
+
+    /* Update dropdown with applications based on user choice of api */
+    $scope.$watch('vm.form.subscription.add.api', function() {
+      updateApplications();
+    });
+
     function subscriptionsGetResponse(response) {
       if (response.status === 200) {
         vm.subscriptions = response.data.list;
@@ -43,6 +53,7 @@
     function applicationsGetResponse(response) {
       if (response.status === 200) {
         vm.applications = response.data.list;
+        vm.applicationsInitial = response.data.list;
       } else {
         AlertService.error('Problem att hämta listan över applikationer');
       }
@@ -52,6 +63,10 @@
       if (response.status === 200) {
         // Only possible to create a subscription towards a published api
         vm.apis = response.data.list.filter(function(el) {
+          return el.status.toUpperCase() === 'PUBLISHED';
+        });
+
+        vm.apisInitial = response.data.list.filter(function(el) {
           return el.status.toUpperCase() === 'PUBLISHED';
         });
 
@@ -77,7 +92,7 @@
         }, 'application/json'])
         .then(subscriptionsPostResponse)
         .catch(function(response) {
-          AlertService.error('Problem att skapa ny prenumeration');
+          AlertService.error('Problem att skapa prenumerationen');
         });
 
       function subscriptionsPostResponse(response) {
@@ -116,6 +131,8 @@
             vm.subscriptions[i].application.name + ' och API ' + vm.subscriptions[i].api.name + ' ' + vm.subscriptions[i].api.version + ' borttagen!');
 
           vm.subscriptions.splice(i, 1);
+          updateApis();
+          updateApplications();
 
         } else {
           AlertService.error('Problem att ta bort prenumerationen');
@@ -129,6 +146,37 @@
       vm.form.subscription.add.application = null;
 
       $scope.addSubscriptionForm.$setPristine();
+    }
+
+    function updateApis() {
+      if (vm.subscriptions != null) {
+        var removeApis = [];
+        for (var i = 0; i < vm.subscriptions.length; i++) {
+          if (vm.subscriptions[i].application.id === parseInt(vm.form.subscription.add.application)) {
+            removeApis.push(vm.subscriptions[i].api.name + vm.subscriptions[i].api.version + vm.subscriptions[i].api.provider);
+          }
+        }
+
+        vm.apis = vm.apisInitial.filter(function(a) {
+          return (removeApis.indexOf(a.name + a.version + a.provider) === -1);
+        });
+      }
+    }
+
+    function updateApplications() {
+      if (vm.subscriptions != null && vm.form.subscription.add.api != null) {
+        var removeApplications = [];
+        var apiDef = vm.form.subscription.add.api.split('/');
+        for (var i = 0; i < vm.subscriptions.length; i++) {
+          if (vm.subscriptions[i].api.name === apiDef[0] && vm.subscriptions[i].api.version === apiDef[1] && vm.subscriptions[i].api.provider === apiDef[2]) {
+            removeApplications.push(vm.subscriptions[i].application.id);
+          }
+        }
+
+        vm.applications = vm.applicationsInitial.filter(function(a) {
+          return (removeApplications.indexOf(a.id) === -1);
+        });
+      }
     }
 
   }
