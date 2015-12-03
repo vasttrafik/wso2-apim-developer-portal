@@ -43,7 +43,7 @@
           </div>
         </a>
         <h3>Mina applikationer</h3>
-        <p ng-repeat="entries in vm.applications">{{entries.name}}</p>
+        <p ng-repeat="entries in vm.applications"><a href="#/applications/{{entries.id}}">{{entries.name}}</a></p>
         <a href="#/applications" title="Mina applikationer">
           <strong>Visa Detaljer</strong>
         </a>
@@ -57,7 +57,7 @@
           </div>
         </a>
         <h3>Mina prenumerationer</h3>
-        <p ng-repeat="entries in vm.subscriptions">{{entries.api.name}}</p>
+        <p ng-repeat="entries in vm.subscriptions"><a href="#/api/{{entries.api.name}}/{{entries.api.version}}/{{entries.api.provider}}/direct">{{entries.api.name}} {{entries.api.version}}</a></p>
         <a href="#/subscriptions" title="Prenumerationer">
           <strong>Visa Detaljer</strong>
         </a>

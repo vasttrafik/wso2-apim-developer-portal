@@ -9,8 +9,9 @@ angular
      */
     this.execute = function(data) {
       var deferred = $q.defer();
-      data.headers.Authorization = 'Bearer ' + $rootScope.user.swagger.accessToken;
-      data.headers.Host = 'api.vasttrafik.se';
+      if ($rootScope.user.swagger.accessToken != null) {
+        data.headers.Authorization = 'Bearer ' + $rootScope.user.accessToken;
+      }
       deferred.resolve(true);
       return deferred.promise;
     };
