@@ -59,7 +59,7 @@
           </div>
           <h3>Guide kring OAuth 2</h3>
         </a>
-        <p>
+        <p class="full-justify">
           Förklarande text kring säkerhets- implementationen alla våra nya api:er använder.
         </p>
       </div>
@@ -83,7 +83,7 @@
     <div class="row">
       <div class="col-sm-4">
         <div class="feed">
-          <h3><i class="fa fa-newspaper-o"></i> Nyheter</h3>
+          <h3 class="text-center"><i class="fa fa-newspaper-o"></i> Nyheter</h3>
           <ul class="list-unstyled truncate" style="line-height:2em">
             <li ng-repeat="entry in vm.newsItems">
               <a href="#/news/{{entry.publishedDate | date:'M'}}?id={{entry.id}}">
@@ -93,17 +93,21 @@
                 {{entry.title}}
               </a>
             </li>
-
+          </ul>
+          <p>
+            <a href="#/news">Fler nyheter</a>
+            <br />
+          </p>
         </div>
       </div>
       <div class="col-sm-4">
-        <div class="feed">
+        <div class="feed text-center">
           <h3><i class="fa fa-pencil-square-o"></i> Blogg</h3>
           <p>Kommer i version 2</p>
         </div>
       </div>
       <div class="col-sm-4">
-        <div class="feed">
+        <div class="feed text-center">
           <h3><i class="fa fa-calendar"></i> Kalender</h3>
           <p>Kommer i version 2</p>
         </div>
@@ -181,15 +185,15 @@
 </div>
 
 <script>
-  $(document).ready(function () {
+  $(document).ready(function() {
 
-    $('#create-button').on('click', function (e) {
+    $('#create-button').on('click', function(e) {
       e.stopPropagation();
 
       var element = angular.element(document.body);
       var controller = element.controller();
 
-      element.scope().$apply(function () {
+      element.scope().$apply(function() {
         controller.toggleCreate(true);
       });
 
