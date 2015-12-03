@@ -29,7 +29,7 @@
           <footer>
             <div class="fader"></div>
             Taggad som:
-            <span class="label label-default" ng-repeat="tag in newsItem.tags">{{tag}}</span>&nbsp;
+            <span class="label label-default" ng-repeat="tag in newsItem.tags"  ng-click="vm.setTag(tag)" style="cursor: pointer">{{tag}}</span>&nbsp;
             <span>Publicerad av: {{newsItem.publishedBy}}, {{newsItem.publishedDate}}</span>
             <span class="toggleItemBottom">
               <span class="showMore" ng-show="!vm.newsItems[$index].expand" ng-click="vm.toggleExpand($index)">Visa mer <i class="glyphicon glyphicon-chevron-down"></i></span>
@@ -43,37 +43,10 @@
 
     <div class="row col-md-3">
       <aside>
-        <!--<section class="card cardSection greenCard" style="padding-top:5px;">
-          <h1 style="margin-top:0">Nyhetsbrev <i class="fa fa-envelope"></i></h1>
-          <p>Prenumerera på vårt nyhets-brev för att inte riskera att missa senaste nytt!</p>
-          <form name="subscribeForm" ng-submit="" role="form" class="ng-pristine ng-invalid ng-invalid-required">
-            <div class="form-group" ng-class="{ 'has-error': subscribeForm.name.$dirty && subscribeForm.name.$invalid, 'has-success' : subscribeForm.name.$valid}">
-              <label for="name">Namn</label>
-              <input type="text" name="name" id="name" ng-model="vm.name" class="form-control" required>
-              <span ng-show="subscribeForm.name.$dirty && subscribeForm.name.$error.required" class="help-block">Namn är obligatoriskt</span>
-            </div>
-
-            <div class="form-group" ng-class="{ 'has-error': subscribeForm.email.$dirty && subscribeForm.email.$invalid, 'has-success' : subscribeForm.email.$valid}">
-              <label for="name">Epostadress</label>
-              <input type="email" name="email" id="email" ng-model="vm.email" class="form-control" required>
-            </div>
-
-            <div class="form-actions noclick">
-              <button type="submit" ng-disabled="subscribeForm.$invalid || vm.dataLoading" class="btn btn-primary" disabled="disabled">Prenumerera</button>
-              <span class="btn btn-link">Ångra</span>
-            </div>
-          </form>
-        </section>-->
-
-        <!--<section>
-          <h3>Arkiv (månadsvy)</h3>
-          Kalender...
-        </section>-->
 
         <section>
           <h3>Månader</h3>
             <span ng-repeat="entry in vm.months"><a href="#/news/{{entry + 1}}">{{vm.toMonth(entry)}}</a></span>
-          <!--<a class="more" href="#/news">Fler</a>-->
         </section>
 
         <section class="tags-dark-blue" ng-if="vm.tags.length > 0">
@@ -85,31 +58,3 @@
     </div>
   </div>
 </div>
-<script>
-
-  $(document).ready(function () {
-
-    //$('.toggleItem, .toggleItemBottom').on('click', function () {
-    //  var obj = $(this).parents('.newsItem').find('.articleContent');
-    //  $(obj).toggleClass('selectedItem').trigger('collapsed', obj);
-    //});
-
-    //$('.newsItem').on('collapsed', function (event) {
-    //  var elem = event.target;
-    //  var parent = $(elem).parents('.newsItem');
-    //  var showLess = $(elem).hasClass('selectedItem');
-
-    //  if (showLess) {
-    //    $(parent).find('.showMore').css('display', 'none');
-    //    $(parent).find('.showLess').css('display', 'block');
-    //  }
-    //  else {
-    //    $(parent).find('.showMore').css('display', 'block');
-    //    $(parent).find('.showLess').css('display', 'none');
-    //  }
-    //});
-
-    //$('.toggleItem').first().trigger('click');
-
-  });
-</script>
