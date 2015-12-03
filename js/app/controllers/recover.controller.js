@@ -123,7 +123,7 @@
 
       function challengeQuestionsGetResponse(response) {
 
-        if (response.data.length < 1) {
+        if (response.status === 404) {
           AlertService.error('Det finns inga inställda frågor att svara på. Tyvärr går det inte att uppdatera lösenordet med hjälp av fråga');
         } else {
           vm.challengeQuestions = response.data;
@@ -141,6 +141,8 @@
       vm.form.question.challengeQuestion = vm.challengeQuestions[0].question;
       vm.form.question.id = vm.challengeQuestions[0].id;
       vm.form.question.key = vm.challengeQuestions[0].key;
+      vm.form.question.question = '';
+      $scope.passwordRecoverySecretQuestionForm.$setPristine();
 
       vm.user.question = true;
     }
@@ -205,6 +207,8 @@
 
         } else {
           AlertService.error('Försök igen', 'Felaktigt svar på frågan');
+          vm.user.question = false;
+          generateCaptcha();
         }
 
         vm.dataLoadingNotification = false;
