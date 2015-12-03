@@ -9,9 +9,9 @@
     .controller('ApiCtrl', ApiCtrl)
     .constant('defaultBaseUrl', defaultBaseUrl);
 
-  ApiCtrl.$inject = ['$rootScope', '$scope', '$location', '$routeParams', 'APIService', 'AlertService'];
+  ApiCtrl.$inject = ['$rootScope', '$scope', '$location', '$routeParams', '$timeout', 'APIService', 'AlertService'];
 
-  function ApiCtrl($rootScope, $scope, $location, $routeParams, APIService, AlertService) {
+  function ApiCtrl($rootScope, $scope, $location, $routeParams, $timeout, APIService, AlertService) {
     var vm = this;
 
     vm.addSubscription = addSubscription;
@@ -35,6 +35,12 @@
       vm.apiProvider = $routeParams.apiProvider;
       vm.apiIdSingle = $routeParams.apiName + '--' + $routeParams.apiVersion + '_' + $routeParams.apiProvider;
 
+      vm.applicationsSubscribing = [];
+
+      $scope.$on('cfpLoadingBar:completed', function(event, data) {
+        $rootScope.user.accessToken = vm.accessToken;
+      });
+
       APIService.call('apisApiIdGet', [vm.apiIdSingle])
         .then(aPIsIdGetResponse)
         .then(getDocumentsForApi);
@@ -42,12 +48,34 @@
       if ($rootScope.user.loggedIn) {
         APIService.call('applicationsGet', [100, 0])
           .then(applicationsGetResponse);
+
+        // Event fired when all $http loads completed
+        $scope.$on('cfpLoadingBar:completed', function(event, data) {
+          $timeout(function() {
+            // Adding accessToken to API Console if there's a subscribing application with a key
+            $rootScope.user.accessToken = vm.accessToken;
+          }, 100);
+        });
       }
+
     })();
 
     function applicationsGetResponse(response) {
+
       if (response.status === 200) {
-        vm.applications = response.data.list;
+        vm.applications = response.data.list.filter(function(a) {
+          for (var i = 0; i < a.subscriptions.length; i++) {
+            if (a.subscriptions[i].api.name === vm.apiName && a.subscriptions[i].api.version === vm.apiVersion && a.subscriptions[i].api.provider === vm.apiProvider) {
+              vm.applicationsSubscribing.push(a);
+
+              // Adding accessToken to API Console if there's a subscribing application with a key
+              vm.accessToken = (a.accessToken != null ? a.accessToken : null);
+
+              return false;
+            }
+          }
+          return true;
+        });
       } else {
         AlertService.error('Problem att hämta lista med applikationer');
       }
@@ -64,6 +92,7 @@
         vm.imageUrl = response.data.imageUrl;
         vm.apiId = vm.api.name + '/' + vm.api.version + '/' + vm.api.provider;
         vm.swaggerUrl = defaultBaseUrl + '/' + response.data.swagger;
+        vm.useAccessToken = response.data.status !== 'DEPRECATED';
 
       } else {
         AlertService.error('Problem att hämta detaljer för API');

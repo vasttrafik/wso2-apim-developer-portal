@@ -47,12 +47,21 @@
     </div>
   </div>
 
+  <div ng-show="user.loggedIn && vm.api.status.toUpperCase() !== 'PUBLISHED'" class="row col-md-4">
+    <div class="alert alert-warning" role="alert">
+      <span><span class="glyphicon glyphicon-info-sign">&nbsp;</span>Det är inte möjligt att prenumerera på detta API!</span>
+    </div>
+  </div>
+
   <div ng-show="user.loggedIn && vm.api.status.toUpperCase() === 'PUBLISHED'" class="row col-md-4 well">
     <div class="form-group" ng-class="{ 'has-error': addSubscriptionForm.application.$dirty && addSubscriptionForm.application.$invalid, 'has-success' : addSubscriptionForm.application.$valid}">
-      <div ng-show="vm.applications.length == 0">
-        Du har inga registrerade applikationer.
-        <br />
-        <a href="#/applications">Skapa en applikation först</a>, skapa sedan en prenumeration här!
+      <div ng-show="vm.applications.length === 0 && vm.applicationsSubscribing.length === 0">
+        <b>Du har inga registrerade applikationer.</b>
+        <p><a href="#/applications">Skapa en applikation först</a>, skapa sedan en prenumeration här!</p>
+      </div>
+      <div ng-show="vm.applications.length === 0 && vm.applicationsSubscribing.length > 0">
+        <b>Applikationer som prenumererar på detta API</b><br />
+        <p ng-repeat="entries in vm.applicationsSubscribing"><a href="#/applications/{{entries.id}}">{{entries.name}}</a></p>
       </div>
 
       <div ng-show="vm.applications.length > 0">
@@ -137,10 +146,12 @@
         </div>
 
         <div role="tabpanel" class="tab-pane" id="apiConsole">
-          <label for="requestHeader">Ange Request Header</label>
-          <div class="input-group">
-            <span class="input-group-addon" id="basic-addon3">Authorization: Bearer </span>
-            <input type="text" class="form-control" id="requestHeader" ng-model="user.swagger.accesstoken" aria-describedby="basic-addon3">
+          <div ng-if="vm.useAccessToken">
+            <label for="requestHeader">Ange access token</label>
+            <div class="input-group">
+              <span class="input-group-addon" id="basic-addon3">Authorization: Bearer </span>
+              <input type="text" class="form-control" id="requestHeader" ng-model="user.accessToken" aria-describedby="basic-addon3">
+            </div>
           </div>
 
           <div class="row" style="padding:20px;">
