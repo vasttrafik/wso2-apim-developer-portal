@@ -9,7 +9,7 @@
   </div>
 </div>
 
-<div class="container" ng-show="vm.subscriptions.length == 0">
+<div class="container" ng-show="vm.subscriptions.length === 0">
   <div class="row">
     <h3>Du har för närvarande inga prenumerationer. Skapa en ny prenumeration genom att fylla i formuläret nedan.</h3>
   </div>
@@ -67,7 +67,7 @@
         <div class="form-group" ng-class="{ 'has-error': addSubscriptionForm.application.$dirty && addSubscriptionForm.application.$invalid,
   'has-success' : addSubscriptionForm.application.$valid}">
           <label for="application">Applikation</label>
-          <div ng-show="vm.applications.length == 0" style="margin-bottom: 20px">Det finns inga tillgängliga applikationer att skapa en prenumeration emot. <a href="#/applications">Skapa en ny applikation</a>, skapa sedan en prenumeration här!</div>
+          <div ng-show="vm.applications.length === 0" style="margin-bottom: 20px">Det finns inga tillgängliga applikationer att skapa en prenumeration emot. <a href="#/applications">Skapa en ny applikation</a>, skapa sedan en prenumeration här!</div>
           <div ng-show="vm.applications.length > 0">
             <select name="application" id="application" ng-model="vm.form.subscription.add.application" class="form-control" required>
               <option ng-repeat="entry in vm.applications" value="{{entry.id}}">{{entry.name}}</option>
@@ -79,7 +79,7 @@
         <div class="form-group" ng-class="{ 'has-error': addSubscriptionForm.api.$dirty && addSubscriptionForm.api.$invalid,
   'has-success' : addSubscriptionForm.api.$valid}">
           <label for="api">API</label>
-          <div ng-show="vm.apis.length == 0" style="margin-bottom: 20px">Det finns inga tillgängliga APIer att skapa en prenumeration emot</div>
+          <div ng-show="vm.apis.length === 0" style="margin-bottom: 20px">Det finns inga tillgängliga API:er att skapa en prenumeration emot</div>
           <div ng-show="vm.apis.length > 0">
             <select name="api" id="api" ng-model="vm.form.subscription.add.api" class="form-control" required>
               <option ng-repeat="entry in vm.apis" value="{{entry.name}}/{{entry.version}}/{{entry.provider}}">{{entry.name}} {{entry.version}}</option>

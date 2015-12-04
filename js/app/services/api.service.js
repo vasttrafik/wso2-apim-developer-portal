@@ -33,14 +33,14 @@
     /*
       Wrapper function for calls towards user backend API
     */
-    function userCall(funcName, args) {
+    function userCall(funcName, args, doNotLogout) {
       var deferred = $q.defer();
 
       userApiClient[funcName].apply(userApiClient, args)
         .then(function(response) {
           deferred.resolve(response);
         }, function(response) {
-          apiErrorResponse(response, deferred);
+          apiErrorResponse(response, deferred, doNotLogout);
         })
         .catch(function(response) {
           apiErrorResponse(response, deferred);

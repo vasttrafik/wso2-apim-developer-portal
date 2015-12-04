@@ -53,7 +53,9 @@
         $scope.$on('cfpLoadingBar:completed', function(event, data) {
           $timeout(function() {
             // Adding accessToken to API Console if there's a subscribing application with a key
-            $rootScope.user.accessToken = vm.accessToken;
+            if (vm.accessToken != null) {
+              $rootScope.user.accessToken = vm.accessToken;
+            }
           }, 100);
         });
       }
