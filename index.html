@@ -26,7 +26,7 @@
 
   <div id="menu_left" class="container sidebar sidebar-left">
     <div class="nav-side-menu" data-side="left">
-      <div class="brand"><i class="fa fa-home fa-lg"></i> Start</div>
+      <div class="brand"><a href="#/"><i class="fa fa-home fa-lg"></i> Start</a></div>
       <i class="fa fa-bars fa-2x toggle-btn" data-toggle="collapse" data-target="#menu-content"></i>
 
       <div class="menu-list">
@@ -347,7 +347,7 @@
         $('.fa.fa-cog.fa-2x').removeClass("fa-spin");
       });
 
-      $('.nav-side-menu ul .sub-menu li a, .nav-side-menu li .sub-menu li a, ul#menu-content li a.leaf').on('click', function () {
+      $('.nav-side-menu ul .sub-menu li a, .nav-side-menu li .sub-menu li a, ul#menu-content li a.leaf, div.brand a').on('click', function () {
         $('.toggler').click();
       });
 
