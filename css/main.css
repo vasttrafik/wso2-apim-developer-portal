@@ -518,6 +518,7 @@ i.fa.fa-bars {
 }
 .scroll-top-wrapper i.fa {
   line-height: inherit;
+  padding-top:5px;
 }
 .fa.fa-envelope, .glyphicon.glyphicon-map-marker, .fa.fa-phone, .fa.fa-fax {
   color: #00aaeb;
