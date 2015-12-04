@@ -194,7 +194,9 @@ a .panel-body {
 .panel-body {
   padding: 15px;
 }
-
+div.showcase.panel.panel-default {
+  max-width:165px;
+}
 /* End Showcase area */
 
 a.more {
