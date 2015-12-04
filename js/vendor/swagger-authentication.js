@@ -9,7 +9,7 @@ angular
      */
     this.execute = function(data) {
       var deferred = $q.defer();
-      if ($rootScope.user.swagger.accessToken != null) {
+      if ($rootScope.user.accessToken != null) {
         data.headers.Authorization = 'Bearer ' + $rootScope.user.accessToken;
       }
       deferred.resolve(true);

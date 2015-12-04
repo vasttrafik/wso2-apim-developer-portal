@@ -155,7 +155,8 @@
           </div>
 
           <div class="row" style="padding:20px;">
-            <div swagger-ui url="vm.swaggerUrl" api-explorer="true" parser="json" validator-url="false"></div>
+            <div ng-if="vm.useAccessToken === true" swagger-ui url="vm.swaggerUrl" api-explorer="true" parser="json" validator-url="false"></div>
+            <div ng-if="vm.useAccessToken === false" swagger-ui url="vm.swaggerUrl" api-explorer="false" parser="json" validator-url="false"></div>
           </div>
         </div>
       </div>
