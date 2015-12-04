@@ -10,27 +10,50 @@
 <p>
   Metoden används på följande sätt:
 </p>
-<p>
+<!--<p class="hidden-xs">
   <pre class="code-highlight">
 http://&lt;base-url&gt;/livemap?authKey=&lt;authKey&gt;&minx=&lt;int&gt;&miny=&lt;int&gt;&maxx=&lt;int&gt;&maxy=&lt;int&gt;
 &onlyRealtime=&lt;boolean&gt;
   </pre>
-</p>
+</p>-->
+
+<!--<p class="hidden-sm hidden-md hidden-lg">
+  <pre class="code-highlight">
+http://&lt;base-url&gt;/livemap?authKey=&lt;authKey&gt;
+&minx=&lt;int&gt;&miny=&lt;int&gt;
+&maxx=&lt;int&gt;&maxy=&lt;int&gt;
+&onlyRealtime=&lt;boolean&gt;
+  </pre>
+</p>-->
+
 <p>
-  , där minx, miny, maxx och maxy är gränser för en geografiska rektangel i WGS84-koordinater*1000000.
+  där minx, miny, maxx och maxy är gränser för en geografiska rektangel i WGS84-koordinater*1000000.
 </p>
 <p>
   Följande är ett exempel på anrop för centrala Göteborg inom Vallgraven:
 </p>
-<p>
+
+
+<!--<p>
   <pre class="code-highlight">
-http://<base-url>/livemap?authKey=<authKey>&minx=11.957653&miny=57702588&maxx=11971943&maxy=57711300&onlyRealtime=yes
+http://&lt;base-url&gt;/livemap?authKey=&lt;authKey&gt;&minx=11.957653&miny=57702588&maxx=11971943&maxy=57711300&onlyRealtime=yes
   </pre>
-</p>
+</p>-->
+
+<!--<div class="hidden-sm hidden-md hidden-lg">
+  <p>
+    <pre class="code-highlight">
+http://&lt;base-url&gt;/livemap?authKey=&lt;authKey&gt;
+&minx=11.957653&miny=57702588
+&maxx=11971943&maxy=57711300
+&onlyRealtime=yes
+  </pre>
+  </p>
+</div>-->
 <p>
   med resulterande svar:
 </p>
-<p>
+<!--<p class="hidden-xs">
   <pre class="code-highlight">
 {
   "livemap": 
@@ -53,13 +76,42 @@ http://<base-url>/livemap?authKey=<authKey>&minx=11.957653&miny=57702588&maxx=11
     ]
   }
 }
-</pre>
+  </pre>
 </p>
+<p class="hidden-xs">
+  <pre class="code-highlight">
+{
+  "livemap": 
+  { "maxy": "57711300", "miny": "57702588", 
+    "maxx": "11971943", "minx": "11.957653", 
+    "time": "09:39:16",
+    "vehicles": [
+      { 
+        "delay": "5", "prodclass": "BUS", 
+        "direction": "16", "name": "Bus GUL", 
+        "y": "57707717", "x": "11935912" 
+      },
+      { 
+        "delay": "1", "prodclass": "BUS", 
+        "direction": "9", "name": "Bus 18", 
+        "y": "57704661", "x": "11969155" },
+      …
+      …
+      …
+      { 
+        "prodclass": "BUS", "direction": "21", 
+        "name": "Bus 290", "y": "57702737", 
+        "x": "11647179" 
+      }
+    ]
+  }
+}
+</pre>
+</p>-->
 <p>
   Svaret kan förädlas, konverteras och sen användas. Som i följande visualisering på karta via
-  <i><a href="http://geojson.org/">geojson</a></i> och <i><a href="http://leafletjs.com/">leaflet</a></i>.
+  <i><a target="_blank" title="Till geojson.org" href="http://geojson.org/">geojson</a></i> och <i><a target="_blank" title="Till leafletjs.com" href="http://leafletjs.com/">leaflet</a></i>.
 </p>
 <p>
-  <img src="/img/png/livemap-sample.png" alt="Livemap image" class="img-responsive" style="margin:auto" />
+  <img src="img/png/livemap-sample.png" alt="Livemap image" class="img-box img-responsive" style="margin:auto;" />
 </p>
-

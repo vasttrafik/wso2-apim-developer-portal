@@ -39,6 +39,10 @@ a {
   color: #00aaeb;
   text-decoration: none;
 }
+
+.img-box {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
 a:hover, a:focus {
   color: #0085b8;
   text-decoration: underline;
@@ -460,7 +464,7 @@ div.row.col-md-4.well {
 }
 .dropdown-menu.create {
   padding: 20px;
-  min-width: 400px;
+  min-width: 350px;
 }
 i.glyphicon.glyphicon-info-sign.text-info {
   vertical-align: top;
@@ -796,7 +800,7 @@ label-green, section.tags-green > span.label {
     min-width: 400px;
   }
   .dropdown-menu.create {
-    margin-left: -320px;
+    margin-left: -280px;
   }
   div.area.overview {
     margin: auto;
@@ -897,6 +901,7 @@ article.newsItem > h2 {
 .label {
   font-weight: 500;
   letter-spacing: 1px;
+  margin-right:4px;
 }
 .sub-menu > li {
   background: #23282e !important;
