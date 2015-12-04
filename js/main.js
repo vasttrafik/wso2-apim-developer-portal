@@ -32,7 +32,7 @@ var newsItems = [{
 }, {
   id: '4',
   publishedDate: '2015-12-04',
-  publishedBy: 'Lars Andersson',
+  publishedBy: 'Federico Hernandez',
   title: 'Livemap - ny funktion i Reseplaneraren!',
   contentUrl: 'js/app/views/news/rp-livemap.view.html',
   tags: ['Api', 'Nytt']

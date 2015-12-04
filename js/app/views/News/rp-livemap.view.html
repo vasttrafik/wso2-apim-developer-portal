@@ -1,6 +1,65 @@
 ﻿<p>
-  Vi lanserar nu en ny funktion i Reseplaneraren som gör det möjligt att i realtid följa våra
-  fordon inom en geografisk rektangel på kartan. Denna funktion, som bara erbjuds till
-  prenumeranter på den nya versionen av API:t, beskrivs närmare nedan.
-  <i style="margin-top:30px">more content from Fedde...</i>
+  Vi lanserar nu en ny funktion i Reseplaneraren som gör det möjligt att i realtid följa våra fordon inom
+  en geografisk rektangel (bounding box) på kartan. Denna funktion, som bara erbjuds till prenumeranter på
+  den nya versionen av API:t, beskrivs närmare nedan.
 </p>
+<p>
+  Metoden returnerar positionen av alla fordon i en angiven geografisk bounding box. Svaret, som ges i JSON-format,
+  kan sen användas för att visualisera fordonen på en karta med lämpligt bibliotek som t.ex. <i>leaflet.js</i>.
+</p>
+<p>
+  Metoden används på följande sätt:
+</p>
+<p>
+  <pre class="code-highlight">
+http://&lt;base-url&gt;/livemap?authKey=&lt;authKey&gt;&minx=&lt;int&gt;&miny=&lt;int&gt;&maxx=&lt;int&gt;&maxy=&lt;int&gt;
+&onlyRealtime=&lt;boolean&gt;
+  </pre>
+</p>
+<p>
+  , där minx, miny, maxx och maxy är gränser för den geografiska bounding box i WGS84-koordinater*1000000.
+</p>
+<p>
+  Följande är ett exempel på anrop för centrala Göteborg inom Vallgraven:
+</p>
+<p>
+  <pre class="code-highlight">
+http://<base-url>/livemap?authKey=<authKey>&minx=11.957653&miny=57702588&maxx=11971943&maxy=57711300&onlyRealtime=yes
+  </pre>
+</p>
+<p>
+  med resulterande svar:
+</p>
+<p>
+  <pre class="code-highlight">
+{
+  "livemap": 
+  { "maxy": "57711300", "miny": "57702588", 
+    "maxx": "11971943", "minx": "11.957653", "time": "09:39:16",
+    "vehicles": [
+      { 
+        "delay": "5", "prodclass": "BUS", 
+        "direction": "16", "name": "Bus GUL", 
+        "y": "57707717", "x": "11935912" 
+      },
+      { 
+        "delay": "1", "prodclass": "BUS", 
+        "direction": "9", "name": "Bus 18", 
+        "y": "57704661", "x": "11969155" },
+      …
+      …
+      …
+      { "prodclass": "BUS", "direction": "21", "name": "Bus 290", "y": "57702737", "x": "11647179" }
+    ]
+  }
+}
+</pre>
+</p>
+<p>
+  Svaret kan förädlas, konverteras och sen användas. Som i följande visualisering på karta via
+  <i><a href="http://geojson.org/">geojson</a></i> och <i><a href="http://leafletjs.com/">leaflet</a></i>.
+</p>
+<p>
+  <img src="/img/png/livemap-sample.png" alt="Livemap image" class="img-responsive" style="margin:auto" />
+</p>
+
