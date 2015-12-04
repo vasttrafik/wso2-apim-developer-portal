@@ -1,5 +1,5 @@
-var defaultBaseUrl = 'https://wso2publisher-test:9444/portal-api';
-var userBaseUrl = 'https://wso2publisher-test:9444/idmgt-api';
+var defaultBaseUrl = 'https://developer.vasttrafik.se/portal-api';
+var userBaseUrl = 'https://developer.vasttrafik.se/idmgt-api';
 
 var newsItems = [{
   id: '0',
