@@ -97,8 +97,11 @@
               .then(notificationsPostResponse);
           } else if (vm.form.captcha.recoveryType === 'secretQuestion') {
 
-            APIService.userCall('challengequestionsGet', ['application/json', response.data.userId, response.data.key])
-              .then(challengeQuestionsGetResponse);
+            APIService.userCall('challengequestionsGet', ['application/json', response.data.userId, response.data.key], true)
+              .then(challengeQuestionsGetResponse)
+              .catch(function() {
+                challengeQuestionsGetResponseError();
+              })
           }
 
         } else {
@@ -122,14 +125,19 @@
       }
 
       function challengeQuestionsGetResponse(response) {
-
-        if (response.status === 404) {
-          AlertService.error('Det finns inga inställda frågor att svara på. Tyvärr går det inte att uppdatera lösenordet med hjälp av fråga');
-        } else {
+        if (response.status === 200) {
           vm.challengeQuestions = response.data;
           setChallengeQuestion();
+        } else {
+          challengeQuestionsGetResponseError();
         }
+      }
 
+      function challengeQuestionsGetResponseError() {
+        AlertService.error('Det finns inga inställda frågor att svara på. Tyvärr går det inte att uppdatera lösenordet med hjälp av fråga');
+        generateCaptcha();
+        vm.form.captcha.captcha = '';
+        $scope.passwordRecoveryCaptchaForm.$setPristine();
       }
     }
 
