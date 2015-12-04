@@ -867,7 +867,7 @@ article.newsItem > h2 {
 
 /*#endregion */
 .news-item-content {
-  max-height: 2500px;
+  max-height: 5500px;
 }
 .news-item-content img {
     display: block;
