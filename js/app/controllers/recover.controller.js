@@ -101,7 +101,7 @@
               .then(challengeQuestionsGetResponse)
               .catch(function() {
                 challengeQuestionsGetResponseError();
-              })
+              });
           }
 
         } else {
@@ -120,7 +120,7 @@
           vm.user.notification = true;
           generateCaptcha();
         } else {
-          AlertService.error('Kontakta ic-support@vasttrafik.se och beskriv problemet", "Problem att skicka ut mail med instruktioner');
+          AlertService.error('Kontakta api@vasttrafik.se och beskriv problemet", "Problem att skicka ut mail med instruktioner');
         }
       }
 
