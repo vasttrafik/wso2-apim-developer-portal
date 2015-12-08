@@ -31,6 +31,10 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: FoundersGroteskWeb-Regular;
 }
+
+label {
+  margin-bottom: 0;
+}
 .container {
   padding-bottom: 20px;
   padding-top: 20px;
@@ -47,6 +51,17 @@ a:hover, a:focus {
   color: #0085b8;
   text-decoration: underline;
 }
+.form-group {
+  margin-bottom: 10px;
+}
+.form-action {
+  width:95px;
+  text-align:right;
+}
+#formCreate, #formLogin {
+  width:280px;
+}
+
 .navbar {
   min-height: 88px;
 }
@@ -466,7 +481,7 @@ div.row.col-md-4.well {
 }
 .dropdown-menu.create {
   padding: 20px;
-  min-width: 350px;
+  min-width: 330px;
 }
 i.glyphicon.glyphicon-info-sign.text-info {
   vertical-align: top;
@@ -800,10 +815,10 @@ label-green, section.tags-green > span.label {
   }
   .create {
     padding: 20px;
-    min-width: 400px;
+    min-width: 330px;
   }
   .dropdown-menu.create {
-    margin-left: -280px;
+    margin-left: -235px;
   }
   div.area.overview {
     margin: auto;

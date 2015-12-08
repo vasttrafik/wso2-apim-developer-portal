@@ -106,12 +106,12 @@
             <!-- Login/Create -->
             <div class="btn-group" ng-show="!user.loggedIn">
               <a class="dropdown-toggle logincreate" data-toggle="dropdown">
-                <span ng-if="!user.create">
+                <div class="form-action" ng-if="!user.create">
                   Logga in
-                </span>
-                <span ng-if="user.create">
+                </div>
+                <div class="form-action" ng-if="user.create">
                   Skapa konto
-                </span>
+                </div>
               </a>
               <div class="dropdown-menu create">
 
@@ -122,7 +122,7 @@
                 </div>
 
                 <form name="form" ng-submit="user.create ? vm.create() : vm.login()" role="form">
-                  <div ng-if="!user.create">
+                  <div id="formLogin" ng-if="!user.create">
                     <div class="form-group" ng-class="{ 'has-error': login-form.username.$dirty && login-form.username.$error.required }">
                       <label for="username">Användarnamn</label>
                       <span ng-click="vm.toggleUsernameRecovery()" style="float:right;cursor:pointer;">Glömt ditt användarnamn?</span>
@@ -143,7 +143,7 @@
                     </div>
                   </div>
 
-                  <div ng-if="user.create">
+                  <div id="formCreate" ng-if="user.create">
                     <div class="form-group" ng-class="{ 'has-error': form.{{entries.claimValue}}.$dirty && form.{{entries.claimValue}}.$invalid, 'has-success' : form.{{entries.claimValue}}.$valid}" ng-repeat="entries in vm.claims">
                       <label for="{{entries.claimValue}}">{{entries.displayTag}}</label>
                       <input type="text" name="{{entries.claimValue}}" id="{{entries.claimValue}}" class="form-control" ng-model="vm.user[entries.claimValue].value" required />
