@@ -456,7 +456,7 @@ div.card .tab-content {
 div.card {
   background: #fff none repeat scroll 0 0;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  margin: 10px 0;
+  margin: 10px 15px 10px 0;
 }
 
 /* END: API tab styles */

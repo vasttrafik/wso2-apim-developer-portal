@@ -114,26 +114,49 @@
           <table class="table table-hover table-striped" ng-show="vm.documents.length > 0">
             <thead class="table-header">
               <tr>
-                <th>Namn</th>
-                <th>Typ</th>
-                <th>Beskrivning</th>
+                <th class="hidden-xs">Namn</th>
+                <th class="hidden-sm hidden-md hidden-lg">Dokument</th>
+
+                <th class="hidden-xs">Typ</th>
+                <th class="hidden-xs">Beskrivning</th>
               </tr>
             </thead>
             <tbody>
               <tr ng-repeat="doc in vm.documents" class="nga-default nga-fade">
-                <td ng-if="doc.source === 'url'">
+
+                <!-- Small device, a list instead -->
+                <td class="hidden-sm hidden-md hidden-lg">
+                  <!-- Url -->
+                  <strong>Namn:</strong>
+                  <span ng-if="doc.source === 'url'"><a href="{{doc.url}}" title="{{doc.type}}">{{doc.name}}</a></span>
+                  <span ng-if="doc.source !== 'url'"><a href="{{vm.defaultBaseUrl + '/apis/' + vm.apiIdSingle + '/documents/' + doc.id + '/content/' + doc.fileName}}" title="{{doc.type}}">{{doc.name}}</a></span>
+                  <br />
+                  <!-- Type -->
+                  <strong>Typ:</strong>
+                  <span ng-if="doc.type.type !== 'Other'"><span>{{doc.type.type}}</span></span>
+                  <span ng-if="doc.type.type === 'Other'"><span>{{doc.type.otherType}}</span></span>
+                  <br />
+                    <!-- Summary -->
+                  <strong>Beskrivning:</strong>
+                  <span>{{doc.summary}}</span>
+                </td>
+
+
+                <td class="hidden-xs" ng-if="doc.source === 'url'">
                   <span><a href="{{doc.url}}" title="{{doc.type}}">{{doc.name}}</a></span>
                 </td>
-                <td ng-if="doc.source !== 'url'">
+                <td class="hidden-xs" ng-if="doc.source !== 'url'">
                   <span><a href="{{vm.defaultBaseUrl + '/apis/' + vm.apiIdSingle + '/documents/' + doc.id + '/content/' + doc.fileName}}" title="{{doc.type}}">{{doc.name}}</a></span>
                 </td>
-                <td ng-if="doc.type.type !== 'Other'">
+
+                <td class="hidden-xs" ng-if="doc.type.type !== 'Other'">
                   <span>{{doc.type.type}}</span>
                 </td>
-                <td ng-if="doc.type.type === 'Other'">
+                <td class="hidden-xs" ng-if="doc.type.type === 'Other'">
                   <span>{{doc.type.otherType}}</span>
                 </td>
-                <td>
+
+                <td class="hidden-xs">
                   <span>{{doc.summary}}</span>
                 </td>
               </tr>
