@@ -1,12 +1,12 @@
-New features in wso2-apim-portal
+New features in wso2-apim-developer-portal
 
   -
 
-Newly deprecated features in wso2-apim-portal
+Newly deprecated features in wso2-apim-developer-portal
 
   -
 
-Removed features in wso2-apim-portal
+Removed features in wso2-apim-developer-portal
 
   -
 
@@ -16,10 +16,10 @@ Known issues
 
 ---
 
-While wso2-apim-portal has undergone testing, bugs are sure to remain. If you
+While wso2-apim-developer-portal has undergone testing, bugs are sure to remain. If you
 encounter a bug, please enter a new issue at:
 
-  https://github.com/vasttrafik/wso2-apim-portal/issues
+  https://github.com/vasttrafik/wso2-apim-developer-portal/issues
 
 Or just send a message to:
 
