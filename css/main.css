@@ -31,6 +31,10 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: FoundersGroteskWeb-Regular;
 }
+
+label {
+  margin-bottom: 0;
+}
 .container {
   padding-bottom: 20px;
   padding-top: 20px;
@@ -47,6 +51,17 @@ a:hover, a:focus {
   color: #0085b8;
   text-decoration: underline;
 }
+.form-group {
+  margin-bottom: 10px;
+}
+.form-action {
+  width:95px;
+  text-align:right;
+}
+#formCreate, #formLogin {
+  width:280px;
+}
+
 .navbar {
   min-height: 88px;
 }
@@ -131,7 +146,7 @@ div.area.overview {
   background-color: #EBF7F7;
 }
 .rotate45 {
-  filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=1);
+  /*filter: progid: DXImageTransform.Microsoft.BasicImage(rotation=1);*/
   -webkit-transform: rotate(45deg);
   -moz-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
@@ -441,7 +456,7 @@ div.card .tab-content {
 div.card {
   background: #fff none repeat scroll 0 0;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  margin: 10px 0;
+  margin: 10px 15px 10px 0;
 }
 
 /* END: API tab styles */
@@ -466,7 +481,7 @@ div.row.col-md-4.well {
 }
 .dropdown-menu.create {
   padding: 20px;
-  min-width: 350px;
+  min-width: 330px;
 }
 i.glyphicon.glyphicon-info-sign.text-info {
   vertical-align: top;
@@ -695,7 +710,7 @@ div.fader {
   background: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(237, 247, 246, 0.5) 50%, rgba(237, 247, 246, 1) 100%);
   background: -o-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(237, 247, 246, 0.5) 50%, rgba(237, 247, 246, 1) 100%);
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(237, 247, 246, 0.5) 50%, rgba(237, 247, 246, 1) 100%);
-  filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#edf7f6', GradientType=0);
+  /*filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#edf7f6', GradientType=0);*/
 }
 .toggleItem, .toggleItemBottom {
   float: right;
@@ -800,10 +815,10 @@ label-green, section.tags-green > span.label {
   }
   .create {
     padding: 20px;
-    min-width: 400px;
+    min-width: 330px;
   }
   .dropdown-menu.create {
-    margin-left: -280px;
+    margin-left: -235px;
   }
   div.area.overview {
     margin: auto;
@@ -838,6 +853,11 @@ label-green, section.tags-green > span.label {
     min-height: 1px;
     padding-right: 0;
     padding-left: 15px;
+  }
+
+  .navbar-header {
+    float: left;
+    padding-left: 10px;
   }
 }
 

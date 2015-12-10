@@ -12,8 +12,8 @@
 </p>
 <span class="hidden-xs hidden-sm">
   <pre class="code-highlight">
-http://&lt;base-url&gt;/livemap?authKey=&lt;authKey&gt;&minx=&lt;int&gt;&miny=&lt;int&gt;&maxx=&lt;int&gt;
-&maxy=&lt;int&gt;&onlyRealtime=&lt;boolean&gt;
+http://&lt;base-url&gt;/livemap?authKey=&lt;authKey&gt;&minx=&lt;int&gt;
+&miny=&lt;int&gt;&maxx=&lt;int&gt;&maxy=&lt;int&gt;&onlyRealtime=&lt;boolean&gt;
   </pre>
 </span>
 
@@ -35,7 +35,7 @@ http://&lt;base-url&gt;/livemap
 </p>
 
 
-<span class="col-md-12 hidden-xs hidden-sm">
+<span class="hidden-xs hidden-sm">
   <pre class="code-highlight">
 http://&lt;base-url&gt;/livemap?authKey=&lt;authKey&gt;&minx=11.957653&miny=57702588
 &maxx=11971943&maxy=57711300&onlyRealtime=yes
@@ -56,32 +56,32 @@ http://&lt;base-url&gt;/livemap
 </p>
 
 <span class="hidden-xs hidden-sm">
-  <pre class="code-highlight">
-  {
-    "livemap":
-    { "maxy": "57711300", "miny": "57702588",
-      "maxx": "11971943", "minx": "11.957653", "time": "09:39:16",
-      "vehicles": [
-        {
-          "delay": "5", "prodclass": "BUS",
-          "direction": "16", "name": "Bus GUL",
-          "y": "57707717", "x": "11935912"
-        },
-        {
-          "delay": "1", "prodclass": "BUS",
-          "direction": "9", "name": "Bus 18",
-          "y": "57704661", "x": "11969155" },
-        …
-        …
-        …
-        { 
-          "prodclass": "BUS", "direction": "21", "name": "Bus 290", 
-          "y": "57702737", "x": "11647179" 
-        }
-      ]
-    }
+<pre class="code-highlight">
+{
+  "livemap":
+  { "maxy": "57711300", "miny": "57702588",
+    "maxx": "11971943", "minx": "11.957653", "time": "09:39:16",
+    "vehicles": [
+      {
+        "delay": "5", "prodclass": "BUS",
+        "direction": "16", "name": "Bus GUL",
+        "y": "57707717", "x": "11935912"
+      },
+      {
+        "delay": "1", "prodclass": "BUS",
+        "direction": "9", "name": "Bus 18",
+        "y": "57704661", "x": "11969155" },
+      ...
+      ...
+      ...
+      {
+        "prodclass": "BUS", "direction": "21", "name": "Bus 290",
+        "y": "57702737", "x": "11647179"
+      }
+    ]
   }
-    </pre>
+}
+</pre>
 </span>
 
 <span class="hidden-md hidden-lg">
@@ -127,8 +127,9 @@ http://&lt;base-url&gt;/livemap
 
 <p>
   Svaret kan förädlas, konverteras och sen användas. Som i följande visualisering på karta via
-  <i><a target="_blank" title="Till geojson.org" href="http://geojson.org/">geojson</a></i> och <i><a target="_blank" title="Till leafletjs.com" href="http://leafletjs.com/">leaflet</a></i>.
+  <i><a target="_blank" title="Till geojson.org" href="http://geojson.org/">geojson</a></i> och
+  <i><a target="_blank" title="Till leafletjs.com" href="http://leafletjs.com/">leaflet</a></i>.
 </p>
 <p>
-  <img src="img/png/livemap-sample.png" alt="Livemap image" class="img-box img-responsive" style="margin:auto;" />
+  <img src="img/png/livemap-sample.png" alt="Livemap image" class="img-responsive img-box" style="width:100%; height:auto;" />
 </p>
