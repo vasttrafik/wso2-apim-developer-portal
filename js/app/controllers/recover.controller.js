@@ -105,7 +105,7 @@
           }
 
         } else {
-          AlertService.error('Problem vid verifieringen av captcha, försök igen');
+          AlertService.error('Problem vid verifieringen av captcha och användarnamn, försök igen (är det korrekt användarnamn?)');
           generateCaptcha();
           vm.form.captcha.captcha = '';
           $scope.passwordRecoveryCaptchaForm.$setPristine();
