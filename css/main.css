@@ -921,3 +921,7 @@ article.newsItem > h2 {
   -ms-text-justify: distribute;
   text-justify: distribute;
 }
+/* Styling for swagger-ui model */
+.pad {
+    line-height: 1.5em;
+}

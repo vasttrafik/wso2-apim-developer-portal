@@ -183,12 +183,12 @@ angular
           delete model.subTypes;
         }
         angular.forEach(model.properties, function(prop) {
-          if (swagger1.models && swagger1.models[prop.type]) {
-            prop.$ref = '#/definitions/' + prop.type;
+          if (swagger1.models && swagger1.models[prop.$ref]) {
+            prop.$ref = '#/definitions/' + prop.$ref;
             delete prop.type;
           }
-          if (prop.items && swagger1.models && swagger1.models[prop.items.type]) {
-            prop.items.$ref = '#/definitions/' + prop.items.type;
+          if (prop.items && swagger1.models && swagger1.models[prop.items.$ref]) {
+            prop.items.$ref = '#/definitions/' + prop.items.$ref;
             delete prop.items.type;
           }
         });
