@@ -53,7 +53,6 @@
         <a href="#/subscriptions" title="Prenumerationer">
           <div class="area overview">
             <span class="fa fa-paper-plane fa-2x" aria-hidden="true"></span>
-
           </div>
         </a>
         <h3>Mina prenumerationer</h3>
@@ -68,8 +67,10 @@
           <span class="fa fa-bar-chart fa-2x" aria-hidden="true"></span>
         </div>
         <h3>Min Statistik</h3>
-
-        <p>Kommer i version 2.</p>
+        <p ng-repeat="entries in vm.applications"><a href="#/statistics/applications/{{entries.id}}">{{entries.name}}</a></p>
+        <a href="#/statistics/applications" title="Statistik">
+          <strong>Visa Detaljer</strong>
+        </a>
       </div>
     </div>
   </div>

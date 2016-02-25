@@ -25,7 +25,7 @@
     function activateAccount() {
       APIService.userCall('usersPut', ['application/json', 'application/json', {
           username: vm.form.activation.username,
-          code: vm.form.activation.code,
+          code: vm.form.activation.code.trim(),
           captcha: {
             imageId: vm.form.activation.imageId,
             secretKey: vm.form.activation.secretKey,

@@ -6,7 +6,7 @@
   'use strict';
 
   angular
-    .module('vtPortal', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ngPasswordStrength', 'ui.validate', 'angular-clipboard', 'ngLocationUpdate', 'swaggerUi', 'duScroll', 'angular-loading-bar'])
+    .module('vtPortal', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ngPasswordStrength', 'ui.validate', 'angular-clipboard', 'ngLocationUpdate', 'swaggerUi', 'duScroll', 'angular-loading-bar', 'ngJSONPath', 'highcharts-ng'])
     .config(config)
     .factory('timeoutHttpIntercept', function($rootScope, $q) {
       return {
@@ -120,6 +120,18 @@
       controllerAs: 'vm'
     })
 
+    .when('/statistics/apis', {
+      controller: 'StatisticsApisCtrl',
+      templateUrl: 'js/app/views/statistics.apis.view.html',
+      controllerAs: 'vm'
+    })
+
+    .when('/statistics/applications/:applicationId?', {
+      controller: 'StatisticsApplicationsCtrl',
+      templateUrl: 'js/app/views/statistics.applications.view.html',
+      controllerAs: 'vm'
+    })
+
     .otherwise({
       redirectTo: '/'
     });
@@ -155,8 +167,12 @@
 
     $rootScope.$on('$locationChangeStart', function(event, next, current) {
 
-      // redirect to startpage page if not logged in and trying to access a restricted page
+      // redirect to startpage if not logged in and trying to access a restricted page
       var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api', 'guides', 'docs', 'news', 'activation', 'recover', 'contact']) === -1;
+
+      if ($location.path().split('/')[1] === 'statistics') {
+        restrictedPage = $location.path().split('/')[2] !== 'apis';
+      }
 
       if (restrictedPage && !$rootScope.user.loggedIn) {
         $location.path('/');
@@ -189,7 +205,7 @@
       function claimsGetResponse(response) {
         // Only include claims set to be displayed by default
         var claims = response.data.filter(function(a) {
-          return a.supportedByDefault === 'true' && a.claimUri !== 'http://wso2.org/claims/challengeQuestion1';
+          return a.supportedByDefault === 'true' && a.claimUri !== 'http://wso2.org/claims/challengeQuestion1' && a.claimUri !== 'http://wso2.org/claims/identity/accountLocked';
         });
 
         // Sort the claims in correct order.

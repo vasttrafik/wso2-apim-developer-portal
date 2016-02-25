@@ -16,12 +16,12 @@
 
     (function init() {
       APIService.call('apisGet', [100, 0])
-        .then(aPIsGetResponse);
+        .then(apisGetResponse);
 
       vm.defaultBaseUrl = defaultBaseUrl;
     })();
 
-    function aPIsGetResponse(response) {
+    function apisGetResponse(response) {
       if (response.status === 200) {
         vm.apis = response.data.list.filter(function(el) {
           return el.status.toUpperCase() !== 'BLOCKED';

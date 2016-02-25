@@ -1,6 +1,8 @@
 {
     "excludeFiles": ["node_modules/**", "bower_components/**"],
 
+    "safeContextKeyword": ["vm"],
+	
     "requireCurlyBraces": [
         "if",
         "else",

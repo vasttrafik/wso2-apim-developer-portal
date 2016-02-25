@@ -558,6 +558,138 @@ var API;
         return this.$http(httpRequestParams);
       };
 
+      /**
+       *
+       * Retrieves combined statistics for chosen source
+       * @param type List of statistic types.
+       * @param grouping Date grouping for statistics. Defaults to / day.
+       * @param period Period of statistics data to include. Defaults to 'week'.
+       * @param source Source of statistics info. Either for API gateway or applications.
+       */
+      DefaultApi.prototype.statisticsGet = function (source, type, period, grouping, extraHttpRequestParams) {
+          var path = this.basePath + '/statistics';
+          var queryParameters = {};
+          var headerParams = {};
+
+          if (!source) {
+              throw new Error('Missing required parameter source when calling statisticsGet');
+          }
+          // verify required parameter 'type' is set
+          if (!type) {
+              throw new Error('Missing required parameter type when calling statisticsApiNameApiVersionGet');
+          }
+
+          if (source !== undefined) {
+              queryParameters['source'] = source;
+          }
+          if (type !== undefined) {
+              queryParameters['type'] = type;
+          }
+          if (period !== undefined) {
+              queryParameters['period'] = period;
+          }
+          if (grouping !== undefined) {
+              queryParameters['grouping'] = grouping;
+          }
+          var httpRequestParams = {
+              method: 'GET',
+              url: path,
+              json: true,
+              params: queryParameters,
+              headers: headerParams
+          };
+          if (extraHttpRequestParams) {
+              httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+          }
+          return this.$http(httpRequestParams);
+      };
+      /**
+       *
+       * Retrieves statistics available for specified applicationId
+       * @param apiName The api name
+       * @param apiVersion The api version
+       * @param type Statistics type
+       * @param period Period of statistics data to include. Defaults to 'week'.
+       * @param grouping Date grouping for statistics. Defaults to / day.
+       */
+      DefaultApi.prototype.statisticsApiNameApiVersionGet = function (apiName, apiVersion, type, period, grouping, extraHttpRequestParams) {
+          var path = this.basePath + '/statistics/{apiName}/{apiVersion}'
+              .replace('{' + 'apiName' + '}', String(apiName))
+              .replace('{' + 'apiVersion' + '}', String(apiVersion));
+          var queryParameters = {};
+          var headerParams = {};
+          // verify required parameter 'apiName' is set
+          if (!apiName) {
+              throw new Error('Missing required parameter apiName when calling statisticsApiNameApiVersionGet');
+          }
+          // verify required parameter 'apiVersion' is set
+          if (!apiVersion) {
+              throw new Error('Missing required parameter apiVersion when calling statisticsApiNameApiVersionGet');
+          }
+          // verify required parameter 'type' is set
+          if (!type) {
+              throw new Error('Missing required parameter type when calling statisticsApiNameApiVersionGet');
+          }
+          if (period !== undefined) {
+              queryParameters['period'] = period;
+          }
+          if (grouping !== undefined) {
+              queryParameters['grouping'] = grouping;
+          }
+          if (type !== undefined) {
+              queryParameters['type'] = type;
+          }
+          var httpRequestParams = {
+              method: 'GET',
+              url: path,
+              json: true,
+              params: queryParameters,
+              headers: headerParams
+          };
+          if (extraHttpRequestParams) {
+              httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+          }
+          return this.$http(httpRequestParams);
+      };
+      /**
+       *
+       * Retrieves statistics available for specified applicationId
+       * @param applicationName The application name
+       * @param type Statistics type
+       * @param grouping Date grouping for statistics. Defaults to / day.
+       */
+      DefaultApi.prototype.statisticsApplicationNameGet = function (applicationName, type, grouping, extraHttpRequestParams) {
+          var path = this.basePath + '/statistics/{applicationName}'
+              .replace('{' + 'applicationName' + '}', String(applicationName));
+          var queryParameters = {};
+          var headerParams = {};
+          // verify required parameter 'applicationName' is set
+          if (!applicationName) {
+              throw new Error('Missing required parameter applicationName when calling statisticsApplicationNameGet');
+          }
+          // verify required parameter 'type' is set
+          if (!type) {
+              throw new Error('Missing required parameter type when calling statisticsApplicationNameGet');
+          }
+          if (grouping !== undefined) {
+              queryParameters['grouping'] = grouping;
+          }
+          if (type !== undefined) {
+              queryParameters['type'] = type;
+          }
+          var httpRequestParams = {
+              method: 'GET',
+              url: path,
+              json: true,
+              params: queryParameters,
+              headers: headerParams
+          };
+          if (extraHttpRequestParams) {
+              httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+          }
+          return this.$http(httpRequestParams);
+      };
+
       DefaultApi.prototype.subscriptionsGet = function(accept, ifNoneMatch, extraHttpRequestParams) {
         var path = this.basePath + '/subscriptions';
 
