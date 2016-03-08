@@ -167,7 +167,11 @@
     }
 
     function calculatePercentageChange(value, previousValue) {
-      return Math.floor(((value / previousValue) * 100) - 100);
+      if (value !== 0 && previousValue !== 0) {
+        return Math.floor(((value / previousValue) * 100) - 100);
+      } else {
+        return 0;
+      }
     }
 
   }

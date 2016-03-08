@@ -192,7 +192,7 @@
         vm.statistics.uniqueUsersDayChangeNumber = Math.abs(uniqueUsers.series[0].values[valuesLength - 1] - uniqueUsers.series[0].values[valuesLength - 2]);
       }
       /* Check if first date is from last week and last date is from today. This means it's possible to compare them */
-      if (valuesLength > 1 && Date.create(uniqueUsers.series[0].names[0]).is('9 days ago') && Date.create(uniqueUsers.series[0].names[valuesLength - 1]).isToday()) {
+      if (valuesLength > 1 && Date.create(uniqueUsers.series[0].names[0]).is('8 days ago') && Date.create(uniqueUsers.series[0].names[valuesLength - 1]).isToday()) {
         vm.statistics.uniqueUsersWeekChange = calculatePercentageChange(uniqueUsers.series[0].values[valuesLength - 1], uniqueUsers.series[0].values[0]);
         vm.statistics.uniqueUsersWeekChangeNumber = Math.abs(uniqueUsers.series[0].values[valuesLength - 1] - uniqueUsers.series[0].values[0]);
         uniqueUsers.series[0].values.shift(); // Remove first day
@@ -277,7 +277,12 @@
     }
 
     function calculatePercentageChange(value, previousValue) {
-      return Math.floor(((value / previousValue) * 100) - 100);
+      if (value !== 0 && previousValue !== 0) {
+        return Math.floor(((value / previousValue) * 100) - 100);
+      } else {
+        return 0;
+      }
+
     }
 
   }
