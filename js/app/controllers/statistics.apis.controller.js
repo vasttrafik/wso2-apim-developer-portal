@@ -61,7 +61,7 @@
       }
     }
 
-    /* Update statistics based on user choice of API */
+    /* Update statistics based on user choice of API and period */
     $scope.$watchCollection('[vm.selectedApiIndex, vm.selectedPeriodIndex]', function() {
 
       if (vm.selectedApiIndex != null) {

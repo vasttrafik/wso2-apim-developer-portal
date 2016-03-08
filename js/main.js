@@ -1,6 +1,9 @@
 /*global Highcharts*/
+//var defaultBaseUrl = 'http://localhost:9763/portal-api';
 var defaultBaseUrl = 'https://wso2publisher-test.vt.net:9444/portal-api';
+//var userBaseUrl = 'http://localhost:9763/idmgt-api';
 var userBaseUrl = 'https://wso2publisher-test.vt.net:9444/idmgt-api';
+var communityBaseUrl = 'http://localhost:8080';
 
 var newsItems = [{
   id: '0',
@@ -44,8 +47,7 @@ var newsItems = [{
   title: 'Så byggde vi den nya portalen',
   contentUrl: 'js/app/views/news/portal-how.view.html',
   tags: ['Api', 'Nytt']
-},
-];
+}];
 
 var chartConfig = {
 
@@ -151,7 +153,6 @@ var chartConfig = {
       name: 'Unika användare',
       showInLegend: false,
       color: '#90ed7d',
-      pointWidth: 20,
       data: []
 
     }]
@@ -211,7 +212,10 @@ var chartConfig = {
       text: null
     },
     xAxis: [{
-      crosshair: true
+      crosshair: true,
+      labels: {
+        rotation: -45
+      }
     }],
     series: [{
       name: 'Antal requests',
@@ -291,7 +295,6 @@ var chartConfig = {
     series: [{
       name: 'Requests',
       showInLegend: false,
-      pointWidth: 20,
       data: []
     }]
   },
@@ -300,6 +303,11 @@ var chartConfig = {
     options: {
       title: {
         text: null
+      },
+      xAxis: {
+        labels: {
+          enabled: true
+        }
       },
       yAxis: {
         labels: {
@@ -323,20 +331,15 @@ var chartConfig = {
       },
       credits: {
         enabled: false
-      }
-    },
-    xAxis: {
-      labels: {
-        enabled: true
-      }
-    },
-    series: [{
-      name: 'Requests',
-      type: 'spline',
-      showInLegend: false,
-      pointWidth: 20,
-      data: []
-    }]
+      },
+      series: [{
+        name: 'Requests',
+        type: 'spline',
+        showInLegend: false,
+        pointWidth: 20,
+        data: []
+      }]
+    }
   },
 
   totalFaults: {
@@ -398,9 +401,8 @@ var chartConfig = {
     },
     series: [{
       name: 'Fel',
-      color: '#BA3C3D',
+      color: 'rgba(186,60,61,1)',
       showInLegend: false,
-      pointWidth: 20,
       data: []
     }]
   }

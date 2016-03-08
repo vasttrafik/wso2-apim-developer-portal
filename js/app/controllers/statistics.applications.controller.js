@@ -122,6 +122,13 @@
 
       calculateChangeValues(totalRequestsFaults.series);
 
+      totalRequestsFaults.series[0].names.forEach(function(entry, index) {
+        totalRequestsFaults.series[0].names[index] = entry.substring(5, entry.length);
+      });
+      totalRequestsFaults.series[1].names.forEach(function(entry, index) {
+        totalRequestsFaults.series[1].names[index] = entry.substring(5, entry.length);
+      });
+
       vm.charts.totalRequests.xAxis.categories = totalRequestsFaults.series[0].names;
       vm.charts.totalRequests.series[0].data = totalRequestsFaults.series[0].values;
 
@@ -191,6 +198,10 @@
         uniqueUsers.series[0].values.shift(); // Remove first day
         uniqueUsers.series[0].names.shift(); // Remove first value
       }
+
+      uniqueUsers.series[0].names.forEach(function(entry, index) {
+        uniqueUsers.series[0].names[index] = entry.substring(5, entry.length);
+      });
 
       vm.charts.uniqueUsers.xAxis.categories = uniqueUsers.series[0].names;
       vm.charts.uniqueUsers.series[0].data = uniqueUsers.series[0].values;

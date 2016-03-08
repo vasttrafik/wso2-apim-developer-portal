@@ -62,7 +62,8 @@
         <div ng-if="vm.charts.requestResponseTimes.length > 0" class="row padding-medium border-top padding-right-left-xs">
           <div class="col-md-12 text-center">
             <h1>Antal requests och genomsnittlig svarstid per API resurs</h1>
-            <highchart ng-repeat="entries in vm.charts.requestResponseTimes track by $index" id="request-responses-chart-$index" config="vm.charts.requestResponseTimes[$index]" class="padding-top-bottom"></highchart>
+            <h3 class="faded">Kombinerad data ifrån {{vm.periods[vm.selectedPeriodIndex].label}}</h3>
+            <highchart ng-repeat="entries in vm.charts.requestResponseTimes track by $index" id="request-responses-chart-$index" config="vm.charts.requestResponseTimes[$index]" class="padding-top-bottom" style="height: 600px"></highchart>
           </div>
         </div>
 
