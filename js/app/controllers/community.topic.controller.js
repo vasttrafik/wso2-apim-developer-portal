@@ -1,0 +1,240 @@
+/*global newsItems*/
+(function() {
+  'use strict';
+
+  angular
+    .module('vtPortal')
+    .controller('CommunityTopicCtrl', CommunityTopicCtrl);
+
+  CommunityTopicCtrl.$inject = ['AlertService', 'APIService', '$routeParams', '$scope', '$location'];
+
+  function CommunityTopicCtrl(AlertService, APIService, $routeParams, $scope, $location) {
+    var vm = this;
+
+    vm.addAnswer = addAnswer;
+    vm.addComment = addComment;
+    vm.removePost = removePost;
+    vm.updatePost = updatePost;
+    vm.togglePostComment = togglePostComment;
+    vm.togglePostCommentUpdate = togglePostCommentUpdate;
+    vm.resetAddAnswerForm = resetAddAnswerForm;
+    vm.addPostCommentUpdate = addPostCommentUpdate;
+    vm.addTopicUpdate = addTopicUpdate;
+    vm.updateTopic = updateTopic;
+    vm.removeTopic = removeTopic;
+
+    (function init() {
+
+      vm.memberId = 1;
+      vm.togglePostsComments = [];
+      vm.toggleTopicUpdate = false;
+      vm.togglePostsCommentsUpdate = [];
+      vm.form = {};
+      vm.form.posts = [];
+      vm.form.comments = [];
+
+      APIService.communityCall('topicsIdGet', [$routeParams.topicId])
+        .then(topicsIdGetResponse);
+
+    })();
+
+    function topicsIdGetResponse(response) {
+      if (response.status === 200) {
+        vm.topic = response.data;
+
+      } else {
+        AlertService.error('Problem att hämta topic');
+      }
+    }
+
+    function addComment(postId) {
+
+      APIService.communityCall('postsPost', [{
+          topicId: vm.topic.id,
+          forumId: vm.topic.forumId,
+          type: 'comment',
+          text: vm.form.comments[postId],
+          ml: 'md',
+          commentTo: {
+            id: postId
+          }
+        }])
+        .then(postsPostCommentResponse);
+
+      function postsPostCommentResponse(response) {
+        if (response.status === 200) {
+          AlertService.success('Kommentar skickat!');
+          vm.topic.posts.push(response.data);
+          togglePostComment(postId);
+
+        } else {
+          AlertService.error('Problem att skicka kommentar');
+        }
+      }
+
+    }
+
+    function addAnswer() {
+
+      APIService.communityCall('postsPost', [{
+          topicId: vm.topic.id,
+          forumId: vm.topic.forumId,
+          type: 'answer',
+          text: vm.form.answer,
+          ml: 'md'
+        }])
+        .then(postsPostAnswerResponse);
+
+      function postsPostAnswerResponse(response) {
+        if (response.status === 200) {
+          AlertService.success('Svar skickat!');
+          vm.topic.posts.push(response.data);
+          vm.topic.numberOfReplies++;
+          resetAddAnswerForm();
+
+        } else {
+          AlertService.error('Problem att skicka svar');
+        }
+      }
+
+    }
+
+    function addTopicUpdate() {
+
+      vm.toggleTopicUpdate = !vm.toggleTopicUpdate;
+      vm.form.subject = angular.copy(vm.topic.subject);
+
+    }
+
+    function removePost(postId, comment) {
+
+      var i = 0;
+      for (i; i < vm.topic.posts.length; i++) {
+        if (vm.topic.posts[i].id === postId) {
+          if (confirm('Är du säker på att du vill ta bort ' + (comment ? 'kommentaren' : 'svaret') + ': ' + vm.topic.posts[i].text.substring(0, 20) + '...?') === true) {
+            APIService.communityCall('postsIdDelete', [postId])
+              .then(postsIdDeleteResponse);
+            break;
+          }
+        }
+      }
+
+      function postsIdDeleteResponse(response) {
+        if (response.status === 200) {
+          AlertService.success((comment ? 'Kommentaren' : 'Svaret') + 'borttaget!');
+          vm.topic.posts[i].isDeleted = true;
+          vm.topic.numberOfPosts--;
+          if (comment) {
+            vm.topic.numberOfReplies--;
+          }
+        } else {
+          AlertService.error('Problem att ta bort svar');
+        }
+      }
+    }
+
+    function updatePost(postId) {
+
+      var i = 0;
+      for (i; i < vm.topic.posts.length; i++) {
+        if (vm.topic.posts[i].id === postId) {
+          APIService.communityCall('postsIdPut', [postId, {
+              id: postId,
+              topicId: vm.topic.posts[i].topicId,
+              type: vm.topic.posts[i].type,
+              ml: vm.topic.posts[i].ml,
+              text: vm.form.posts[postId]
+            }])
+            .then(postsIdPutResponse);
+          break;
+        }
+      }
+
+      function postsIdPutResponse(response) {
+        if (response.status === 200) {
+          AlertService.success('Post uppdaterad!');
+          vm.topic.posts[i] = response.data;
+          togglePostCommentUpdate(postId);
+        } else {
+          AlertService.error('Problem att uppdatera post');
+        }
+      }
+
+    }
+
+    function updateTopic() {
+
+      APIService.communityCall('topicsIdPut', [vm.topic.id, {
+          forumId: vm.topic.forumId,
+          subject: vm.form.subject
+        }])
+        .then(topicsIdPutResponse);
+
+      function topicsIdPutResponse(response) {
+        if (response.status === 200) {
+          AlertService.success('Topic uppdaterad!');
+          vm.topic.subject = vm.form.subject;
+          vm.toggleTopicUpdate = false;
+        } else {
+          AlertService.error('Problem att uppdatera topic');
+        }
+      }
+
+    }
+
+    function removeTopic() {
+
+      if (confirm('Är du säker på att du vill ta bort denna topic?') === true) {
+        APIService.communityCall('topicsIdDelete', [vm.topic.id])
+          .then(topicsIdDeleteResponse);
+      }
+
+      function topicsIdDeleteResponse(response) {
+        if (response.status === 200) {
+          AlertService.success('Topic borttagen!');
+
+          $location.path('/community/forum/' + vm.topic.forumId); // Redirect to parent forum
+
+        } else {
+          AlertService.error('Problem att uppdatera topic');
+        }
+      }
+
+    }
+
+    function resetAddAnswerForm() {
+      vm.form.answer = '';
+      $scope.addAnswerForm.$setPristine();
+    }
+
+    function addPostCommentUpdate(id) {
+      for (var i = 0; i < vm.topic.posts.length; i++) {
+        if (vm.topic.posts[i].id === id) {
+          vm.form.posts[id] = angular.copy(vm.topic.posts[i].text);
+          break;
+        }
+      }
+      togglePostCommentUpdate(id);
+    }
+
+    function togglePostComment(commentId) {
+      if (vm.togglePostsComments.indexOf(commentId) === -1) {
+        vm.togglePostsComments.push(commentId);
+      } else {
+        vm.togglePostsComments.splice(vm.togglePostsComments.indexOf(commentId), 1);
+        delete vm.form.comments[commentId];
+      }
+    }
+
+    function togglePostCommentUpdate(id) {
+      if (vm.togglePostsCommentsUpdate.indexOf(id) === -1) {
+        vm.togglePostsCommentsUpdate.push(id);
+      } else {
+        vm.togglePostsCommentsUpdate.splice(vm.togglePostsCommentsUpdate.indexOf(id), 1);
+        delete vm.form.posts[id];
+      }
+    }
+
+  }
+
+})();

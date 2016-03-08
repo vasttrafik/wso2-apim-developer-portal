@@ -307,12 +307,16 @@
   <script src="js/vendor/tooltip.js"></script>
   <script src="js/vendor/angular-scroll.min.js"></script>
   <script src="js/vendor/sugar.min.js"></script>
+  <script src="js/vendor/sugar-sv.js"></script>
   <script src="js/vendor/highcharts-ng.min.js"></script>
+  <script src="js/vendor/showdown.min.js"></script>
+  <script src="js/vendor/markdown.js"></script>
 
   <script src="js/main.js"></script>
 
   <script src="js/api/DefaultApi.js"></script>
   <script src="js/api/UserApi.js"></script>
+  <script src="js/api/CommunityApi.js"></script>
 
   <script src="js/app/app.js"></script>
 
@@ -332,6 +336,10 @@
   <script src="js/app/controllers/subscriptions.controller.js"></script>
   <script src="js/app/controllers/overview.controller.js"></script>
   <script src="js/app/controllers/news.controller.js"></script>
+  <script src="js/app/controllers/community.controller.js"></script>
+  <script src="js/app/controllers/community.category.controller.js"></script>
+  <script src="js/app/controllers/community.forum.controller.js"></script>
+  <script src="js/app/controllers/community.topic.controller.js"></script>
   <script src="js/app/controllers/statistics.applications.controller.js"></script>
   <script src="js/app/controllers/statistics.apis.controller.js"></script>
 
@@ -340,6 +348,8 @@
 
   <script>
     $(document).ready(function() {
+
+    Date.setLocale('sv');
 
       $(function() {
         $('.dropdown-menu, .dropdown-menu input, .noclick').click(function(event) {

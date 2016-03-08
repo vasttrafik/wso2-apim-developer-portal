@@ -1,0 +1,178 @@
+<div class="jumbotron title">
+  <div class="container no-padding-left">
+    <ol class="breadcrumb">
+      <li><a href="#/" target="_self">Hem</a></li>
+      <li><a href="#/community" target="_self">Community</a></li>
+      <li><a href="#/community/category/{{vm.topic.categoryId}}" target="_self">{{vm.topic.categoryName}}</a></li>
+      <li><a href="#/community/forum/{{vm.topic.forumId}}" target="_self">{{vm.topic.forumName}}</a></li>
+      <li class="active">{{vm.topic.subject}}</li>
+    </ol>
+    <span style="float: right; cursor: pointer" ng-if="vm.topic.createdBy.id === vm.memberId && vm.topic.numberOfPosts < 2" ng-click="vm.removeTopic()"><i class="fa fa-trash"></i></span>
+    <span style="float: right; cursor: pointer; margin-right: 5px" ng-if="vm.topic.createdBy.id === vm.memberId" ng-click="vm.addTopicUpdate()"><i class="fa fa-pencil-square-o"></i></span>
+
+    <h1 ng-if="!vm.toggleTopicUpdate">{{vm.topic.subject}}</h1>
+
+    <div ng-if="vm.toggleTopicUpdate">
+      <form name="updateTopicForm" ng-submit="vm.updateTopic" role="form">
+        <div class="form-group" ng-class="{ 'has-error': updateTopicForm.subject.$dirty && updateTopicForm.subject.$invalid,
+  'has-success' : updateTopicForm.subject.$valid}">
+          <input type="text" name="subject" id="subject" class="form-control" ng-model="vm.form.subject" required />
+        </div>
+
+        <div class="form-actions" style="float: right">
+          <button type="submit" ng-disabled="updateTopicForm.$invalid || vm.dataLoadingUpdateTopic" class="btn btn-primary">Uppdatera</button>
+          <span ng-click="vm.toggleTopicUpdate = false" class="btn btn-link">Ångra</span>
+        </div>
+      </form>
+    </div>
+</div>
+</div>
+
+<div class="container">
+  <div class="row padding-top-bottom" ng-class="$index !== 0 ? 'border-top' : ''" ng-repeat="entries in vm.topic.posts" ng-if="entries.type === 'answer' || entries.type === 'question'">
+
+    <div class="col-md-1 text-center">
+      <div ng-if="!entries.isDeleted">
+        <div>
+          <span class="fa-stack">
+                      <i class="fa fa-chevron-up fa-stack-1x" ng-class="(entries.pointUpBy.indexOf(vm.memberId) === -1 ) ? 'voted' : 'vote'"></i>
+                    </span>
+        </div>
+        <div>
+          {{entries.pointsAwarded}}
+        </div>
+        <div>
+          <span class="fa-stack">
+                    <i class="fa fa-chevron-down fa-stack-1x" ng-class="(entries.pointDownBy.indexOf(vm.memberId) === -1) ? 'voted' : 'vote'"></i>
+                  </span>
+
+          <div>
+            <i class="fa fa-check-circle" ng-class="entries.isAnswer ? 'answer' : 'not-answer'" ng-if="entries.isAnswer"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-11">
+      <div ng-if="!entries.isDeleted && vm.togglePostsCommentsUpdate.indexOf(entries.id) === -1">
+        <div class="row" style="padding-bottom: 10px">
+          <span class="fa-stack">
+                      <i class="fa fa-circle fa-stack-2x" style="color:#00AAEB"></i>
+                      <i class="fa fa-user fa-stack-1x fa-inverse" style="color:#FFFFFF"></i>
+                    </span> <a href="signature" style="padding-right: 10px">{{entries.createdBy.signature}}</a>&bull;
+          <span style="margin-left: 5px">{{entries.createDate | relativeDate}}</span>
+          <span ng-if="entries.numberOfTimesEdited > 0" style="margin-left: 5px"><span style="margin-right: 5px">&bull;</span> Editerad {{entries.editDate | relativeDate}}</span>
+          <span style="float: right; cursor: pointer" ng-if="entries.createdBy.id === vm.memberId" ng-click="vm.removePost(entries.id)"><i class="fa fa-trash"></i></span>
+          <span style="float: right; cursor: pointer; margin-right: 5px" ng-if="entries.createdBy.id === vm.memberId" ng-click="vm.addPostCommentUpdate(entries.id)"><i class="fa fa-pencil-square-o"></i></span>
+        </div>
+
+        <div class="row simple-well" style="margin-bottom: 10px; padding-bottom: 10px" btf-markdown="entries.text">
+        </div>
+      </div>
+
+      <div ng-if="!entries.isDeleted && vm.togglePostsCommentsUpdate.indexOf(entries.id) !== -1" class="row well">
+        <form name="updatetPostForm" ng-submit="vm.updatePost(entries.id)" role="form">
+          <div class="form-group" ng-class="{ 'has-error': updatePostForm.answer.$dirty && updatePostForm.answer.$invalid,
+'has-success' : updatePostForm.answer.$valid}">
+            <label for="post{{entries.id}}" ng-if="$index === 0">Fråga</label>
+            <label for="post{{entries.id}}" ng-if="$index !== 0">Svar</label>
+            <span style="float: right; font-size: 0.9em"><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown Cheat Sheet</a></span>
+            <textarea id="post{{entries.id}}" type="text" class="form-control" ng-model="vm.form.posts[entries.id]" style="height: 100px; margin-bottom: 20px" required></textarea>
+            <label for="description" ng-show="vm.form.posts[entries.id]">Förhandsgranskning</label>
+            <div btf-markdown="vm.form.posts[entries.id]">
+            </div>
+          </div>
+
+          <div class="form-actions noclick" style="float: right">
+            <button type="submit" ng-disabled="updatePostForm.$invalid" class="btn btn-primary">Uppdatera</button>
+            <span ng-click="vm.togglePostCommentUpdate(entries.id)" class="btn btn-link">Ångra</span>
+          </div>
+        </form>
+      </div>
+
+      <div ng-if="entries.isDeleted" class="row simple-well" style="margin-bottom: 10px; padding-bottom: 10px">
+        Svaret borttaget av användaren {{entries.modifiedDate | relativeDate}}
+      </div>
+
+      <div ng-class="$index !== 0 ? 'border-top' : ''" ng-repeat="comment in vm.topic.posts | limitTo:vm.topic.posts.length-$parent.$index:$parent.$index+1" ng-if="comment.commentTo.id === entries.id" style="padding-bottom: 10px;">
+        <div ng-if="!comment.isDeleted && vm.togglePostsCommentsUpdate.indexOf(comment.id) === -1">
+          <a href="something" style="padding-right: 10px">{{comment.createdBy.signature}}</a>&bull;
+          <span style="margin-left: 5px">{{comment.createDate | relativeDate}}</span>
+          <span style="float: right; cursor: pointer" ng-if="comment.createdBy.id === vm.memberId" ng-click="vm.removePost(comment.id, true)"><i class="fa fa-trash"></i></span>
+          <span style="float: right; cursor: pointer; margin-right: 5px" ng-if="comment.createdBy.id === vm.memberId" ng-click="vm.addPostCommentUpdate(comment.id)"><i class="fa fa-pencil-square-o"></i></span>
+          <div btf-markdown="comment.text">
+          </div>
+        </div>
+        <div ng-if="!comment.isDeleted && vm.togglePostsCommentsUpdate.indexOf(comment.id) !== -1">
+          <form name="updateCommentForm{{comment.id}}" ng-submit="vm.updatePost(comment.id)" role="form">
+            <div class="form-group" ng-class="{ 'has-error': updateCommentForm{{comment.id}}.comment.$dirty && updateCommentForm{{comment.id}}.comment.$invalid,
+      'has-success' : updateCommentForm{{comment.id}}.comment.$valid}">
+              <input type="text" name="comment" id="comment{{comment.id}}" class="form-control" ng-model="vm.form.posts[comment.id]" required></input>
+            </div>
+
+            <div class="form-actions" style="text-align: right">
+              <button type="submit" ng-disabled="updateCommentForm{{comment.id}}.$invalid || vm.dataLoadingUpdateComment" class="btn btn-primary">Uppdatera</button>
+              <span ng-click="vm.togglePostCommentUpdate(comment.id)" class="btn btn-link">Ångra</span>
+            </div>
+          </form>
+        </div>
+        <div ng-if="comment.isDeleted">
+          Kommentaren borttagen av användaren {{comment.modifiedDate | relativeDate}}
+        </div>
+
+      </div>
+
+      <div ng-click="vm.togglePostComment(entries.id)" ng-if="vm.togglePostsComments.indexOf(entries.id) === -1" style="float: right; cursor: pointer;"><u>Skriv en kommentar</u></div>
+
+
+      <div ng-if="vm.togglePostsComments.indexOf(entries.id) !== -1">
+        <form name="addCommentForm{{entries.id}}" ng-submit="vm.addComment(entries.id)" role="form">
+          <div class="form-group" ng-class="{ 'has-error': addCommentForm{{entries.id}}.comment.$dirty && addCommentForm{{entries.id}}.comment.$invalid,
+    'has-success' : addCommentForm{{entries.id}}.comment.$valid}">
+            <input type="text" name="comment" id="comment{{entries.id}}" class="form-control" ng-model="vm.form.comments[entries.id]" placeholder="Skriv en kommentar..." required />
+          </div>
+
+          <div class="form-actions" style="float: right">
+            <button type="submit" ng-disabled="addCommentForm{{entries.id}}.$invalid || vm.dataLoadingAddApplication" class="btn btn-primary">Skicka</button>
+            <span ng-click="vm.togglePostComment(entries.id)" class="btn btn-link">Ångra</span>
+          </div>
+        </form>
+      </div>
+
+    </div>
+
+    <div ng-if="$index === 0" class="row">
+      <div class="col-md-12" style="margin-bottom: -40px; margin-left: 20px">
+        <h2>{{vm.topic.numberOfReplies}} svar</h2>
+      </div>
+    </div>
+
+  </div>
+
+  <div>
+    <div class="container" style="padding-left: 0; padding-bottom: 0">
+      <h2>Skriv ett svar</h2>
+    </div>
+
+    <div class="container" style="padding-bottom: 20px;">
+      <div class="row well">
+        <form name="addAnswerForm" ng-submit="vm.addAnswer()" role="form">
+          <div class="form-group" ng-class="{ 'has-error': addAnswerForm.answer.$dirty && addAnswerForm.answer.$invalid,
+'has-success' : addAnswerForm.answer.$valid}">
+            <label for="answer">Svar</label>
+            <span style="float: right; font-size: 0.9em"><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown Cheat Sheet</a></span>
+            <textarea id="answer" type="text" class="form-control" ng-model="vm.form.answer" style="height: 100px; margin-bottom: 20px" required></textarea>
+            <label for="description" ng-show="vm.form.answer">Förhandsgranskning</label>
+            <div btf-markdown="vm.form.answer">
+            </div>
+          </div>
+
+          <div class="form-actions noclick" style="float: right">
+            <button type="submit" ng-disabled="addAnswerForm.$invalid" class="btn btn-primary">Skicka</button>
+            <span ng-click="vm.resetAddAnswerForm();" class="btn btn-link">Ångra</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,74 @@
+<div class="jumbotron title">
+  <div class="container no-padding-left">
+    <ol class="breadcrumb">
+      <li><a href="#/" target="_self">Hem</a></li>
+      <li><a href="#/community" target="_self">Community</a></li>
+      <li class="active">{{vm.category.name}}</li>
+    </ol>
+    <h1>{{vm.category.name}}</h1>
+  </div>
+</div>
+
+<div class="container no-padding-top">
+  <div class="row padding-bottom">
+    <h2>{{vm.category.description}}</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-4 cat-id-1" style="color: #fff; height: 200px">
+      <h3 class="truncate">Hur lägger jag till fler poster?</h2>
+      <p><strong>Technical Support Forum</strong></p>
+      <p>5 dagar sedan</p>
+      <span style="position: absolute;bottom: 5px;right: 10px;" data-toggle="tooltip" data-original-title="Populär"><i class="fa fa-line-chart"></i></span>
+    </div>
+    <div class="col-md-4">
+      <div class="col-md-12 cat-id-2" style="color: #fff; height: 200px">
+        <h3 class="truncate">Anvädnning av Reseplanerar API:et</h2>
+        <p><strong>API Forum</strong></p>
+        <p>2 dagar sedan</p>
+        <span style="position: absolute;bottom: 0px;right: 10px;" data-toggle="tooltip" data-original-title="Senaste"><i class="fa fa-sort-asc"></i></span>
+      </div>
+    </div>
+    <div class="col-md-4" style="padding-left: 0px">
+      <div class="col-md-12 cat-id-3" style="color: #fff; height: 200px">
+        <h3 class="truncate">Antal requests som jag får skicka?</h2>
+        <p><strong>General Forum</strong></p>
+        <p>7 timmar sedan</p>
+        <span style="position: absolute;bottom: 5px;right: 10px;" data-toggle="tooltip" data-original-title="Obesvarad fråga"><i class="fa fa-question"></i></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+      <table class="table table-borderless">
+        <thead class="table-header">
+          <tr>
+            <th colspan="3"><h1>Forum</h1></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="entries in vm.category.forums | orderBy:'id'">
+            <td style="width: 50px">
+              <div class="area area-small cat-id-{{entries.categoryId}}">
+                <span ng-if="entries.id === 1" class="fa fa-desktop fa-2x" aria-hidden="true"></span>
+                <span ng-if="entries.id === 2" class="fa fa-cloud fa-2x" aria-hidden="true"></span>
+                <span ng-if="entries.id === 3" class="fa fa-paper-plane fa-2x" aria-hidden="true"></span>
+                <span ng-if="entries.id === 4" class="fa fa-support fa-2x" aria-hidden="true"></span>
+              </div>
+            </td>
+            <td>
+              <h2 style="margin-bottom: 0px"><a href="#/community/forum/{{entries.id}}">{{entries.name}}</a></h2>
+              <p>{{entries.description}}</p>
+            </td>
+            <td class="text-center">
+              <h2 style="margin-bottom: 0px">{{entries.numberOfTopics}}</h2>
+              <p>Topics</p>
+            </td>
+            <td class="text-center">
+              <h2 style="margin-bottom: 0px">{{entries.numberOfPosts}}</h2>
+              <p>Posts</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+</div>
