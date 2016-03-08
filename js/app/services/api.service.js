@@ -14,11 +14,14 @@
     var service = {};
     var apiClient = new API.Client.DefaultApi($http, null, $httpParamSerializer); // jshint ignore:line
     var userApiClient = new UserAPI.Client.UserApi($http, null, $httpParamSerializer); // jshint ignore:line
+    var communityApiClient = new CommunityAPI.Client.CommunityApi($http, null, $httpParamSerializer); // jshint ignore:line
 
     service.call = call;
     service.userCall = userCall;
+    service.communityCall = communityCall;
     service.getApiBasePath = getApiBasePath;
     service.getUserApiBasePath = getUserApiBasePath;
+    service.getCommunityApiBasePath = getCommunityApiBasePath;
 
     return service;
 
@@ -30,6 +33,10 @@
       return userApiClient.basePath;
     }
 
+    function getCommunityApiBasePath() {
+      return communityApiClient.basePath;
+    }
+
     /*
       Wrapper function for calls towards user backend API
     */
@@ -37,6 +44,26 @@
       var deferred = $q.defer();
 
       userApiClient[funcName].apply(userApiClient, args)
+        .then(function(response) {
+          deferred.resolve(response);
+        }, function(response) {
+          apiErrorResponse(response, deferred, doNotLogout);
+        })
+        .catch(function(response) {
+          apiErrorResponse(response, deferred);
+        });
+
+      return deferred.promise;
+
+    }
+
+    /*
+      Wrapper function for calls towards user backend API
+    */
+    function communityCall(funcName, args, doNotLogout) {
+      var deferred = $q.defer();
+
+      communityApiClient[funcName].apply(communityApiClient, args)
         .then(function(response) {
           deferred.resolve(response);
         }, function(response) {

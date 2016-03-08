@@ -6,7 +6,7 @@
   'use strict';
 
   angular
-    .module('vtPortal', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ngPasswordStrength', 'ui.validate', 'angular-clipboard', 'ngLocationUpdate', 'swaggerUi', 'duScroll', 'angular-loading-bar', 'ngJSONPath', 'highcharts-ng'])
+    .module('vtPortal', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ngPasswordStrength', 'ui.validate', 'angular-clipboard', 'ngLocationUpdate', 'swaggerUi', 'duScroll', 'angular-loading-bar', 'ngJSONPath', 'highcharts-ng','btford.markdown'])
     .config(config)
     .factory('timeoutHttpIntercept', function($rootScope, $q) {
       return {
@@ -24,6 +24,11 @@
           }
           return index === 0 ? match.toLowerCase() : match.toUpperCase();
         });
+      };
+    })
+    .filter('relativeDate', function() {
+      return function(input, all) {
+        return Date.create(input).relative();
       };
     })
     .run(run)
@@ -108,6 +113,30 @@
       controllerAs: 'vm'
     })
 
+    .when('/community', {
+      controller: 'CommunityCtrl',
+      templateUrl: 'js/app/views/community.view.html',
+      controllerAs: 'vm'
+    })
+
+    .when('/community/category/:categoryId', {
+      controller: 'CommunityCategoryCtrl',
+      templateUrl: 'js/app/views/community.category.view.html',
+      controllerAs: 'vm'
+    })
+
+    .when('/community/forum/:forumId', {
+      controller: 'CommunityForumCtrl',
+      templateUrl: 'js/app/views/community.forum.view.html',
+      controllerAs: 'vm'
+    })
+
+    .when('/community/topic/:topicId', {
+      controller: 'CommunityTopicCtrl',
+      templateUrl: 'js/app/views/community.topic.view.html',
+      controllerAs: 'vm'
+    })
+
     .when('/api/:apiName/:apiVersion/:apiProvider/:direct?', {
       controller: 'ApiCtrl',
       templateUrl: 'js/app/views/api.view.html',
@@ -168,7 +197,7 @@
     $rootScope.$on('$locationChangeStart', function(event, next, current) {
 
       // redirect to startpage if not logged in and trying to access a restricted page
-      var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api', 'guides', 'docs', 'news', 'activation', 'recover', 'contact']) === -1;
+      var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api', 'guides', 'docs', 'news', 'activation', 'recover', 'contact', 'community']) === -1;
 
       if ($location.path().split('/')[1] === 'statistics') {
         restrictedPage = $location.path().split('/')[2] !== 'apis';
