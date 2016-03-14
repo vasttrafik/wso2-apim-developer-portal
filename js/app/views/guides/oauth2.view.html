@@ -35,20 +35,30 @@
       </pre>
       <div class="alert alert-info" role="alert">
         <p>
-        <span class="glyphicon glyphicon-info-sign">&nbsp;</span>
+          <span class="glyphicon glyphicon-info-sign">&nbsp;</span>
           <strong>Notera att det i POST anropet används grant_type=client_credentials</strong>
         </p>
         <p>Det innebär att det skapas en access-token utefter just (nyckel:hemlighet) som är Base64 encodat i headern
           <strong>Authorization</strong> i requesten.</p>
+          <p>
+            <span style="font-size: 0.8em">UmJseEkyeTFsWVNFTTZ0Z2J6anBTa2E0R1pzYTpaTWdKRHRjSlpEZXg5MmV1TGlBR1g4UTFSdVFh</span> i requesten är just nyckel:hemlighet som base64 encodats.
+          </p>
       </div>
       <div class="alert alert-warning" role="alert">
         <p>
-        <span class="glyphicon glyphicon-info-sign">&nbsp;</span>
-          <strong>Var noggrann med att använda rätt scope=&lt;device_id&gt;</strong>
+          <span class="glyphicon glyphicon-info-sign">&nbsp;</span>
+          <strong>Var noggrann med att använda rätt scope=device_&lt;device_id&gt; (t.ex scope=device_123)</strong>
         </p>
-        <p>Det kan endast finnas en aktiv nyckel i varje scope. Det är därför viktigt att sätta ett unikt scope för varje enskild användare (scope=&lt;device_id&gt;).</p>
+        <p>Det kan endast finnas en aktiv nyckel i varje scope. Det är därför viktigt att sätta ett unikt scope för varje enskild användare (scope=device_&lt;device_id&gt;).</p>
         <p>Skapar du t.ex en app eller hemsida som skall distribueras så behöver varje unik användare få ett eget scope när nyckeln skapas för bästa hantering.</p>
-        <p><strong>När en ny nyckel skapas så invalideras tidigare nyckel i samma scope!</strong></p>
+        <p><strong>Syftet med detta är att man då åstadkommer två saker:</strong>
+
+        </p>
+        <ol>
+          <li>När token inte längre är giltig påverkas bara just denna klient, annars påverkas alla klienter samtidigt av att token behöver förnyas, vilket inte är bra av flera anledningar.</li>
+          <li>Vi kan erbjuda statistik som visar antal unika användare av din app.</li>
+        </ol>
+        <p></p>
       </div>
       Ovanstående anrop ger följande svar ifrån servern (default expiry = 1 timme):
       <pre class="code-highlight">
@@ -69,7 +79,7 @@
       </pre>
       <div class="alert alert-info" role="alert">
         <p>
-        <span class="glyphicon glyphicon-info-sign">&nbsp;</span>
+          <span class="glyphicon glyphicon-info-sign">&nbsp;</span>
           <strong>Notera Authorization headern</strong>
         </p>
         <p>Detta är den access_token som återficks i steg 1, med token-type prefixet "Bearer "</p>
@@ -82,8 +92,7 @@
       </p>
     </article>
     <article>
-      <h2>Återkalla token</h2>
-      Det är möjligt att invalidera en token för att göra den ogiltig. Detta är dock inte ett steg som behöver användas i autentiseringskedjan.
+      <h2>Återkalla token</h2> Det är möjligt att invalidera en token för att göra den ogiltig. Detta är dock inte ett steg som behöver användas i autentiseringskedjan.
       <pre class="code-highlight">
         POST <strong>http://api.vasttrafik.se/revoke</strong> HTTP/1.1
         Content-Type: <strong>application/x-www-form-urlencoded</strong>
@@ -99,8 +108,7 @@
       </p>
     </article>
     <article>
-      <h2>Länkar till resurser rörande OAuth</h2>
-      För den som vill läsa på ytterligare om OAuth återfinns mer information nedan:
+      <h2>Länkar till resurser rörande OAuth</h2> För den som vill läsa på ytterligare om OAuth återfinns mer information nedan:
       <ul class="fa-ul">
         <li>
           <a class="ext" href="http://tools.ietf.org/html/rfc6749" target="_blank" title="Till IETF (i nytt fönster)">
