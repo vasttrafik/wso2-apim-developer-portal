@@ -71,7 +71,7 @@
           </div>
           <h3>Statistik</h3>
         </a>
-        <p class="full-justify">Se diagram över användingen av våra publika API:er</p>
+        <p class="full-justify">Se diagram och mätvärden över användingen av våra publika API:er</p>
       </div>
     </div>
   </div>
@@ -85,7 +85,7 @@
         <div class="feed">
           <h3 class="text-center"><i class="fa fa-newspaper-o"></i> Nyheter</h3>
           <ul class="list-unstyled truncate" style="line-height:2em">
-            <li ng-repeat="entry in vm.newsItems">
+            <li ng-repeat="entry in vm.newsItems | orderBy: 'publishedDate':true">
               <a href="#/news/{{entry.publishedDate | date:'M'}}?id={{entry.id}}">
                 <div class="calDate" style="margin-top:0;margin-bottom:2px;">
                   <div class="month green">{{entry.publishedDate | date:'MMM'}}</div>{{entry.publishedDate | date:'d'}}

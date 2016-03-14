@@ -52,7 +52,9 @@
 
       $timeout(function() {
         var idSection = angular.element(document.getElementById('newsArticle-' + $location.search().id));
-        $document.scrollToElement(idSection, 100, 100);
+        if (idSection.length > 0) {
+          $document.scrollToElement(idSection, 100, 100);
+        }
       }, 1000);
 
     })();

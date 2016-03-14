@@ -3,7 +3,6 @@
 var defaultBaseUrl = 'https://wso2publisher-test.vt.net:9444/portal-api';
 //var userBaseUrl = 'http://localhost:9763/idmgt-api';
 var userBaseUrl = 'https://wso2publisher-test.vt.net:9444/idmgt-api';
-var communityBaseUrl = 'http://localhost:8080';
 
 var newsItems = [{
   id: '0',
@@ -46,6 +45,14 @@ var newsItems = [{
   publishedBy: 'Lars Andersson',
   title: 'Så byggde vi den nya portalen',
   contentUrl: 'js/app/views/news/portal-how.view.html',
+  tags: ['Api', 'Nytt']
+},
+{
+  id: '6',
+  publishedDate: '2016-03-14',
+  publishedBy: 'Christian Morin',
+  title: 'Nu finns det statistik i utvecklarportalen!',
+  contentUrl: 'js/app/views/news/statistics.view.html',
   tags: ['Api', 'Nytt']
 }];
 
