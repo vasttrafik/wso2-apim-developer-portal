@@ -1097,13 +1097,27 @@ article.newsItem > h2 {
 .voted {
   color: #00AAEB;
 }
+.voted:hover {
+  cursor: pointer;
+}
+.vote {
+  color: #3C4650;
+}
 .vote:hover {
   color: #00AAEB;
+  cursor: pointer;
 }
 
 .answer {
-  color: #50B746;
+  background-color: #50B746;
+  color: #ffffff;
 }
 .not-answer:hover {
-  color: #50B746;
+  background-color: #50B746;
+  color: #ffffff;
+}
+.avatar {
+  border-radius: 45px;
+  height: 45px;
+  width: 45px;
 }
