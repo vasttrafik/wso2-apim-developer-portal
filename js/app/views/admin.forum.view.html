@@ -2,8 +2,7 @@
   <div class="container no-padding-left">
     <ol class="breadcrumb">
       <li><a href="#/" target="_self">Hem</a></li>
-      <li><a href="#/community" target="_self">Community</a></li>
-      <li><a href="#/community/category/{{vm.forum.categoryId}}" target="_self">{{vm.forum.categoryName}}</a></li>
+      <li><a href="#/admin" target="_self">Admin</a></li>
       <li class="active">{{vm.forum.name}}</li>
     </ol>
     <h1>{{vm.forum.name}}</h1>
@@ -11,32 +10,8 @@
 </div>
 
 <div class="container no-padding-top">
-  <div class="row padding-bottom">
+  <div class="row padding-bottom border-bottom">
     <h2>{{vm.forum.description}}</h2>
-  </div>
-  <div class="row">
-    <div class="col-md-4 cat-id-1" style="color: #fff; height: 200px">
-      <h3 class="truncate">Hur lägger jag till fler poster?</h2>
-      <p><strong>Technical Support Forum</strong></p>
-      <p>5 dagar sedan</p>
-      <span style="position: absolute;bottom: 5px;right: 10px;" data-toggle="tooltip" data-original-title="Populär"><i class="fa fa-line-chart"></i></span>
-    </div>
-    <div class="col-md-4">
-      <div class="col-md-12 cat-id-2" style="color: #fff; height: 200px">
-        <h3 class="truncate">Anvädnning av Reseplanerar API:et</h2>
-        <p><strong>API Forum</strong></p>
-        <p>2 dagar sedan</p>
-        <span style="position: absolute;bottom: 0px;right: 10px;" data-toggle="tooltip" data-original-title="Senaste"><i class="fa fa-sort-asc"></i></span>
-      </div>
-    </div>
-    <div class="col-md-4" style="padding-left: 0px">
-      <div class="col-md-12 cat-id-3" style="color: #fff; height: 200px">
-        <h3 class="truncate">Antal requests som jag får skicka?</h2>
-        <p><strong>General Forum</strong></p>
-        <p>7 timmar sedan</p>
-        <span style="position: absolute;bottom: 5px;right: 10px;" data-toggle="tooltip" data-original-title="Obesvarad fråga"><i class="fa fa-question"></i></span>
-      </div>
-    </div>
   </div>
 
   <div class="row">
@@ -58,21 +33,9 @@
               </div>
             </td>
             <td>
-              <h2 style="margin-bottom: 0px"><a href="#/community/topic/{{entries.id}}">{{entries.subject}}</a></h2>
+              <h2 style="margin-bottom: 0px"><a href="#/admin/topic/{{entries.id}}">{{entries.subject}}</a></h2>
               <a href="signature" style="padding-right: 10px">{{entries.createdBy.signature}}</a>&bull;
               <span style="margin-left: 5px">{{entries.createDate | relativeDate}}</span>
-            </td>
-            <td class="text-center">
-              <h2 style="margin-bottom: 0px">{{entries.numberOfPosts}}</h2>
-              <p>Poster</p>
-            </td>
-            <td class="text-center">
-              <h2 style="margin-bottom: 0px">{{entries.numberOfViews}}</h2>
-              <p>Visningar</p>
-            </td>
-            <td class="text-center">
-              <h2 style="margin-bottom: 0px" ng-class="entries.answeredByPostId ? 'answer' : 'not-answer'">{{entries.numberOfReplies}}</h2>
-              <p>Svar</p>
             </td>
           </tr>
         </tbody>

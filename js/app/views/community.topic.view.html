@@ -13,10 +13,10 @@
     <h1 ng-if="!vm.toggleTopicUpdate">{{vm.topic.subject}}</h1>
 
     <div ng-if="vm.toggleTopicUpdate">
-      <form name="updateTopicForm" ng-submit="vm.updateTopic" role="form">
+      <form name="updateTopicForm" ng-submit="vm.updateTopic()" role="form">
         <div class="form-group" ng-class="{ 'has-error': updateTopicForm.subject.$dirty && updateTopicForm.subject.$invalid,
   'has-success' : updateTopicForm.subject.$valid}">
-          <input type="text" name="subject" id="subject" class="form-control" ng-model="vm.form.subject" required />
+          <input type="text" name="subject" id="subject" class="form-control" ng-model="vm.form.subject" maxlength="50" required />
         </div>
 
         <div class="form-actions" style="float: right">
@@ -25,47 +25,28 @@
         </div>
       </form>
     </div>
-</div>
+  </div>
 </div>
 
 <div class="container">
   <div class="row padding-top-bottom" ng-class="$index !== 0 ? 'border-top' : ''" ng-repeat="entries in vm.topic.posts" ng-if="entries.type === 'answer' || entries.type === 'question'">
-
-    <div class="col-md-1 text-center">
-      <div ng-if="!entries.isDeleted">
-        <div>
-          <span class="fa-stack">
-                      <i class="fa fa-chevron-up fa-stack-1x" ng-class="(entries.pointUpBy.indexOf(vm.memberId) === -1 ) ? 'voted' : 'vote'"></i>
-                    </span>
-        </div>
-        <div>
-          {{entries.pointsAwarded}}
-        </div>
-        <div>
-          <span class="fa-stack">
-                    <i class="fa fa-chevron-down fa-stack-1x" ng-class="(entries.pointDownBy.indexOf(vm.memberId) === -1) ? 'voted' : 'vote'"></i>
-                  </span>
-
-          <div>
-            <i class="fa fa-check-circle" ng-class="entries.isAnswer ? 'answer' : 'not-answer'" ng-if="entries.isAnswer"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-11">
+    <div class="col-md-12">
       <div ng-if="!entries.isDeleted && vm.togglePostsCommentsUpdate.indexOf(entries.id) === -1">
         <div class="row" style="padding-bottom: 10px">
-          <span class="fa-stack">
+          <span ng-if="!entries.createdBy.useGravatar" class="fa-stack">
                       <i class="fa fa-circle fa-stack-2x" style="color:#00AAEB"></i>
                       <i class="fa fa-user fa-stack-1x fa-inverse" style="color:#FFFFFF"></i>
-                    </span> <a href="signature" style="padding-right: 10px">{{entries.createdBy.signature}}</a>&bull;
+          </span>
+          <img ng-if="entries.createdBy.useGravatar" src="http://www.gravatar.com/avatar/{{entries.createdBy.email | hash}}?s=45" class="avatar">
+          <a href="signature" style="padding-right: 10px">{{entries.createdBy.signature}}</a>&bull;
           <span style="margin-left: 5px">{{entries.createDate | relativeDate}}</span>
           <span ng-if="entries.numberOfTimesEdited > 0" style="margin-left: 5px"><span style="margin-right: 5px">&bull;</span> Editerad {{entries.editDate | relativeDate}}</span>
           <span style="float: right; cursor: pointer" ng-if="entries.createdBy.id === vm.memberId" ng-click="vm.removePost(entries.id)"><i class="fa fa-trash"></i></span>
           <span style="float: right; cursor: pointer; margin-right: 5px" ng-if="entries.createdBy.id === vm.memberId" ng-click="vm.addPostCommentUpdate(entries.id)"><i class="fa fa-pencil-square-o"></i></span>
         </div>
 
-        <div class="row simple-well" style="margin-bottom: 10px; padding-bottom: 10px" btf-markdown="entries.text">
+        <div class="row simple-well" ng-if="$index === 0 || vm.topic.answeredByPostId && vm.topic.answeredByPostId !== entries.id" style="margin-bottom: 10px; padding-bottom: 10px" btf-markdown="entries.text"></div>
+        <div class="row simple-well" ng-if="$index !== 0 && !vm.topic.answeredByPostId || vm.topic.answeredByPostId === entries.id" ng-class="entries.isAnswer ? 'answer' : 'not-answer'" style="margin-bottom: 10px; padding-bottom: 10px" btf-markdown="entries.text">
         </div>
       </div>
 

@@ -42,6 +42,10 @@
       if (response.status === 200) {
         vm.topic = response.data;
 
+        /* Initiating input for admin purposes */
+        vm.form.posts[vm.topic.posts[0].id] = angular.copy(vm.topic.posts[0].text);
+        vm.form.subject = angular.copy(vm.topic.subject);
+
       } else {
         AlertService.error('Problem att hämta topic');
       }
@@ -153,7 +157,8 @@
       function postsIdPutResponse(response) {
         if (response.status === 200) {
           AlertService.success('Post uppdaterad!');
-          vm.topic.posts[i] = response.data;
+          vm.topic.posts[i].text = response.data.text;
+          vm.form.posts[response.data.id] = response.data.text;
           togglePostCommentUpdate(postId);
         } else {
           AlertService.error('Problem att uppdatera post');

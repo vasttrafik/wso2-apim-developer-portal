@@ -6,12 +6,13 @@
     .module('vtPortal')
     .controller('CommunityForumCtrl', CommunityForumCtrl);
 
-  CommunityForumCtrl.$inject = ['AlertService', 'APIService', '$routeParams'];
+  CommunityForumCtrl.$inject = ['AlertService', 'APIService', '$routeParams', '$scope'];
 
-  function CommunityForumCtrl(AlertService, APIService, $routeParams) {
+  function CommunityForumCtrl(AlertService, APIService, $routeParams, $scope) {
     var vm = this;
 
     vm.addTopic = addTopic;
+    vm.resetAddTopicForm = resetAddTopicForm;
 
     (function init() {
 
@@ -44,17 +45,37 @@
 
       function topicsPostResponse(response) {
         if (response.status === 201) {
-          vm.forum.topics.push(response.data);
 
-          AlertService.success('Topic ' + response.subject + ' skapad!');
+          APIService.communityCall('postsPost', [{
+              topicId: vm.forum.topicId,
+              forumId: vm.forum.id,
+              type: 'question',
+              text: vm.form.topic.question,
+              ml: 'md'
+            }])
+            .then(postsPostAnswerResponse);
 
-          resetAddTopicForm();
+          function postsPostAnswerResponse(postresponse) {
+            if (postresponse.status === 200) {
+              AlertService.success('Topic ' + response.data.subject + ' skapad!');
+              vm.forum.topics.push(response.data);
+              resetAddTopicForm();
+
+            } else {
+              AlertService.error('Problem att skicka svar');
+            }
+          }
 
         } else {
           AlertService.error('Problem att skapa ny applikation');
         }
-        vm.dataLoadingAddApplication = false;
+        vm.dataLoadingAddTopic = false;
       }
+    }
+
+    function resetAddTopicForm() {
+      vm.form.topic = {};
+      $scope.addTopicForm.$setPristine();
     }
 
   }

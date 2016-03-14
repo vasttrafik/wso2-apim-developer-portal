@@ -31,6 +31,11 @@
         return Date.create(input).relative();
       };
     })
+    .filter('hash', function() {
+      return function(input, all) {
+        return md5(input);
+      };
+    })
     .run(run)
     .controller('MainCtrl', MainCtrl);
 
@@ -137,6 +142,24 @@
       controllerAs: 'vm'
     })
 
+    .when('/admin', {
+      controller: 'CommunityCategoryCtrl',
+      templateUrl: 'js/app/views/admin.view.html',
+      controllerAs: 'vm'
+    })
+
+    .when('/admin/forum/:forumId', {
+      controller: 'CommunityForumCtrl',
+      templateUrl: 'js/app/views/admin.forum.view.html',
+      controllerAs: 'vm'
+    })
+
+    .when('/admin/topic/:topicId', {
+      controller: 'CommunityTopicCtrl',
+      templateUrl: 'js/app/views/admin.topic.view.html',
+      controllerAs: 'vm'
+    })
+
     .when('/api/:apiName/:apiVersion/:apiProvider/:direct?', {
       controller: 'ApiCtrl',
       templateUrl: 'js/app/views/api.view.html',
@@ -197,7 +220,7 @@
     $rootScope.$on('$locationChangeStart', function(event, next, current) {
 
       // redirect to startpage if not logged in and trying to access a restricted page
-      var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api', 'guides', 'docs', 'news', 'activation', 'recover', 'contact', 'community']) === -1;
+      var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api', 'guides', 'docs', 'news', 'activation', 'recover', 'contact', 'community', 'admin']) === -1;
 
       if ($location.path().split('/')[1] === 'statistics') {
         restrictedPage = $location.path().split('/')[2] !== 'apis';
