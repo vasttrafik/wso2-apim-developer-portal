@@ -270,42 +270,6 @@ var CommunityAPI;
       };
       /**
        *
-       * Retrieves forums, without topics
-       * @param name Retrieve a forum by name
-       * @param label Only retrieve forums with this label
-       * @param offset Starting point of the list
-       * @param limit Maximum size array to return
-       */
-      CommunityApi.prototype.forumsGet = function(name, label, offset, limit, extraHttpRequestParams) {
-        var path = this.basePath + '/forums';
-        var queryParameters = {};
-        var headerParams = this.extendObj({}, this.defaultHeaders);
-        if (name !== undefined) {
-          queryParameters['name'] = name;
-        }
-        if (label !== undefined) {
-          queryParameters['label'] = label;
-        }
-        if (offset !== undefined) {
-          queryParameters['offset'] = offset;
-        }
-        if (limit !== undefined) {
-          queryParameters['limit'] = limit;
-        }
-        var httpRequestParams = {
-          method: 'GET',
-          url: path,
-          json: true,
-          params: queryParameters,
-          headers: headerParams
-        };
-        if (extraHttpRequestParams) {
-          httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
-        }
-        return this.$http(httpRequestParams);
-      };
-      /**
-       *
        * Retrieves forums belonging to a certain category, without topics
        * @param id Resource id
        * @param ifModifiedSince Standard http header
@@ -876,6 +840,64 @@ var CommunityAPI;
         headerParams['Authorization'] = authorization;
         var httpRequestParams = {
           method: 'DELETE',
+          url: localVarPath,
+          json: true,
+          params: queryParameters,
+          headers: headerParams
+        };
+        if (extraHttpRequestParams) {
+          httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+        }
+        return this.$http(httpRequestParams);
+      };
+      /**
+       *
+       * Creates a vote
+       * @param id Resource id
+       * @param body The vote to create
+       */
+      CommunityApi.prototype.postsIdVotesPost = function(id, body, extraHttpRequestParams) {
+        var localVarPath = this.basePath + '/posts/{id}/votes'
+          .replace('{' + 'id' + '}', String(id));
+        var queryParameters = {};
+        var headerParams = this.extendObj({}, this.defaultHeaders);
+        // verify required parameter 'id' is set
+        if (!id) {
+          throw new Error('Missing required parameter id when calling postsIdVotesPost');
+        }
+        var httpRequestParams = {
+          method: 'POST',
+          url: localVarPath,
+          json: true,
+          data: body,
+          params: queryParameters,
+          headers: headerParams
+        };
+        if (extraHttpRequestParams) {
+          httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+        }
+        return this.$http(httpRequestParams);
+      };
+      /**
+       *
+       * Retrieves votes for a specific topic, possibly filtered by member id
+       * @param id Resource id
+       * @param memberId Filter by member id.
+       */
+      CommunityApi.prototype.topicsIdVotesGet = function(id, memberId, extraHttpRequestParams) {
+        var localVarPath = this.basePath + '/topics/{id}/votes'
+          .replace('{' + 'id' + '}', String(id));
+        var queryParameters = {};
+        var headerParams = this.extendObj({}, this.defaultHeaders);
+        // verify required parameter 'id' is set
+        if (!id) {
+          throw new Error('Missing required parameter id when calling topicsIdVotesGet');
+        }
+        if (memberId !== undefined) {
+          queryParameters['memberId'] = memberId;
+        }
+        var httpRequestParams = {
+          method: 'GET',
           url: localVarPath,
           json: true,
           params: queryParameters,
