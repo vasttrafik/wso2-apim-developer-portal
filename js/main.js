@@ -1,8 +1,6 @@
 /*global Highcharts*/
-//var defaultBaseUrl = 'http://localhost:9763/portal-api';
-var defaultBaseUrl = 'https://wso2publisher-test.vt.net:9444/portal-api';
-//var userBaseUrl = 'http://localhost:9763/idmgt-api';
-var userBaseUrl = 'https://wso2publisher-test.vt.net:9444/idmgt-api';
+var defaultBaseUrl = 'https://developer.vasttrafik.se/portal-api';
+var userBaseUrl = 'https://developer.vasttrafik.se/idmgt-api';
 
 var newsItems = [{
   id: '0',
