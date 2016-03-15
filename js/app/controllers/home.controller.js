@@ -1,9 +1,11 @@
+/*global newsItems*/
 (function() {
   'use strict';
 
   angular
     .module('vtPortal')
-    .controller('HomeCtrl', HomeCtrl);
+    .controller('HomeCtrl', HomeCtrl)
+    .constant('newsItems', newsItems);
 
   HomeCtrl.$inject = ['AlertService'];
 

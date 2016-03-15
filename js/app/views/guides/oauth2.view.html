@@ -1,4 +1,4 @@
-﻿<div class="jumbotron title">
+<div class="jumbotron title">
   <div class="container">
     <h1 class="sub-header">OAuth 2, hur fungerar det?</h1>
   </div>
@@ -7,160 +7,108 @@
 <div class="container" style="padding-top: 0">
   <section>
     <article>
-      <h2>OAuth 2 beskrivning</h2>
       <p style="font-weight: bold;">
-        OAuth 2 är ramverk som gör att program kan få begränsad tillgång till användarkonton för HTTP-tjänster. 
-        Det fungerar genom att delegera användarautentisering till tjänsten som är värd för användarkontot, 
-        och aktoriserar tredjepartsprogram för att komma åt användarkontot.
+        Västtrafiks API:er använder sig av autentiseringsstandarden OAuth 2. I tidigare versioner av Västtrafiks reseplanerar API användes "statiska nycklar" som skickades med i varje request, så fungerar dock inte OAuth 2. Läs därför denna guide för att förstå
+        hur din implementation skall autentisera sig på bästa sätt.
+      </p>
+    </article>
+    <article>
+      <p>
+        När du i utvecklarportalen skapat en applikation, så är det möjligt att skapa "initiala nycklar". Detta skapar en "nyckel" (key) och en "hemlighet" (secret). Med hjälp av dessa två är det möjligt att skapa access-tokens. Det är access-tokens som används
+        för autentisering, de övriga värdena används endast för att skapa nya access-tokens.
       </p>
       <p>
-        Denna enkla guide är riktad till applikationsutvecklare och syftar till att ge en enkel beskrivning
-        och översikt av roller, olika typer av auktorisering ("authorization grant types") och flöden som används av OAuth2.
-      </p>
-    </article>
-    <article>
-      <h2>OAuth roller</h2>
-      OAuth definierar 4 roller:
-      <ol>
-        <li>Resursägare</li>
-        <li>Klient</li>
-        <li>Resursserver</li>
-        <li>Auktoriseringsserver</li>
-      </ol>
-    </article>
-
-    <article>
-      <h2>Resursägare: Användare</h2>
-      <p>
-        Resursägare är användaren som godkänner en applikation att accessa dess konto.
-        Vilken access till användarens konto som applikationen har bestäms av omfattningen (scope)
-        av den beviljade accessen.
-
-        <!--The resource owner is the user who authorizes an application to access their account. 
-        The application's access to the user's account is limited to the "scope" of the authorization 
-        granted (e.g. read or write access).-->
-        
-        
-      </p>
-    </article>
-    <article>
-      <h2>Resurs-/Auktoriseringsserver: API</h2>
-      <p>
-        Resursservern är värd för dom skyddade användarkontona, och auktoriseringsservern verifierar 
-        identiteten för användaren, och utfärdar access token för applikationen.
+        En access-token är en kortlivad autentiserings-token. Dvs, den är endast giltig en kort period (som längst kan den vara giltig i 1 timme). Efter 1 timme så måste en ny access-token genereras.
       </p>
       <p>
-        För en applikationsutvecklare innebär detta att API:et för en tjänst uppfyller båda rollerna, 
-        dvs agerar såväl resurs- som hanterar auktorisering (service eller api-roll).
+        Du genererar en ny access-token genom att skicka ett
+        <strong>POST</strong>-anrop till <a href="https://api.vasttrafik.se/token">https://api.vasttrafik.se/token</a>
       </p>
     </article>
-    <article>
-      <h2>Klient: Applikationen</h2>
-      <p>
-        Klienten är applikationen som vill ha åtkomst till användarens konto.
-        Före så kan ske, måste applikationen auktoriseras av användaren, och auktoriseringen måste 
-        valideras av API:et. 
-      </p>
-    </article>
-
-    <article>
-      <h2>Authorization grant types: Vilka alternativ finns?</h2>
-        Enligt <a href="http://tools.ietf.org/html/rfc6749#section-1.3" target="_blank">RFC6749</a> erbjuds 4 olika typer:
-        <ol>
-          <li>Authorization code</li>
-          <li>Implicit</li>
-          <li>Resource owner password credentials (ROPC)</li>
-          <li>Client credentials</li>
-        </ol>
-        Västtrafik Utvecklarportalen supportar alla grant types men föredrar client credentials, vilket är det som denna guide kommer att 
-        använda sig av i sina exempel.
-    </article>
-
-    <article>
-      <h2>OAuth2 Client credentials grant</h2>
-      Autentisera och få access-token i 1 steg, med följande information:
-      <ul>
-        <li><strong>URL</strong> till autentiseringsserver</li>
-        <li><strong>Consumer key</strong> och...</li>
-        <li><strong>Consumer secret</strong></li>
-        <li><strong>Authorization header</strong> (m.hj.a consumer key och consumer secret):<br />
-          Authorization: Basic Base64_encode(consumer-key:consumer-secret)</li>
-      </ul>
-      Notera att värdet för authorization header är en Base64-kodad teckensträng.
-      <i>[Referens till CURL-kommando vid applikationsregistrering]</i>
-    </article>
-
     <article>
       <h2>Steg 1: Generera token</h2>
-      <p>
-        <pre class="code-highlight">
-          POST <strong>https://api.vasttrafik.se/token</strong> HTTP/1.1
-          Accept-Encoding: gzip,deflate
-          User-Agent: SoapUI/5.0.0
-          Content-Type: <strong>application/x-www-form-urlencoded</strong>
-          Authorization: <strong>Basic UmJseEkyeTFsWVNFTTZ0Z2J6anBTa2E0R1pzYTpaTWdKRHRjSlpEZXg5MmV1TGlBR1g4UTFSdVFh</strong>
-          Content-Length: xx
-          Host: auth.vasttrafik.se
-          Connection: Keep-Alive
+      <pre class="code-highlight">
+        POST <strong>https://api.vasttrafik.se/token</strong> HTTP/1.1
+        Content-Type: <strong>application/x-www-form-urlencoded</strong>
+        Authorization: <strong>Basic UmJseEkyeTFsWVNFTTZ0Z2J6anBTa2E0R1pzYTpaTWdKRHRjSlpEZXg5MmV1TGlBR1g4UTFSdVFh</strong>
+        <strong>grant_type=client_credentials&scope=&lt;device_id&gt;</strong>
+      </pre>
+      <div class="alert alert-info" role="alert">
+        <p>
+          <span class="glyphicon glyphicon-info-sign">&nbsp;</span>
+          <strong>Notera att det i POST anropet används grant_type=client_credentials</strong>
+        </p>
+        <p>Det innebär att det skapas en access-token utefter just (nyckel:hemlighet) som är Base64 encodat i headern
+          <strong>Authorization</strong> i requesten.</p>
+          <p>
+            <span style="font-size: 0.8em">UmJseEkyeTFsWVNFTTZ0Z2J6anBTa2E0R1pzYTpaTWdKRHRjSlpEZXg5MmV1TGlBR1g4UTFSdVFh</span> i requesten är just nyckel:hemlighet som base64 encodats.
+          </p>
+      </div>
+      <div class="alert alert-warning" role="alert">
+        <p>
+          <span class="glyphicon glyphicon-info-sign">&nbsp;</span>
+          <strong>Var noggrann med att använda rätt scope=device_&lt;device_id&gt; (t.ex scope=device_123)</strong>
+        </p>
+        <p>Det kan endast finnas en aktiv nyckel i varje scope. Det är därför viktigt att sätta ett unikt scope för varje enskild användare (scope=device_&lt;device_id&gt;).</p>
+        <p>Skapar du t.ex en app eller hemsida som skall distribueras så behöver varje unik användare få ett eget scope när nyckeln skapas för bästa hantering.</p>
+        <p><strong>Syftet med detta är att man då åstadkommer två saker:</strong>
 
-          <strong>grant_type=client_credentials&scope=device&lt;device_id&gt;</strong>
-        </pre>
-      </p>
-      Detta anrop ger följande svar från servern (default expiry = 60min):
-      <p>
-        <pre class="code-highlight">
-          {
-            "scope": ”&lt;scope&gt;",
-            "token_type": "Bearer",
-            "expires_in": 3600,
-            "refresh_token": "ebfc4b5bd6a531ccdee49b407341293d",
-            "access_token": "766b697f4462ca3878b05597ff19313"
-          }
-        </pre>
-      </p>
+        </p>
+        <ol>
+          <li>När token inte längre är giltig påverkas bara just denna klient, annars påverkas alla klienter samtidigt av att token behöver förnyas, vilket inte är bra av flera anledningar.</li>
+          <li>Vi kan erbjuda statistik som visar antal unika användare av din app.</li>
+        </ol>
+        <p></p>
+      </div>
+      Ovanstående anrop ger följande svar ifrån servern (default expiry = 1 timme):
+      <pre class="code-highlight">
+        {
+          "scope": ”&lt;scope&gt;",
+          "token_type": "Bearer",
+          "expires_in": 3600,
+          "refresh_token": "ebfc4b5bd6a531ccdee49b407341293d",
+          "access_token": "766b697f4462ca3878b05597ff19313"
+        }
+      </pre>
     </article>
-
     <article>
       <h2>Steg 2: Använd token</h2>
-      <p>
-        <pre class="code-highlight">
-          GET http://api.vasttrafik.se/bin/rest.exe/v1/location.name?input=ols&format=json HTTP/1.1
-          Accept-Encoding: gzip,deflate
-          User-Agent: SoapUI/5.0.0
-          Authorization: <strong>Bearer 766b697f4462ca3878b05597ff19313</strong>
-          Host: api.vasttrafik.se
-          Connection: Keep-Alive
-        </pre>
-      </p>
+      <pre class="code-highlight">
+        GET http://api.vasttrafik.se/bin/rest.exe/v2/location.name?input=ols&format=json HTTP/1.1
+        Authorization: <strong>Bearer 766b697f4462ca3878b05597ff19313</strong>
+      </pre>
+      <div class="alert alert-info" role="alert">
+        <p>
+          <span class="glyphicon glyphicon-info-sign">&nbsp;</span>
+          <strong>Notera Authorization headern</strong>
+        </p>
+        <p>Detta är den access_token som återficks i steg 1, med token-type prefixet "Bearer "</p>
+      </div>
     </article>
-
     <article>
       <h2>Steg 3: Förnya token</h2>
       <p>
-        Förnya token sker i steg 1 när authorization grant type är satt till client credentials.
+        När en access-token gått ut kan en ny enkelt skapas genom att upprepa steg 1.
       </p>
+    </article>
+    <article>
+      <h2>Återkalla token</h2> Det är möjligt att invalidera en token för att göra den ogiltig. Detta är dock inte ett steg som behöver användas i autentiseringskedjan.
+      <pre class="code-highlight">
+        POST <strong>http://api.vasttrafik.se/revoke</strong> HTTP/1.1
+        Content-Type: <strong>application/x-www-form-urlencoded</strong>
+        Authorization: <strong>Basic UmJseEkyeTFsWVNFTTZ0Z2J6anBTa2E0R1pzYTpaTWdKRHRjSlpEZXg5MmV1TGlBR1g4UTFSdVFh</strong>
+        <strong>token=766b697f4462ca3878b05597ff19313</strong>
+      </pre>
     </article>
 
     <article>
-      <h2>Steg 4: Återkalla token</h2>
+      <h2>Summering</h2>
       <p>
-        <pre class="code-highlight">
-          POST <strong>http://api.vasttrafik.se/revoke</strong> HTTP/1.1
-          Accept-Encoding: gzip,deflate
-          User-Agent: SoapUI/5.0.0
-          Content-Type: <strong>application/x-www-form-urlencoded</strong>
-          Authorization: <strong>Basic UmJseEkyeTFsWVNFTTZ0Z2J6anBTa2E0R1pzYTpaTWdKRHRjSlpEZXg5MmV1TGlBR1g4UTFSdVFh</strong>
-          Content-Length: xx
-          Host: auth.vasttrafik.se
-          Connection: Keep-Alive
-
-          <strong>token=ebfc4b5bd6a531ccdee49b407341293d</strong>
-        </pre>
+        Generera en ny access-token med hjälp av nyckel och hemlighet i rätt unika scope. Använd access-token i 1 timme. Skapa sedan en ny access-token.
       </p>
     </article>
     <article>
-      <h2>Länkar till resurser rörande OAuth</h2>
-      För den som vill läsa på ytterligare om OAuth återfinns mer information nedan:
+      <h2>Länkar till resurser rörande OAuth</h2> För den som vill läsa på ytterligare om OAuth återfinns mer information nedan:
       <ul class="fa-ul">
         <li>
           <a class="ext" href="http://tools.ietf.org/html/rfc6749" target="_blank" title="Till IETF (i nytt fönster)">
@@ -169,5 +117,6 @@
         </li>
       </ul>
     </article>
+
   </section>
 </div>

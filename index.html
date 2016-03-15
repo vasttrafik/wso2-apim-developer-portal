@@ -96,6 +96,8 @@
                     <br />
                     <a href="#/subscriptions">Mina prenumerationer</a>
                     <br />
+                    <a href="#/statistics/applications">Min statistisk</a>
+                    <br />
                     <a href="#/" ng-click="vm.logout()">Logga ut</a>
                     <br />
                   </div>
@@ -220,8 +222,8 @@
         <div class="col-sm-2 col-md-2 col-centered">
           <ul class="list-unstyled truncate">
             <li><a href="#/apis">API</a></li>
+            <li><a href="#/statistics/apis">Statistik</a></li>
             <li><a href="" title="..." class="disabled">Showcase (v2)</a></li>
-            <li><a href="" title="..." class="disabled">Statistik (v2)</a></li>
             <li><a href="" title="..." class="disabled">Driftinfo (v2)</a></li>
           </ul>
         </div>
@@ -253,7 +255,7 @@
 
       <div class="row row-centered info">
         <div class="col-xs-12 col-sm-6 col-centered">
-          <div class="copyright">© Copyright 2015, Västtrafik</div>
+          <div class="copyright">© Copyright 2016, Västtrafik</div>
         </div>
         <div class="col-xs-12 col-sm-6">
           <a class="logo" href="#/index.html" title="Västtrafik - En del av Västra Götalandsregionen">
@@ -288,6 +290,10 @@
   <script src="js/vendor/angular-clipboard.js"></script>
   <script src="js/vendor/angular-loading-bar.min.js"></script>
 
+  <script src="js/vendor/highcharts/highcharts.js"></script>
+  <script src="js/vendor/highcharts/modules/exporting.js"></script>
+  <script src="js/vendor/highcharts/export-csv.js"></script>
+
   <script src="js/vendor/angular-swagger-ui.js"></script>
   <script src="js/vendor/swagger-external-references.min.js"></script>
   <script src="js/vendor/swagger1-to-swagger2-converter.js"></script>
@@ -295,9 +301,13 @@
   <script src="js/vendor/swagger-authentication.js"></script>
 
   <script src="js/vendor/ng-password-strength.js"></script>
+  <script src="js/vendor/ng-jsonpath.min.js"></script>
   <script src="js/vendor/lodash.min.js"></script>
   <script src="js/vendor/BootSideMenu.js"></script>
+  <script src="js/vendor/tooltip.js"></script>
   <script src="js/vendor/angular-scroll.min.js"></script>
+  <script src="js/vendor/sugar.min.js"></script>
+  <script src="js/vendor/highcharts-ng.min.js"></script>
 
   <script src="js/main.js"></script>
 
@@ -306,10 +316,10 @@
 
   <script src="js/app/app.js"></script>
 
-  <script src="js/app/services/authentication.service.js"></script>
   <script src="js/app/services/alert.service.js"></script>
-  <script src="js/app/services/user.service.js"></script>
   <script src="js/app/services/api.service.js"></script>
+  <script src="js/app/services/authentication.service.js"></script>
+  <script src="js/app/services/user.service.js"></script>
 
   <script src="js/app/controllers/home.controller.js"></script>
   <script src="js/app/controllers/contact.controller.js"></script>
@@ -322,6 +332,8 @@
   <script src="js/app/controllers/subscriptions.controller.js"></script>
   <script src="js/app/controllers/overview.controller.js"></script>
   <script src="js/app/controllers/news.controller.js"></script>
+  <script src="js/app/controllers/statistics.applications.controller.js"></script>
+  <script src="js/app/controllers/statistics.apis.controller.js"></script>
 
   <script src="js/app/controllers/activation.controller.js"></script>
   <script src="js/app/controllers/recover.controller.js"></script>

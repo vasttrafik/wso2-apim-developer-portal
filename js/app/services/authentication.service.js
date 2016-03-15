@@ -182,7 +182,7 @@
           AlertService.success('Du har blivit automatiskt utloggad. Var vänlig logga in igen');
           logout();
         }, 60000);
-      }, 1740000);
+      }, 3600000);
     }
 
   }

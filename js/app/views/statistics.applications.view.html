@@ -1,0 +1,119 @@
+<div class="jumbotron title">
+  <div class="container no-padding-left">
+    <ol class="breadcrumb">
+      <li><a href="#/" target="_self">Hem</a></li>
+      <li><a href="#/overview" target="_self">Mina sidor</a></li>
+      <li class="active">Min statistik</li>
+    </ol>
+    <h1>Min statistik</h1>
+  </div>
+</div>
+
+<div class="container no-padding-top">
+  <div class="row">
+    <h2>Diagram över användning för dina applikationer och dess API:er</h2>
+    <p>All data (förutom unika användare) beräknas en gång vid nattetid och visar användning en vecka tillbaka i tiden</p>
+
+    <div class="panel panel-default" style="margin-top: 25px">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <select name="application" id="application" ng-model="vm.selectedApplicationIndex" class="form-control" required>
+                <option ng-repeat="entry in vm.applications track by $index" value="{{$index}}">{{entry.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-8 text-right">
+            För muspekaren över varje diagram för att visa mer detaljerad information
+          </div>
+        </div>
+      </div>
+      <div ng-if="vm.statistics.totalRequests === 0" class="panel-body">
+        <div class="row">
+          <div class="col-md-12 text-center padding-large">
+            <h1>Ingen statistik att visa för vald applikation</h1>
+          </div>
+        </div>
+      </div>
+      <div ng-if="vm.statistics.totalRequests !== 0" class="panel-body no-padding-top">
+        <div class="row">
+          <div class="col-md-6 text-center padding-medium border-right padding-right-left-xs">
+            <highchart id="total-requests-chart" config="vm.charts.totalRequests" class="chart"></highchart>
+            <h1>{{vm.statistics.totalRequests | number}}</h1>
+            <p>Antal requests senaste veckan</p>
+            <p data-toggle="tooltip" data-original-title="Förändring sedan föregående dag">
+              <span ng-if="vm.statistics.totalRequestsDayChange > 0" class="color-success">{{vm.statistics.totalRequestsDayChangeNumber | number}} <i class="fa fa-arrow-circle-up"></i> {{vm.statistics.totalRequestsDayChange}} % (dag)</span>
+              <span ng-if="vm.statistics.totalRequestsDayChange < 0" class="color-failure">{{vm.statistics.totalRequestsDayChangeNumber | number}} <i class="fa fa-arrow-circle-down"></i> {{vm.statistics.totalRequestsDayChange *-1}} % (dag)</span>
+            </p>
+            <p data-toggle="tooltip" data-original-title="Förändring sedan föregående vecka">
+              <span ng-if="vm.statistics.totalRequestsWeekChange > 0" class="color-success">{{vm.statistics.totalRequestsWeekChangeNumber | number}} <i class="fa fa-arrow-circle-up"></i> {{vm.statistics.totalRequestsWeekChange}} % (vecka)</span>
+              <span ng-if="vm.statistics.totalRequestsWeekChange < 0" class="color-failure">{{vm.statistics.totalRequestsWeekChangeNumber | number}} <i class="fa fa-arrow-circle-down"></i> {{vm.statistics.totalRequestsWeekChange *-1}} % (vecka)</span>
+            </p>
+          </div>
+          <div class="col-md-6 text-center padding-medium padding-right-left-xs">
+            <div ng-if="vm.statistics.uniqueUsersIsEmpty" class="chart display-table" role="alert">
+              <span class="table-cell-middle">
+                <strong>Unika användare beräknas vid användning av oAuth2 scopes</strong>
+                <p><a href="#/guides/oauth2">Läs mer om användning av oAuth2 scopes här</a></p>
+              </span>
+            </div>
+            <highchart ng-if="!vm.statistics.uniqueUsersIsEmpty" id="unique-users-chart" config="vm.charts.uniqueUsers" class="chart"></highchart>
+            <div data-toggle="tooltip" data-original-title="Endast för API:er med användning av oAuth2 scopes">
+              <h1>{{vm.statistics.uniqueUsers | number}}</h1>
+              <p>Unika användare idag</p>
+              <p data-toggle="tooltip" data-original-title="Förändring sedan igår">
+                <span ng-if="vm.statistics.uniqueUsersDayChange > 0" class="color-success">{{vm.statistics.uniqueUsersDayChangeNumber | number}} <i class="fa fa-arrow-circle-up"></i> {{vm.statistics.uniqueUsersDayChange}} % (dag)</span>
+                <span ng-if="vm.statistics.uniqueUsersDayChange < 0" class="color-failure">{{vm.statistics.uniqueUsersDayChangeNumber | number}} <i class="fa fa-arrow-circle-down"></i> {{vm.statistics.uniqueUsersDayChange *-1}} % (dag)</span>
+              </p>
+              <p data-toggle="tooltip" data-original-title="Förändring sedan föregående vecka">
+                <span ng-if="vm.statistics.uniqueUsersWeekChange > 0" class="color-success">{{vm.statistics.uniqueUsersWeekChangeNumber | number}} <i class="fa fa-arrow-circle-up"></i> {{vm.statistics.uniqueUsersWeekChange}} % (vecka)</span>
+                <span ng-if="vm.statistics.uniqueUsersWeekChange < 0" class="color-failure">{{vm.statistics.uniqueUsersWeekChangeNumber | number}} <i class="fa fa-arrow-circle-down"></i> {{vm.statistics.uniqueUsersWeekChange *-1}} % (vecka)</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div ng-if="vm.statistics.totalFaults === 0" class="row border-top">
+          <div class="row fault-row" data-toggle="tooltip" data-original-title="Här visas diagram och information ifall vi upptäckt felaktiga requests">
+            <div class="col-md-12 text-center">
+              <h3 ng-if="vm.selectedApplicationIndex !== '0'" class="h3-white-middle">Inga fel ifrån din applikation senaste veckan!</h3>
+              <h3 ng-if="vm.selectedApplicationIndex === '0'" class="h3-white-middle">Inga fel ifrån dina applikationer senaste veckan!</h3>
+            </div>
+          </div>
+        </div>
+
+        <div ng-if="vm.statistics.totalFaults > 0" class="row text-center border-top">
+          <div class="col-md-6 border-right padding-medium padding-right-left-xs">
+            <highchart id="total-faults-chart" config="vm.charts.totalFaults" class="chart"></highchart>
+            <h1>{{vm.statistics.totalFaults}}</h1>
+            <p>Antal fel senaste veckan</p>
+            <p data-toggle="tooltip" data-original-title="Förändring sedan föregående dag">
+              <span ng-if="vm.statistics.totalFaultsDayChange < 0" class="color-success">{{vm.statistics.totalFaultsDayChangeNumber | number}} <i class="fa fa-arrow-circle-down"></i> {{vm.statistics.totalFaultsDayChange *-1}} %</span>
+              <span ng-if="vm.statistics.totalFaultsDayChange > 0" class="color-failure">{{vm.statistics.totalFaultsDayChangeNumber | number}} <i class="fa fa-arrow-circle-up"></i> {{vm.statistics.totalFaultsDayChange}} %</span>
+            </p>
+            <p data-toggle="tooltip" data-original-title="Förändring sedan föregående vecka">
+              <span ng-if="vm.statistics.totalFaultsWeekChange < 0" class="color-success">{{vm.statistics.totalFaultsWeekChangeNumber | number}} <i class="fa fa-arrow-circle-down"></i> {{vm.statistics.totalFaultsWeekChange *-1}} %</span>
+              <span ng-if="vm.statistics.totalFaultsWeekChange > 0" class="color-failure">{{vm.statistics.totalFaultsWeekChangeNumber | number}} <i class="fa fa-arrow-circle-up"></i> {{vm.statistics.totalFaultsWeekChange}} %</span>
+            </p>
+          </div>
+          <div class="col-md-6 padding-medium padding-right-left-xs">
+            <highchart id="faults-percentage-chart" config="vm.charts.faultsPercentage" style="height: 300px"></highchart>
+          </div>
+        </div>
+
+        <div ng-if="vm.charts.requestResponseTimes.length > 0" class="row padding-medium padding-right-left-xs border-top">
+          <div class="col-md-12 text-center">
+            <h1>Antal requests och genomsnittlig svarstid per API resurs</h1>
+            <h3 class="faded">Kombinerad data ifrån senaste veckan</h3>
+            <highchart ng-repeat="entries in vm.charts.requestResponseTimes track by $index" id="request-responses-chart-$index" config="vm.charts.requestResponseTimes[$index]" class="padding-top-bottom" style="height: 600px"></highchart>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div>

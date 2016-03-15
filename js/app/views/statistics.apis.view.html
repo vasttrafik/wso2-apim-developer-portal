@@ -1,0 +1,74 @@
+<div class="jumbotron title">
+  <div class="container no-padding-left">
+    <ol class="breadcrumb">
+      <li><a href="#/" target="_self">Hem</a></li>
+      <li class="active">Statistik</li>
+    </ol>
+    <h1>Statistik</h1>
+  </div>
+</div>
+
+<div class="container no-padding-top">
+  <div class="row">
+    <h2>Diagram över användning av publika API:er</h2>
+    <p>All data beräknas en gång vid nattetid. Det är möjligt att visa användning en vecka, en månad eller ett kvartal tillbaka i tiden.</p>
+
+    <div class="panel panel-default" style="margin-top: 25px">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <select name="api" id="api" ng-model="vm.selectedApiIndex" class="form-control" required>
+                <option ng-repeat="entry in vm.apis track by $index" value="{{$index}}">{{entry.name + ' ' + entry.version}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-2">
+            <div class="form-group">
+              <select name="period" id="period" ng-model="vm.selectedPeriodIndex" class="form-control" required>
+                <option ng-repeat="period in vm.periods" value="{{$index}}">{{period.label}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6 text-right">
+            För muspekaren över varje diagram för att visa mer detaljerad information
+          </div>
+        </div>
+      </div>
+      <div ng-if="vm.statistics.totalRequests === 0" class="panel-body">
+        <div class="row no-margin-right">
+          <div class="col-md-12 text-center padding-large">
+            <h1>Ingen statistik att visa för valt API</h1>
+          </div>
+        </div>
+      </div>
+      <div ng-if="vm.statistics.totalRequests !== 0" class="panel-body">
+        <div class="row">
+          <div class="col-md-12 text-center padding-medium padding-right-left-xs">
+            <highchart id="total-requests-chart" config="vm.charts.totalRequests"></highchart>
+            <h1>{{vm.statistics.totalRequests | number}}</h1>
+            <p>Antal requests {{vm.periods[vm.selectedPeriodIndex].label}}</p>
+            <p data-toggle="tooltip" data-original-title="Förändring sedan föregående dag">
+              <span ng-if="vm.statistics.totalRequestsDayChange > 0" class="color-success">{{vm.statistics.totalRequestsDayChangeNumber | number}} <i class="fa fa-arrow-circle-up"></i> {{vm.statistics.totalRequestsDayChange}} % (dag)</span>
+              <span ng-if="vm.statistics.totalRequestsDayChange < 0" class="color-failure">{{vm.statistics.totalRequestsDayChangeNumber | number}} <i class="fa fa-arrow-circle-down"></i> {{vm.statistics.totalRequestsDayChange *-1}} % (dag)</span>
+            </p>
+            <p data-toggle="tooltip" data-original-title="Förändring sedan föregående vecka">
+              <span ng-if="vm.statistics.totalRequestsWeekChange > 0" class="color-success">{{vm.statistics.totalRequestsWeekChangeNumber | number}} <i class="fa fa-arrow-circle-up"></i> {{vm.statistics.totalRequestsWeekChange}} % (vecka)</span>
+              <span ng-if="vm.statistics.totalRequestsWeekChange < 0" class="color-failure">{{vm.statistics.totalRequestsWeekChangeNumber | number}} <i class="fa fa-arrow-circle-down"></i> {{vm.statistics.totalRequestsWeekChange *-1}} % (vecka)</span>
+            </p>
+          </div>
+        </div>
+
+        <div ng-if="vm.charts.requestResponseTimes.length > 0" class="row padding-medium border-top padding-right-left-xs">
+          <div class="col-md-12 text-center">
+            <h1>Antal requests och genomsnittlig svarstid per API resurs</h1>
+            <h3 class="faded">Kombinerad data ifrån {{vm.periods[vm.selectedPeriodIndex].label}}</h3>
+            <highchart ng-repeat="entries in vm.charts.requestResponseTimes track by $index" id="request-responses-chart-$index" config="vm.charts.requestResponseTimes[$index]" class="padding-top-bottom" style="height: 600px"></highchart>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
