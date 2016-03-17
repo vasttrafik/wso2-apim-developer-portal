@@ -11,8 +11,10 @@
     var vm = this;
 
     vm.saveProfile = saveProfile;
+    vm.saveCommunityProfile = saveCommunityProfile;
     vm.savePassword = savePassword;
     vm.resetProfileForm = resetProfileForm;
+    vm.resetCommunityForm = resetCommunityForm;
     vm.resetPasswordForm = resetPasswordForm;
     vm.resetChallengeQuestionForm = resetChallengeQuestionForm;
     vm.addUpdateChallengeQuestion = addUpdateChallengeQuestion;
@@ -21,6 +23,7 @@
       vm.form = {};
 
       resetProfileForm();
+      resetCommunityForm();
       resetChallengeQuestionForm();
 
     })();
@@ -47,6 +50,7 @@
           response.tenantDomain = 'carbon.super';
           delete response.accessToken;
           delete response.userName;
+          delete response.memberId;
 
           APIService.userCall('usersUserIdPut', [response.id, 'updateProfile', 'application/json', 'Bearer ' + newUserObject.accessToken.token, 'application/json', response])
             .then(usersUserIdPutResponse)
@@ -79,6 +83,71 @@
           AlertService.error('Problem att uppdatera användaruppgifter');
         }
         vm.dataLoadingProfile = false;
+      }
+    }
+
+    function saveCommunityProfile() {
+      vm.dataLoadingCommunity = true;
+
+      var member = {
+        userName: $rootScope.globals.currentUser.userName,
+        email: vm.form.community.email,
+        signature: vm.form.community.signature,
+        gravatarEmail: vm.form.community.gravatarEmail,
+        useGravatar: (vm.form.community.gravatarEmail ? true : false)
+      };
+
+      if ($rootScope.globals.member) {
+        APIService.communityCall('membersIdPut', [$rootScope.globals.currentUser.id, member])
+          .then(membersResponse)
+          .catch(function(response) {
+            if (response.status === 400) {
+              AlertService.error(response.message, 'Problem att uppdatera community profil');
+            } else {
+              AlertService.error('Problem att uppdatera community profil');
+            }
+            vm.dataLoadingCommunity = false;
+          });
+      } else {
+        APIService.communityCall('membersPost', [member])
+          .then(membersResponse)
+          .catch(function(response) {
+            if (response.status === 400) {
+              AlertService.error(response.message, 'Problem att skapa community profil');
+            } else {
+              AlertService.error('Problem att skapa community profil');
+            }
+            vm.dataLoadingCommunity = false;
+          });
+      }
+
+      function membersResponse(response) {
+
+        if (response.status === 200 || response.status === 201) {
+
+          var created = ($rootScope.globals.currentUser.id ? false : true);
+
+          UserService.setMemberId(response.data.id)
+            .then(function() {
+              if (!created) {
+                AlertService.success('Din community profil är uppdaterad!');
+              } else {
+                AlertService.success('Din community profil är skapad!');
+              }
+            })
+            .then(resetCommunityForm)
+            .catch(function(response) {
+              AlertService.error('Problem att uppdatera community profilen');
+            });
+
+        } else {
+          if ($rootScope.globals.member) {
+            AlertService.success('Problem att uppdatera community profil');
+          } else {
+            AlertService.success('Problem att skapa community profil');
+          }
+        }
+        vm.dataLoadingCommunity = false;
       }
     }
 
@@ -146,6 +215,20 @@
 
     function resetProfileForm() {
       vm.form.profile = angular.copy($rootScope.globals.currentUser);
+    }
+
+    function resetCommunityForm() {
+
+      vm.form.community = {};
+
+      if (!$rootScope.globals.member) {
+        vm.form.community.signature = $rootScope.globals.currentUser.userName;
+        vm.form.community.email = $rootScope.globals.currentUser.email;
+        vm.form.community.gravatarEmail = $rootScope.globals.currentUser.email;
+      } else {
+        vm.form.community = angular.copy($rootScope.globals.member);
+      }
+
     }
 
     function resetChallengeQuestionForm() {
