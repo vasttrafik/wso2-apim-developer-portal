@@ -899,6 +899,12 @@ section article {
   transition: max-height 700ms ease;
   border-top: 4px solid #00394d;
 }
+.articleContent p {
+  margin: 10px 0px 10px 0px;
+}
+.double-margin {
+  margin: 20px 0px 20px 0px !important;
+}
 .newsItem .selectedItem {
   max-height: 1300px;
 }
@@ -925,6 +931,7 @@ article.newsItem > h2 {
 .news-item-content .img-section {
   text-align: center;
   padding: 10px;
+  margin-bottom: 20px;
 }
 .news-item-intro {
   overflow: hidden;

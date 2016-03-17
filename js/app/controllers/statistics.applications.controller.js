@@ -122,6 +122,13 @@
 
       calculateChangeValues(totalRequestsFaults.series);
 
+      totalRequestsFaults.series[0].names.forEach(function(entry, index) {
+        totalRequestsFaults.series[0].names[index] = entry.substring(5, entry.length);
+      });
+      totalRequestsFaults.series[1].names.forEach(function(entry, index) {
+        totalRequestsFaults.series[1].names[index] = entry.substring(5, entry.length);
+      });
+
       vm.charts.totalRequests.xAxis.categories = totalRequestsFaults.series[0].names;
       vm.charts.totalRequests.series[0].data = totalRequestsFaults.series[0].values;
 
@@ -185,12 +192,16 @@
         vm.statistics.uniqueUsersDayChangeNumber = Math.abs(uniqueUsers.series[0].values[valuesLength - 1] - uniqueUsers.series[0].values[valuesLength - 2]);
       }
       /* Check if first date is from last week and last date is from today. This means it's possible to compare them */
-      if (valuesLength > 1 && Date.create(uniqueUsers.series[0].names[0]).is('9 days ago') && Date.create(uniqueUsers.series[0].names[valuesLength - 1]).isToday()) {
+      if (valuesLength > 1 && Date.create(uniqueUsers.series[0].names[0]).is('8 days ago') && Date.create(uniqueUsers.series[0].names[valuesLength - 1]).isToday()) {
         vm.statistics.uniqueUsersWeekChange = calculatePercentageChange(uniqueUsers.series[0].values[valuesLength - 1], uniqueUsers.series[0].values[0]);
         vm.statistics.uniqueUsersWeekChangeNumber = Math.abs(uniqueUsers.series[0].values[valuesLength - 1] - uniqueUsers.series[0].values[0]);
         uniqueUsers.series[0].values.shift(); // Remove first day
         uniqueUsers.series[0].names.shift(); // Remove first value
       }
+
+      uniqueUsers.series[0].names.forEach(function(entry, index) {
+        uniqueUsers.series[0].names[index] = entry.substring(5, entry.length);
+      });
 
       vm.charts.uniqueUsers.xAxis.categories = uniqueUsers.series[0].names;
       vm.charts.uniqueUsers.series[0].data = uniqueUsers.series[0].values;
@@ -266,7 +277,12 @@
     }
 
     function calculatePercentageChange(value, previousValue) {
-      return Math.floor(((value / previousValue) * 100) - 100);
+      if (value !== 0 && previousValue !== 0) {
+        return Math.floor(((value / previousValue) * 100) - 100);
+      } else {
+        return 0;
+      }
+
     }
 
   }

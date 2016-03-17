@@ -36,19 +36,19 @@
           </div>
         </div>
       </div>
-      <div ng-if="vm.statistics.totalRequests !== 0" class="panel-body">
+      <div ng-if="vm.statistics.totalRequests !== 0" class="panel-body no-padding-top">
         <div class="row">
           <div class="col-md-6 text-center padding-medium border-right padding-right-left-xs">
             <highchart id="total-requests-chart" config="vm.charts.totalRequests" class="chart"></highchart>
             <h1>{{vm.statistics.totalRequests | number}}</h1>
             <p>Antal requests senaste veckan</p>
             <p data-toggle="tooltip" data-original-title="Förändring sedan föregående dag">
-              <span ng-if="vm.statistics.totalRequestsDayChange >= 0" class="color-success">{{vm.statistics.totalRequestsDayChangeNumber | number}} <i class="fa fa-arrow-circle-up"></i> {{vm.statistics.totalRequestsDayChange}} %</span>
-              <span ng-if="vm.statistics.totalRequestsDayChange < 0" class="color-failure">{{vm.statistics.totalRequestsDayChangeNumber | number}} <i class="fa fa-arrow-circle-down"></i> {{vm.statistics.totalRequestsDayChange *-1}} %</span>
+              <span ng-if="vm.statistics.totalRequestsDayChange > 0" class="color-success">{{vm.statistics.totalRequestsDayChangeNumber | number}} <i class="fa fa-arrow-circle-up"></i> {{vm.statistics.totalRequestsDayChange}} % (dag)</span>
+              <span ng-if="vm.statistics.totalRequestsDayChange < 0" class="color-failure">{{vm.statistics.totalRequestsDayChangeNumber | number}} <i class="fa fa-arrow-circle-down"></i> {{vm.statistics.totalRequestsDayChange *-1}} % (dag)</span>
             </p>
             <p data-toggle="tooltip" data-original-title="Förändring sedan föregående vecka">
-              <span ng-if="vm.statistics.totalRequestsWeekChange >= 0" class="color-success">{{vm.statistics.totalRequestsWeekChangeNumber | number}} <i class="fa fa-arrow-circle-up"></i> {{vm.statistics.totalRequestsWeekChange}} %</span>
-              <span ng-if="vm.statistics.totalRequestsWeekChange < 0" class="color-failure">{{vm.statistics.totalRequestsWeekChangeNumber | number}} <i class="fa fa-arrow-circle-down"></i> {{vm.statistics.totalRequestsWeekChange *-1}} %</span>
+              <span ng-if="vm.statistics.totalRequestsWeekChange > 0" class="color-success">{{vm.statistics.totalRequestsWeekChangeNumber | number}} <i class="fa fa-arrow-circle-up"></i> {{vm.statistics.totalRequestsWeekChange}} % (vecka)</span>
+              <span ng-if="vm.statistics.totalRequestsWeekChange < 0" class="color-failure">{{vm.statistics.totalRequestsWeekChangeNumber | number}} <i class="fa fa-arrow-circle-down"></i> {{vm.statistics.totalRequestsWeekChange *-1}} % (vecka)</span>
             </p>
           </div>
           <div class="col-md-6 text-center padding-medium padding-right-left-xs">
@@ -63,12 +63,12 @@
               <h1>{{vm.statistics.uniqueUsers | number}}</h1>
               <p>Unika användare idag</p>
               <p data-toggle="tooltip" data-original-title="Förändring sedan igår">
-                <span ng-if="vm.statistics.uniqueUsersDayChange >= 0" class="color-success">{{vm.statistics.uniqueUsersDayChangeNumber | number}} <i class="fa fa-arrow-circle-up"></i> {{vm.statistics.uniqueUsersDayChange}} %</span>
-                <span ng-if="vm.statistics.uniqueUsersDayChange < 0" class="color-failure">{{vm.statistics.uniqueUsersDayChangeNumber | number}} <i class="fa fa-arrow-circle-down"></i> {{vm.statistics.uniqueUsersDayChange *-1}} %</span>
+                <span ng-if="vm.statistics.uniqueUsersDayChange > 0" class="color-success">{{vm.statistics.uniqueUsersDayChangeNumber | number}} <i class="fa fa-arrow-circle-up"></i> {{vm.statistics.uniqueUsersDayChange}} % (dag)</span>
+                <span ng-if="vm.statistics.uniqueUsersDayChange < 0" class="color-failure">{{vm.statistics.uniqueUsersDayChangeNumber | number}} <i class="fa fa-arrow-circle-down"></i> {{vm.statistics.uniqueUsersDayChange *-1}} % (dag)</span>
               </p>
               <p data-toggle="tooltip" data-original-title="Förändring sedan föregående vecka">
-                <span ng-if="vm.statistics.uniqueUsersWeekChange >= 0" class="color-success">{{vm.statistics.uniqueUsersWeekChangeNumber | number}} <i class="fa fa-arrow-circle-up"></i> {{vm.statistics.uniqueUsersWeekChange}} %</span>
-                <span ng-if="vm.statistics.uniqueUsersWeekChange < 0" class="color-failure">{{vm.statistics.uniqueUsersWeekChangeNumber | number}} <i class="fa fa-arrow-circle-down"></i> {{vm.statistics.uniqueUsersWeekChange *-1}} %</span>
+                <span ng-if="vm.statistics.uniqueUsersWeekChange > 0" class="color-success">{{vm.statistics.uniqueUsersWeekChangeNumber | number}} <i class="fa fa-arrow-circle-up"></i> {{vm.statistics.uniqueUsersWeekChange}} % (vecka)</span>
+                <span ng-if="vm.statistics.uniqueUsersWeekChange < 0" class="color-failure">{{vm.statistics.uniqueUsersWeekChangeNumber | number}} <i class="fa fa-arrow-circle-down"></i> {{vm.statistics.uniqueUsersWeekChange *-1}} % (vecka)</span>
               </p>
             </div>
           </div>
@@ -83,29 +83,30 @@
           </div>
         </div>
 
-        <div ng-if="vm.statistics.totalFaults > 0" class="row padding-medium padding-right-left-xs border-top">
-          <div class="col-md-6">
+        <div ng-if="vm.statistics.totalFaults > 0" class="row text-center border-top">
+          <div class="col-md-6 border-right padding-medium padding-right-left-xs">
             <highchart id="total-faults-chart" config="vm.charts.totalFaults" class="chart"></highchart>
             <h1>{{vm.statistics.totalFaults}}</h1>
             <p>Antal fel senaste veckan</p>
             <p data-toggle="tooltip" data-original-title="Förändring sedan föregående dag">
               <span ng-if="vm.statistics.totalFaultsDayChange < 0" class="color-success">{{vm.statistics.totalFaultsDayChangeNumber | number}} <i class="fa fa-arrow-circle-down"></i> {{vm.statistics.totalFaultsDayChange *-1}} %</span>
-              <span ng-if="vm.statistics.totalFaultsDayChange >= 0" class="color-failure">{{vm.statistics.totalFaultsDayChangeNumber | number}} <i class="fa fa-arrow-circle-up"></i> {{vm.statistics.totalFaultsDayChange}} %</span>
+              <span ng-if="vm.statistics.totalFaultsDayChange > 0" class="color-failure">{{vm.statistics.totalFaultsDayChangeNumber | number}} <i class="fa fa-arrow-circle-up"></i> {{vm.statistics.totalFaultsDayChange}} %</span>
             </p>
             <p data-toggle="tooltip" data-original-title="Förändring sedan föregående vecka">
               <span ng-if="vm.statistics.totalFaultsWeekChange < 0" class="color-success">{{vm.statistics.totalFaultsWeekChangeNumber | number}} <i class="fa fa-arrow-circle-down"></i> {{vm.statistics.totalFaultsWeekChange *-1}} %</span>
-              <span ng-if="vm.statistics.totalFaultsWeekChange >= 0" class="color-failure">{{vm.statistics.totalFaultsWeekChangeNumber | number}} <i class="fa fa-arrow-circle-up"></i> {{vm.statistics.totalFaultsWeekChange}} %</span>
+              <span ng-if="vm.statistics.totalFaultsWeekChange > 0" class="color-failure">{{vm.statistics.totalFaultsWeekChangeNumber | number}} <i class="fa fa-arrow-circle-up"></i> {{vm.statistics.totalFaultsWeekChange}} %</span>
             </p>
           </div>
-          <div class="col-md-6">
-            <highchart id="faults-percentage-chart" config="vm.charts.faultsPercentage"></highchart>
+          <div class="col-md-6 padding-medium padding-right-left-xs">
+            <highchart id="faults-percentage-chart" config="vm.charts.faultsPercentage" style="height: 300px"></highchart>
           </div>
         </div>
 
         <div ng-if="vm.charts.requestResponseTimes.length > 0" class="row padding-medium padding-right-left-xs border-top">
           <div class="col-md-12 text-center">
             <h1>Antal requests och genomsnittlig svarstid per API resurs</h1>
-            <highchart ng-repeat="entries in vm.charts.requestResponseTimes track by $index" id="request-responses-chart-$index" config="vm.charts.requestResponseTimes[$index]" class="padding-top-bottom"></highchart>
+            <h3 class="faded">Kombinerad data ifrån senaste veckan</h3>
+            <highchart ng-repeat="entries in vm.charts.requestResponseTimes track by $index" id="request-responses-chart-$index" config="vm.charts.requestResponseTimes[$index]" class="padding-top-bottom" style="height: 600px"></highchart>
           </div>
         </div>
 
