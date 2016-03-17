@@ -11,26 +11,28 @@
         <div class="row" ng-if="vm.newsItems.length === 0">
           <h3>Det finns inte några nyheter med valda sökkriterier. Välj en månad i listan till höger.</h3>
         </div>
-        <article id="{{'newsArticle-' + $index}}" class="newsItem" ng-repeat="newsItem in vm.newsItems | orderBy: 'publishedDate'">
+        <article id="{{'newsArticle-' + newsItem.id}}" class="newsItem" ng-repeat="newsItem in vm.newsItems | orderBy: 'createDate'">
           <div class="calDate">
-            <div class="month red">{{ newsItem.publishedDate | date:'MMM' }}</div>{{  newsItem.publishedDate | date:'d' }}
+            <div class="month red">{{ newsItem.createDate | date:'MMM' }}</div>{{  newsItem.createDate | date:'d' }}
           </div>
           <span class="toggleItem">
             <span class="showMore" ng-show="!vm.news[$index].showIngress"><i class="glyphicon glyphicon-chevron-down" ng-click="vm.toggleExpand($index)"></i></span>
             <span class="showLess" ng-show="vm.news[$index].showIngress"><i class="glyphicon glyphicon-chevron-up" ng-click="vm.toggleExpand($index)"></i></span>
           </span>
-          <h2 class="ellipsis">{{newsItem.title}}</h2>
+          <h2 class="ellipsis">{{newsItem.subject}}</h2>
           <div class="articleContent">
-            <div id="{{'newsIntro-' + $index}}" class="news-item-intro animate-hide" ng-hide="vm.newsItems[$index].expand" ng-include="vm.newsItems[$index].contentUrl">
+            <div id="{{'newsIntro-' + $index}}" class="news-item-intro animate-hide" ng-hide="vm.newsItems[$index].expand">
+              {{vm.newsItems[$index].firstPost.text}}
             </div>
-            <div id="{{'newsContent-' + $index}}" class="news-item-content animate-hide" ng-hide="!vm.newsItems[$index].expand" ng-include="vm.newsItems[$index].contentUrl">
+            <div id="{{'newsContent-' + $index}}" class="news-item-content margin-bottom-small animate-hide" ng-hide="!vm.newsItems[$index].expand">
+              {{vm.newsItems[$index].firstPost.text}}
             </div>
           </div>
           <footer>
             <div class="fader"></div>
             Taggad som:
             <span class="label label-default" ng-repeat="tag in newsItem.tags"  ng-click="vm.setTag(tag)" style="cursor: pointer">{{tag}}</span>&nbsp;
-            <span>Publicerad av: {{newsItem.publishedBy}}, {{newsItem.publishedDate}}</span>
+            <span>Publicerad av: {{newsItem.createdBy.signature}}, {{newsItem.createDate}}</span>
             <span class="toggleItemBottom">
               <span class="showMore" ng-show="!vm.newsItems[$index].expand" ng-click="vm.toggleExpand($index)">Visa mer <i class="glyphicon glyphicon-chevron-down"></i></span>
               <span class="showLess" ng-show="vm.newsItems[$index].expand" ng-click="vm.toggleExpand($index)">Visa mindre <i class="glyphicon glyphicon-chevron-up"></i></span>
@@ -46,7 +48,7 @@
 
         <section>
           <h3>Månader</h3>
-            <span ng-repeat="entry in vm.months"><a href="#/news/{{entry + 1}}">{{vm.toMonth(entry)}}</a></span>
+            <span ng-repeat="entry in vm.months"><a href="#/news/{{entry + 1}}">{{vm.toMonth(entry)}}</a> </span>
         </section>
 
         <section class="tags-dark-blue" ng-if="vm.tags.length > 0">

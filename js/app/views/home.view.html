@@ -86,11 +86,11 @@
           <h3 class="text-center"><i class="fa fa-newspaper-o"></i> Nyheter</h3>
           <ul class="list-unstyled truncate" style="line-height:2em">
             <li ng-repeat="entry in vm.newsItems">
-              <a href="#/news/{{entry.publishedDate | date:'M'}}?id={{entry.id}}">
+              <a href="#/news/{{entry.createDate | date:'M'}}?id={{entry.id}}">
                 <div class="calDate" style="margin-top:0;margin-bottom:2px;">
-                  <div class="month green">{{entry.publishedDate | date:'MMM'}}</div>{{entry.publishedDate | date:'d'}}
+                  <div class="month green">{{entry.createDate | date:'MMM'}}</div>{{entry.createDate | date:'d'}}
                 </div>
-                {{entry.title}}
+                {{entry.subject}}
               </a>
             </li>
           </ul>

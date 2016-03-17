@@ -9,9 +9,9 @@
     .constant('newsItems', newsItems)
     .constant('helper', helper);
 
-  NewsCtrl.$inject = ['$routeParams', '$location', '$scope', '$timeout', '$document'];
+  NewsCtrl.$inject = ['$routeParams', '$location', '$scope', '$timeout', '$document', 'APIService', 'AlertService'];
 
-  function NewsCtrl($routeParams, $location, $scope, $timeout, $document) {
+  function NewsCtrl($routeParams, $location, $scope, $timeout, $document, APIService, AlertService) {
     var vm = this;
 
     vm.newsItems = [];
@@ -23,37 +23,49 @@
     vm.toMonth = toMonth;
 
     (function init() {
-      vm.newsItems = newsItems.filter(function(a) {
 
-        vm.months.push(new Date(a.publishedDate).getMonth());
+      APIService.communityCall('forumsIdGet', [10])
+        .then(forumsIdGetResponse);
 
-        if ($routeParams.month && $location.search().tag) {
-          return (parseInt(new Date(a.publishedDate).getMonth()) + 1 === parseInt($routeParams.month)) && (a.tags.indexOf($location.search().tag) > -1);
-        } else if ($routeParams.month) {
-          return (parseInt(new Date(a.publishedDate).getMonth()) + 1 === parseInt($routeParams.month));
-        } else if ($location.search().tag) {
-          return (new Date(a.publishedDate).getMonth() === new Date().getMonth()) && (a.tags.indexOf($location.search().tag) > -1);
+      function forumsIdGetResponse(response) {
+        if (response.status === 200) {
+          vm.newsItems = response.data.topics.filter(function(a) {
+
+            vm.months.push(new Date(a.createDate).getMonth());
+
+            if ($routeParams.month && $location.search().tag) {
+              return (parseInt(new Date(a.createDate).getMonth()) + 1 === parseInt($routeParams.month)) && (a.tags.indexOf($location.search().tag) > -1);
+            } else if ($routeParams.month) {
+              return (parseInt(new Date(a.createDate).getMonth()) + 1 === parseInt($routeParams.month));
+            } else if ($location.search().tag) {
+              return (new Date(a.createDate).getMonth() === new Date().getMonth()) && (a.tags.indexOf($location.search().tag) > -1);
+            } else {
+              return new Date(a.createDate).getMonth() === new Date().getMonth();
+            }
+          });
+
+          angular.forEach(vm.newsItems, function(keys, values) {
+            vm.tags.push.apply(vm.tags, keys.tags);
+            if (parseInt(keys.id) === parseInt($location.search().id)) {
+              console.log(JSON.stringify(keys, null, 4));
+              keys.expand = true;
+            } else {
+              keys.expand = false;
+            }
+          });
+
+          vm.tags = helper.getUniqueArray(vm.tags);
+          vm.months = helper.getUniqueArray(vm.months);
+
+          $timeout(function() {
+            var idSection = angular.element(document.getElementById('newsArticle-' + $location.search().id));
+            $document.scrollToElement(idSection, 100, 100);
+          }, 1000);
+
         } else {
-          return new Date(a.publishedDate).getMonth() === new Date().getMonth();
+          AlertService.error('Problem att hämta nyheter');
         }
-      });
-
-      angular.forEach(vm.newsItems, function(keys, values) {
-        vm.tags.push.apply(vm.tags, keys.tags);
-        if (keys.id === $location.search().id) {
-          keys.expand = true;
-        } else {
-          keys.expand = false;
-        }
-      });
-
-      vm.tags = helper.getUniqueArray(vm.tags);
-      vm.months = helper.getUniqueArray(vm.months);
-
-      $timeout(function() {
-        var idSection = angular.element(document.getElementById('newsArticle-' + $location.search().id));
-        $document.scrollToElement(idSection, 100, 100);
-      }, 1000);
+      }
 
     })();
 

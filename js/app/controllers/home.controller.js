@@ -7,17 +7,28 @@
     .controller('HomeCtrl', HomeCtrl)
     .constant('newsItems', newsItems);
 
-  HomeCtrl.$inject = ['AlertService'];
+  HomeCtrl.$inject = ['AlertService', 'APIService'];
 
-  function HomeCtrl(AlertService) {
+  function HomeCtrl(AlertService, APIService) {
     var vm = this;
 
     vm.newsItems = [];
 
     (function init() {
-      vm.newsItems = newsItems;
+
+      APIService.communityCall('forumsIdGet', [10])
+        .then(forumsIdGetResponse);
 
     })();
+
+    function forumsIdGetResponse(response) {
+      if (response.status === 200) {
+        vm.newsItems = response.data.topics;
+
+      } else {
+        AlertService.error('Problem att hämta nyheter');
+      }
+    }
 
   }
 
