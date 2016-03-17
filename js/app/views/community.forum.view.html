@@ -6,7 +6,28 @@
       <li><a href="#/community/category/{{vm.forum.categoryId}}" target="_self">{{vm.forum.categoryName}}</a></li>
       <li class="active">{{vm.forum.name}}</li>
     </ol>
-    <h1>{{vm.forum.name}}</h1>
+
+    <!-- Subject -->
+    <span class="pull-right pointer" ng-if="vm.forum.createdBy.id === globals.currentUser.memberId && vm.forum.numberOfTopics === 0" ng-click="vm.removeForum()"><i class="fa fa-trash"></i></span>
+    <span class="pull-right pointer margin-right-mini" ng-if="vm.forum.createdBy.id === globals.currentUser.memberId" ng-click="vm.addForumUpdate()"><i class="fa fa-pencil-square-o"></i></span>
+
+    <h1 ng-if="!vm.toggleForumUpdate">{{vm.forum.name}}</h1>
+
+    <div ng-if="vm.toggleForumUpdate">
+      <form name="updateForumForm" ng-submit="vm.updateForum()" role="form">
+        <div class="form-group" ng-class="{ 'has-error': updateForumForm.subject.$dirty && updateForumForm.subject.$invalid,
+  'has-success' : updateForumForm.subject.$valid}">
+          <input type="text" name="subject" id="subject" class="form-control" ng-model="vm.form.subject" maxlength="50" required />
+        </div>
+
+        <div class="form-actions pull-right">
+          <button type="submit" ng-disabled="updateForumForm.$invalid || vm.dataLoadingUpdateForum" class="btn btn-primary">Uppdatera</button>
+          <span ng-click="vm.toggleForumUpdate = false" class="btn btn-link">Ångra</span>
+        </div>
+      </form>
+    </div>
+    <!-- End subject -->
+
   </div>
 </div>
 
@@ -14,23 +35,23 @@
   <div class="row padding-bottom">
     <h2>{{vm.forum.description}}</h2>
   </div>
-  <div class="row">
-    <div class="col-md-4 cat-id-1" style="color: #fff; height: 200px">
+  <div class="row color-white">
+    <div class="col-md-4 cat-id-1" style="height: 200px">
       <h3 class="truncate">Hur lägger jag till fler poster?</h2>
       <p><strong>Technical Support Forum</strong></p>
       <p>5 dagar sedan</p>
       <span style="position: absolute;bottom: 5px;right: 10px;" data-toggle="tooltip" data-original-title="Populär"><i class="fa fa-line-chart"></i></span>
     </div>
     <div class="col-md-4">
-      <div class="col-md-12 cat-id-2" style="color: #fff; height: 200px">
+      <div class="col-md-12 cat-id-2" style="height: 200px">
         <h3 class="truncate">Anvädnning av Reseplanerar API:et</h2>
         <p><strong>API Forum</strong></p>
         <p>2 dagar sedan</p>
         <span style="position: absolute;bottom: 0px;right: 10px;" data-toggle="tooltip" data-original-title="Senaste"><i class="fa fa-sort-asc"></i></span>
       </div>
     </div>
-    <div class="col-md-4" style="padding-left: 0px">
-      <div class="col-md-12 cat-id-3" style="color: #fff; height: 200px">
+    <div class="col-md-4 no-padding-left">
+      <div class="col-md-12 cat-id-3" style="height: 200px">
         <h3 class="truncate">Antal requests som jag får skicka?</h2>
         <p><strong>General Forum</strong></p>
         <p>7 timmar sedan</p>
@@ -51,27 +72,27 @@
             <td style="width: 50px">
               <div class="area area-small">
                   <span ng-if="!entries.createdBy.useGravatar" class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x" style="color:#00AAEB"></i>
-                    <i class="fa fa-user fa-stack-1x fa-inverse" style="color:#FFFFFF"></i>
+                    <i class="fa fa-circle fa-stack-2x color-blue"></i>
+                    <i class="fa fa-user fa-stack-1x fa-inverse color-white"></i>
                   </span>
                   <img ng-if="entries.createdBy.useGravatar" src="http://www.gravatar.com/avatar/{{entries.createdBy.email | hash}}?s=45" class="avatar">
               </div>
             </td>
             <td>
-              <h2 style="margin-bottom: 0px"><a href="#/community/topic/{{entries.id}}">{{entries.subject}}</a></h2>
-              <a href="signature" style="padding-right: 10px">{{entries.createdBy.signature}}</a>&bull;
-              <span style="margin-left: 5px">{{entries.createDate | relativeDate}}</span>
+              <h2 class="no-margin-bottom"><a href="#/community/topic/{{entries.id}}">{{entries.subject}}</a></h2>
+              <a href="signature" class="padding-right-mini">{{entries.createdBy.signature}}</a>&bull;
+              <span class="margin-left-mini">{{entries.createDate | relativeDate}}</span>
             </td>
             <td class="text-center">
-              <h2 style="margin-bottom: 0px">{{entries.numberOfPosts}}</h2>
+              <h2 class="no-margin-bottom">{{entries.numberOfPosts}}</h2>
               <p>Poster</p>
             </td>
             <td class="text-center">
-              <h2 style="margin-bottom: 0px">{{entries.numberOfViews}}</h2>
+              <h2 class="no-margin-bottom">{{entries.numberOfViews}}</h2>
               <p>Visningar</p>
             </td>
             <td class="text-center">
-              <h2 style="margin-bottom: 0px" ng-class="entries.answeredByPostId ? 'answer' : 'not-answer'">{{entries.numberOfReplies}}</h2>
+              <h2 class="no-margin-bottom" ng-class="entries.answeredByPostId ? 'answer' : 'not-answer'">{{entries.numberOfReplies}}</h2>
               <p>Svar</p>
             </td>
           </tr>
@@ -79,27 +100,33 @@
       </table>
   </div>
 
-  <div class="container" style="padding-bottom: 20px;">
+  <div class="container padding-bottom-small" ng-show="globals.currentUser.id && user.loggedIn">
           <h2>Skapa ny topic</h2>
     <div class="row well">
       <form name="addTopicForm" ng-submit="vm.addTopic()" role="form">
         <div class="form-group" ng-class="{ 'has-error': addTopicForm.topic.$dirty && addTopicForm.topic.$invalid,
   'has-success' : addTopicForm.answer.$valid}">
           <label for="subject">Rubrik</label>
-          <input type="text" name="subject" id="subject" class="form-control" ng-model="vm.form.topic.subject" style="margin-bottom: 20px" maxlength="50" required />
+          <input type="text" name="subject" id="subject" class="form-control margin-bottom-small" ng-model="vm.form.topic.subject" maxlength="50" required />
           <label for="question">Fråga</label>
-          <span style="float: right; font-size: 0.9em"><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown Cheat Sheet</a></span>
-          <textarea id="question" type="text" class="form-control" ng-model="vm.form.topic.question" style="height: 100px; margin-bottom: 20px" required></textarea>
+          <span class="pull-right" style="font-size: 0.9em"><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown Cheat Sheet</a></span>
+          <textarea id="question" type="text" class="form-control margin-bottom-small" ng-model="vm.form.topic.question" style="height: 100px;" required></textarea>
           <label for="preview" ng-show="vm.form.topic.question">Förhandsgranskning</label>
           <div btf-markdown="vm.form.topic.question">
           </div>
         </div>
 
-        <div class="form-actions noclick" style="float: right">
+        <div class="form-actions noclick pull-right">
           <button type="submit" ng-disabled="addTopicForm.$invalid" class="btn btn-primary">Skicka</button>
           <span ng-click="vm.resetAddTopicForm();" class="btn btn-link">Ångra</span>
         </div>
       </form>
+    </div>
+  </div>
+
+  <div class="container padding-bottom-small" ng-show="!globals.currentUser.id && user.loggedIn">
+    <div class="row">
+    <h3><a href="#/profile">Skapa en community profil för att kunna interagera med forumet</a></h3>
     </div>
   </div>
 

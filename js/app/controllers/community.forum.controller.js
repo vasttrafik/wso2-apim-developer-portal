@@ -16,6 +16,8 @@
 
     (function init() {
 
+      vm.toggleForumUpdate = false;
+
       APIService.communityCall('forumsIdGet', [$routeParams.forumId])
         .then(categoriesIdGetResponse);
 
@@ -71,6 +73,33 @@
         }
         vm.dataLoadingAddTopic = false;
       }
+    }
+
+    function addForumUpdate() {
+
+      vm.toggleForumUpdate = !vm.toggleforumUpdate;
+      vm.form.subject = angular.copy(vm.forum.subject);
+
+    }
+
+    function updateForum() {
+
+      APIService.communityCall('forumsIdPut', [vm.forum.id, {
+          categoryId: vm.forum.categoryId,
+          subject: vm.form.subject
+        }])
+        .then(forumsIdPutResponse);
+
+      function forumsIdPutResponse(response) {
+        if (response.status === 200) {
+          AlertService.success('Forum uppdaterad!');
+          vm.forum.subject = vm.form.subject;
+          vm.toggleForumUpdate = false;
+        } else {
+          AlertService.error('Problem att uppdatera forum');
+        }
+      }
+
     }
 
     function resetAddTopicForm() {

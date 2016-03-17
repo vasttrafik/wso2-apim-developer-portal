@@ -16,6 +16,8 @@
 
     (function init() {
 
+      vm.toggleCategoryUpdate = false;
+
       APIService.communityCall('categoriesIdGet', [$routeParams.categoryId ? $routeParams.categoryId : 1])
         .then(categoriesIdGetResponse);
 

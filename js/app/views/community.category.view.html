@@ -5,7 +5,26 @@
       <li><a href="#/community" target="_self">Community</a></li>
       <li class="active">{{vm.category.name}}</li>
     </ol>
-    <h1>{{vm.category.name}}</h1>
+    <!-- Subject -->
+    <span class="pull-right pointer" ng-if="vm.category.createdBy.id === globals.currentUser.memberId && vm.forum.numberOfTopics === 0" ng-click="vm.removeForum()"><i class="fa fa-trash"></i></span>
+    <span class="pull-right pointer margin-right-mini" ng-if="vm.category.createdBy.id === globals.currentUser.memberId" ng-click="vm.addForumUpdate()"><i class="fa fa-pencil-square-o"></i></span>
+
+    <h1 ng-if="!vm.toggleCategoryUpdate">{{vm.category.name}}</h1>
+
+    <div ng-if="vm.toggleCategoryUpdate">
+      <form name="updateCategoryForm" ng-submit="vm.updateCategory()" role="form">
+        <div class="form-group" ng-class="{ 'has-error': updateCategoryForm.subject.$dirty && updateCategoryForm.subject.$invalid,
+  'has-success' : updateCategoryForm.subject.$valid}">
+          <input type="text" name="subject" id="subject" class="form-control" ng-model="vm.form.subject" maxlength="50" required />
+        </div>
+
+        <div class="form-actions pull-right">
+          <button type="submit" ng-disabled="updateCategoryForm.$invalid || vm.dataLoadingUpdateCategory" class="btn btn-primary">Uppdatera</button>
+          <span ng-click="vm.toggleCategoryUpdate = false" class="btn btn-link">Ångra</span>
+        </div>
+      </form>
+    </div>
+    <!-- End subject -->
   </div>
 </div>
 
@@ -13,15 +32,15 @@
   <div class="row padding-bottom">
     <h2>{{vm.category.description}}</h2>
   </div>
-  <div class="row">
-    <div class="col-md-4 cat-id-1" style="color: #fff; height: 200px">
+  <div class="row color-white">
+    <div class="col-md-4 cat-id-1" style="height: 200px">
       <h3 class="truncate">Hur lägger jag till fler poster?</h2>
       <p><strong>Technical Support Forum</strong></p>
       <p>5 dagar sedan</p>
       <span style="position: absolute;bottom: 5px;right: 10px;" data-toggle="tooltip" data-original-title="Populär"><i class="fa fa-line-chart"></i></span>
     </div>
     <div class="col-md-4">
-      <div class="col-md-12 cat-id-2" style="color: #fff; height: 200px">
+      <div class="col-md-12 cat-id-2" style="height: 200px">
         <h3 class="truncate">Anvädnning av Reseplanerar API:et</h2>
         <p><strong>API Forum</strong></p>
         <p>2 dagar sedan</p>
@@ -29,7 +48,7 @@
       </div>
     </div>
     <div class="col-md-4" style="padding-left: 0px">
-      <div class="col-md-12 cat-id-3" style="color: #fff; height: 200px">
+      <div class="col-md-12 cat-id-3" style="height: 200px">
         <h3 class="truncate">Antal requests som jag får skicka?</h2>
         <p><strong>General Forum</strong></p>
         <p>7 timmar sedan</p>
@@ -56,15 +75,15 @@
               </div>
             </td>
             <td>
-              <h2 style="margin-bottom: 0px"><a href="#/community/forum/{{entries.id}}">{{entries.name}}</a></h2>
+              <h2 class="no-margin-bottom"><a href="#/community/forum/{{entries.id}}">{{entries.name}}</a></h2>
               <p>{{entries.description}}</p>
             </td>
             <td class="text-center">
-              <h2 style="margin-bottom: 0px">{{entries.numberOfTopics}}</h2>
+              <h2 class="no-margin-bottom">{{entries.numberOfTopics}}</h2>
               <p>Topics</p>
             </td>
             <td class="text-center">
-              <h2 style="margin-bottom: 0px">{{entries.numberOfPosts}}</h2>
+              <h2 class="no-margin-bottom">{{entries.numberOfPosts}}</h2>
               <p>Posts</p>
             </td>
           </tr>
@@ -72,25 +91,31 @@
       </table>
   </div>
 
-  <div class="container" style="padding-bottom: 20px;">
+  <div class="container padding-bottom-small" ng-show="globals.currentUser.id && user.loggedIn">
     <h2>Skapa nytt forum</h2>
     <div class="row well">
       <form name="addForumForm" ng-submit="vm.addForum()" role="form">
         <div class="form-group" ng-class="{ 'has-error': addForumForm.topic.$dirty && addForumForm.topic.$invalid,
   'has-success' : addForumForm.answer.$valid}">
           <label for="name">Namn</label>
-          <input type="text" name="name" id="name" class="form-control" ng-model="vm.form.forum.name" style="margin-bottom: 20px" maxlength="50" required />
+          <input type="text" name="name" id="name" class="form-control margin-bottom-small" ng-model="vm.form.forum.name" maxlength="50" required />
           <label for="description">Beskrivning</label>
-          <input type="text" name="name" id="description" class="form-control" ng-model="vm.form.forum.description" style="margin-bottom: 20px" maxlength="50" required />
+          <input type="text" name="name" id="description" class="form-control margin-bottom-small" ng-model="vm.form.forum.description" maxlength="50" required />
           <label for="imageURL">Bild URL</label>
-          <input type="text" name="imageURL" id="imageURL" class="form-control" ng-model="vm.form.forum.imageURL" maxlength="100" style="margin-bottom: 20px" />
+          <input type="text" name="imageURL" id="imageURL" class="form-control margin-bottom-small" ng-model="vm.form.forum.imageURL" maxlength="100" />
         </div>
 
-        <div class="form-actions noclick" style="float: right">
+        <div class="form-actions noclick pull-right">
           <button type="submit" ng-disabled="addForumForm.$invalid" class="btn btn-primary">Skicka</button>
           <span ng-click="vm.resetAddForumForm();" class="btn btn-link">Ångra</span>
         </div>
       </form>
+    </div>
+  </div>
+
+  <div class="container padding-bottom-small" ng-show="!globals.currentUser.id && user.loggedIn">
+    <div class="row">
+    <h3><a href="#/profile">Skapa en community profil för att kunna interagera med forumet</a></h3>
     </div>
   </div>
 
