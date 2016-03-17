@@ -4,8 +4,7 @@
 
   angular
     .module('vtPortal')
-    .controller('HomeCtrl', HomeCtrl)
-    .constant('newsItems', newsItems);
+    .controller('HomeCtrl', HomeCtrl);
 
   HomeCtrl.$inject = ['AlertService', 'APIService'];
 

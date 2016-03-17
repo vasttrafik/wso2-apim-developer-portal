@@ -6,7 +6,6 @@
   angular
     .module('vtPortal')
     .controller('NewsCtrl', NewsCtrl)
-    .constant('newsItems', newsItems)
     .constant('helper', helper);
 
   NewsCtrl.$inject = ['$routeParams', '$location', '$scope', '$timeout', '$document', 'APIService', 'AlertService'];
