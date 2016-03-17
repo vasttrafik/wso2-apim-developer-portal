@@ -450,6 +450,118 @@ var CommunityAPI;
       };
       /**
        *
+       * Performs a partial match (auto-complete) to search for members
+       * @param member The email or signature of the member
+       * @param offset Starting point of the list
+       * @param limit Maximum size array to return
+       */
+      CommunityApi.prototype.membersGet = function(member, offset, limit, extraHttpRequestParams) {
+        var localVarPath = this.basePath + '/members';
+        var queryParameters = {};
+        var headerParams = this.extendObj({}, this.defaultHeaders);
+        // verify required parameter 'member' is set
+        if (!member) {
+          throw new Error('Missing required parameter member when calling membersGet');
+        }
+        if (member !== undefined) {
+          queryParameters['member'] = member;
+        }
+        if (offset !== undefined) {
+          queryParameters['offset'] = offset;
+        }
+        if (limit !== undefined) {
+          queryParameters['limit'] = limit;
+        }
+        var httpRequestParams = {
+          method: 'GET',
+          url: localVarPath,
+          json: true,
+          params: queryParameters,
+          headers: headerParams
+        };
+        if (extraHttpRequestParams) {
+          httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+        }
+        return this.$http(httpRequestParams);
+      };
+      /**
+       *
+       * Retrieves a community member profile
+       * @param id Resource id
+       */
+      CommunityApi.prototype.membersIdGet = function(id, extraHttpRequestParams) {
+        var localVarPath = this.basePath + '/members/{id}'
+          .replace('{' + 'id' + '}', String(id));
+        var queryParameters = {};
+        var headerParams = this.extendObj({}, this.defaultHeaders);
+        // verify required parameter 'id' is set
+        if (!id) {
+          throw new Error('Missing required parameter id when calling membersIdGet');
+        }
+        var httpRequestParams = {
+          method: 'GET',
+          url: localVarPath,
+          json: true,
+          params: queryParameters,
+          headers: headerParams
+        };
+        if (extraHttpRequestParams) {
+          httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+        }
+        return this.$http(httpRequestParams);
+      };
+      /**
+       *
+       * Updates a member profile
+       * @param id Resource id
+       * @param body The member profile to update
+       */
+      CommunityApi.prototype.membersIdPut = function(id, body, extraHttpRequestParams) {
+        var localVarPath = this.basePath + '/members/{id}'
+          .replace('{' + 'id' + '}', String(id));
+        var queryParameters = {};
+        var headerParams = this.extendObj({}, this.defaultHeaders);
+        // verify required parameter 'id' is set
+        if (!id) {
+          throw new Error('Missing required parameter id when calling membersIdPut');
+        }
+        var httpRequestParams = {
+          method: 'PUT',
+          url: localVarPath,
+          json: true,
+          data: body,
+          params: queryParameters,
+          headers: headerParams
+        };
+        if (extraHttpRequestParams) {
+          httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+        }
+        return this.$http(httpRequestParams);
+      };
+      /**
+       *
+       * Creates a member profile
+       * @param body The member profile to create
+       */
+      CommunityApi.prototype.membersPost = function(body, extraHttpRequestParams) {
+        var localVarPath = this.basePath + '/members';
+        var queryParameters = {};
+        var headerParams = this.extendObj({}, this.defaultHeaders);
+        var httpRequestParams = {
+          method: 'POST',
+          url: localVarPath,
+          json: true,
+          data: body,
+          params: queryParameters,
+          headers: headerParams
+        };
+        if (extraHttpRequestParams) {
+          httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+        }
+        return this.$http(httpRequestParams);
+      };
+      /**
+       *
        * Retrieves posts, without edits
        * @param label Only retrieve posts with this label
        * @param query Query string that will be matched against the following attributes: createDate, createdBy, text, categoryId and forumId

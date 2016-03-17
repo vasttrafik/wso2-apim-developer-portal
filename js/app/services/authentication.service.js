@@ -14,6 +14,7 @@
     var service = {};
     var apiClient = new API.Client.DefaultApi($http, null, $httpParamSerializer); // jshint ignore:line
     var userApiClient = new UserAPI.Client.UserApi($http, null, $httpParamSerializer); // jshint ignore:line
+    var communityApiClient = new CommunityAPI.Client.CommunityApi($http, null, $httpParamSerializer); // jshint ignore:line
 
     service.login = login;
     service.logout = logout;
@@ -58,6 +59,8 @@
 
       function usersUserIdGet() {
 
+        var userAccountObject;
+
         // Retrieve further user information based on userId from login response
         userApiClient.usersUserIdGet(userObject.userId, 'application/json', 'Bearer ' + userObject.accessToken.token)
           .then(usersUserIdGetResponse)
@@ -65,13 +68,27 @@
             apiErrorResponse(apiResponse, deferred);
           });
 
-        function usersUserIdGetResponse(userAccountObject) {
+        function usersUserIdGetResponse(response) {
+
+          userAccountObject = response;
 
           if (userAccountObject.status === 200) {
 
             userAccountObject.data.accessToken = userObject.accessToken;
 
-            UserService.setUser(userAccountObject.data)
+            communityApiClient.membersIdGet(userObject.userId)
+            .then(membersIdGetResponse)
+            .catch(function(apiResponse) {
+              apiErrorResponse(apiResponse, deferred);
+            });
+
+          }
+        }
+
+        function membersIdGetResponse(membersObject) {
+
+          if (membersObject.status === 200) {
+            UserService.setUser(userAccountObject.data, membersObject.data.id ? true : false)
               .then(function(response) {
                 setLogoutTimer();
                 deferred.resolve();

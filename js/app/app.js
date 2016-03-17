@@ -208,7 +208,7 @@
 
         if (!$.isEmptyObject(user)) {
           $rootScope.user.loggedIn = true;
-          UserService.setUser(user); // Since this also sets the user scope
+          UserService.setUser(user, (user.memberId ? true : false)); // Since this also sets the user scope
           AuthenticationService.setLogoutTimer();
 
           $http.defaults.headers.common.Authorization = 'Bearer ' + user.accessToken.token;
