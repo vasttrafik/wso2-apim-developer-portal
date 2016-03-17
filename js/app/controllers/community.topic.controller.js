@@ -17,6 +17,7 @@
     vm.updatePost = updatePost;
     vm.togglePostComment = togglePostComment;
     vm.togglePostCommentUpdate = togglePostCommentUpdate;
+    vm.setAnswer = setAnswer;
     vm.resetAddAnswerForm = resetAddAnswerForm;
     vm.addPostCommentUpdate = addPostCommentUpdate;
     vm.addTopicUpdate = addTopicUpdate;
@@ -25,7 +26,6 @@
 
     (function init() {
 
-      vm.memberId = 1;
       vm.togglePostsComments = [];
       vm.toggleTopicUpdate = false;
       vm.togglePostsCommentsUpdate = [];
@@ -40,6 +40,7 @@
 
     function topicsIdGetResponse(response) {
       if (response.status === 200) {
+
         vm.topic = response.data;
 
         /* Initiating input for admin purposes */
@@ -205,6 +206,29 @@
         }
       }
 
+    }
+
+    function setAnswer(postId) {
+
+      for (var i = 0; i < vm.topic.posts.length; i++) {
+        if (vm.topic.posts[i].id === postId) {
+          break;
+        }
+      }
+
+      APIService.communityCall('postsIdPut', [postId, vm.topic.posts[i]])
+        .then(postsIdPutResponse);
+
+      function postsIdPutResponse(response) {
+        if (response.status === 200) {
+          AlertService.success('Specificerade utpekat svar till frågan');
+
+          vm.topic.answeredByPostId = postId;
+          vm.topic.posts[i].isAnswer = true;
+        } else {
+          AlertService.error('Problem att specificera utpekat svar till frågan');
+        }
+      }
     }
 
     function resetAddAnswerForm() {
