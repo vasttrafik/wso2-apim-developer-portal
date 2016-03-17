@@ -19,11 +19,11 @@
       vm.toggleForumUpdate = false;
 
       APIService.communityCall('forumsIdGet', [$routeParams.forumId])
-        .then(categoriesIdGetResponse);
+        .then(forumsIdGetResponse);
 
     })();
 
-    function categoriesIdGetResponse(response) {
+    function forumsIdGetResponse(response) {
       if (response.status === 200) {
         vm.forum = response.data;
 
