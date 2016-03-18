@@ -1,6 +1,6 @@
 ﻿<div class="jumbotron title">
   <div class="container" style="padding-left: 0">
-    <h1 class="sub-header">Nyheter</h1>
+    <h1 class="sub-header">Nyheter {{vm.month}}</h1>
   </div>
 </div>
 
@@ -8,24 +8,22 @@
   <div class="container">
     <div class="row col-md-9">
       <section id="newsItemsList">
-        <div class="row" ng-if="vm.newsItems.length === 0">
+        <div class="row" ng-if="vm.mediaItems.length === 0">
           <h3>Det finns inte några nyheter med valda sökkriterier. Välj en månad i listan till höger.</h3>
         </div>
-        <article id="{{'newsArticle-' + newsItem.id}}" class="newsItem" ng-repeat="newsItem in vm.newsItems | orderBy: 'createDate'">
+        <article id="{{'mediaArticle-' + newsItem.id}}" class="newsItem" ng-repeat="newsItem in vm.mediaItems | orderBy: createDate : true">
           <div class="calDate">
             <div class="month red">{{ newsItem.createDate | date:'MMM' }}</div>{{  newsItem.createDate | date:'d' }}
           </div>
           <span class="toggleItem">
-            <span class="showMore" ng-show="!vm.news[$index].showIngress"><i class="glyphicon glyphicon-chevron-down" ng-click="vm.toggleExpand($index)"></i></span>
-            <span class="showLess" ng-show="vm.news[$index].showIngress"><i class="glyphicon glyphicon-chevron-up" ng-click="vm.toggleExpand($index)"></i></span>
+            <span class="showMore" ng-show="!vm.mediaItems[$index].expand"><i class="glyphicon glyphicon-chevron-down" ng-click="vm.toggleExpand($index)"></i></span>
+            <span class="showLess" ng-show="vm.mediaItems[$index].expand"><i class="glyphicon glyphicon-chevron-up" ng-click="vm.toggleExpand($index)"></i></span>
           </span>
           <h2 class="ellipsis">{{newsItem.subject}}</h2>
           <div class="articleContent">
-            <div id="{{'newsIntro-' + $index}}" class="news-item-intro animate-hide" ng-hide="vm.newsItems[$index].expand">
-              {{vm.newsItems[$index].firstPost.text}}
+            <div id="{{'mediaIntro-' + $index}}" class="news-item-intro animate-hide" ng-hide="vm.mediaItems[$index].expand" ng-bind-html="vm.mediaItems[$index].firstPost.text | trustAsHtml">
             </div>
-            <div id="{{'newsContent-' + $index}}" class="news-item-content margin-bottom-small animate-hide" ng-hide="!vm.newsItems[$index].expand">
-              {{vm.newsItems[$index].firstPost.text}}
+            <div id="{{'mediaContent-' + $index}}" class="news-item-content margin-bottom-small animate-hide" ng-hide="!vm.mediaItems[$index].expand" ng-bind-html="vm.mediaItems[$index].firstPost.text | trustAsHtml">
             </div>
           </div>
           <footer>
@@ -34,8 +32,8 @@
             <span class="label label-default" ng-repeat="tag in newsItem.tags"  ng-click="vm.setTag(tag)" style="cursor: pointer">{{tag}}</span>&nbsp;
             <span>Publicerad av: {{newsItem.createdBy.signature}}, {{newsItem.createDate}}</span>
             <span class="toggleItemBottom">
-              <span class="showMore" ng-show="!vm.newsItems[$index].expand" ng-click="vm.toggleExpand($index)">Visa mer <i class="glyphicon glyphicon-chevron-down"></i></span>
-              <span class="showLess" ng-show="vm.newsItems[$index].expand" ng-click="vm.toggleExpand($index)">Visa mindre <i class="glyphicon glyphicon-chevron-up"></i></span>
+              <span class="showMore" ng-show="!vm.mediaItems[$index].expand" ng-click="vm.toggleExpand($index)">Visa mer <i class="glyphicon glyphicon-chevron-down"></i></span>
+              <span class="showLess" ng-show="vm.mediaItems[$index].expand" ng-click="vm.toggleExpand($index)">Visa mindre <i class="glyphicon glyphicon-chevron-up"></i></span>
             </span>
 
           </footer>
@@ -55,6 +53,10 @@
           <h3>Taggar</h3>
           <span class="label" ng-repeat="entry in vm.tags" ng-click="vm.setTag(entry)" style="cursor: pointer">{{entry}}</span>
         </section>
+
+        <div ng-if="vm.month">
+          <a href="#/news">Se alla nyheter</a>
+        </div>
 
       </aside>
     </div>

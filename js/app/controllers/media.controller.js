@@ -1,21 +1,22 @@
-/*global newsItems*/
+/*global mediaItems*/
 /*global helper*/
 (function() {
   'use strict';
 
   angular
     .module('vtPortal')
-    .controller('NewsCtrl', NewsCtrl)
+    .controller('MediaCtrl', MediaCtrl)
     .constant('helper', helper);
 
-  NewsCtrl.$inject = ['$routeParams', '$location', '$scope', '$timeout', '$document', 'APIService', 'AlertService'];
+  MediaCtrl.$inject = ['$routeParams', '$location', '$scope', '$timeout', '$document', 'APIService', 'AlertService'];
 
-  function NewsCtrl($routeParams, $location, $scope, $timeout, $document, APIService, AlertService) {
+  function MediaCtrl($routeParams, $location, $scope, $timeout, $document, APIService, AlertService) {
     var vm = this;
 
-    vm.newsItems = [];
+    vm.mediaItems = [];
     vm.tags = [];
     vm.months = [];
+    vm.month = $routeParams.month ? toMonth($routeParams.month - 1) : null;
 
     vm.toggleExpand = toggleExpand;
     vm.setTag = setTag;
@@ -23,12 +24,12 @@
 
     (function init() {
 
-      APIService.communityCall('forumsIdGet', [10])
+      APIService.communityCall('forumsIdGet', [($location.path().split('/')[1] === 'news' ? 10 : 11)])
         .then(forumsIdGetResponse);
 
       function forumsIdGetResponse(response) {
         if (response.status === 200) {
-          vm.newsItems = response.data.topics.filter(function(a) {
+          vm.mediaItems = response.data.topics.filter(function(a) {
 
             vm.months.push(new Date(a.createDate).getMonth());
 
@@ -37,16 +38,15 @@
             } else if ($routeParams.month) {
               return (parseInt(new Date(a.createDate).getMonth()) + 1 === parseInt($routeParams.month));
             } else if ($location.search().tag) {
-              return (new Date(a.createDate).getMonth() === new Date().getMonth()) && (a.tags.indexOf($location.search().tag) > -1);
+              return a.tags.indexOf($location.search().tag) > -1;
             } else {
-              return new Date(a.createDate).getMonth() === new Date().getMonth();
+              return true;
             }
           });
 
-          angular.forEach(vm.newsItems, function(keys, values) {
+          angular.forEach(vm.mediaItems, function(keys, values) {
             vm.tags.push.apply(vm.tags, keys.tags);
             if (parseInt(keys.id) === parseInt($location.search().id)) {
-              console.log(JSON.stringify(keys, null, 4));
               keys.expand = true;
             } else {
               keys.expand = false;
@@ -56,10 +56,12 @@
           vm.tags = helper.getUniqueArray(vm.tags);
           vm.months = helper.getUniqueArray(vm.months);
 
-          $timeout(function() {
-            var idSection = angular.element(document.getElementById('newsArticle-' + $location.search().id));
-            $document.scrollToElement(idSection, 100, 100);
-          }, 1000);
+          if ($location.search().id) {
+            $timeout(function() {
+              var idSection = angular.element(document.getElementById('mediaArticle-' + $location.search().id));
+              $document.scrollToElement(idSection, ($location.path().split('/')[1] === 'news' ? 100 : 50), 100);
+            }, 1000);
+          }
 
         } else {
           AlertService.error('Problem att hämta nyheter');
@@ -69,10 +71,10 @@
     })();
 
     function toggleExpand(index) {
-      if (vm.newsItems[index].expand != null) {
-        vm.newsItems[index].expand = !vm.newsItems[index].expand;
+      if (vm.mediaItems[index].expand != null) {
+        vm.mediaItems[index].expand = !vm.mediaItems[index].expand;
       } else {
-        vm.newsItems[index].expand = true;
+        vm.mediaItems[index].expand = true;
       }
     }
 
@@ -82,7 +84,7 @@
     }
 
     function toMonth(month) {
-      switch (month) {
+      switch (parseInt(month)) {
         case 0:
           return 'Januari';
         case 1:

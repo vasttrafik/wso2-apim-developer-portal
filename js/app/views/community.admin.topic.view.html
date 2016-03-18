@@ -36,7 +36,7 @@
             <span style="float: right; font-size: 0.9em"><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown Cheat Sheet</a></span>
             <textarea id="post{{vm.topic.posts[0].id}}" type="text" class="form-control" ng-model="vm.form.posts[vm.topic.posts[0].id]" style="height: 100px; margin-bottom: 20px" required></textarea>
             <label for="description" ng-show="vm.form.posts[vm.topic.posts[0].id]">Förhandsgranskning</label>
-            <div btf-markdown="vm.form.posts[vm.topic.posts[0].id]">
+            <div ng-bind-html="vm.form.posts[vm.topic.posts[0].id] | trustAsHtml">
             </div>
           </div>
 
