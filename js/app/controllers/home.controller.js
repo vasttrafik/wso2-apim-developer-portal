@@ -16,13 +16,25 @@
     (function init() {
 
       APIService.communityCall('forumsIdGet', [10])
-        .then(forumsIdGetResponse);
+        .then(forumsIdNewsGetResponse);
+
+      APIService.communityCall('forumsIdGet', [11])
+          .then(forumsIdBlogGetResponse);
 
     })();
 
-    function forumsIdGetResponse(response) {
+    function forumsIdNewsGetResponse(response) {
       if (response.status === 200) {
         vm.newsItems = response.data.topics;
+
+      } else {
+        AlertService.error('Problem att hämta nyheter');
+      }
+    }
+
+    function forumsIdBlogGetResponse(response) {
+      if (response.status === 200) {
+        vm.blogItems = response.data.topics;
 
       } else {
         AlertService.error('Problem att hämta nyheter');

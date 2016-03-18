@@ -6,7 +6,7 @@
   'use strict';
 
   angular
-    .module('vtPortal', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ngPasswordStrength', 'ui.validate', 'angular-clipboard', 'ngLocationUpdate', 'swaggerUi', 'duScroll', 'angular-loading-bar', 'ngJSONPath', 'highcharts-ng','btford.markdown'])
+    .module('vtPortal', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ngPasswordStrength', 'ui.validate', 'angular-clipboard', 'ngLocationUpdate', 'swaggerUi', 'duScroll', 'angular-loading-bar', 'ngJSONPath', 'highcharts-ng', 'btford.markdown'])
     .config(config)
     .factory('timeoutHttpIntercept', function($rootScope, $q) {
       return {
@@ -34,6 +34,11 @@
     .filter('hash', function() {
       return function(input, all) {
         return md5(input);
+      };
+    })
+    .filter('trustAsHtml', function($sce) {
+      return function(value) {
+        return $sce.trustAsHtml(value);
       };
     })
     .run(run)
@@ -144,19 +149,19 @@
 
     .when('/admin', {
       controller: 'CommunityCategoryCtrl',
-      templateUrl: 'js/app/views/admin.view.html',
+      templateUrl: 'js/app/views/community.admin.view.html',
       controllerAs: 'vm'
     })
 
     .when('/admin/forum/:forumId', {
       controller: 'CommunityForumCtrl',
-      templateUrl: 'js/app/views/admin.forum.view.html',
+      templateUrl: 'js/app/views/community.admin.forum.view.html',
       controllerAs: 'vm'
     })
 
     .when('/admin/topic/:topicId', {
       controller: 'CommunityTopicCtrl',
-      templateUrl: 'js/app/views/admin.topic.view.html',
+      templateUrl: 'js/app/views/community.admin.topic.view.html',
       controllerAs: 'vm'
     })
 
@@ -167,8 +172,14 @@
     })
 
     .when('/news/:month?', {
-      controller: 'NewsCtrl',
-      templateUrl: 'js/app/views/news.view.html',
+      controller: 'MediaCtrl',
+      templateUrl: 'js/app/views/media.news.view.html',
+      controllerAs: 'vm'
+    })
+
+    .when('/blog/:month?', {
+      controller: 'MediaCtrl',
+      templateUrl: 'js/app/views/media.blog.view.html',
       controllerAs: 'vm'
     })
 
@@ -220,7 +231,7 @@
     $rootScope.$on('$locationChangeStart', function(event, next, current) {
 
       // redirect to startpage if not logged in and trying to access a restricted page
-      var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api', 'guides', 'docs', 'news', 'activation', 'recover', 'contact', 'community', 'admin']) === -1;
+      var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api', 'guides', 'docs', 'news', 'activation', 'recover', 'contact', 'community', 'admin', 'blog']) === -1;
 
       if ($location.path().split('/')[1] === 'statistics') {
         restrictedPage = $location.path().split('/')[2] !== 'apis';

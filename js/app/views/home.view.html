@@ -85,7 +85,7 @@
         <div class="feed">
           <h3 class="text-center"><i class="fa fa-newspaper-o"></i> Nyheter</h3>
           <ul class="list-unstyled truncate" style="line-height:2em">
-            <li ng-repeat="entry in vm.newsItems">
+            <li ng-repeat="entry in vm.newsItems | orderBy: createDate : true">
               <a href="#/news/{{entry.createDate | date:'M'}}?id={{entry.id}}">
                 <div class="calDate" style="margin-top:0;margin-bottom:2px;">
                   <div class="month green">{{entry.createDate | date:'MMM'}}</div>{{entry.createDate | date:'d'}}
@@ -103,7 +103,20 @@
       <div class="col-sm-4">
         <div class="feed text-center">
           <h3><i class="fa fa-pencil-square-o"></i> Blogg</h3>
-          <p>Kommer i version 2</p>
+          <ul class="list-unstyled truncate" style="line-height:2em">
+            <li ng-repeat="entry in vm.blogItems | orderBy: createDate : true">
+              <a href="#/blog/{{entry.createDate | date:'M'}}?id={{entry.id}}">
+                <div class="calDate" style="margin-top:0;margin-bottom:2px;">
+                  <div class="month green">{{entry.createDate | date:'MMM'}}</div>{{entry.createDate | date:'d'}}
+                </div>
+                {{entry.subject}}
+              </a>
+            </li>
+          </ul>
+          <p>
+            <a href="#/news">Fler blogposter</a>
+            <br />
+          </p>
         </div>
       </div>
       <div class="col-sm-4">
