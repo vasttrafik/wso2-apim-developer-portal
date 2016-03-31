@@ -1184,6 +1184,9 @@ article.newsItem > h2 {
 }
 .avatar {
   border-radius: 45px;
-  height: 45px;
-  width: 45px;
+}
+.avatar-small {
+  border-radius: 45px;
+  height: 35px !important;
+  width: 35px !important;
 }

@@ -1,9 +1,7 @@
 /*global Highcharts*/
-//var defaultBaseUrl = 'http://localhost:9763/portal-api';
 var defaultBaseUrl = 'https://wso2publisher-test.vt.net:9444/portal-api';
-//var userBaseUrl = 'http://localhost:9763/idmgt-api';
 var userBaseUrl = 'https://wso2publisher-test.vt.net:9444/idmgt-api';
-var communityBaseUrl = 'http://localhost:8080';
+var communityBaseUrl = 'https://wso2publisher-test.vt.net:9444/community-api';
 
 var chartConfig = {
 
