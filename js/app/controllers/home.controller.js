@@ -15,10 +15,10 @@
 
     (function init() {
 
-      APIService.communityCall('forumsIdGet', [10])
+      APIService.communityCall('forumsIdGet', [1])
         .then(forumsIdNewsGetResponse);
 
-      APIService.communityCall('forumsIdGet', [11])
+      APIService.communityCall('forumsIdGet', [2])
           .then(forumsIdBlogGetResponse);
 
     })();

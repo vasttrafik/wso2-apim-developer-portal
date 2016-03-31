@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="css/nga.all.min.css">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/balloon.min.css">
 </head>
 
 <body id="body" ng-controller="MainCtrl as vm" ng-cloak>
@@ -99,8 +100,12 @@
                     <br />
                     <a href="#/subscriptions">Mina prenumerationer</a>
                     <br />
-                    <a href="#/statistics/applications">Min statistisk</a>
+                    <a href="#/statistics/applications">Min statistik</a>
                     <br />
+                    <span ng-if="user.role === 'admin'">
+                    <a href="#/admin">Administrera media</a>
+                    <br />
+                    </span>
                     <a href="#/" ng-click="vm.logout()">Logga ut</a>
                     <br />
                   </div>
@@ -242,7 +247,7 @@
           <ul class="list-unstyled truncate">
             <li><a href="#/news">Nyheter</a></li>
             <li><a href="#/community">Community</a></li>
-            <li><a href="" title="..." class="disabled">Blogg (v2)</a></li>
+            <li><a href="#/blog">Blogg</a></li>
             <li><a href="" title="..." class="disabled">Kalender (v2)</a></li>
           </ul>
         </div>

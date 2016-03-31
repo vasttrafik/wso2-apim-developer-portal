@@ -30,7 +30,7 @@
             <div class="fader"></div>
             Taggad som:
             <span class="label label-default" ng-repeat="tag in newsItem.tags"  ng-click="vm.setTag(tag)" style="cursor: pointer">{{tag}}</span>&nbsp;
-            <span>Publicerad av: {{newsItem.createdBy.signature}}, {{newsItem.createDate}}</span>
+            <span>Publicerad av: {{newsItem.createdBy.signature}}, {{newsItem.createDate | relativeDate}}</span>
             <span class="toggleItemBottom">
               <span class="showMore" ng-show="!vm.mediaItems[$index].expand" ng-click="vm.toggleExpand($index)">Visa mer <i class="glyphicon glyphicon-chevron-down"></i></span>
               <span class="showLess" ng-show="vm.mediaItems[$index].expand" ng-click="vm.toggleExpand($index)">Visa mindre <i class="glyphicon glyphicon-chevron-up"></i></span>

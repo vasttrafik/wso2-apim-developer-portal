@@ -24,7 +24,7 @@
 
     (function init() {
 
-      APIService.communityCall('forumsIdGet', [($location.path().split('/')[1] === 'news' ? 10 : 11)])
+      APIService.communityCall('forumsIdGet', [($location.path().split('/')[1] === 'news' ? 1 : 2)])
         .then(forumsIdGetResponse);
 
       function forumsIdGetResponse(response) {

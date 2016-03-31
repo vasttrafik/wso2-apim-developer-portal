@@ -1,6 +1,6 @@
 <div class="jumbotron title">
   <div class="container" style="padding-left: 0">
-    <h1 class="sub-header">Blog {{vm.month}}</h1>
+    <h1 class="sub-header">Blogg {{vm.month}}</h1>
   </div>
 </div>
 
@@ -30,7 +30,7 @@
 
         <section>
           <h3>Månader</h3>
-          <span ng-repeat="entry in vm.months"><a href="#/blog/{{entry + 1}}">{{vm.toMonth(entry)}}</a> </span>
+          <span ng-repeat="entry in vm.months"><a href="#/blog/{{entry + 1}}">{{vm.toMonth(entry)}}</a>&nbsp;</span>
         </section>
 
         <section class="tags-dark-blue" ng-if="vm.tags.length > 0">
