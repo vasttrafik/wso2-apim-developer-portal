@@ -37,20 +37,20 @@
 
       var userObject = {};
 
-      apiClient.securityPost(action, refreshToken, {
+      apiClient.authenticatePost({
           userName: username,
           credential: password
         }, 'application/json')
-        .then(securityPostResponse)
+        .then(authenticationPostResponse)
         .then(usersUserIdGet)
         .catch(function(apiResponse) {
           apiErrorResponse(apiResponse, deferred);
         });
 
-      function securityPostResponse(authenticatedUserObject) {
+      function authenticationPostResponse(authenticatedUserObject) {
         if (authenticatedUserObject.status === 200 || authenticatedUserObject.status === 201) {
           userObject = authenticatedUserObject.data;
-          $http.defaults.headers.common.Authorization = 'Bearer ' + userObject.accessToken.token;
+          $http.defaults.headers.common['X-JWT-Assertion'] = userObject.accessToken.token;
         } else {
           apiErrorResponse(authenticatedUserObject, deferred);
         }
@@ -59,7 +59,7 @@
       function usersUserIdGet() {
 
         // Retrieve further user information based on userId from login response
-        userApiClient.usersUserIdGet(userObject.userId, 'application/json', 'Bearer ' + userObject.accessToken.token)
+        userApiClient.usersUserIdGet(userObject.userId, 'application/json', userObject.accessToken.token)
           .then(usersUserIdGetResponse)
           .catch(function(apiResponse) {
             apiErrorResponse(apiResponse, deferred);
