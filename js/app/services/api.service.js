@@ -58,7 +58,7 @@
     }
 
     /*
-      Wrapper function for calls towards user backend API
+      Wrapper function for calls towards community backend API
     */
     function communityCall(funcName, args, doNotLogout) {
       var deferred = $q.defer();
@@ -70,7 +70,8 @@
           apiErrorResponse(response, deferred, doNotLogout);
         })
         .catch(function(response) {
-          apiErrorResponse(response, deferred);
+          // Never logout someone from community view
+          apiErrorResponse(response, deferred, true);
         });
 
       return deferred.promise;

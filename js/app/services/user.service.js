@@ -63,6 +63,7 @@
         $rootScope.globals = {
           currentUser: {
             id: user.id,
+            role: (user.roles.indexOf('community-admin') > -1 ? 'community-admin' : 'community-member'),
             memberId: user.memberId,
             userName: user.userName,
             email: user.claims.filter(function(el) {

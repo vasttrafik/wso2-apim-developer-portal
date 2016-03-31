@@ -22,11 +22,24 @@
     (function init() {
       vm.form = {};
 
+      APIService.communityCall('membersIdGet', [$rootScope.globals.currentUser.id])
+        .then(membersIdGetResponse);
+
       resetProfileForm();
-      resetCommunityForm();
       resetChallengeQuestionForm();
 
     })();
+
+    function membersIdGetResponse(response) {
+      if (response.status === 200) {
+
+        vm.member = response.data;
+        resetCommunityForm();
+
+      } else {
+        AlertService.error('Problem att hämta community profil');
+      }
+    }
 
     function saveProfile() {
       vm.dataLoadingProfile = true;
@@ -49,10 +62,9 @@
           newUserObject = angular.copy(response); // Keep a copy of the updated values
           response.tenantDomain = 'carbon.super';
           delete response.accessToken;
-          delete response.userName;
           delete response.memberId;
 
-          APIService.userCall('usersUserIdPut', [response.id, 'updateProfile', 'application/json', 'Bearer ' + newUserObject.accessToken.token, 'application/json', response])
+          APIService.userCall('usersUserIdPut', [response.id, 'updateProfile', 'application/json', newUserObject.accessToken.token, 'application/json', response])
             .then(usersUserIdPutResponse)
             .catch(function(response) {
               if (response.status === 412) {
@@ -90,15 +102,17 @@
       vm.dataLoadingCommunity = true;
 
       var member = {
+        id: $rootScope.globals.currentUser.id,
         userName: $rootScope.globals.currentUser.userName,
+        status: 'active',
         email: vm.form.community.email,
         signature: vm.form.community.signature,
         gravatarEmail: vm.form.community.gravatarEmail,
         useGravatar: (vm.form.community.gravatarEmail ? true : false)
       };
 
-      if ($rootScope.globals.member) {
-        APIService.communityCall('membersIdPut', [$rootScope.globals.currentUser.id, member])
+      if ($rootScope.globals.currentUser.memberId) {
+        APIService.communityCall('membersIdPut', [$rootScope.globals.currentUser.memberId, member])
           .then(membersResponse)
           .catch(function(response) {
             if (response.status === 400) {
@@ -164,7 +178,7 @@
           request.password.newPassword = vm.form.password.passwordRepeat;
           request.userName = response.userName;
 
-          APIService.userCall('usersUserIdPut', [response.id, 'updatePassword', '*/*', 'Bearer ' + response.accessToken.token, 'application/json', request])
+          APIService.userCall('usersUserIdPut', [response.id, 'updatePassword', '*/*', response.accessToken.token, 'application/json', request])
             .then(usersUserIdPutResponse);
         });
 
@@ -190,7 +204,7 @@
       UserService.getUser()
         .then(function(response) {
 
-          APIService.userCall('challengequestionsPost', ['application/json', 'Bearer ' + response.accessToken.token, response.id, {
+          APIService.userCall('challengequestionsPost', ['application/json', response.accessToken.token, response.id, {
               id: challengeQuestionId,
               question: challengeQuestionQuestion,
               answer: vm.form.question.answer
@@ -221,12 +235,12 @@
 
       vm.form.community = {};
 
-      if (!$rootScope.globals.member) {
+      if (!$rootScope.globals.currentUser.memberId) {
         vm.form.community.signature = $rootScope.globals.currentUser.userName;
         vm.form.community.email = $rootScope.globals.currentUser.email;
         vm.form.community.gravatarEmail = $rootScope.globals.currentUser.email;
       } else {
-        vm.form.community = angular.copy($rootScope.globals.member);
+        vm.form.community = angular.copy(vm.member);
       }
 
     }
@@ -239,13 +253,15 @@
           if (response.success) {
             vm.form.question = {};
 
-            /* The challenge question isn't correctly formatted */
-            if (response.object.claimValue == null) {
-              vm.form.question.question = '';
-            } else if (response.object.claimValue.indexOf('!') > -1) {
-              vm.form.question.question = response.object.claimValue.substring(0, response.object.claimValue.indexOf('!'));
-            } else {
-              vm.form.question.question = response.object.claimValue;
+            if (response.object) {
+              /* The challenge question isn't correctly formatted */
+              if (response.object.claimValue == null) {
+                vm.form.question.question = '';
+              } else if (response.object.claimValue.indexOf('!') > -1) {
+                vm.form.question.question = response.object.claimValue.substring(0, response.object.claimValue.indexOf('!'));
+              } else {
+                vm.form.question.question = response.object.claimValue;
+              }
             }
           }
         });

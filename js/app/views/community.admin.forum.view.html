@@ -48,13 +48,12 @@
       <form name="addTopicForm" ng-submit="vm.addTopic()" role="form">
         <div class="form-group" ng-class="{ 'has-error': addTopicForm.topic.$dirty && addTopicForm.topic.$invalid,
   'has-success' : addTopicForm.answer.$valid}">
-          <label for="subject">Rubrik</label>
+          <label for="subject">Titel</label>
           <input type="text" name="subject" id="subject" class="form-control" ng-model="vm.form.topic.subject" style="margin-bottom: 20px" maxlength="50" required />
-          <label for="question">Fråga</label>
-          <span style="float: right; font-size: 0.9em"><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown Cheat Sheet</a></span>
+          <label for="question">Text</label>
           <textarea id="question" type="text" class="form-control" ng-model="vm.form.topic.question" style="height: 100px; margin-bottom: 20px" required></textarea>
           <label for="preview" ng-show="vm.form.topic.question">Förhandsgranskning</label>
-          <div btf-markdown="vm.form.topic.question">
+          <div ng-bind-html="vm.form.topic.question | trustAsHtml">
           </div>
         </div>
 
