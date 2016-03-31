@@ -6,17 +6,20 @@
     .module('vtPortal')
     .controller('CommunityForumCtrl', CommunityForumCtrl);
 
-  CommunityForumCtrl.$inject = ['AlertService', 'APIService', '$routeParams', '$scope'];
+  CommunityForumCtrl.$inject = ['$routeParams', '$scope', '$location', 'AlertService', 'APIService'];
 
-  function CommunityForumCtrl(AlertService, APIService, $routeParams, $scope) {
+  function CommunityForumCtrl($routeParams, $scope, $location, AlertService, APIService) {
     var vm = this;
 
     vm.addTopic = addTopic;
+    vm.addForumUpdate = addForumUpdate;
+    vm.updateForum = updateForum;
     vm.resetAddTopicForm = resetAddTopicForm;
 
     (function init() {
 
       vm.toggleForumUpdate = false;
+      vm.form = {};
 
       APIService.communityCall('forumsIdGet', [$routeParams.forumId])
         .then(forumsIdGetResponse);
@@ -37,7 +40,14 @@
 
       APIService.communityCall('topicsPost', [{
           forumId: vm.forum.id,
-          subject: vm.form.topic.subject
+          subject: vm.form.topic.name,
+          posts: [{
+              topicId: vm.forum.topicId,
+              forumId: vm.forum.id,
+              type: 'question',
+              text: vm.form.topic.question,
+              textFormat: ($location.path().split('/')[1] === 'community' ? 'md' : 'html')
+            }]
         }])
         .then(topicsPostResponse)
         .catch(function(response) {
@@ -48,28 +58,12 @@
       function topicsPostResponse(response) {
         if (response.status === 201) {
 
-          APIService.communityCall('postsPost', [{
-              topicId: vm.forum.topicId,
-              forumId: vm.forum.id,
-              type: 'question',
-              text: vm.form.topic.question,
-              ml: 'md'
-            }])
-            .then(postsPostAnswerResponse);
-
-          function postsPostAnswerResponse(postresponse) {
-            if (postresponse.status === 200) {
-              AlertService.success('Topic ' + response.data.subject + ' skapad!');
-              vm.forum.topics.push(response.data);
-              resetAddTopicForm();
-
-            } else {
-              AlertService.error('Problem att skicka svar');
-            }
-          }
+          AlertService.success('Topic ' + response.data.name + ' skapad!');
+          vm.forum.topics.push(response.data);
+          resetAddTopicForm();
 
         } else {
-          AlertService.error('Problem att skapa ny applikation');
+          AlertService.error('Problem att skapa ny topic');
         }
         vm.dataLoadingAddTopic = false;
       }
@@ -77,8 +71,9 @@
 
     function addForumUpdate() {
 
-      vm.toggleForumUpdate = !vm.toggleforumUpdate;
-      vm.form.subject = angular.copy(vm.forum.subject);
+      vm.toggleForumUpdate = !vm.toggleForumUpdate;
+      vm.form.name = angular.copy(vm.forum.name);
+      vm.form.description = angular.copy(vm.forum.description);
 
     }
 
@@ -86,14 +81,16 @@
 
       APIService.communityCall('forumsIdPut', [vm.forum.id, {
           categoryId: vm.forum.categoryId,
-          subject: vm.form.subject
+          name: vm.form.name,
+          description: vm.form.description
         }])
         .then(forumsIdPutResponse);
 
       function forumsIdPutResponse(response) {
         if (response.status === 200) {
           AlertService.success('Forum uppdaterad!');
-          vm.forum.subject = vm.form.subject;
+          vm.forum.name = vm.form.name;
+          vm.forum.description = vm.form.description;
           vm.toggleForumUpdate = false;
         } else {
           AlertService.error('Problem att uppdatera forum');

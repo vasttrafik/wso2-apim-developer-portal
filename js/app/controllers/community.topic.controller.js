@@ -6,9 +6,9 @@
     .module('vtPortal')
     .controller('CommunityTopicCtrl', CommunityTopicCtrl);
 
-  CommunityTopicCtrl.$inject = ['AlertService', 'APIService', '$routeParams', '$scope', '$location'];
+  CommunityTopicCtrl.$inject = ['$routeParams', '$scope', '$location', 'AlertService', 'APIService'];
 
-  function CommunityTopicCtrl(AlertService, APIService, $routeParams, $scope, $location) {
+  function CommunityTopicCtrl($routeParams, $scope, $location, AlertService, APIService) {
     var vm = this;
 
     vm.addAnswer = addAnswer;
@@ -59,7 +59,7 @@
           forumId: vm.topic.forumId,
           type: 'comment',
           text: vm.form.comments[postId],
-          ml: 'md',
+          textFormat: 'md',
           commentTo: {
             id: postId
           }
@@ -67,7 +67,7 @@
         .then(postsPostCommentResponse);
 
       function postsPostCommentResponse(response) {
-        if (response.status === 200) {
+        if (response.status === 201) {
           AlertService.success('Kommentar skickat!');
           vm.topic.posts.push(response.data);
           togglePostComment(postId);
@@ -86,15 +86,15 @@
           forumId: vm.topic.forumId,
           type: 'answer',
           text: vm.form.answer,
-          ml: 'md'
+          textFormat: 'md'
         }])
         .then(postsPostAnswerResponse);
 
       function postsPostAnswerResponse(response) {
-        if (response.status === 200) {
+        if (response.status === 201) {
           AlertService.success('Svar skickat!');
           vm.topic.posts.push(response.data);
-          vm.topic.numberOfReplies++;
+          vm.topic.numberOfAnswers++;
           resetAddAnswerForm();
 
         } else {
@@ -126,11 +126,15 @@
 
       function postsIdDeleteResponse(response) {
         if (response.status === 200) {
-          AlertService.success((comment ? 'Kommentaren' : 'Svaret') + 'borttaget!');
+          AlertService.success((comment ? 'Kommentaren' : 'Svaret') + ' borttaget!');
           vm.topic.posts[i].isDeleted = true;
           vm.topic.numberOfPosts--;
-          if (comment) {
-            vm.topic.numberOfReplies--;
+          if (!comment) {
+            vm.topic.numberOfAnswers--;
+          }
+          /* If the deleted post was the appointed answer. Remove it from topic */
+          if (vm.topic.answeredByPostId === vm.topic.posts[i].id) {
+            vm.topic.answeredByPostId = null;
           }
         } else {
           AlertService.error('Problem att ta bort svar');
@@ -143,11 +147,12 @@
       var i = 0;
       for (i; i < vm.topic.posts.length; i++) {
         if (vm.topic.posts[i].id === postId) {
-          APIService.communityCall('postsIdPut', [postId, {
+          APIService.communityCall('postsIdPut', [postId, 'edited', {
               id: postId,
-              topicId: vm.topic.posts[i].topicId,
+              forumId: vm.topic.forumId,
+              topicId: vm.topic.id,
               type: vm.topic.posts[i].type,
-              ml: vm.topic.posts[i].ml,
+              textFormat: vm.topic.posts[i].textFormat,
               text: vm.form.posts[postId]
             }])
             .then(postsIdPutResponse);
@@ -158,7 +163,7 @@
       function postsIdPutResponse(response) {
         if (response.status === 200) {
           AlertService.success('Post uppdaterad!');
-          vm.topic.posts[i].text = response.data.text;
+          vm.topic.posts[i] = response.data;
           vm.form.posts[response.data.id] = response.data.text;
           togglePostCommentUpdate(postId);
         } else {
@@ -170,7 +175,8 @@
 
     function updateTopic() {
 
-      APIService.communityCall('topicsIdPut', [vm.topic.id, {
+      APIService.communityCall('topicsIdPut', [vm.topic.id, 'subject', {
+          id: vm.topic.id,
           forumId: vm.topic.forumId,
           subject: vm.form.subject
         }])
@@ -199,7 +205,7 @@
         if (response.status === 200) {
           AlertService.success('Topic borttagen!');
 
-          $location.path('/community/forum/' + vm.topic.forumId); // Redirect to parent forum
+          $location.path('/' + ($location.path().split('/')[1] === 'community' ? 'community' : 'admin') + '/forum/' + vm.topic.forumId); // Redirect to parent forum
 
         } else {
           AlertService.error('Problem att uppdatera topic');
@@ -216,7 +222,7 @@
         }
       }
 
-      APIService.communityCall('postsIdPut', [postId, vm.topic.posts[i]])
+      APIService.communityCall('postsIdPut', [postId, 'answered', vm.topic.posts[i]])
         .then(postsIdPutResponse);
 
       function postsIdPutResponse(response) {

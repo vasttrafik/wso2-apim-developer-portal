@@ -9,7 +9,7 @@
     </ol>
 
     <!-- Subject -->
-    <span class="pull-right pointer" ng-if="vm.topic.createdBy.id === globals.currentUser.memberId && vm.topic.numberOfPosts < 2" ng-click="vm.removeTopic()"><i class="fa fa-trash"></i></span>
+    <span class="pull-right pointer" ng-if="vm.topic.createdBy.id === globals.currentUser.memberId && vm.topic.numberOfPosts < 2 || globals.currentUser.role === 'community-admin'" ng-click="vm.removeTopic()"><i class="fa fa-trash"></i></span>
     <span class="pull-right margin-right-mini pointer" ng-if="vm.topic.createdBy.id === globals.currentUser.memberId" ng-click="vm.addTopicUpdate()"><i class="fa fa-pencil-square-o"></i></span>
 
     <h1 ng-if="!vm.toggleTopicUpdate">{{vm.topic.subject}}</h1>
@@ -42,7 +42,7 @@
                       <i class="fa fa-circle fa-stack-2x color-blue"></i>
                       <i class="fa fa-user fa-stack-1x fa-inverse color-white"></i>
           </span>
-          <img ng-if="entries.createdBy.useGravatar" src="http://www.gravatar.com/avatar/{{entries.createdBy.email | hash}}?s=45" class="avatar margin-right-mini fa-stack">
+          <img ng-if="entries.createdBy.useGravatar" src="http://www.gravatar.com/avatar/{{entries.createdBy.gravatarEmail | hash}}?s=35" class="avatar-small margin-right-mini fa-stack">
           <a href="signature" class="padding-right-mini">{{entries.createdBy.signature}}</a>&bull;
           <span class="margin-left-mini">{{entries.createDate | relativeDate}}</span>
           <span ng-if="entries.numberOfTimesEdited > 0" class="margin-left-mini"><span class="margin-right-mini">&bull;</span> Editerad {{entries.editDate | relativeDate}}</span>
@@ -80,7 +80,7 @@
 
       <!-- Main post if deleted -->
       <div ng-if="entries.isDeleted" class="row simple-well margin-bottom-mini">
-        <p>Svaret borttaget av användaren {{entries.modifiedDate | relativeDate}}</p>
+        <p>Svaret borttaget av användaren {{entries.editDate | relativeDate}}</p>
       </div>
       <!-- End main post if deleted -->
 
@@ -108,7 +108,7 @@
           </form>
         </div>
         <div ng-if="comment.isDeleted">
-          Kommentaren borttagen av användaren {{comment.modifiedDate | relativeDate}}
+          Kommentaren borttagen av användaren {{comment.editdDate | relativeDate}}
         </div>
       </div>
       <!-- End comments to main post -->
@@ -136,7 +136,7 @@
     <!-- Number of replies only showed after first iteration -->
     <div ng-if="$index === 0" class="row">
       <div class="col-md-12" style="margin-bottom: -40px; margin-left: 20px">
-        <h2>{{vm.topic.numberOfReplies}} svar</h2>
+        <h2>{{vm.topic.numberOfAnswers}} svar</h2>
       </div>
     </div>
 

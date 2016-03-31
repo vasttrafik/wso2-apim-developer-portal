@@ -6,17 +6,20 @@
     .module('vtPortal')
     .controller('CommunityCategoryCtrl', CommunityCategoryCtrl);
 
-  CommunityCategoryCtrl.$inject = ['AlertService', 'APIService', '$routeParams', '$scope'];
+  CommunityCategoryCtrl.$inject = ['$routeParams', '$scope', 'AlertService', 'APIService'];
 
-  function CommunityCategoryCtrl(AlertService, APIService, $routeParams, $scope) {
+  function CommunityCategoryCtrl($routeParams, $scope, AlertService, APIService) {
     var vm = this;
 
     vm.addForum = addForum;
+    vm.addCategoryUpdate = addCategoryUpdate;
+    vm.updateCategory = updateCategory;
     vm.resetAddForumForm = resetAddForumForm;
 
     (function init() {
 
       vm.toggleCategoryUpdate = false;
+      vm.form = {};
 
       APIService.communityCall('categoriesIdGet', [$routeParams.categoryId ? $routeParams.categoryId : 1])
         .then(categoriesIdGetResponse);
@@ -64,6 +67,33 @@
     function resetAddForumForm() {
       vm.form.forum = {};
       $scope.addForumForm.$setPristine();
+    }
+
+    function addCategoryUpdate() {
+
+      vm.toggleCategoryUpdate = !vm.toggleCategoryUpdate;
+      vm.form.name = angular.copy(vm.category.name);
+
+    }
+
+    function updateCategory() {
+
+      APIService.communityCall('categoriesIdPut', [vm.category.id, {
+          id: vm.category.id,
+          name: vm.form.name
+        }])
+        .then(categoriesIdPutResponse);
+
+      function categoriesIdPutResponse(response) {
+        if (response.status === 200) {
+          AlertService.success('Kategori uppdaterad!');
+          vm.category.name = vm.category.name;
+          vm.toggleCategoryUpdate = false;
+        } else {
+          AlertService.error('Problem att uppdatera kategori');
+        }
+      }
+
     }
 
   }

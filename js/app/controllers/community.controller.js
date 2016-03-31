@@ -6,21 +6,15 @@
     .module('vtPortal')
     .controller('CommunityCtrl', CommunityCtrl);
 
-  CommunityCtrl.$inject = ['AlertService', 'APIService', '$document'];
+  CommunityCtrl.$inject = ['AlertService', 'APIService'];
 
-  function CommunityCtrl(AlertService, APIService, $document) {
+  function CommunityCtrl(AlertService, APIService) {
     var vm = this;
 
     (function init() {
 
-      APIService.communityCall('categoriesGet', [])
+      APIService.communityCall('categoriesGet', [true])
         .then(categoriesGetResponse);
-
-        $(document).ready(function() {
-          $('body').tooltip({
-            selector: '[data-toggle=tooltip]',
-          });
-        });
 
     })();
 

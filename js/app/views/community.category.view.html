@@ -5,17 +5,17 @@
       <li><a href="#/community" target="_self">Community</a></li>
       <li class="active">{{vm.category.name}}</li>
     </ol>
-    <!-- Subject -->
-    <span class="pull-right pointer" ng-if="vm.category.createdBy.id === globals.currentUser.memberId && vm.forum.numberOfTopics === 0" ng-click="vm.removeForum()"><i class="fa fa-trash"></i></span>
-    <span class="pull-right pointer margin-right-mini" ng-if="vm.category.createdBy.id === globals.currentUser.memberId" ng-click="vm.addForumUpdate()"><i class="fa fa-pencil-square-o"></i></span>
+    <!-- Name -->
+    <span class="pull-right pointer" ng-if="vm.category.createdBy.id === globals.currentUser.memberId && vm.forum.numberOfTopics === 0 || globals.currentUser.role === 'community-admin'" ng-click="vm.removeCategory()"><i class="fa fa-trash"></i></span>
+    <span class="pull-right pointer margin-right-mini" ng-if="vm.category.createdBy.id && vm.category.createdBy.id === globals.currentUser.memberId || globals.currentUser.role === 'community-admin'" ng-click="vm.addCategoryUpdate()"><i class="fa fa-pencil-square-o"></i></span>
 
     <h1 ng-if="!vm.toggleCategoryUpdate">{{vm.category.name}}</h1>
 
     <div ng-if="vm.toggleCategoryUpdate">
       <form name="updateCategoryForm" ng-submit="vm.updateCategory()" role="form">
-        <div class="form-group" ng-class="{ 'has-error': updateCategoryForm.subject.$dirty && updateCategoryForm.subject.$invalid,
-  'has-success' : updateCategoryForm.subject.$valid}">
-          <input type="text" name="subject" id="subject" class="form-control" ng-model="vm.form.subject" maxlength="50" required />
+        <div class="form-group" ng-class="{ 'has-error': updateCategoryForm.name.$dirty && updateCategoryForm.name.$invalid,
+  'has-success' : updateCategoryForm.name.$valid}">
+          <input type="text" name="name" id="name" class="form-control" ng-model="vm.form.name" maxlength="50" required />
         </div>
 
         <div class="form-actions pull-right">
@@ -24,14 +24,11 @@
         </div>
       </form>
     </div>
-    <!-- End subject -->
+    <!-- End name -->
   </div>
 </div>
 
 <div class="container no-padding-top">
-  <div class="row padding-bottom">
-    <h2>{{vm.category.description}}</h2>
-  </div>
   <div class="row color-white">
     <div class="col-md-4 cat-id-1" style="height: 200px">
       <h3 class="truncate">Hur lägger jag till fler poster?</h2>
