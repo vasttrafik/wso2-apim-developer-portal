@@ -29,7 +29,7 @@ var CommunityAPI;
        * @param attachment The attachment to upload. May be multiple files.
        * @param authorization Standard http header
        */
-      CommunityApi.prototype.attachmentsPost = function(attachment, authorization, extraHttpRequestParams) {
+      CommunityApi.prototype.attachmentsPost = function(attachment, extraHttpRequestParams) {
         var localVarPath = this.basePath + '/attachments';
         var queryParameters = {};
         var headerParams = this.extendObj({}, this.defaultHeaders);
@@ -38,7 +38,6 @@ var CommunityAPI;
         if (!attachment) {
           throw new Error('Missing required parameter attachment when calling attachmentsPost');
         }
-        headerParams['Authorization'] = authorization;
         headerParams['Content-Type'] = 'application/x-www-form-urlencoded';
         formParams['attachment'] = attachment;
         var httpRequestParams = {
@@ -60,7 +59,7 @@ var CommunityAPI;
        * @param id Resource id
        * @param authorization Standard http header
        */
-      CommunityApi.prototype.attachmentsIdGet = function(id, authorization, extraHttpRequestParams) {
+      CommunityApi.prototype.attachmentsIdGet = function(id, extraHttpRequestParams) {
         var localVarPath = this.basePath + '/attachments/{id}'
           .replace('{' + 'id' + '}', String(id));
         var queryParameters = {};
@@ -69,7 +68,6 @@ var CommunityAPI;
         if (!id) {
           throw new Error('Missing required parameter id when calling attachmentsIdGet');
         }
-        headerParams['Authorization'] = authorization;
         var httpRequestParams = {
           method: 'GET',
           url: localVarPath,
@@ -166,11 +164,10 @@ var CommunityAPI;
        * @param authorization Standard http header
        * @param body The category to create
        */
-      CommunityApi.prototype.categoriesPost = function(authorization, body, extraHttpRequestParams) {
+      CommunityApi.prototype.categoriesPost = function(body, extraHttpRequestParams) {
         var localVarPath = this.basePath + '/categories';
         var queryParameters = {};
         var headerParams = this.extendObj({}, this.defaultHeaders);
-        headerParams['Authorization'] = authorization;
         var httpRequestParams = {
           method: 'POST',
           url: localVarPath,
@@ -217,7 +214,7 @@ var CommunityAPI;
        * @param authorization Standard http header
        * @param body The category to update
        */
-      CommunityApi.prototype.categoriesIdPut = function(id, authorization, body, extraHttpRequestParams) {
+      CommunityApi.prototype.categoriesIdPut = function(id, body, extraHttpRequestParams) {
         var localVarPath = this.basePath + '/categories/{id}'
           .replace('{' + 'id' + '}', String(id));
         var queryParameters = {};
@@ -226,7 +223,6 @@ var CommunityAPI;
         if (!id) {
           throw new Error('Missing required parameter id when calling categoriesIdPut');
         }
-        headerParams['Authorization'] = authorization;
         var httpRequestParams = {
           method: 'PUT',
           url: localVarPath,
@@ -246,7 +242,7 @@ var CommunityAPI;
        * @param id Resource id
        * @param authorization Standard http header
        */
-      CommunityApi.prototype.categoriesIdDelete = function(id, authorization, extraHttpRequestParams) {
+      CommunityApi.prototype.categoriesIdDelete = function(id, extraHttpRequestParams) {
         var localVarPath = this.basePath + '/categories/{id}'
           .replace('{' + 'id' + '}', String(id));
         var queryParameters = {};
@@ -255,7 +251,6 @@ var CommunityAPI;
         if (!id) {
           throw new Error('Missing required parameter id when calling categoriesIdDelete');
         }
-        headerParams['Authorization'] = authorization;
         var httpRequestParams = {
           method: 'DELETE',
           url: localVarPath,
@@ -346,11 +341,10 @@ var CommunityAPI;
        * @param authorization Standard http header
        * @param body The forum to create
        */
-      CommunityApi.prototype.forumsPost = function(authorization, body, extraHttpRequestParams) {
+      CommunityApi.prototype.forumsPost = function(body, extraHttpRequestParams) {
         var localVarPath = this.basePath + '/forums';
         var queryParameters = {};
         var headerParams = this.extendObj({}, this.defaultHeaders);
-        headerParams['Authorization'] = authorization;
         var httpRequestParams = {
           method: 'POST',
           url: localVarPath,
@@ -397,7 +391,7 @@ var CommunityAPI;
        * @param authorization Standard http header
        * @param body The forum to update
        */
-      CommunityApi.prototype.forumsIdPut = function(id, authorization, body, extraHttpRequestParams) {
+      CommunityApi.prototype.forumsIdPut = function(id, body, extraHttpRequestParams) {
         var localVarPath = this.basePath + '/forums/{id}'
           .replace('{' + 'id' + '}', String(id));
         var queryParameters = {};
@@ -406,7 +400,6 @@ var CommunityAPI;
         if (!id) {
           throw new Error('Missing required parameter id when calling forumsIdPut');
         }
-        headerParams['Authorization'] = authorization;
         var httpRequestParams = {
           method: 'PUT',
           url: localVarPath,
@@ -426,7 +419,7 @@ var CommunityAPI;
        * @param id Resource id
        * @param authorization Standard http header
        */
-      CommunityApi.prototype.forumsIdDelete = function(id, authorization, extraHttpRequestParams) {
+      CommunityApi.prototype.forumsIdDelete = function(id, extraHttpRequestParams) {
         var localVarPath = this.basePath + '/forums/{id}'
           .replace('{' + 'id' + '}', String(id));
         var queryParameters = {};
@@ -435,7 +428,6 @@ var CommunityAPI;
         if (!id) {
           throw new Error('Missing required parameter id when calling forumsIdDelete');
         }
-        headerParams['Authorization'] = authorization;
         var httpRequestParams = {
           method: 'DELETE',
           url: localVarPath,
@@ -602,7 +594,7 @@ var CommunityAPI;
        * @param body The post to create
        * @param authorization Standard http header
        */
-      CommunityApi.prototype.postsPost = function(body, authorization, extraHttpRequestParams) {
+      CommunityApi.prototype.postsPost = function(body, extraHttpRequestParams) {
         var localVarPath = this.basePath + '/posts';
         var queryParameters = {};
         var headerParams = this.extendObj({}, this.defaultHeaders);
@@ -610,7 +602,6 @@ var CommunityAPI;
         if (!body) {
           throw new Error('Missing required parameter body when calling postsPost');
         }
-        headerParams['Authorization'] = authorization;
         var httpRequestParams = {
           method: 'POST',
           url: localVarPath,
@@ -658,7 +649,7 @@ var CommunityAPI;
        * @param authorization Standard http header
        * @param action An action parameter specifying the patch to perform
        */
-      CommunityApi.prototype.postsIdPut = function(id, body, authorization, action, extraHttpRequestParams) {
+      CommunityApi.prototype.postsIdPut = function(id, action, body, extraHttpRequestParams) {
         var localVarPath = this.basePath + '/posts/{id}'
           .replace('{' + 'id' + '}', String(id));
         var queryParameters = {};
@@ -674,7 +665,6 @@ var CommunityAPI;
         if (action !== undefined) {
           queryParameters['action'] = action;
         }
-        headerParams['Authorization'] = authorization;
         var httpRequestParams = {
           method: 'PUT',
           url: localVarPath,
@@ -694,7 +684,7 @@ var CommunityAPI;
        * @param id Resource id
        * @param authorization Standard http header
        */
-      CommunityApi.prototype.postsIdDelete = function(id, authorization, extraHttpRequestParams) {
+      CommunityApi.prototype.postsIdDelete = function(id, extraHttpRequestParams) {
         var localVarPath = this.basePath + '/posts/{id}'
           .replace('{' + 'id' + '}', String(id));
         var queryParameters = {};
@@ -703,7 +693,6 @@ var CommunityAPI;
         if (!id) {
           throw new Error('Missing required parameter id when calling postsIdDelete');
         }
-        headerParams['Authorization'] = authorization;
         var httpRequestParams = {
           method: 'DELETE',
           url: localVarPath,
@@ -856,11 +845,10 @@ var CommunityAPI;
        * @param authorization Standard http header
        * @param body The topic to create
        */
-      CommunityApi.prototype.topicsPost = function(authorization, body, extraHttpRequestParams) {
+      CommunityApi.prototype.topicsPost = function(body, extraHttpRequestParams) {
         var localVarPath = this.basePath + '/topics';
         var queryParameters = {};
         var headerParams = this.extendObj({}, this.defaultHeaders);
-        headerParams['Authorization'] = authorization;
         var httpRequestParams = {
           method: 'POST',
           url: localVarPath,
@@ -908,7 +896,7 @@ var CommunityAPI;
        * @param action The action to take
        * @param body The topic to update
        */
-      CommunityApi.prototype.topicsIdPut = function(id, authorization, action, body, extraHttpRequestParams) {
+      CommunityApi.prototype.topicsIdPut = function(id, action, body, extraHttpRequestParams) {
         var localVarPath = this.basePath + '/topics/{id}'
           .replace('{' + 'id' + '}', String(id));
         var queryParameters = {};
@@ -920,7 +908,6 @@ var CommunityAPI;
         if (action !== undefined) {
           queryParameters['action'] = action;
         }
-        headerParams['Authorization'] = authorization;
         var httpRequestParams = {
           method: 'PUT',
           url: localVarPath,
@@ -940,7 +927,7 @@ var CommunityAPI;
        * @param id Resource id
        * @param authorization Standard http header
        */
-      CommunityApi.prototype.topicsIdDelete = function(id, authorization, extraHttpRequestParams) {
+      CommunityApi.prototype.topicsIdDelete = function(id, extraHttpRequestParams) {
         var localVarPath = this.basePath + '/topics/{id}'
           .replace('{' + 'id' + '}', String(id));
         var queryParameters = {};
@@ -949,7 +936,6 @@ var CommunityAPI;
         if (!id) {
           throw new Error('Missing required parameter id when calling topicsIdDelete');
         }
-        headerParams['Authorization'] = authorization;
         var httpRequestParams = {
           method: 'DELETE',
           url: localVarPath,

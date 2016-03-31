@@ -71,7 +71,7 @@ var UserAPI;
           throw new Error('Missing required parameter userId when calling usersUserIdGet');
         }
         headerParams['Accept'] = accept;
-        headerParams['Authorization'] = authorization;
+        headerParams['X-JWT-Assertion'] = authorization;
         headerParams['If-None-Match'] = ifNoneMatch;
         headerParams['If-Modified-Since'] = ifModifiedSince;
         var httpRequestParams = {
@@ -103,7 +103,7 @@ var UserAPI;
           queryParameters['action'] = action;
         }
         headerParams['Accept'] = accept;
-        headerParams['Authorization'] = authorization;
+        headerParams['X-JWT-Assertion'] = authorization;
         headerParams['Content-Type'] = contentType;
         var httpRequestParams = {
           method: 'PUT',
@@ -283,7 +283,7 @@ var UserAPI;
           queryParameters['userId'] = userId;
         }
         headerParams['Accept'] = accept;
-        headerParams['Authorization'] = authorization;
+        headerParams['X-JWT-Assertion'] = authorization;
         var httpRequestParams = {
           method: 'POST',
           url: path,

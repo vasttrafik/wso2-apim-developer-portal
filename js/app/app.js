@@ -222,7 +222,7 @@
           UserService.setUser(user, (user.memberId ? true : false)); // Since this also sets the user scope
           AuthenticationService.setLogoutTimer();
 
-          $http.defaults.headers.common.Authorization = 'Bearer ' + user.accessToken.token;
+          $http.defaults.headers.common['X-JWT-Assertion'] = user.accessToken.token;
         } else {
           $rootScope.user.loggedIn = false;
         }
