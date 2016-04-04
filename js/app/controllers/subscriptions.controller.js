@@ -44,6 +44,11 @@
 
     function subscriptionsGetResponse(response) {
       if (response.status === 200) {
+
+        angular.forEach(response.data.list, function(value, key) {
+          value.api.imageUrl = vm.defaultBaseUrl + '/' + value.api.imageUrl;
+          value.api.swaggerUrl = vm.defaultBaseUrl + '/' + value.api.swaggerUrl;
+        });
         vm.subscriptions = response.data.list;
       } else {
         AlertService.error('Problem att hämta listan över prenumerationer');
@@ -97,6 +102,8 @@
 
       function subscriptionsPostResponse(response) {
         if (response.status === 201) {
+          response.data.api.imageUrl = vm.defaultBaseUrl + '/' + response.data.api.imageUrl;
+          response.data.api.swaggerUrl = vm.defaultBaseUrl + '/' + response.data.api.swaggerUrl;
           vm.subscriptions.push(response.data);
 
           AlertService.success('Prenumerationen skapad!');
@@ -152,7 +159,7 @@
       if (vm.subscriptions != null) {
         var removeApis = [];
         for (var i = 0; i < vm.subscriptions.length; i++) {
-          if (vm.subscriptions[i].application.id === parseInt(vm.form.subscription.add.application)) {
+          if (vm.form.subscription.add != null && vm.subscriptions[i].application.id === parseInt(vm.form.subscription.add.application)) {
             removeApis.push(vm.subscriptions[i].api.name + vm.subscriptions[i].api.version + vm.subscriptions[i].api.provider);
           }
         }
@@ -164,7 +171,7 @@
     }
 
     function updateApplications() {
-      if (vm.subscriptions != null && vm.form.subscription.add.api != null) {
+      if (vm.subscriptions != null && vm.form.subscription.add != null && vm.form.subscription.add.api != null) {
         var removeApplications = [];
         var apiDef = vm.form.subscription.add.api.split('/');
         for (var i = 0; i < vm.subscriptions.length; i++) {

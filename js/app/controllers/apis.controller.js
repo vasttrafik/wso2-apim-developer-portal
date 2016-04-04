@@ -24,6 +24,7 @@
     function apisGetResponse(response) {
       if (response.status === 200) {
         vm.apis = response.data.list.filter(function(el) {
+          el.imageUrl = vm.defaultBaseUrl + '/' + el.imageUrl;
           return el.status.toUpperCase() !== 'BLOCKED';
         });
       } else {

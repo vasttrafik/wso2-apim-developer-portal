@@ -91,9 +91,9 @@
     function aPIsIdGetResponse(response) {
       if (response.status === 200) {
         vm.api = response.data;
-        vm.imageUrl = response.data.imageUrl;
+        vm.imageUrl = vm.defaultBaseUrl + '/' + response.data.imageUrl;
         vm.apiId = vm.api.name + '/' + vm.api.version + '/' + vm.api.provider;
-        vm.swaggerUrl = defaultBaseUrl + '/' + response.data.swagger;
+        vm.swaggerUrl = vm.defaultBaseUrl + '/' + response.data.swagger;
         vm.useAccessToken = response.data.status !== 'DEPRECATED';
 
       } else {
