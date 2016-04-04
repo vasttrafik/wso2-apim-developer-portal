@@ -131,26 +131,6 @@
     function logout() {
       var deferred = $q.defer();
 
-      var response;
-      apiClient.securityPost('logout')
-        .then(securityPostResponse)
-        .catch(function(apiResponse) {
-          apiErrorResponse(apiResponse, deferred);
-        });
-
-      function securityPostResponse(apiResponse) {
-        if (apiResponse.status === 204 || apiResponse.status === 200) {
-
-          response = {
-            status: apiResponse.status
-          };
-
-          deferred.resolve(response);
-        } else {
-          apiErrorResponse(apiResponse, deferred);
-        }
-      }
-
       $timeout.cancel(logoutPromise); // Cancel the logout promise
       UserService.clearUser();
       $location.path('/');
