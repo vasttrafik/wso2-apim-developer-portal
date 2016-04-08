@@ -64,7 +64,7 @@
           delete response.accessToken;
           delete response.memberId;
 
-          APIService.userCall('usersUserIdPut', [response.id, 'updateProfile', 'application/json', newUserObject.accessToken.token, 'application/json', response])
+          APIService.userCall('usersUserIdPut', [response.id, 'updateProfile', 'application/json', 'application/json', response])
             .then(usersUserIdPutResponse)
             .catch(function(response) {
               if (response.status === 412) {
@@ -178,7 +178,7 @@
           request.password.newPassword = vm.form.password.passwordRepeat;
           request.userName = response.userName;
 
-          APIService.userCall('usersUserIdPut', [response.id, 'updatePassword', '*/*', response.accessToken.token, 'application/json', request])
+          APIService.userCall('usersUserIdPut', [response.id, 'updatePassword', '*/*', 'application/json', request])
             .then(usersUserIdPutResponse);
         });
 
@@ -204,7 +204,7 @@
       UserService.getUser()
         .then(function(response) {
 
-          APIService.userCall('challengequestionsPost', ['application/json', response.accessToken.token, response.id, {
+          APIService.userCall('challengequestionsPost', ['application/json', response.id, {
               id: challengeQuestionId,
               question: challengeQuestionQuestion,
               answer: vm.form.question.answer

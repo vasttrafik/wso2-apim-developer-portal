@@ -37,7 +37,7 @@
             </span>
           </td>
           <td class="hidden-xs">
-            <img src="{{vm.defaultBaseUrl + '/' + entries.api.imageUrl}}" style="width:25px;height:25px" />
+            <img ng-src="{{entries.api.imageUrl}}" style="width:25px;height:25px" />
           </td>
           <td>
             <span><a href="#/api/{{entries.api.name}}/{{entries.api.version}}/{{entries.api.provider}}/direct">{{entries.api.name}} {{entries.api.version}}</a></span>

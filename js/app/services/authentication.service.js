@@ -148,6 +148,7 @@
 
     function logout() {
       var deferred = $q.defer();
+
       $timeout.cancel(logoutPromise); // Cancel the logout promise
       UserService.clearUser();
       $location.path('/');
