@@ -6,7 +6,7 @@
   'use strict';
 
   angular
-    .module('vtPortal', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ngPasswordStrength', 'ui.validate', 'angular-clipboard', 'ngLocationUpdate', 'swaggerUi', 'duScroll', 'angular-loading-bar', 'ngJSONPath', 'highcharts-ng', 'btford.markdown'])
+    .module('vtPortal', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ngPasswordStrength', 'ui.validate', 'angular-clipboard', 'ngLocationUpdate', 'swaggerUi', 'duScroll', 'angular-loading-bar', 'ngJSONPath', 'highcharts-ng', 'btford.markdown', 'ui.bootstrap', 'ui-iconpicker'])
     .config(config)
     .factory('timeoutHttpIntercept', function($rootScope, $q) {
       return {
