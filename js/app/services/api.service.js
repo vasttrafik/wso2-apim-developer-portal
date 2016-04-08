@@ -107,7 +107,7 @@
 
       if (apiResponse.status === 401) {
         if (doNotLogout) {
-          AlertService.error('Du måste logga in för att få tillgång till denna resurs');
+          AlertService.error('Du måste logga in igen för att få tillgång till denna resurs');
           deferred.resolve(response);
           return;
         } else {
