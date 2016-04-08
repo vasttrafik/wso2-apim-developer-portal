@@ -8,8 +8,8 @@
     </ol>
 
     <!-- Subject -->
-    <span class="pull-right pointer" ng-if="vm.forum.createdBy.id === globals.currentUser.memberId && vm.forum.numberOfTopics === 0 || globals.currentUser.role === 'community-admin'" ng-click="vm.removeForum()"><i class="fa fa-trash"></i></span>
-    <span class="pull-right pointer margin-right-mini" ng-if="vm.forum.createdBy.id === globals.currentUser.memberId || globals.currentUser.role === 'community-admin'" ng-click="vm.addForumUpdate()"><i class="fa fa-pencil-square-o"></i></span>
+    <span class="pull-right pointer" ng-if="vm.forum.createdBy.id === globals.currentUser.memberId && vm.forum.numberOfTopics === 0 || communityService.isAdmin" ng-click="vm.removeForum()"><i class="fa fa-trash"></i></span>
+    <span class="pull-right pointer margin-right-mini" ng-if="vm.forum.createdBy.id != null && vm.forum.createdBy.id === globals.currentUser.memberId || communityService.isAdmin" ng-click="vm.addForumUpdate()"><i class="fa fa-pencil-square-o"></i></span>
 
     <h1 ng-if="!vm.toggleForumUpdate">{{vm.forum.name}}</h1>
 
@@ -50,7 +50,7 @@
     <h2 ng-if="!vm.toggleForumUpdate">{{vm.forum.description}}</h2>
   </div>
   <div class="row color-white">
-    <div class="col-md-4 cat-id-1" style="height: 200px">
+    <div class="col-md-4 com-popular" style="height: 200px">
       <div ng-if="vm.labels.popular.id">
         <h3 class="truncate"><a href="#/community/topic/{{vm.labels.popular.id}}" class="color-white">{{vm.labels.popular.subject}}</a></h3>
         <p>{{vm.labels.popular.lastPostDate | relativeDate}}</p>
@@ -61,7 +61,7 @@
       <span style="position: absolute;bottom: 5px;right: 10px;" data-balloon="Populär" data-balloon-pos="up"><i class="fa fa-line-chart"></i></span>
     </div>
     <div class="col-md-4">
-      <div class="col-md-12 cat-id-2" style="height: 200px">
+      <div class="col-md-12 com-answered" style="height: 200px">
         <div ng-if="vm.labels.answered.id">
           <h3 class="truncate"><a href="#/community/topic/{{vm.labels.answered.id}}" class="color-white">{{vm.labels.answered.subject}}</a></h3>
           <p>{{vm.labels.answered.lastPostDate | relativeDate}}</p>
@@ -73,7 +73,7 @@
       </div>
     </div>
     <div class="col-md-4 no-padding-left">
-      <div class="col-md-12 cat-id-3" style="height: 200px">
+      <div class="col-md-12 com-unanswered" style="height: 200px">
         <div ng-if="vm.labels.unanswered.id">
           <h3 class="truncate"><a href="#/community/topic/{{vm.labels.unanswered.id}}" class="color-white">{{vm.labels.unanswered.subject}}</a></h3>
           <p>{{vm.labels.unanswered.lastPostDate | relativeDate}}</p>
@@ -128,7 +128,7 @@
     </table>
   </div>
 
-  <div class="container padding-bottom-small" ng-show="globals.currentUser.id && user.loggedIn">
+  <div class="container padding-bottom-small" ng-show="communityService.isMember">
     <h2>Ställ ny fråga</h2>
     <div class="row well">
       <form name="addTopicForm" ng-submit="vm.addTopic()" role="form">
@@ -152,7 +152,7 @@
     </div>
   </div>
 
-  <div class="container padding-bottom-small" ng-show="!globals.currentUser.id && user.loggedIn">
+  <div class="container padding-bottom-small" ng-show="!communityService.isMember">
     <div class="row">
       <h3><a href="#/profile">Skapa en community profil för att kunna interagera med forumet</a></h3>
     </div>

@@ -11,6 +11,8 @@
   function CommunityCtrl(AlertService, APIService, CommunityService) {
     var vm = this;
 
+    vm.communityService = CommunityService;
+
     (function init() {
 
       APIService.communityCall('categoriesGet', [false])

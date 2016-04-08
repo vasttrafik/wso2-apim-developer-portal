@@ -11,6 +11,8 @@
   function CommunityTopicCtrl($routeParams, $scope, $location, AlertService, APIService) {
     var vm = this;
 
+    vm.communityService = CommunityService;
+
     vm.addAnswer = addAnswer;
     vm.addComment = addComment;
     vm.removePost = removePost;

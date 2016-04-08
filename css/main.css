@@ -1118,16 +1118,16 @@ article.newsItem > h2 {
   color: #888;
 }
 
-.cat-id-1{
+.com-popular{
   background-color: #00AAEB;
 }
-.cat-id-2{
+.com-answered{
   background-color: #50B746;
 }
-.cat-id-3{
+.com-unanswered{
   background-color: #00394D
 }
-.cat-id-4{
+.com-none{
   background-color: #3C4650;
 }
 

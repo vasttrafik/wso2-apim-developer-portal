@@ -8,15 +8,17 @@
     .module('vtPortal')
     .factory('CommunityService', CommunityService);
 
-  CommunityService.$inject = ['$q', 'APIService'];
+  CommunityService.$inject = ['$q', '$rootScope', 'APIService'];
 
-  function CommunityService($q, APIService) {
+  function CommunityService($q, $rootScope, APIService) {
     var service = {};
 
     service.getFirstTopicByLabel = getFirstTopicByLabel;
     service.getFirstTopicByLabels = getFirstTopicByLabels;
     service.getFirstPostByLabel = getFirstPostByLabel;
     service.getFirstPostByLabels = getFirstPostByLabels;
+    service.isCommunityMember = isCommunityMember;
+    service.isCommunityAdmin = isCommunityAdmin;
 
     return service;
 
@@ -102,6 +104,14 @@
       }
 
       return deferred.promise;
+    }
+
+    function isCommunityMember() {
+      return $rootScope.globals.currentUser.memberId && $rootScope.user.loggedIn ? true : false;
+    }
+
+    function isCommunityAdmin() {
+      return $rootScope.globals.currentUser.role === 'community-admin' ? true : false;
     }
 
     function errorResponse(status, message, deferred) {

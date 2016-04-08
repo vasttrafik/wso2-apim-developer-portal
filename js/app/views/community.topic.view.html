@@ -9,8 +9,8 @@
     </ol>
 
     <!-- Subject -->
-    <span class="pull-right pointer" ng-if="vm.topic.createdBy.id === globals.currentUser.memberId && vm.topic.numberOfPosts < 2 || globals.currentUser.role === 'community-admin'" ng-click="vm.removeTopic()"><i class="fa fa-trash"></i></span>
-    <span class="pull-right margin-right-mini pointer" ng-if="vm.topic.createdBy.id === globals.currentUser.memberId" ng-click="vm.addTopicUpdate()"><i class="fa fa-pencil-square-o"></i></span>
+    <span class="pull-right pointer" ng-if="vm.topic.createdBy.id === globals.currentUser.memberId && vm.topic.numberOfPosts < 2 || communityservice.idAdmin" ng-click="vm.removeTopic()"><i class="fa fa-trash"></i></span>
+    <span class="pull-right margin-right-mini pointer" ng-if="vm.topic.createdBy.id != null && vm.topic.createdBy.id === globals.currentUser.memberId || communityservice.isAdmin" ng-click="vm.addTopicUpdate()"><i class="fa fa-pencil-square-o"></i></span>
 
     <h1 ng-if="!vm.toggleTopicUpdate">{{vm.topic.subject}}</h1>
 
@@ -143,7 +143,7 @@
   </div>
 
   <!-- Add reply -->
-  <div ng-show="globals.currentUser.memberId && user.loggedIn">
+  <div ng-show="communityservice.isMember">
     <div class="container no-padding-left no-padding-bottom">
       <h2>Skriv ett svar</h2>
     </div>
@@ -172,7 +172,7 @@
   <!-- End add reply -->
 
   <!-- If user has no community profile -->
-  <div class="container padding-bottom-small" ng-show="!globals.currentUser.memberId && user.loggedIn">
+  <div class="container padding-bottom-small" ng-show="!communityservice.isMember">
     <div class="row">
     <h3><a href="#/profile">Skapa en community profil för att kunna interagera med forumet</a></h3>
     </div>

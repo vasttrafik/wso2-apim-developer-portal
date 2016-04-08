@@ -11,6 +11,8 @@
   function CommunityCategoryCtrl($routeParams, $scope, AlertService, APIService, CommunityService) {
     var vm = this;
 
+    vm.communityService = CommunityService;
+
     vm.addForum = addForum;
     vm.addCategoryUpdate = addCategoryUpdate;
     vm.updateCategory = updateCategory;
