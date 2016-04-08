@@ -70,11 +70,18 @@
 
     })();
 
-    function toggleExpand(index) {
-      if (vm.mediaItems[index].expand != null) {
-        vm.mediaItems[index].expand = !vm.mediaItems[index].expand;
-      } else {
-        vm.mediaItems[index].expand = true;
+    function toggleExpand(id) {
+
+      console.log(id);
+
+      for (var i = 0; i < vm.mediaItems.length; i++) {
+        if (vm.mediaItems[i].id === id) {
+          if (vm.mediaItems[i].expand != null) {
+            vm.mediaItems[i].expand = !vm.mediaItems[i].expand;
+          } else {
+            vm.mediaItems[i].expand = true;
+          }
+        }
       }
     }
 

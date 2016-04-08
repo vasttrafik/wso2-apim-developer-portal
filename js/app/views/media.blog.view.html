@@ -11,9 +11,9 @@
         <div class="row" ng-if="vm.mediaItems.length === 0">
           <h3>Det finns inte några nyheter med valda sökkriterier. Välj en månad i listan till höger.</h3>
         </div>
-        <article id="{{'mediaArticle-' + blogItem.id}}" ng-repeat="blogItem in vm.mediaItems | orderBy: createDate : true" class="padding-bottom border-bottom">
+        <article id="{{'mediaArticle-' + blogItem.id}}" ng-repeat="blogItem in vm.mediaItems | orderBy: 'createDate' : true" class="padding-bottom border-bottom">
           <h2>{{blogItem.subject}}</h2>
-          <div id="{{'mediaContent-' + $index}}" ng-bind-html="vm.mediaItems[$index].firstPost.text | trustAsHtml">
+          <div id="{{'mediaContent-' + $index}}" ng-bind-html="blogItem.firstPost.text | trustAsHtml">
           </div>
           <div class="padding-top">
             Taggad som:

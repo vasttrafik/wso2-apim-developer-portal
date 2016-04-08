@@ -11,19 +11,19 @@
         <div class="row" ng-if="vm.mediaItems.length === 0">
           <h3>Det finns inte några nyheter med valda sökkriterier. Välj en månad i listan till höger.</h3>
         </div>
-        <article id="{{'mediaArticle-' + newsItem.id}}" class="newsItem" ng-repeat="newsItem in vm.mediaItems | orderBy: createDate : true">
+        <article id="{{'mediaArticle-' + newsItem.id}}" class="newsItem" ng-repeat="newsItem in vm.mediaItems | orderBy: 'createDate' : true">
           <div class="calDate">
             <div class="month red">{{ newsItem.createDate | date:'MMM' }}</div>{{  newsItem.createDate | date:'d' }}
           </div>
           <span class="toggleItem">
-            <span class="showMore" ng-show="!vm.mediaItems[$index].expand"><i class="glyphicon glyphicon-chevron-down" ng-click="vm.toggleExpand($index)"></i></span>
-            <span class="showLess" ng-show="vm.mediaItems[$index].expand"><i class="glyphicon glyphicon-chevron-up" ng-click="vm.toggleExpand($index)"></i></span>
+            <span class="showMore" ng-show="!newsItem.expand"><i class="glyphicon glyphicon-chevron-down" ng-click="vm.toggleExpand(newsItem.id)"></i></span>
+            <span class="showLess" ng-show="newsItem.expand"><i class="glyphicon glyphicon-chevron-up" ng-click="vm.toggleExpand(newsItem.id)"></i></span>
           </span>
           <h2 class="ellipsis">{{newsItem.subject}}</h2>
           <div class="articleContent">
-            <div id="{{'mediaIntro-' + $index}}" class="news-item-intro animate-hide" ng-hide="vm.mediaItems[$index].expand" ng-bind-html="vm.mediaItems[$index].firstPost.text | trustAsHtml">
+            <div id="{{'mediaIntro-' + $index}}" class="news-item-intro animate-hide" ng-hide="newsItem.expand" ng-bind-html="newsItem.firstPost.text | trustAsHtml">
             </div>
-            <div id="{{'mediaContent-' + $index}}" class="news-item-content margin-bottom-small animate-hide" ng-hide="!vm.mediaItems[$index].expand" ng-bind-html="vm.mediaItems[$index].firstPost.text | trustAsHtml">
+            <div id="{{'mediaContent-' + $index}}" class="news-item-content margin-bottom-small animate-hide" ng-hide="!newsItem.expand" ng-bind-html="newsItem.firstPost.text | trustAsHtml">
             </div>
           </div>
           <footer>
@@ -32,8 +32,8 @@
             <span class="label label-default" ng-repeat="tag in newsItem.tags"  ng-click="vm.setTag(tag)" style="cursor: pointer">{{tag}}</span>&nbsp;
             <span>Publicerad av: {{newsItem.createdBy.signature}}, {{newsItem.createDate | relativeDate}}</span>
             <span class="toggleItemBottom">
-              <span class="showMore" ng-show="!vm.mediaItems[$index].expand" ng-click="vm.toggleExpand($index)">Visa mer <i class="glyphicon glyphicon-chevron-down"></i></span>
-              <span class="showLess" ng-show="vm.mediaItems[$index].expand" ng-click="vm.toggleExpand($index)">Visa mindre <i class="glyphicon glyphicon-chevron-up"></i></span>
+              <span class="showMore" ng-show="!newsItem.expand" ng-click="vm.toggleExpand(newsItem.id)">Visa mer <i class="glyphicon glyphicon-chevron-down"></i></span>
+              <span class="showLess" ng-show="newsItem.expand" ng-click="vm.toggleExpand(newsItem.id)">Visa mindre <i class="glyphicon glyphicon-chevron-up"></i></span>
             </span>
 
           </footer>
