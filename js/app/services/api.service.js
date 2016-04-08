@@ -67,7 +67,8 @@
         .then(function(response) {
           deferred.resolve(response);
         }, function(response) {
-          apiErrorResponse(response, deferred, doNotLogout);
+          // Never logout someone from community view
+          apiErrorResponse(response, deferred, true);
         })
         .catch(function(response) {
           // Never logout someone from community view
@@ -106,8 +107,9 @@
 
       if (apiResponse.status === 401) {
         if (doNotLogout) {
-          UserService.clearUser();
           AlertService.error('Du måste logga in för att få tillgång till denna resurs');
+          deferred.resolve(response);
+          return;
         } else {
           AuthenticationService.logout();
           AlertService.error('Användaren är inte autentiserad');
