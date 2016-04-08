@@ -6,9 +6,9 @@
     .module('vtPortal')
     .controller('CommunityTopicCtrl', CommunityTopicCtrl);
 
-  CommunityTopicCtrl.$inject = ['$routeParams', '$scope', '$location', 'AlertService', 'APIService'];
+  CommunityTopicCtrl.$inject = ['$routeParams', '$scope', '$location', 'AlertService', 'APIService', 'CommunityService'];
 
-  function CommunityTopicCtrl($routeParams, $scope, $location, AlertService, APIService) {
+  function CommunityTopicCtrl($routeParams, $scope, $location, AlertService, APIService, CommunityService) {
     var vm = this;
 
     vm.communityService = CommunityService;

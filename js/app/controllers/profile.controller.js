@@ -139,10 +139,13 @@
 
         if (response.status === 200 || response.status === 201) {
 
-          var created = ($rootScope.globals.currentUser.id ? false : true);
+          var created = ($rootScope.globals.currentUser.memberId ? false : true);
 
           UserService.setMemberId(response.data.id)
             .then(function() {
+
+              vm.member = response.data;
+
               if (!created) {
                 AlertService.success('Din community profil är uppdaterad!');
               } else {

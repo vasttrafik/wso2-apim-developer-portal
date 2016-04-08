@@ -17,8 +17,8 @@
     service.getFirstTopicByLabels = getFirstTopicByLabels;
     service.getFirstPostByLabel = getFirstPostByLabel;
     service.getFirstPostByLabels = getFirstPostByLabels;
-    service.isCommunityMember = isCommunityMember;
-    service.isCommunityAdmin = isCommunityAdmin;
+    service.isMember = isMember;
+    service.isAdmin = isAdmin;
 
     return service;
 
@@ -106,11 +106,11 @@
       return deferred.promise;
     }
 
-    function isCommunityMember() {
+    function isMember() {
       return $rootScope.globals.currentUser.memberId && $rootScope.user.loggedIn ? true : false;
     }
 
-    function isCommunityAdmin() {
+    function isAdmin() {
       return $rootScope.globals.currentUser.role === 'community-admin' ? true : false;
     }
 

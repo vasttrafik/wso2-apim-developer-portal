@@ -8,8 +8,8 @@
     </ol>
 
     <!-- Subject -->
-    <span class="pull-right pointer" ng-if="vm.forum.createdBy.id === globals.currentUser.memberId && vm.forum.numberOfTopics === 0 || communityService.isAdmin" ng-click="vm.removeForum()"><i class="fa fa-trash"></i></span>
-    <span class="pull-right pointer margin-right-mini" ng-if="vm.forum.createdBy.id != null && vm.forum.createdBy.id === globals.currentUser.memberId || communityService.isAdmin" ng-click="vm.addForumUpdate()"><i class="fa fa-pencil-square-o"></i></span>
+    <span class="pull-right pointer" ng-if="vm.forum.createdBy.id === globals.currentUser.memberId && vm.forum.numberOfTopics === 0 || vm.communityService.isAdmin()" ng-click="vm.removeForum()"><i class="fa fa-trash"></i></span>
+    <span class="pull-right pointer margin-right-mini" ng-if="vm.forum.createdBy.id != null && vm.forum.createdBy.id === globals.currentUser.memberId || vm.communityService.isAdmin()" ng-click="vm.addForumUpdate()"><i class="fa fa-pencil-square-o"></i></span>
 
     <h1 ng-if="!vm.toggleForumUpdate">{{vm.forum.name}}</h1>
 
@@ -128,7 +128,7 @@
     </table>
   </div>
 
-  <div class="container padding-bottom-small" ng-show="communityService.isMember">
+  <div class="container padding-bottom-small" ng-show="vm.communityService.isMember()">
     <h2>Ställ ny fråga</h2>
     <div class="row well">
       <form name="addTopicForm" ng-submit="vm.addTopic()" role="form">
@@ -137,7 +137,7 @@
           <label for="subject">Fråga</label>
           <input type="text" name="subject" id="subject" class="form-control margin-bottom-small" ng-model="vm.form.topic.subject" maxlength="50" required />
           <label for="question">Beskrivning</label>
-          <span class="pull-right" style="font-size: 0.9em"><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown Cheat Sheet</a></span>
+          <span class="pull-right" style="font-size: 0.9em"><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank">Markdown Cheat Sheet</a></span>
           <textarea id="question" type="text" class="form-control margin-bottom-small" ng-model="vm.form.topic.question" style="height: 100px;" required></textarea>
           <label for="preview" ng-show="vm.form.topic.question">Förhandsgranskning</label>
           <div btf-markdown="vm.form.topic.question">
@@ -152,7 +152,7 @@
     </div>
   </div>
 
-  <div class="container padding-bottom-small" ng-show="!communityService.isMember">
+  <div class="container padding-bottom-small" ng-show="!vm.communityService.isMember()">
     <div class="row">
       <h3><a href="#/profile">Skapa en community profil för att kunna interagera med forumet</a></h3>
     </div>

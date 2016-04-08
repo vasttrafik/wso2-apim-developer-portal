@@ -87,14 +87,15 @@
 
       APIService.communityCall('categoriesIdPut', [vm.category.id, {
           id: vm.category.id,
-          name: vm.form.name
+          name: vm.form.name,
+          isPublic: true
         }])
         .then(categoriesIdPutResponse);
 
       function categoriesIdPutResponse(response) {
         if (response.status === 200) {
           AlertService.success('Kategori uppdaterad!');
-          vm.category.name = vm.category.name;
+          vm.category.name = response.data.name;
           vm.toggleCategoryUpdate = false;
         } else {
           AlertService.error('Problem att uppdatera kategori');

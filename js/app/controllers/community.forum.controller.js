@@ -16,6 +16,7 @@
     vm.addTopic = addTopic;
     vm.addForumUpdate = addForumUpdate;
     vm.updateForum = updateForum;
+    vm.removeForum = removeForum;
     vm.resetAddTopicForm = resetAddTopicForm;
 
     (function init() {
@@ -111,6 +112,26 @@
     function resetAddTopicForm() {
       vm.form.topic = {};
       $scope.addTopicForm.$setPristine();
+    }
+
+    function removeForum() {
+
+      if (confirm('Är du säker på att du vill ta bort detta forum?') === true) {
+        APIService.communityCall('forumsIdDelete', [vm.forum.id])
+          .then(forumsIdDeleteResponse);
+      }
+
+      function forumsIdDeleteResponse(response) {
+        if (response.status === 200) {
+          AlertService.success('Forum borttaget!');
+
+          $location.path('/' + ($location.path().split('/')[1] === 'community' ? 'community' : 'admin') + '/category/' + vm.forum.categoryId); // Redirect to parent catrgory
+
+        } else {
+          AlertService.error('Problem att ta bort forum');
+        }
+      }
+
     }
 
   }
