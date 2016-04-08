@@ -6,9 +6,9 @@
     .module('vtPortal')
     .controller('CommunityCategoryCtrl', CommunityCategoryCtrl);
 
-  CommunityCategoryCtrl.$inject = ['$routeParams', '$scope', 'AlertService', 'APIService'];
+  CommunityCategoryCtrl.$inject = ['$routeParams', '$scope', 'AlertService', 'APIService', 'CommunityService'];
 
-  function CommunityCategoryCtrl($routeParams, $scope, AlertService, APIService) {
+  function CommunityCategoryCtrl($routeParams, $scope, AlertService, APIService, CommunityService) {
     var vm = this;
 
     vm.addForum = addForum;
@@ -23,6 +23,11 @@
 
       APIService.communityCall('categoriesIdGet', [$routeParams.categoryId ? $routeParams.categoryId : 1])
         .then(categoriesIdGetResponse);
+
+      CommunityService.getFirstTopicByLabels(['popular', 'answered', 'unanswered'])
+        .then(function(response) {
+          vm.labels = response;
+        });
 
     })();
 
@@ -42,8 +47,8 @@
           categoryId: vm.category.id,
           name: vm.form.forum.name,
           description: vm.form.forum.description,
-          imageURL: vm.form.forum.imageURL
-        }])
+          imageURL: $scope.iconClass
+        }], true)
         .then(forumsPostResponse)
         .catch(function(response) {
           AlertService.error('Problem att skapa forum');

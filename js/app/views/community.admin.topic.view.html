@@ -35,7 +35,7 @@
             <label for="post{{vm.topic.posts[0].id}}">Text</label>
             <textarea id="post{{vm.topic.posts[0].id}}" type="text" class="form-control" ng-model="vm.form.posts[vm.topic.posts[0].id]" style="height: 100px; margin-bottom: 20px" required></textarea>
             <label for="description" ng-show="vm.form.posts[vm.topic.posts[0].id]">Förhandsgranskning</label>
-            <div ng-bind-html="vm.form.posts[vm.topic.posts[0].id] | trustAsHtml">
+            <div class="news-item-content" ng-bind-html="vm.form.posts[vm.topic.posts[0].id] | trustAsHtml">
             </div>
           </div>
 

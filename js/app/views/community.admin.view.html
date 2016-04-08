@@ -24,10 +24,7 @@
           <tr ng-repeat="entries in vm.category.forums | orderBy:'id'">
             <td style="width: 50px">
               <div class="area area-small cat-id-{{entries.categoryId}}">
-                <span ng-if="entries.id === 1" class="fa fa-desktop fa-2x" aria-hidden="true"></span>
-                <span ng-if="entries.id === 2" class="fa fa-cloud fa-2x" aria-hidden="true"></span>
-                <span ng-if="entries.id === 3" class="fa fa-paper-plane fa-2x" aria-hidden="true"></span>
-                <span ng-if="entries.id === 4" class="fa fa-support fa-2x" aria-hidden="true"></span>
+                <span class="{{entries.imageURL}}" aria-hidden="true"></span>
               </div>
             </td>
             <td>
@@ -57,8 +54,18 @@
           <input type="text" name="name" id="name" class="form-control" ng-model="vm.form.forum.name" style="margin-bottom: 20px" maxlength="50" required />
           <label for="description">Beskrivning</label>
           <input type="text" name="name" id="description" class="form-control" ng-model="vm.form.forum.description" style="margin-bottom: 20px" maxlength="50" required />
-          <label for="imageURL">Bild URL</label>
-          <input type="text" name="imageURL" id="imageURL" class="form-control" ng-model="vm.form.forum.imageURL" maxlength="100" style="margin-bottom: 20px" />
+          <label for="imageURL">Ikon</label>
+
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-btn">
+                <ui-iconpicker ng-model="iconClass" groups="font-awesome"></ui-iconpicker>
+              </span>
+              <input class="form-control" type="text" name="imageURL" id="imageURL" class="form-control margin-bottom-small" ng-model="iconClass" disabled />
+            </div>
+          </div>
+
+        </div>
         </div>
 
         <div class="form-actions noclick" style="float: right">

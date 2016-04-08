@@ -13,7 +13,7 @@
 
     <h1 ng-if="!vm.toggleForumUpdate">{{vm.forum.name}}</h1>
 
-    <div ng-if="vm.toggleForumUpdate">
+    <div ng-show="vm.toggleForumUpdate">
       <form name="updateForumForm" ng-submit="vm.updateForum()" role="form">
         <div class="form-group" ng-class="{ 'has-error': updateForumForm.name.$dirty && updateForumForm.name.$invalid,
   'has-success' : updateForumForm.name.$valid}">
@@ -24,6 +24,14 @@
   'has-success' : updateForumForm.description.$valid}">
           <label for="description">Beskrivning</label>
           <input type="text" name="description" id="description" class="form-control" ng-model="vm.form.description" maxlength="50" required />
+        </div>
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-btn">
+              <ui-iconpicker ng-model="vm.form.imageURL" groups="font-awesome"></ui-iconpicker>
+            </span>
+            <input class="form-control" type="text" name="imageURL" id="imageURL" class="form-control margin-bottom-small" ng-model="vm.form.imageURL" disabled />
+          </div>
         </div>
 
         <div class="form-actions pull-right">
@@ -43,78 +51,92 @@
   </div>
   <div class="row color-white">
     <div class="col-md-4 cat-id-1" style="height: 200px">
-      <h3 class="truncate">Hur lägger jag till fler poster?</h2>
-      <p><strong>Technical Support Forum</strong></p>
-      <p>5 dagar sedan</p>
-      <span style="position: absolute;bottom: 5px;right: 10px;" data-toggle="tooltip" data-original-title="Populär"><i class="fa fa-line-chart"></i></span>
+      <div ng-if="vm.labels.popular.id">
+        <h3 class="truncate"><a href="#/community/topic/{{vm.labels.popular.id}}" class="color-white">{{vm.labels.popular.subject}}</a></h3>
+        <p>{{vm.labels.popular.lastPostDate | relativeDate}}</p>
+      </div>
+      <div ng-if="!vm.labels.popular.id">
+        <h3>Det finns inga populära frågor i detta forum ännu. <br/><br/>Ställ gärna en!</h3>
+      </div>
+      <span style="position: absolute;bottom: 5px;right: 10px;" data-balloon="Populär" data-balloon-pos="up"><i class="fa fa-line-chart"></i></span>
     </div>
     <div class="col-md-4">
       <div class="col-md-12 cat-id-2" style="height: 200px">
-        <h3 class="truncate">Anvädnning av Reseplanerar API:et</h2>
-        <p><strong>API Forum</strong></p>
-        <p>2 dagar sedan</p>
-        <span style="position: absolute;bottom: 0px;right: 10px;" data-toggle="tooltip" data-original-title="Senaste"><i class="fa fa-sort-asc"></i></span>
+        <div ng-if="vm.labels.answered.id">
+          <h3 class="truncate"><a href="#/community/topic/{{vm.labels.answered.id}}" class="color-white">{{vm.labels.answered.subject}}</a></h3>
+          <p>{{vm.labels.answered.lastPostDate | relativeDate}}</p>
+        </div>
+        <div ng-if="!vm.labels.answered.id">
+          <h3>Inga frågor är ännu besvarade i detta forum. <br/><br/>Hjälp gärna till!</h3>
+        </div>
+        <span style="position: absolute;bottom: 0px;right: 10px;" data-balloon="Senaste besvarade fråga" data-balloon-pos="up"><i class="fa fa-sort-asc"></i></span>
       </div>
     </div>
     <div class="col-md-4 no-padding-left">
       <div class="col-md-12 cat-id-3" style="height: 200px">
-        <h3 class="truncate">Antal requests som jag får skicka?</h2>
-        <p><strong>General Forum</strong></p>
-        <p>7 timmar sedan</p>
-        <span style="position: absolute;bottom: 5px;right: 10px;" data-toggle="tooltip" data-original-title="Obesvarad fråga"><i class="fa fa-question"></i></span>
+        <div ng-if="vm.labels.unanswered.id">
+          <h3 class="truncate"><a href="#/community/topic/{{vm.labels.unanswered.id}}" class="color-white">{{vm.labels.unanswered.subject}}</a></h3>
+          <p>{{vm.labels.unanswered.lastPostDate | relativeDate}}</p>
+        </div>
+        <div ng-if="!vm.labels.unanswered.id">
+          <h3>Det finns inga obesvarade frågor i detta forum. <br/><br/>Ställ gärna en ny!</h3>
+        </div>
+        <span style="position: absolute;bottom: 5px;right: 10px;" data-balloon="Senaste obesvarade fråga" data-balloon-pos="up"><i class="fa fa-question"></i></span>
       </div>
     </div>
   </div>
 
   <div class="row">
-      <table class="table table-borderless">
-        <thead class="table-header">
-          <tr>
-            <th colspan="3"><h1>Topics</h1></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr ng-repeat="entries in vm.forum.topics | orderBy:'id'">
-            <td style="width: 50px">
-              <div class="area area-small">
-                  <span ng-if="!entries.createdBy.useGravatar" class="fa-stack fa-lg">
+    <table class="table table-borderless">
+      <thead class="table-header">
+        <tr>
+          <th colspan="3">
+            <h1>Frågor</h1></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="entries in vm.forum.topics | orderBy:'lastPostDate' : true">
+          <td style="width: 50px">
+            <div class="area area-small">
+              <span ng-if="!entries.createdBy.useGravatar" class="fa-stack fa-lg">
                     <i class="fa fa-circle fa-stack-2x color-blue"></i>
                     <i class="fa fa-user fa-stack-1x fa-inverse color-white"></i>
                   </span>
-                  <img ng-if="entries.createdBy.useGravatar" src="http://www.gravatar.com/avatar/{{entries.createdBy.gravatarEmail | hash}}?s=45" class="avatar">
-              </div>
-            </td>
-            <td>
-              <h2 class="no-margin-bottom"><a href="#/community/topic/{{entries.id}}">{{entries.subject}}</a></h2>
-              <a href="signature" class="padding-right-mini">{{entries.createdBy.signature}}</a>&bull;
-              <span class="margin-left-mini">{{entries.createDate | relativeDate}}</span>
-            </td>
-            <td class="text-center">
-              <h2 class="no-margin-bottom">{{entries.numberOfPosts}}</h2>
-              <p>Poster</p>
-            </td>
-            <td class="text-center">
-              <h2 class="no-margin-bottom">{{entries.numberOfViews}}</h2>
-              <p>Visningar</p>
-            </td>
-            <td class="text-center">
-              <h2 class="no-margin-bottom" ng-class="entries.answeredByPostId ? 'answer' : 'not-answer'">{{entries.numberOfAnswers}}</h2>
-              <p>Svar</p>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              <img ng-if="entries.createdBy.useGravatar" src="http://www.gravatar.com/avatar/{{entries.createdBy.gravatarEmail | hash}}?s=45" class="avatar">
+            </div>
+          </td>
+          <td>
+            <h2 class="no-margin-bottom"><a href="#/community/topic/{{entries.id}}">{{entries.subject}}</a></h2>
+            <span class="padding-right-mini"><strong>{{entries.createdBy.signature}}</strong></span>&bull;
+            <span class="margin-left-mini">Skapades för {{entries.createDate | relativeDate}}</span> &bull;
+            <span class="margin-left-mini">Senaste inlägg skrevs för {{entries.lastPostDate | relativeDate}}</span>
+          </td>
+          <td class="text-center">
+            <h2 class="no-margin-bottom">{{entries.numberOfPosts}}</h2>
+            <p>Inlägg</p>
+          </td>
+          <td class="text-center">
+            <h2 class="no-margin-bottom">{{entries.numberOfViews}}</h2>
+            <p>Visningar</p>
+          </td>
+          <td class="text-center">
+            <h2 class="no-margin-bottom" ng-class="entries.answeredByPostId ? 'answer' : 'not-answer'">{{entries.numberOfAnswers}}</h2>
+            <p>Svar</p>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 
   <div class="container padding-bottom-small" ng-show="globals.currentUser.id && user.loggedIn">
-          <h2>Skapa ny topic</h2>
+    <h2>Ställ ny fråga</h2>
     <div class="row well">
       <form name="addTopicForm" ng-submit="vm.addTopic()" role="form">
         <div class="form-group" ng-class="{ 'has-error': addTopicForm.topic.$dirty && addTopicForm.topic.$invalid,
   'has-success' : addTopicForm.answer.$valid}">
-          <label for="subject">Rubrik</label>
-          <input type="text" name="subject" id="subject" class="form-control margin-bottom-small" ng-model="vm.form.topic.name" maxlength="50" required />
-          <label for="question">Fråga</label>
+          <label for="subject">Fråga</label>
+          <input type="text" name="subject" id="subject" class="form-control margin-bottom-small" ng-model="vm.form.topic.subject" maxlength="50" required />
+          <label for="question">Beskrivning</label>
           <span class="pull-right" style="font-size: 0.9em"><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown Cheat Sheet</a></span>
           <textarea id="question" type="text" class="form-control margin-bottom-small" ng-model="vm.form.topic.question" style="height: 100px;" required></textarea>
           <label for="preview" ng-show="vm.form.topic.question">Förhandsgranskning</label>
@@ -132,7 +154,7 @@
 
   <div class="container padding-bottom-small" ng-show="!globals.currentUser.id && user.loggedIn">
     <div class="row">
-    <h3><a href="#/profile">Skapa en community profil för att kunna interagera med forumet</a></h3>
+      <h3><a href="#/profile">Skapa en community profil för att kunna interagera med forumet</a></h3>
     </div>
   </div>
 

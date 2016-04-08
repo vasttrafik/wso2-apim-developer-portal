@@ -6,15 +6,20 @@
     .module('vtPortal')
     .controller('CommunityCtrl', CommunityCtrl);
 
-  CommunityCtrl.$inject = ['AlertService', 'APIService'];
+  CommunityCtrl.$inject = ['AlertService', 'APIService', 'CommunityService'];
 
-  function CommunityCtrl(AlertService, APIService) {
+  function CommunityCtrl(AlertService, APIService, CommunityService) {
     var vm = this;
 
     (function init() {
 
-      APIService.communityCall('categoriesGet', [true])
+      APIService.communityCall('categoriesGet', [false])
         .then(categoriesGetResponse);
+
+      CommunityService.getFirstTopicByLabels(['popular', 'answered', 'unanswered'])
+        .then(function(response) {
+          vm.labels = response;
+        });
 
     })();
 

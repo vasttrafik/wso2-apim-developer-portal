@@ -48,7 +48,7 @@
         vm.form.subject = angular.copy(vm.topic.subject);
 
       } else {
-        AlertService.error('Problem att hämta topic');
+        AlertService.error('Problem att hämta fråga');
       }
     }
 
@@ -162,12 +162,12 @@
 
       function postsIdPutResponse(response) {
         if (response.status === 200) {
-          AlertService.success('Post uppdaterad!');
+          AlertService.success('Inlägg uppdaterat!');
           vm.topic.posts[i] = response.data;
           vm.form.posts[response.data.id] = response.data.text;
           togglePostCommentUpdate(postId);
         } else {
-          AlertService.error('Problem att uppdatera post');
+          AlertService.error('Problem att uppdatera inlägg');
         }
       }
 
@@ -184,11 +184,11 @@
 
       function topicsIdPutResponse(response) {
         if (response.status === 200) {
-          AlertService.success('Topic uppdaterad!');
+          AlertService.success('Fråga uppdaterad!');
           vm.topic.subject = vm.form.subject;
           vm.toggleTopicUpdate = false;
         } else {
-          AlertService.error('Problem att uppdatera topic');
+          AlertService.error('Problem att uppdatera fråga');
         }
       }
 
@@ -196,7 +196,7 @@
 
     function removeTopic() {
 
-      if (confirm('Är du säker på att du vill ta bort denna topic?') === true) {
+      if (confirm('Är du säker på att du vill ta bort denna fråga?') === true) {
         APIService.communityCall('topicsIdDelete', [vm.topic.id])
           .then(topicsIdDeleteResponse);
       }
@@ -208,7 +208,7 @@
           $location.path('/' + ($location.path().split('/')[1] === 'community' ? 'community' : 'admin') + '/forum/' + vm.topic.forumId); // Redirect to parent forum
 
         } else {
-          AlertService.error('Problem att uppdatera topic');
+          AlertService.error('Problem att uppdatera fråga');
         }
       }
 

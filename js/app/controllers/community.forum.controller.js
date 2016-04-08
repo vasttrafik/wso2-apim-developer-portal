@@ -6,9 +6,9 @@
     .module('vtPortal')
     .controller('CommunityForumCtrl', CommunityForumCtrl);
 
-  CommunityForumCtrl.$inject = ['$routeParams', '$scope', '$location', 'AlertService', 'APIService'];
+  CommunityForumCtrl.$inject = ['$routeParams', '$scope', '$location', 'AlertService', 'APIService', 'CommunityService'];
 
-  function CommunityForumCtrl($routeParams, $scope, $location, AlertService, APIService) {
+  function CommunityForumCtrl($routeParams, $scope, $location, AlertService, APIService, CommunityService) {
     var vm = this;
 
     vm.addTopic = addTopic;
@@ -23,6 +23,11 @@
 
       APIService.communityCall('forumsIdGet', [$routeParams.forumId])
         .then(forumsIdGetResponse);
+
+      CommunityService.getFirstTopicByLabels(['popular', 'answered', 'unanswered'], $routeParams.forumId)
+        .then(function(response) {
+          vm.labels = response;
+        });
 
     })();
 
@@ -40,30 +45,30 @@
 
       APIService.communityCall('topicsPost', [{
           forumId: vm.forum.id,
-          subject: vm.form.topic.name,
+          subject: vm.form.topic.subject,
           posts: [{
-              topicId: vm.forum.topicId,
-              forumId: vm.forum.id,
-              type: 'question',
-              text: vm.form.topic.question,
-              textFormat: ($location.path().split('/')[1] === 'community' ? 'md' : 'html')
-            }]
-        }])
+            topicId: vm.forum.topicId,
+            forumId: vm.forum.id,
+            type: 'question',
+            text: vm.form.topic.question,
+            textFormat: ($location.path().split('/')[1] === 'community' ? 'md' : 'html')
+          }]
+        }], true)
         .then(topicsPostResponse)
         .catch(function(response) {
-          AlertService.error('Problem att skapa topic');
+          AlertService.error('Problem att skapa fråga');
           vm.dataLoadingAddTopic = false;
         });
 
       function topicsPostResponse(response) {
         if (response.status === 201) {
 
-          AlertService.success('Topic ' + response.data.name + ' skapad!');
+          AlertService.success('Fråga ' + response.data.subject + ' skapad!');
           vm.forum.topics.push(response.data);
           resetAddTopicForm();
 
         } else {
-          AlertService.error('Problem att skapa ny topic');
+          AlertService.error('Problem att skapa ny fråga');
         }
         vm.dataLoadingAddTopic = false;
       }
@@ -74,6 +79,7 @@
       vm.toggleForumUpdate = !vm.toggleForumUpdate;
       vm.form.name = angular.copy(vm.forum.name);
       vm.form.description = angular.copy(vm.forum.description);
+      vm.form.imageURL = angular.copy(vm.forum.imageURL);
 
     }
 
@@ -82,13 +88,14 @@
       APIService.communityCall('forumsIdPut', [vm.forum.id, {
           categoryId: vm.forum.categoryId,
           name: vm.form.name,
-          description: vm.form.description
+          description: vm.form.description,
+          imageURL: vm.form.imageURL
         }])
         .then(forumsIdPutResponse);
 
       function forumsIdPutResponse(response) {
         if (response.status === 200) {
-          AlertService.success('Forum uppdaterad!');
+          AlertService.success('Forum uppdaterat!');
           vm.forum.name = vm.form.name;
           vm.forum.description = vm.form.description;
           vm.toggleForumUpdate = false;
