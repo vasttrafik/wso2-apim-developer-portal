@@ -547,12 +547,6 @@ i.fa.fa-bars {
   line-height: inherit;
   padding-top:5px;
 }
-.fa.fa-envelope, .glyphicon.glyphicon-map-marker, .fa.fa-phone, .fa.fa-fax {
-  color: #00aaeb;
-}
-.fa.fa-envelope.adress, .glyphicon.glyphicon-map-marker.adress, .fa.fa-phone.adress, .fa.fa-fax.adress {
-  color: #3C4650;
-}
 .google-maps {
   position: relative;
   padding-bottom: 60%;
@@ -1190,3 +1184,25 @@ article.newsItem > h2 {
   height: 35px !important;
   width: 35px !important;
 }
+
+.btn-bootstrap {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+  }
