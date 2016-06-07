@@ -62,7 +62,7 @@
         var userAccountObject;
 
         // Retrieve further user information based on userId from login response
-        userApiClient.usersUserIdGet(userObject.userId, 'application/json', userObject.accessToken.token)
+        userApiClient.usersUserIdGet(userObject.userId, 'application/json')
           .then(usersUserIdGetResponse)
           .catch(function(apiResponse) {
             apiErrorResponse(apiResponse, deferred);

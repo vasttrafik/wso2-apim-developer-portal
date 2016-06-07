@@ -152,7 +152,7 @@
     </div>
   </div>
 
-  <div class="container padding-bottom-small" ng-show="!vm.communityService.isMember()">
+  <div class="container padding-bottom-small" ng-show="user.loggedIn && !vm.communityService.isMember()">
     <div class="row">
       <h3><a href="#/profile">Skapa en community profil för att kunna interagera med forumet</a></h3>
     </div>

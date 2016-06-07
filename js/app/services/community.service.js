@@ -107,11 +107,19 @@
     }
 
     function isMember() {
-      return $rootScope.globals.currentUser.memberId && $rootScope.user.loggedIn ? true : false;
+      try {
+        return $rootScope.globals.currentUser.memberId && $rootScope.user.loggedIn ? true : false;
+      } catch (err) {
+        return false;
+      }
     }
 
     function isAdmin() {
-      return $rootScope.globals.currentUser.role === 'community-admin' ? true : false;
+      try {
+        return $rootScope.globals.currentUser.role === 'community-admin' ? true : false;
+      } catch (err) {
+        return false;
+      }
     }
 
     function errorResponse(status, message, deferred) {

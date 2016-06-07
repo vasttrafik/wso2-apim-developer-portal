@@ -18,7 +18,7 @@
           <div class="padding-top">
             Taggad som:
             <span class="label label-default" ng-repeat="tag in blogItem.tags" ng-click="vm.setTag(tag)" style="cursor: pointer">{{tag}}</span>&nbsp;
-            <span>Publicerad av: {{blogItem.createdBy.signature}}, {{blogItem.createDate}}</span>
+            <span>Publicerad av: {{blogItem.createdBy.signature}}, {{blogItem.createDate | relativeDate}}</span>
           </div>
 
         </article>
