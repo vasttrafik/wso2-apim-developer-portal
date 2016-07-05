@@ -52,6 +52,14 @@ var newsItems = [{
   title: 'Nu finns det statistik i utvecklarportalen!',
   contentUrl: 'js/app/views/news/statistics.view.html',
   tags: ['Api', 'Nytt']
+},
+{
+  id: '7',
+  publishedDate: '2016-06-29',
+  publishedBy: 'Christian Morin',
+  title: 'Uppgraderad API Gateway',
+  contentUrl: 'js/app/views/news/upgrade.view.html',
+  tags: ['Api', 'Technical', 'Nytt']
 }];
 
 var chartConfig = {

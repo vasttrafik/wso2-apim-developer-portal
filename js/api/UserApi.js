@@ -228,19 +228,51 @@ var UserAPI;
         }
         return this.$http(httpRequestParams);
       };
-      UserApi.prototype.challengequestionsGet = function(accept, username, confirmation, questionId, extraHttpRequestParams) {
-        var path = this.basePath + '/challengequestions';
+      UserApi.prototype.challengequestionsUsernameGet = function(accept, username, confirmation, questionId, extraHttpRequestParams) {
+        var path = this.basePath + '/challengequestions/{username}'
+          .replace('{' + 'username' + '}', String(username));
         var queryParameters = {};
         var headerParams = this.extendObj({}, this.defaultHeaders);
-        if (username !== undefined) {
-          queryParameters['username'] = username;
-        }
         if (confirmation !== undefined) {
           queryParameters['confirmation'] = confirmation;
         }
         if (questionId !== undefined) {
           queryParameters['questionId'] = questionId;
         }
+        headerParams['Accept'] = accept;
+        var httpRequestParams = {
+          method: 'GET',
+          url: path,
+          json: true,
+          params: queryParameters,
+          headers: headerParams
+        };
+        if (extraHttpRequestParams) {
+          httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+        }
+        return this.$http(httpRequestParams);
+      };
+      UserApi.prototype.challengequestionsGet = function(accept, extraHttpRequestParams) {
+        var path = this.basePath + '/challengequestions';
+        var queryParameters = {};
+        var headerParams = this.extendObj({}, this.defaultHeaders);
+        headerParams['Accept'] = accept;
+        var httpRequestParams = {
+          method: 'GET',
+          url: path,
+          json: true,
+          params: queryParameters,
+          headers: headerParams
+        };
+        if (extraHttpRequestParams) {
+          httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+        }
+        return this.$http(httpRequestParams);
+      };
+      UserApi.prototype.challengequestionsGet = function(accept, extraHttpRequestParams) {
+        var path = this.basePath + '/challengequestions';
+        var queryParameters = {};
+        var headerParams = this.extendObj({}, this.defaultHeaders);
         headerParams['Accept'] = accept;
         var httpRequestParams = {
           method: 'GET',

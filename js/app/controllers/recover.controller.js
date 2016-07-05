@@ -97,10 +97,10 @@
               .then(notificationsPostResponse);
           } else if (vm.form.captcha.recoveryType === 'secretQuestion') {
 
-            APIService.userCall('challengequestionsGet', ['application/json', response.data.userId, response.data.key], true)
-              .then(challengeQuestionsGetResponse)
+            APIService.userCall('challengequestionsUsernameGet', ['application/json', response.data.userId, response.data.key], true)
+              .then(challengeQuestionsUsernameGetResponse)
               .catch(function() {
-                challengeQuestionsGetResponseError();
+                challengeQuestionsUsernameGetResponseError();
               });
           }
 
@@ -124,16 +124,16 @@
         }
       }
 
-      function challengeQuestionsGetResponse(response) {
+      function challengeQuestionsUsernameGetResponse(response) {
         if (response.status === 200) {
           vm.challengeQuestions = response.data;
           setChallengeQuestion();
         } else {
-          challengeQuestionsGetResponseError();
+          challengeQuestionsUsernameGetResponseError();
         }
       }
 
-      function challengeQuestionsGetResponseError() {
+      function challengeQuestionsUsernameGetResponseError() {
         AlertService.error('Det finns inga inställda frågor att svara på. Tyvärr går det inte att uppdatera lösenordet med hjälp av fråga');
         generateCaptcha();
         vm.form.captcha.captcha = '';
@@ -226,7 +226,7 @@
     function passwordRecovery() {
       vm.dataLoadingPassword = true;
 
-      APIService.userCall('usersUserIdPut', [vm.form.password.userId, 'recoverPassword', 'application/json', null, 'application/json', {
+      APIService.userCall('usersUserIdPut', [vm.form.password.userId, 'recoverPassword', 'application/json', 'application/json', {
           userName: vm.form.username,
           password: {
             confirmationCode: vm.form.password.code,

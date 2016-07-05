@@ -113,7 +113,14 @@
             <div class="form-group" ng-class="{ 'has-error': challengeQuestionForm.question.$dirty && challengeQuestionForm.question.$invalid,
   'has-success' : challengeQuestionForm.question.$valid}">
               <label for="question">Fråga</label>
-              <input type="question" name="question" id="question" class="form-control" ng-model="vm.form.question.question" value="{{vm.challengeQuestion.claimValue.substr(0, entries.claimValue.indexOf('!')) }}" required />
+
+              <div ng-show="vm.challengequestions.length > 0">
+                <select name="question" id="question" ng-model="vm.form.question.question" class="form-control" required>
+                  <option ng-repeat="entry in vm.challengequestions" value="{{entry.question}}">{{entry.question}}</option>
+                </select>
+                <span ng-show="addSubscriptionForm.application.$dirty && addSubscriptionForm.application.$error.required" class="help-block">Applikation är obligatoriskt</span>
+              </div>
+
               <span ng-show="challengeQuestionForm.question.$dirty && challengeQuestionForm.question.$error.required" class="help-block">Fråga är obligatoriskt</span>
             </div>
 
