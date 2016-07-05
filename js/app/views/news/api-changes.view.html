@@ -1,0 +1,28 @@
+﻿<p>
+  För er som använder våra API:er sedan tidigare är den största förändringen att vi på
+  sikt går över till en ny hantering av API-nycklar. För att denna övergång ska gå så
+  snabbt och smärtfritt som möjligt har vi beslutat oss för att
+</p>
+<ol>
+  <li>
+    <strong>Skapa nya versioner av existerande API:er.</strong>
+    De nya versionerna är i princip exakta kopior av de gamla versionerna, med två viktiga skillnader;
+    för det första byter vi ut den gamla nyckelhanteringen mot att istället använda OAuth2 som standard
+    för autentisering och kontroll av åtkomstbehörighet, och för det andra innebär det också att vi
+    fortsättningsvis bara kommer att stödja HTTPS som kommunikationsprotokoll.
+  </li>
+  <li>
+    <strong>Uppdatera status på existerande versioner till DEPRECATED.</strong>
+    I och med förändringen enligt ovan vill vi så snabbt som möjligt gå över till den nya standarden
+    för hantering av nycklar. Av denna anledning kommer utvecklare som skapar nya konton inte
+    ges tillgång till de gamla versionerna av våra API:er, men de kommer ändå fortsättningsvis vara
+    supportade under en övergångsperiod så att befintliga appar kan migreras till den nya
+    lösningen på ett kontrollerat sätt.
+  </li>
+</ol>
+<p>
+  Hur lång övergångsperioden kommer att bli är ännu inte fastställt, och vi kommer därför att
+  annonsera i god tid när denna övergångsperiod närmar sig sitt slut. Utgå ifrån att vi kommer att
+  ge åtminstone 6 månaders respit. Vi rekommenderar dock att man redan nu börjar planera för övergången så
+  att man inte väntar in i det sista med detta.
+</p>
