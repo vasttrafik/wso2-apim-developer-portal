@@ -97,7 +97,7 @@
       $rootScope.globals = {};
       $rootScope.user.loggedIn = false;
       delete localStorage.user;
-      delete $http.defaults.headers.common.Authorization;
+      delete $http.defaults.headers.common['X-JWT-Assertion'];
     }
 
     function setOrUpdateClaim(claimUri, claimValue) {

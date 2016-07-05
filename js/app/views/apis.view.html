@@ -30,7 +30,7 @@
           <tbody>
             <tr ng-repeat="entries in vm.apis"  class="nga-default nga-fade">
               <td class="hidden-xs">
-                <img src="{{vm.defaultBaseUrl + '/' + entries.imageUrl}}" style="width:25px;height:25px" />
+                <img ng-src="{{entries.imageUrl}}" style="width:25px;height:25px" />
               </td>
               <td><span ng-click="vm.displayApi(entries.name, entries.version, entries.provider)" style="cursor: pointer" title="Visa detaljer">{{entries.name}}</span></td>
               <td class="hidden-xs" ng-bind-html="entries.description"></td>

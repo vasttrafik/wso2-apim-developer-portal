@@ -517,24 +517,11 @@ var API;
         return this.$http(httpRequestParams);
       };
 
-      DefaultApi.prototype.securityPost = function(action, refreshToken, body, contentType, extraHttpRequestParams) {
-        var path = this.basePath + '/security';
+      DefaultApi.prototype.authenticatePost = function(body, contentType, extraHttpRequestParams) {
+        var path = this.basePath + '/authenticate';
 
         var queryParameters = {};
         var headerParams = {};
-
-        // verify required parameter 'action' is set
-        if (!action) {
-          throw new Client.Error('Missing required parameter action when calling securityPost');
-        }
-
-        if (action !== undefined) {
-          queryParameters['action'] = action;
-        }
-
-        if (refreshToken !== undefined) {
-          queryParameters['refreshToken'] = refreshToken;
-        }
 
         headerParams['Content-Type'] = contentType;
 

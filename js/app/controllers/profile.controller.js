@@ -5,9 +5,9 @@
     .module('vtPortal')
     .controller('ProfileCtrl', ProfileCtrl);
 
-  ProfileCtrl.$inject = ['$scope', '$rootScope', '$location', '$http', 'APIService', 'AlertService', 'UserService'];
+  ProfileCtrl.$inject = ['$scope', '$rootScope', '$location', '$http', '$q', 'APIService', 'AlertService', 'UserService'];
 
-  function ProfileCtrl($scope, $rootScope, $location, $http, APIService, AlertService, UserService) {
+  function ProfileCtrl($scope, $rootScope, $location, $http, $q, APIService, AlertService, UserService) {
     var vm = this;
 
     vm.saveProfile = saveProfile;
@@ -48,7 +48,7 @@
           delete response.accessToken;
           delete response.userName;
 
-          APIService.userCall('usersUserIdPut', [response.id, 'updateProfile', 'application/json', 'Bearer ' + newUserObject.accessToken.token, 'application/json', response])
+          APIService.userCall('usersUserIdPut', [response.id, 'updateProfile', 'application/json', 'application/json', response])
             .then(usersUserIdPutResponse)
             .catch(function(response) {
               if (response.status === 412) {
@@ -94,8 +94,9 @@
           request.password.password = vm.form.password.passwordOld;
           request.password.newPassword = vm.form.password.passwordRepeat;
           request.userName = response.userName;
+          request.profileName = 'default';
 
-          APIService.userCall('usersUserIdPut', [response.id, 'updatePassword', '*/*', 'Bearer ' + response.accessToken.token, 'application/json', request])
+          APIService.userCall('usersUserIdPut', [response.id, 'updatePassword', '*/*', 'application/json', request])
             .then(usersUserIdPutResponse);
         });
 
@@ -121,7 +122,7 @@
       UserService.getUser()
         .then(function(response) {
 
-          APIService.userCall('challengequestionsPost', ['application/json', 'Bearer ' + response.accessToken.token, response.id, {
+          APIService.userCall('challengequestionsPost', ['application/json', response.id, {
               id: challengeQuestionId,
               question: challengeQuestionQuestion,
               answer: vm.form.question.answer
@@ -154,21 +155,50 @@
         .then(function(response) {
 
           if (response.success) {
-            vm.form.question = {};
 
-            /* The challenge question isn't correctly formatted */
-            if (response.object.claimValue == null) {
-              vm.form.question.question = '';
-            } else if (response.object.claimValue.indexOf('!') > -1) {
-              vm.form.question.question = response.object.claimValue.substring(0, response.object.claimValue.indexOf('!'));
-            } else {
-              vm.form.question.question = response.object.claimValue;
+            APIService.userCall('challengequestionsGet', ['application/json'])
+              .then(challengeQuestionsGetResponse);
+
+            function challengeQuestionsGetResponse(questionsResponse) {
+              var deferred = $q.defer();
+
+              if (questionsResponse.status === 200) {
+                vm.challengequestions = questionsResponse.data.filter(function(el) {
+                  return el.id === 'http://wso2.org/claims/challengeQuestion1';
+                });
+
+                vm.form.question = {};
+
+                var question = '';
+
+                /* The challenge question isn't correctly formatted */
+                if (response.object.claimValue == null) {
+                  question = '';
+                } else if (response.object.claimValue.indexOf('!') > -1) {
+                  question = response.object.claimValue.substring(0, response.object.claimValue.indexOf('!'));
+                } else {
+                  question = response.object.claimValue;
+                }
+
+                for (var i = 0; i < vm.challengequestions.length; i++) {
+                  if (question === vm.challengequestions[i].question) {
+                    // Set the form to the question the user has previously chosen
+                    vm.form.question.question = vm.challengequestions[i].question;
+                  }
+                }
+
+                if ($scope.challengeQuestionForm != null) {
+                  $scope.challengeQuestionForm.$setPristine();
+                }
+
+                deferred.resolve();
+              } else {
+                AlertService.error('Problem att hämta lista med säkerhetsfrågor');
+                deferred.reject();
+              }
             }
           }
         });
-      if ($scope.challengeQuestionForm != null) {
-        $scope.challengeQuestionForm.$setPristine();
-      }
     }
 
     function resetPasswordForm() {

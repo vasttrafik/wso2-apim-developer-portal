@@ -866,25 +866,27 @@ angular
         for (code in operation.responses) {
           //TODO manage response headers
           response = operation.responses[code];
-          response.description = trustHtml(response.description);
-          if (response.schema) {
-            response.schema.json = response.examples && response.examples[operation.produces[0]] || swaggerModel.generateSampleJson(swagger, response.schema);
-            if (response.schema.type === 'object' || response.schema.type === 'array' || response.schema.$ref) {
-              response.display = 1; // display schema
-              response.schema.model = $sce.trustAsHtml(swaggerModel.generateModel(swagger, response.schema));
-            } else if (response.schema.type === 'string') {
-              delete response.schema;
-            }
-            if (code === '200' || code === '201') {
-              operation.responseClass = response;
-              operation.responseClass.display = 1;
-              operation.responseClass.status = code;
-              delete operation.responses[code];
+          if (response !== 'Internal error') { // Fix for problematic swagger
+            response.description = trustHtml(response.description);
+            if (response.schema) {
+              response.schema.json = response.examples && response.examples[operation.produces[0]] || swaggerModel.generateSampleJson(swagger, response.schema);
+              if (response.schema.type === 'object' || response.schema.type === 'array' || response.schema.$ref) {
+                response.display = 1; // display schema
+                response.schema.model = $sce.trustAsHtml(swaggerModel.generateModel(swagger, response.schema));
+              } else if (response.schema.type === 'string') {
+                delete response.schema;
+              }
+              if (code === '200' || code === '201') {
+                operation.responseClass = response;
+                operation.responseClass.display = 1;
+                operation.responseClass.status = code;
+                delete operation.responses[code];
+              } else {
+                operation.hasResponses = true;
+              }
             } else {
               operation.hasResponses = true;
             }
-          } else {
-            operation.hasResponses = true;
           }
         }
       }
