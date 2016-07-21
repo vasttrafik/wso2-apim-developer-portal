@@ -209,7 +209,10 @@
       valuesLength = uniqueUsers.series[0].values.length;
 
       if (valuesLength > 1) {
-        vm.statistics.uniqueUsers = uniqueUsers.series[0].values[valuesLength - 1];
+        if (Date.create(uniqueUsers.series[0].names[valuesLength - 1]).isToday()) {
+          vm.statistics.uniqueUsers = uniqueUsers.series[0].values[valuesLength - 1];
+        }
+
         vm.charts.uniqueUsers.loading = false;
       } else {
         vm.statistics.uniqueUsersIsEmpty = true;
