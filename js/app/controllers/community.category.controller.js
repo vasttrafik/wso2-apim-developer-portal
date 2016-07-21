@@ -6,9 +6,9 @@
     .module('vtPortal')
     .controller('CommunityCategoryCtrl', CommunityCategoryCtrl);
 
-  CommunityCategoryCtrl.$inject = ['$routeParams', '$scope', 'AlertService', 'APIService', 'CommunityService'];
+  CommunityCategoryCtrl.$inject = ['$routeParams', '$location', '$scope', 'AlertService', 'APIService', 'CommunityService'];
 
-  function CommunityCategoryCtrl($routeParams, $scope, AlertService, APIService, CommunityService) {
+  function CommunityCategoryCtrl($routeParams, $location, $scope, AlertService, APIService, CommunityService) {
     var vm = this;
 
     vm.communityService = CommunityService;
@@ -19,6 +19,10 @@
     vm.resetAddForumForm = resetAddForumForm;
 
     (function init() {
+
+      if ($location.path().indexOf('admin') > -1 && !CommunityService.isAdmin()) {
+        $location.path('/');
+      }
 
       vm.toggleCategoryUpdate = false;
       vm.form = {};
