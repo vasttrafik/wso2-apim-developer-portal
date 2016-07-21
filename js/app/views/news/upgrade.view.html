@@ -1,0 +1,39 @@
+<p>
+  Nu har vi uppgraderat vår API Gateway som vi använder för att styra och publicera våra API:er till senaste version.
+  Vi håller oss självklart uppdaterade för att få tillgång till nya och bra funktioner, stabilitetsvinster och buggrättningar.
+  En klar förbättring efter uppgraderingen är bland annat drastiskt förkortad tid det tar att få en token utfärdad, samt prestandaförbättringar.
+</p>
+<strong>Nertid</strong>
+<p>
+  Vi strävar alltid efter att ha så lite nertid som möjligt när vi genomför förändringar.
+  Då detta var en stor uppgradering så behövde vi dock stänga ner utvecklarportalen under en stund, samt att vissa API:er upplevde problem under tiden.
+</p>
+<p>
+  Efter uppgraderingen fick vi ett par problem som uppdagade sig:
+  <ul>
+    <li>
+      <strong>Problem med certifikat</strong>
+      <p>
+        Ett felaktigt certifikat gjorde det en stund efter uppgraderingen omöjligt att använda TLS mot våra API:er.
+      </p>
+    </li>
+    <li>
+      <strong>Referer header</strong>
+      <p>
+        Implementationer som skickade med en HTTP referer header hade problem att nå våra API:er.
+      </p>
+    </li>
+    <li>
+      <strong>CORS problem för Reseplanerar API v2</strong>
+      <p>
+        Reseplanerar API v2 svarade inte korrekt på HTTP OPTIONS requests, vilket gjorde att web-implementationer som kräver OPTIONS-requests för CORS inte fungerade.
+      </p>
+    </li>
+  </ul>
+</p>
+<p>
+  Vi jobbade hårt på att lösa ovan nämnda problem så fort som möjligt och alla dessa är nu lösta. Vi ber så mycket om ursäkt för eventuella problem som detta skapade för Er.
+</p>
+<p>
+  Hör gärna av Er ifall någon av Er fortfarande upplever problem efter uppgraderingen.
+</p>
