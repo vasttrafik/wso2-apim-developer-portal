@@ -72,8 +72,6 @@
 
     function toggleExpand(id) {
 
-      console.log(id);
-
       for (var i = 0; i < vm.mediaItems.length; i++) {
         if (vm.mediaItems[i].id === id) {
           if (vm.mediaItems[i].expand != null) {

@@ -46,9 +46,6 @@
             <li><a href="#/guides/oauth2">OAuth 2</a></li>
           </ul>
           <li>
-            <a class="leaf" href="#/community">Community</a>
-          </li>
-          <li>
             <a class="leaf" href="#/guides/get-started">Kom igång</a>
           </li>
           <li>
@@ -103,7 +100,7 @@
                     <br />
                     <a href="#/statistics/applications">Min statistik</a>
                     <br />
-                    <span ng-if="user.role === 'admin'">
+                    <span ng-if="vm.isCommunityAdmin()">
                     <a href="#/admin">Administrera media</a>
                     <br />
                     </span>
@@ -232,16 +229,16 @@
           <ul class="list-unstyled truncate">
             <li><a href="#/apis">API</a></li>
             <li><a href="#/statistics/apis">Statistik</a></li>
-            <li><a href="" title="..." class="disabled">Showcase (v2)</a></li>
-            <li><a href="" title="..." class="disabled">Driftinfo (v2)</a></li>
+            <li class="color-white">Showcase (v2)</li>
+            <li class="color-white">Driftinfo (v2)</li>
           </ul>
         </div>
         <div class="col-sm-2 col-md-2 col-centered">
           <ul class="list-unstyled truncate">
             <li><a href="#/guides/get-started">Kom-igång</a></li>
             <li><a href="#/guides/oauth2">Guider</a></li>
-            <li><a href="" title="..." class="disabled">Support (v2)</a></li>
-            <li><a href="" title="..." class="disabled">Verktyg (v2)</a></li>
+            <li class="color-white">Support (v2)</li>
+            <li class="color-white">Verktyg (v2)</li>
           </ul>
         </div>
         <div class="col-sm-2 col-md-2 col-centered">
@@ -249,7 +246,7 @@
             <li><a href="#/news">Nyheter</a></li>
             <li><a href="#/community">Community</a></li>
             <li><a href="#/blog">Blogg</a></li>
-            <li><a href="" title="..." class="disabled">Kalender (v2)</a></li>
+            <li class="color-white">Kalender (v2)</li>
           </ul>
         </div>
         <div class="col-sm-2 col-md-2 col-centered">

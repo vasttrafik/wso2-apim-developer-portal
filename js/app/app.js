@@ -123,30 +123,6 @@
       controllerAs: 'vm'
     })
 
-    .when('/community', {
-      controller: 'CommunityCtrl',
-      templateUrl: 'js/app/views/community.view.html',
-      controllerAs: 'vm'
-    })
-
-    .when('/community/category/:categoryId', {
-      controller: 'CommunityCategoryCtrl',
-      templateUrl: 'js/app/views/community.category.view.html',
-      controllerAs: 'vm'
-    })
-
-    .when('/community/forum/:forumId', {
-      controller: 'CommunityForumCtrl',
-      templateUrl: 'js/app/views/community.forum.view.html',
-      controllerAs: 'vm'
-    })
-
-    .when('/community/topic/:topicId', {
-      controller: 'CommunityTopicCtrl',
-      templateUrl: 'js/app/views/community.topic.view.html',
-      controllerAs: 'vm'
-    })
-
     .when('/admin', {
       controller: 'CommunityCategoryCtrl',
       templateUrl: 'js/app/views/community.admin.view.html',
@@ -231,7 +207,7 @@
     $rootScope.$on('$locationChangeStart', function(event, next, current) {
 
       // redirect to startpage if not logged in and trying to access a restricted page
-      var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api', 'guides', 'docs', 'news', 'activation', 'recover', 'contact', 'community', 'admin', 'blog']) === -1;
+      var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api', 'guides', 'docs', 'news', 'activation', 'recover', 'contact', 'blog']) === -1;
 
       if ($location.path().split('/')[1] === 'statistics') {
         restrictedPage = $location.path().split('/')[2] !== 'apis';
@@ -245,9 +221,9 @@
 
   }
 
-  MainCtrl.$inject = ['$location', '$rootScope', '$scope', '$filter', 'AuthenticationService', 'AlertService', 'APIService'];
+  MainCtrl.$inject = ['$location', '$rootScope', '$scope', '$filter', 'AuthenticationService', 'AlertService', 'APIService', 'CommunityService'];
 
-  function MainCtrl($location, $rootScope, $scope, $filter, AuthenticationService, AlertService, APIService) {
+  function MainCtrl($location, $rootScope, $scope, $filter, AuthenticationService, AlertService, APIService, CommunityService) {
     var vm = this;
 
     vm.login = login;
@@ -258,6 +234,7 @@
     vm.toggleUsernameRecovery = toggleUsernameRecovery;
     vm.clearAlertMessage = AlertService.clearAlertMessageAndDigest;
     vm.clearMenuAlertMessage = AlertService.clearMenuAlertMessageAndDigest;
+    vm.isCommunityAdmin = CommunityService.isAdmin;
 
     var logoutPromise;
 
