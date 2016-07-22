@@ -44,16 +44,16 @@
       </table>
   </div>
 
-  <div class="container" style="padding-bottom: 20px;">
+  <div class="container padding-bottom-small" ng-show="vm.communityService.isMember()">
     <h2>Skapa nytt forum</h2>
     <div class="row well">
       <form name="addForumForm" ng-submit="vm.addForum()" role="form">
         <div class="form-group" ng-class="{ 'has-error': addForumForm.topic.$dirty && addForumForm.topic.$invalid,
   'has-success' : addForumForm.answer.$valid}">
           <label for="name">Namn</label>
-          <input type="text" name="name" id="name" class="form-control" ng-model="vm.form.forum.name" style="margin-bottom: 20px" maxlength="50" required />
+          <input type="text" name="name" id="name" class="form-control margin-bottom-small" ng-model="vm.form.forum.name" maxlength="50" required />
           <label for="description">Beskrivning</label>
-          <input type="text" name="name" id="description" class="form-control" ng-model="vm.form.forum.description" style="margin-bottom: 20px" maxlength="50" required />
+          <input type="text" name="name" id="description" class="form-control margin-bottom-small" ng-model="vm.form.forum.description" maxlength="50" required />
           <label for="imageURL">Ikon</label>
 
           <div class="form-group">
@@ -64,16 +64,15 @@
               <input class="form-control" type="text" name="imageURL" id="imageURL" class="form-control margin-bottom-small" ng-model="iconClass" disabled />
             </div>
           </div>
-
-        </div>
         </div>
 
-        <div class="form-actions noclick" style="float: right">
+        <div class="form-actions noclick pull-right">
           <button type="submit" ng-disabled="addForumForm.$invalid" class="btn btn-primary">Skicka</button>
           <span ng-click="vm.resetAddForumForm();" class="btn btn-link">Ångra</span>
         </div>
       </form>
     </div>
+  </div>
   </div>
 
 </div>
