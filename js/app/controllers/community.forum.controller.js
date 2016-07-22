@@ -21,6 +21,10 @@
 
     (function init() {
 
+      if ($location.path().indexOf('admin') > -1 && !CommunityService.isAdmin()) {
+        $location.path('/');
+      }
+
       vm.toggleForumUpdate = false;
       vm.form = {};
 

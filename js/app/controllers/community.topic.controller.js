@@ -28,6 +28,10 @@
 
     (function init() {
 
+      if ($location.path().indexOf('admin') > -1 && !CommunityService.isAdmin()) {
+        $location.path('/');
+      }
+
       vm.togglePostsComments = [];
       vm.toggleTopicUpdate = false;
       vm.togglePostsCommentsUpdate = [];
