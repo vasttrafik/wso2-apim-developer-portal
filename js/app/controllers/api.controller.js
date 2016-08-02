@@ -38,7 +38,9 @@
       vm.applicationsSubscribing = [];
 
       $scope.$on('cfpLoadingBar:completed', function(event, data) {
-        $rootScope.user.accessToken = vm.accessToken;
+        if (vm.accessToken != null) {
+          $rootScope.user.accessToken = vm.accessToken;
+        }
       });
 
       APIService.call('apisApiIdGet', [vm.apiIdSingle])
