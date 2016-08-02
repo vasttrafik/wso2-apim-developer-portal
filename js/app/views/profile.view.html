@@ -114,11 +114,12 @@
             <div class="form-group" ng-class="{ 'has-error': passwordForm.password.$dirty && passwordForm.password.$invalid,
 'has-success' : passwordForm.password.$valid}">
               <label for="password">Nytt lösenord</label>
-              <input type="password" name="password" id="password" class="form-control" ng-model="vm.form.password.password" ng-minlength="6" ng-maxlength="12" ng-pattern="/^((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*])).{6,12}$/" required />
+              <input type="password" name="password" id="password" class="form-control" ng-model="vm.form.password.password" ng-minlength="6" ng-maxlength="12" ng-pattern="/^((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*])(?!.*[{}])).{6,12}$/" required />
               <span ng-show="passwordForm.password.$dirty && passwordForm.password.$error.required" class="help-block">Lösenord är obligatoriskt</span>
               <span ng-show="passwordForm.password.$error.minlength" class="help-block">Lösenordet måste vara minst 6 tecken långt</span>
               <span ng-show="passwordForm.password.$error.maxlength" class="help-block">Lösenordet får vara max 12 tecken långt</span>
-              <span ng-show="passwordForm.password.$error.pattern" class="help-block">Lösenordet måste innehålla en siffra[0-9], en liten bokstav [a-z], en stor bokstav [A-Z] och en av karraktärerna [!@#$%&]</span>
+              <span ng-show="passwordForm.password.$error.pattern" class="help-block">Lösenordet måste innehålla en siffra[0-9], en liten bokstav [a-z], en stor bokstav [A-Z] och en av karaktärerna !@#$%&</span>
+              <span ng-show="passwordForm.password.$error.pattern" class="help-block">Lösenordet får ej innehålla karaktärerna {}</span>
             </div>
 
             <div ng-password-strength="vm.form.password.password" strength="passStrength" inner-class="progress-bar" inner-class-prefix="progress-bar-"></div>
