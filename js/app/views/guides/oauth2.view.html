@@ -74,7 +74,7 @@
     <article>
       <h2>Steg 2: Använd token</h2>
       <pre class="code-highlight">
-        GET http://api.vasttrafik.se/bin/rest.exe/v2/location.name?input=ols&format=json HTTP/1.1
+        GET https://api.vasttrafik.se/bin/rest.exe/v2/location.name?input=ols&format=json HTTP/1.1
         Authorization: <strong>Bearer 766b697f4462ca3878b05597ff19313</strong>
       </pre>
       <div class="alert alert-info" role="alert">
@@ -94,7 +94,7 @@
     <article>
       <h2>Återkalla token</h2> Det är möjligt att invalidera en token för att göra den ogiltig. Detta är dock inte ett steg som behöver användas i autentiseringskedjan.
       <pre class="code-highlight">
-        POST <strong>http://api.vasttrafik.se/revoke</strong> HTTP/1.1
+        POST <strong>https://api.vasttrafik.se/revoke</strong> HTTP/1.1
         Content-Type: <strong>application/x-www-form-urlencoded</strong>
         Authorization: <strong>Basic UmJseEkyeTFsWVNFTTZ0Z2J6anBTa2E0R1o6Wk1nSkR0Y0paRGV4OTJldUxpQUdYOFExUnU=</strong>
         <strong>token=766b697f4462ca3878b05597ff19313</strong>
