@@ -14,13 +14,10 @@
     var vm = this;
 
     vm.mediaItems = [];
-    vm.tags = [];
-    vm.months = [];
-    vm.month = $routeParams.month ? toMonth($routeParams.month - 1) : null;
+    vm.years = [];
+    vm.year = $routeParams.year ? $routeParams.year : null;
 
     vm.toggleExpand = toggleExpand;
-    vm.setTag = setTag;
-    vm.toMonth = toMonth;
 
     (function init() {
 
@@ -31,21 +28,16 @@
         if (response.status === 200) {
           vm.mediaItems = response.data.topics.filter(function(a) {
 
-            vm.months.push(new Date(a.createDate).getMonth());
+            vm.years.push('20' + String(new Date(a.createDate).getYear()).substring(1,3));
 
-            if ($routeParams.month && $location.search().tag) {
-              return (parseInt(new Date(a.createDate).getMonth()) + 1 === parseInt($routeParams.month)) && (a.tags.indexOf($location.search().tag) > -1);
-            } else if ($routeParams.month) {
-              return (parseInt(new Date(a.createDate).getMonth()) + 1 === parseInt($routeParams.month));
-            } else if ($location.search().tag) {
-              return a.tags.indexOf($location.search().tag) > -1;
+            if ($routeParams.year) {
+              return (parseInt('20' + String(new Date(a.createDate).getYear()).substring(1,3))  === parseInt($routeParams.year));
             } else {
               return true;
             }
           });
 
           angular.forEach(vm.mediaItems, function(keys, values) {
-            vm.tags.push.apply(vm.tags, keys.tags);
             if (parseInt(keys.id) === parseInt($location.search().id)) {
               keys.expand = true;
             } else {
@@ -53,8 +45,7 @@
             }
           });
 
-          vm.tags = helper.getUniqueArray(vm.tags);
-          vm.months = helper.getUniqueArray(vm.months);
+          vm.years = helper.getUniqueArray(vm.years);
 
           if ($location.search().id) {
             $timeout(function() {
@@ -82,40 +73,6 @@
             vm.mediaItems[i].expand = true;
           }
         }
-      }
-    }
-
-    function setTag(tag) {
-      $location.search('id', null);
-      $location.search('tag', tag);
-    }
-
-    function toMonth(month) {
-      switch (parseInt(month)) {
-        case 0:
-          return 'Januari';
-        case 1:
-          return 'Februari';
-        case 2:
-          return 'Mars';
-        case 3:
-          return 'April';
-        case 4:
-          return 'Maj';
-        case 5:
-          return 'Juni';
-        case 6:
-          return 'Juli';
-        case 7:
-          return 'Augusti';
-        case 8:
-          return 'September';
-        case 9:
-          return 'Oktober';
-        case 10:
-          return 'Novermber';
-        case 11:
-          return 'December';
       }
     }
 

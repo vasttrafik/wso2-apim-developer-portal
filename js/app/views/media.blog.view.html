@@ -9,16 +9,15 @@
     <div class="row col-md-12">
       <section id="blogItemsList">
         <div class="row" ng-if="vm.mediaItems.length === 0">
-          <h3>Det finns inte några nyheter med valda sökkriterier. Välj en månad i listan till höger.</h3>
+          <h3>Det finns inte några blogginlägg med valda sökkriterier.</h3>
         </div>
         <article id="{{'mediaArticle-' + blogItem.id}}" ng-repeat="blogItem in vm.mediaItems | orderBy: 'createDate' : true" class="padding-bottom border-bottom">
           <h2>{{blogItem.subject}}</h2>
           <div id="{{'mediaContent-' + $index}}" ng-bind-html="blogItem.firstPost.text | trustAsHtml">
           </div>
           <div class="padding-top">
-            Taggad som:
-            <span class="label label-default" ng-repeat="tag in blogItem.tags" ng-click="vm.setTag(tag)" style="cursor: pointer">{{tag}}</span>&nbsp;
             <span>Publicerad av: {{blogItem.createdBy.signature}}, {{blogItem.createDate | relativeDate}}</span>
+            <span ng-if="blogItem.firstPost.editDate != null && blogItem.firstPost.createDate !== blogItem.firstPost.editDate">Uppdaterad: {{blogItem.firstPost.editDate | relativeDate}}</span>
           </div>
 
         </article>
@@ -28,18 +27,13 @@
     <div class="row col-md-12">
       <aside>
 
-        <section>
-          <h3>Månader</h3>
-          <span ng-repeat="entry in vm.months"><a href="#/blog/{{entry + 1}}">{{vm.toMonth(entry)}}</a>&nbsp;</span>
+        <section ng-if="vm.years.length > 0">
+          <h3>År</h3>
+          <span ng-repeat="entry in vm.years"><a href="#/blog/{{entry}}">{{entry}}</a>&nbsp;</span>
         </section>
 
-        <section class="tags-dark-blue" ng-if="vm.tags.length > 0">
-          <h3>Taggar</h3>
-          <span class="label" ng-repeat="entry in vm.tags" ng-click="vm.setTag(entry)" style="cursor: pointer">{{entry}}</span>
-        </section>
-
-        <div ng-if="vm.month">
-          <a href="#/blog">Se alla blogposter</a>
+        <div ng-if="vm.year">
+          <a href="#/blog">Se alla blogginlägg</a>
         </div>
 
       </aside>
