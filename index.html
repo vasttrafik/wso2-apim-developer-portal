@@ -166,11 +166,12 @@
                     </div>
                     <div class="form-group" ng-class="{ 'has-error': form.createPassword.$dirty && form.createPassword.$invalid, 'has-success' : form.createPassword.$valid}">
                       <label for="createPassword">Lösenord</label>
-                      <input type="password" name="createPassword" id="createPassword" class="form-control" ng-model="vm.user.password" ng-minlength="6" ng-maxlength="12" ng-pattern="/^((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*])).{6,12}$/" required />
+                      <input type="password" name="createPassword" id="createPassword" class="form-control" ng-model="vm.user.password" ng-minlength="6" ng-maxlength="12" ng-pattern="/^((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%&*])(?!.*[{}])).{6,12}$/" required />
                       <span ng-show="form.createPassword.$dirty && form.createPassword.$error.required" class="help-block">Lösenord är obligatoriskt</span>
                       <span ng-show="form.createPassword.$error.minlength" class="help-block">Lösenordet måste vara minst 6 tecken långt</span>
                       <span ng-show="form.createPassword.$error.maxlength" class="help-block">Lösenordet får vara max 12 tecken långt</span>
-                      <span ng-show="form.createPassword.$error.pattern" class="help-block">Lösenordet måste innehålla en siffra[0-9], en liten bokstav [a-z], en stor bokstav [A-Z] och en av karraktärerna [!@#$%&]</span>
+                      <span ng-show="form.createPassword.$error.pattern" class="help-block">Lösenordet måste innehålla en siffra[0-9], en liten bokstav [a-z], en stor bokstav [A-Z] och en av karaktärerna !@#$%&</span>
+                      <span ng-show="form.createPassword.$error.pattern" class="help-block">Lösenordet får ej innehålla karaktärerna {}</span>
                     </div>
                     <div ng-password-strength="vm.user.password" strength="passStrength" inner-class="progress-bar" inner-class-prefix="progress-bar-"></div>
                     <div class="form-group" ng-class="{ 'has-error': form.passwordRepeat.$dirty && form.passwordRepeat.$invalid, 'has-success' : form.passwordRepeat.$valid}">
