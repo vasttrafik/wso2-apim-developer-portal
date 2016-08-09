@@ -147,13 +147,13 @@
       controllerAs: 'vm'
     })
 
-    .when('/news/:month?', {
+    .when('/news/:year?', {
       controller: 'MediaCtrl',
       templateUrl: 'js/app/views/media.news.view.html',
       controllerAs: 'vm'
     })
 
-    .when('/blog/:month?', {
+    .when('/blog/:year?', {
       controller: 'MediaCtrl',
       templateUrl: 'js/app/views/media.blog.view.html',
       controllerAs: 'vm'

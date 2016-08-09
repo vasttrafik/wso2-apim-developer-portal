@@ -659,6 +659,27 @@ article.newsItem h1, article.newsItem h2, article.newsItem h3 {
   color: #00394d;
   margin-top: 5px;
 }
+.calYear {
+  font-family: FoundersGroteskWeb-Regular;
+  font-weight: bold;
+  font-size: 0.8em;
+  text-shadow: 1px 1px 1px #9A9C92;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  border-radius: 2px 0px 0px 2px;
+  height: 40px;
+  width: 40px;
+  display: inline-block;
+  float: left;
+  margin: 0px 0px 0 0;
+  text-align: center;
+  line-height: 40px;
+  vertical-align: middle;
+}
+.calYear.no-box-shadow {
+  box-shadow: none;
+}
 .calDate {
   font-family: FoundersGroteskWeb-Regular;
   font-weight: bold;
@@ -673,7 +694,7 @@ article.newsItem h1, article.newsItem h2, article.newsItem h3 {
   display: inline-block;
   float: left;
   background-color: #fff;
-  margin: -10px 6px 0 0;
+  margin: -10px 10px 0 0;
   text-align: center;
   line-height: 1em;
   vertical-align: middle;
