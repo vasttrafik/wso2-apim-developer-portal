@@ -1,0 +1,78 @@
+<div class="jumbotron title">
+  <div class="container no-padding-left">
+    <ol class="breadcrumb">
+      <li><a href="#/" target="_self">Hem</a></li>
+      <li class="active">{{vm.category.name}}</li>
+    </ol>
+    <h1>{{vm.category.name}}</h1>
+  </div>
+</div>
+
+<div class="container no-padding-top">
+  <div class="row padding-bottom border-bottom">
+    <h2>{{vm.category.description}}</h2>
+  </div>
+
+  <div class="row">
+      <table class="table table-borderless">
+        <thead class="table-header">
+          <tr>
+            <th colspan="3"><h1>Forum</h1></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="entries in vm.category.forums | orderBy:'id'">
+            <td style="width: 50px">
+              <div class="area area-small cat-id-{{entries.categoryId}}">
+                <span class="{{entries.imageURL}}" aria-hidden="true"></span>
+              </div>
+            </td>
+            <td>
+              <h2 style="margin-bottom: 0px"><a href="#/admin/forum/{{entries.id}}">{{entries.name}}</a></h2>
+              <p>{{entries.description}}</p>
+            </td>
+            <td class="text-center">
+              <h2 style="margin-bottom: 0px">{{entries.numberOfTopics}}</h2>
+              <p>Topics</p>
+            </td>
+            <td class="text-center">
+              <h2 style="margin-bottom: 0px">{{entries.numberOfPosts}}</h2>
+              <p>Posts</p>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+
+  <div class="container padding-bottom-small" ng-show="vm.communityService.isMember()">
+    <h2>Skapa nytt forum</h2>
+    <div class="row well">
+      <form name="addForumForm" ng-submit="vm.addForum()" role="form">
+        <div class="form-group" ng-class="{ 'has-error': addForumForm.topic.$dirty && addForumForm.topic.$invalid,
+  'has-success' : addForumForm.answer.$valid}">
+          <label for="name">Namn</label>
+          <input type="text" name="name" id="name" class="form-control margin-bottom-small" ng-model="vm.form.forum.name" maxlength="50" required />
+          <label for="description">Beskrivning</label>
+          <input type="text" name="name" id="description" class="form-control margin-bottom-small" ng-model="vm.form.forum.description" maxlength="50" required />
+          <label for="imageURL">Ikon</label>
+
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-btn">
+                <ui-iconpicker ng-model="iconClass" groups="font-awesome"></ui-iconpicker>
+              </span>
+              <input class="form-control" type="text" name="imageURL" id="imageURL" class="form-control margin-bottom-small" ng-model="iconClass" disabled />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions noclick pull-right">
+          <button type="submit" ng-disabled="addForumForm.$invalid" class="btn btn-primary">Skicka</button>
+          <span ng-click="vm.resetAddForumForm();" class="btn btn-link">Ångra</span>
+        </div>
+      </form>
+    </div>
+  </div>
+  </div>
+
+</div>

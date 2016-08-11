@@ -1,0 +1,42 @@
+<div class="jumbotron title">
+  <div class="container" style="padding-left: 0">
+    <h1 class="sub-header">Blogg {{vm.month}}</h1>
+  </div>
+</div>
+
+<div class="container-fluid" ng-cloak>
+  <div class="container">
+    <div class="row col-md-12">
+      <section id="blogItemsList">
+        <div class="row" ng-if="vm.mediaItems.length === 0">
+          <h3>Det finns inte några blogginlägg med valda sökkriterier.</h3>
+        </div>
+        <article id="{{'mediaArticle-' + blogItem.id}}" ng-repeat="blogItem in vm.mediaItems | orderBy: 'createDate' : true" class="padding-bottom border-bottom">
+          <h2>{{blogItem.subject}}</h2>
+          <div id="{{'mediaContent-' + $index}}" ng-bind-html="blogItem.firstPost.text | trustAsHtml">
+          </div>
+          <div class="padding-top">
+            <span>Publicerad av: {{blogItem.createdBy.signature}}, {{blogItem.createDate | relativeDate}}</span>
+            <span ng-if="blogItem.firstPost.editDate != null && blogItem.firstPost.createDate !== blogItem.firstPost.editDate">Uppdaterad: {{blogItem.firstPost.editDate | relativeDate}}</span>
+          </div>
+
+        </article>
+      </section>
+    </div>
+
+    <div class="row col-md-12">
+      <aside>
+
+        <section ng-if="vm.years.length > 0">
+          <h3>År</h3>
+          <span ng-repeat="entry in vm.years"><a href="#/blog/{{entry}}">{{entry}}</a>&nbsp;</span>
+        </section>
+
+        <div ng-if="vm.year">
+          <a href="#/blog">Se alla blogginlägg</a>
+        </div>
+
+      </aside>
+    </div>
+  </div>
+</div>

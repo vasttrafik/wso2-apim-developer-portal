@@ -1,66 +1,7 @@
 /*global Highcharts*/
 var defaultBaseUrl = 'https://developer.vasttrafik.se/portal-api';
 var userBaseUrl = 'https://developer.vasttrafik.se/idmgt-api';
-
-var newsItems = [{
-  id: '0',
-  publishedDate: '2015-12-04',
-  publishedBy: 'Lars Andersson',
-  title: 'Nu lanserar vi vår nya utvecklarportal',
-  contentUrl: 'js/app/views/news/newportal.view.html',
-  tags: ['Api', 'Nytt']
-}, {
-  id: '1',
-  publishedDate: '2015-12-04',
-  publishedBy: 'Lars Andersson',
-  title: 'Så kommer du åt ditt gamla konto!',
-  contentUrl: 'js/app/views/news/old-account.view.html',
-  tags: ['Api', 'Nytt']
-}, {
-  id: '2',
-  publishedDate: '2015-12-04',
-  publishedBy: 'Lars Andersson',
-  title: 'Smart pendelparkering (SPP) – Nytt API!',
-  contentUrl: 'js/app/views/news/spp-new-api.view.html',
-  tags: ['Api', 'Nytt']
-}, {
-  id: '3',
-  publishedDate: '2015-12-04',
-  publishedBy: 'Lars Andersson',
-  title: 'Förändringar i våra API:er',
-  contentUrl: 'js/app/views/news/api-changes.view.html',
-  tags: ['Api', 'Nytt']
-}, {
-  id: '4',
-  publishedDate: '2015-12-04',
-  publishedBy: 'Federico Hernandez',
-  title: 'Livemap - ny funktion i Reseplaneraren!',
-  contentUrl: 'js/app/views/news/rp-livemap.view.html',
-  tags: ['Api', 'Nytt']
-}, {
-  id: '5',
-  publishedDate: '2015-12-04',
-  publishedBy: 'Lars Andersson',
-  title: 'Så byggde vi den nya portalen',
-  contentUrl: 'js/app/views/news/portal-how.view.html',
-  tags: ['Api', 'Nytt']
-},
-{
-  id: '6',
-  publishedDate: '2016-03-14',
-  publishedBy: 'Christian Morin',
-  title: 'Nu finns det statistik i utvecklarportalen!',
-  contentUrl: 'js/app/views/news/statistics.view.html',
-  tags: ['Api', 'Nytt']
-},
-{
-  id: '7',
-  publishedDate: '2016-06-29',
-  publishedBy: 'Christian Morin',
-  title: 'Uppgraderad API Gateway',
-  contentUrl: 'js/app/views/news/upgrade.view.html',
-  tags: ['Api', 'Technical', 'Nytt']
-}];
+var communityBaseUrl = 'https://developer.vasttrafik.se/community-api';
 
 var chartConfig = {
 
