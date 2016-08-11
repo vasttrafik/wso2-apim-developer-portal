@@ -85,12 +85,15 @@
         <div class="feed">
           <h3 class="text-center"><i class="fa fa-newspaper-o"></i> Nyheter</h3>
           <ul class="list-unstyled truncate" style="line-height:2em">
-            <li ng-repeat="entry in vm.newsItems | orderBy: 'publishedDate':true">
-              <a href="#/news/{{entry.publishedDate | date:'M'}}?id={{entry.id}}">
-                <div class="calDate" style="margin-top:0;margin-bottom:2px;">
-                  <div class="month green">{{entry.publishedDate | date:'MMM'}}</div>{{entry.publishedDate | date:'d'}}
+            <li ng-repeat="entry in vm.newsItems | orderBy: 'createDate' : true | limitTo: 6">
+              <a href="#/news/{{entry.createDate | date:'yyyy'}}?id={{entry.id}}">
+                <div class="calYear no-box-shadow" style="margin-top:0;margin-bottom:2px;">
+                  <div>{{ entry.createDate | date:'yyyy' }}</div>
                 </div>
-                {{entry.title}}
+                <div class="calDate" style="margin-top:0;margin-bottom:2px;">
+                  <div class="month green">{{entry.createDate | date:'MMM'}}</div>{{entry.createDate | date:'d'}}
+                </div>
+                {{entry.subject}}
               </a>
             </li>
           </ul>
@@ -101,9 +104,25 @@
         </div>
       </div>
       <div class="col-sm-4">
-        <div class="feed text-center">
-          <h3><i class="fa fa-pencil-square-o"></i> Blogg</h3>
-          <p>Kommer i version 2</p>
+        <div class="feed">
+          <h3 class="text-center"><i class="fa fa-pencil-square-o"></i> Blogg</h3>
+          <ul class="list-unstyled truncate" style="line-height:2em">
+            <li ng-repeat="entry in vm.blogItems | orderBy: 'createDate' : true | limitTo: 6">
+              <a href="#/blog/{{entry.createDate | date:'yyyy'}}?id={{entry.id}}">
+                <div class="calYear no-box-shadow" style="margin-top:0;margin-bottom:2px;">
+                  <div>{{ entry.createDate | date:'yyyy' }}</div>
+                </div>
+                <div class="calDate" style="margin-top:0;margin-bottom:2px;">
+                  <div class="month green">{{entry.createDate | date:'MMM'}}</div>{{entry.createDate | date:'d'}}
+                </div>
+                {{entry.subject}}
+              </a>
+            </li>
+          </ul>
+          <p ng-if="vm.blogItems.length > 0">
+            <a href="#/blog">Fler blogginlägg</a>
+            <br />
+          </p>
         </div>
       </div>
       <div class="col-sm-4">

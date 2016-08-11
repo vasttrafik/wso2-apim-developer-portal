@@ -1,0 +1,68 @@
+<div class="jumbotron title">
+  <div class="container no-padding-left">
+    <ol class="breadcrumb">
+      <li><a href="#/" target="_self">Hem</a></li>
+      <li><a href="#/admin" target="_self">Admin</a></li>
+      <li class="active">{{vm.forum.name}}</li>
+    </ol>
+    <h1>{{vm.forum.name}}</h1>
+  </div>
+</div>
+
+<div class="container no-padding-top">
+  <div class="row padding-bottom border-bottom">
+    <h2>{{vm.forum.description}}</h2>
+  </div>
+
+  <div class="row">
+      <table class="table table-borderless">
+        <thead class="table-header">
+          <tr>
+            <th colspan="3"><h1>Topics</h1></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="entries in vm.forum.topics | orderBy:'id'">
+            <td style="width: 50px">
+              <div class="area area-small">
+                  <span ng-if="!entries.createdBy.useGravatar" class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x" style="color:#00AAEB"></i>
+                    <i class="fa fa-user fa-stack-1x fa-inverse" style="color:#FFFFFF"></i>
+                  </span>
+                  <img ng-if="entries.createdBy.useGravatar" src="http://www.gravatar.com/avatar/{{entries.createdBy.email | hash}}?s=45" class="avatar">
+              </div>
+            </td>
+            <td>
+              <h2 style="margin-bottom: 0px"><a href="#/admin/topic/{{entries.id}}">{{entries.subject}}</a></h2>
+              <a href="signature" style="padding-right: 10px">{{entries.createdBy.signature}}</a>&bull;
+              <span style="margin-left: 5px">{{entries.createDate | relativeDate}}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+
+  <div class="container" style="padding-bottom: 20px;">
+          <h2>Skapa ny topic</h2>
+    <div class="row well">
+      <form name="addTopicForm" ng-submit="vm.addTopic()" role="form">
+        <div class="form-group" ng-class="{ 'has-error': addTopicForm.topic.$dirty && addTopicForm.topic.$invalid,
+  'has-success' : addTopicForm.answer.$valid}">
+          <label for="subject">Titel</label>
+          <input type="text" name="subject" id="subject" class="form-control" ng-model="vm.form.topic.subject" style="margin-bottom: 20px" maxlength="50" required />
+          <label for="question">Text</label>
+          <textarea id="question" type="text" class="form-control" ng-model="vm.form.topic.question" style="height: 100px; margin-bottom: 20px" required></textarea>
+          <label for="preview" ng-show="vm.form.topic.question">Förhandsgranskning</label>
+          <div ng-bind-html="vm.form.topic.question | trustAsHtml">
+          </div>
+        </div>
+
+        <div class="form-actions noclick" style="float: right">
+          <button type="submit" ng-disabled="addTopicForm.$invalid" class="btn btn-primary">Skicka</button>
+          <span ng-click="vm.resetAddTopicForm();" class="btn btn-link">Ångra</span>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>

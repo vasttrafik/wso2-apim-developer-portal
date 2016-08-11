@@ -1,9 +1,10 @@
 /*
   Handles user object stored in local storage.
-  It's a combination of a UserAccountObject and an AuthenticatedUserObject.
+  It's a combination of a UserAccountObject, AuthenticatedUserObject and a memberId for community section.
 
   {
   "id": "string",
+  "memberId": "string",
   "userName": "string",
   "accessToken" : {
     "token": "string",
@@ -46,19 +47,24 @@
     service.getUser = getUser;
     service.clearUser = clearUser;
     service.getClaim = getClaim;
+    service.setMemberId = setMemberId;
     service.setOrUpdateClaim = setOrUpdateClaim;
 
     return service;
 
-    function setUser(user) {
+    function setUser(user, communityProfile) {
       var deferred = $q.defer();
 
       try {
+        user.memberId = ((communityProfile || user.memberId) ? user.id : null);
         localStorage.user = JSON.stringify(user);
 
         /* Update root scope globals object for easy access */
         $rootScope.globals = {
           currentUser: {
+            id: user.id,
+            role: (user.roles.indexOf('community-admin') > -1 ? 'community-admin' : 'community-member'),
+            memberId: user.memberId,
             userName: user.userName,
             email: user.claims.filter(function(el) {
               return el.claimUri === 'http://wso2.org/claims/emailaddress';
@@ -98,6 +104,26 @@
       $rootScope.user.loggedIn = false;
       delete localStorage.user;
       delete $http.defaults.headers.common['X-JWT-Assertion'];
+    }
+
+    function setMemberId(memberId) {
+      var deferred = $q.defer();
+
+      getUser()
+        .then(function(userObject) {
+          /* Update user with new meember id */
+          setUser(userObject, true)
+            .then(function() {
+              deferred.resolve();
+            })
+            .catch(function() {
+              deferred.reject({
+                message: 'Problem att uppdatera UserObject'
+              });
+            });
+        });
+
+      return deferred.promise;
     }
 
     function setOrUpdateClaim(claimUri, claimValue) {

@@ -4,20 +4,42 @@
 
   angular
     .module('vtPortal')
-    .controller('HomeCtrl', HomeCtrl)
-    .constant('newsItems', newsItems);
+    .controller('HomeCtrl', HomeCtrl);
 
-  HomeCtrl.$inject = ['AlertService'];
+  HomeCtrl.$inject = ['AlertService', 'APIService'];
 
-  function HomeCtrl(AlertService) {
+  function HomeCtrl(AlertService, APIService) {
     var vm = this;
 
     vm.newsItems = [];
 
     (function init() {
-      vm.newsItems = newsItems;
+
+      APIService.communityCall('forumsIdGet', [1])
+        .then(forumsIdNewsGetResponse);
+
+      APIService.communityCall('forumsIdGet', [2])
+          .then(forumsIdBlogGetResponse);
 
     })();
+
+    function forumsIdNewsGetResponse(response) {
+      if (response.status === 200) {
+        vm.newsItems = response.data.topics;
+
+      } else {
+        AlertService.error('Problem att hämta nyheter');
+      }
+    }
+
+    function forumsIdBlogGetResponse(response) {
+      if (response.status === 200) {
+        vm.blogItems = response.data.topics;
+
+      } else {
+        AlertService.error('Problem att hämta nyheter');
+      }
+    }
 
   }
 

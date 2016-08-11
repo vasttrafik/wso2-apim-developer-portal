@@ -6,7 +6,7 @@
   'use strict';
 
   angular
-    .module('vtPortal', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ngPasswordStrength', 'ui.validate', 'angular-clipboard', 'ngLocationUpdate', 'swaggerUi', 'duScroll', 'angular-loading-bar', 'ngJSONPath', 'highcharts-ng'])
+    .module('vtPortal', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ngPasswordStrength', 'ui.validate', 'angular-clipboard', 'ngLocationUpdate', 'swaggerUi', 'duScroll', 'angular-loading-bar', 'ngJSONPath', 'highcharts-ng', 'btford.markdown', 'ui.bootstrap', 'ui-iconpicker'])
     .config(config)
     .factory('timeoutHttpIntercept', function($rootScope, $q) {
       return {
@@ -24,6 +24,21 @@
           }
           return index === 0 ? match.toLowerCase() : match.toUpperCase();
         });
+      };
+    })
+    .filter('relativeDate', function() {
+      return function(input, all) {
+        return Date.create(input).relative();
+      };
+    })
+    .filter('hash', function() {
+      return function(input, all) {
+        return md5(input);
+      };
+    })
+    .filter('trustAsHtml', function($sce) {
+      return function(value) {
+        return $sce.trustAsHtml(value);
       };
     })
     .run(run)
@@ -108,15 +123,39 @@
       controllerAs: 'vm'
     })
 
+    .when('/admin', {
+      controller: 'CommunityCategoryCtrl',
+      templateUrl: 'js/app/views/community.admin.view.html',
+      controllerAs: 'vm'
+    })
+
+    .when('/admin/forum/:forumId', {
+      controller: 'CommunityForumCtrl',
+      templateUrl: 'js/app/views/community.admin.forum.view.html',
+      controllerAs: 'vm'
+    })
+
+    .when('/admin/topic/:topicId', {
+      controller: 'CommunityTopicCtrl',
+      templateUrl: 'js/app/views/community.admin.topic.view.html',
+      controllerAs: 'vm'
+    })
+
     .when('/api/:apiName/:apiVersion/:apiProvider/:direct?', {
       controller: 'ApiCtrl',
       templateUrl: 'js/app/views/api.view.html',
       controllerAs: 'vm'
     })
 
-    .when('/news/:month?', {
-      controller: 'NewsCtrl',
-      templateUrl: 'js/app/views/news.view.html',
+    .when('/news/:year?', {
+      controller: 'MediaCtrl',
+      templateUrl: 'js/app/views/media.news.view.html',
+      controllerAs: 'vm'
+    })
+
+    .when('/blog/:year?', {
+      controller: 'MediaCtrl',
+      templateUrl: 'js/app/views/media.blog.view.html',
       controllerAs: 'vm'
     })
 
@@ -156,7 +195,7 @@
 
         if (!$.isEmptyObject(user)) {
           $rootScope.user.loggedIn = true;
-          UserService.setUser(user); // Since this also sets the user scope
+          UserService.setUser(user, (user.memberId ? true : false)); // Since this also sets the user scope
           AuthenticationService.setLogoutTimer();
 
           $http.defaults.headers.common['X-JWT-Assertion'] = user.accessToken.token;
@@ -168,7 +207,7 @@
     $rootScope.$on('$locationChangeStart', function(event, next, current) {
 
       // redirect to startpage if not logged in and trying to access a restricted page
-      var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api', 'guides', 'docs', 'news', 'activation', 'recover', 'contact']) === -1;
+      var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api', 'guides', 'docs', 'news', 'activation', 'recover', 'contact', 'blog']) === -1;
 
       if ($location.path().split('/')[1] === 'statistics') {
         restrictedPage = $location.path().split('/')[2] !== 'apis';
@@ -182,9 +221,9 @@
 
   }
 
-  MainCtrl.$inject = ['$location', '$rootScope', '$scope', '$filter', 'AuthenticationService', 'AlertService', 'APIService'];
+  MainCtrl.$inject = ['$location', '$rootScope', '$scope', '$filter', 'AuthenticationService', 'AlertService', 'APIService', 'CommunityService'];
 
-  function MainCtrl($location, $rootScope, $scope, $filter, AuthenticationService, AlertService, APIService) {
+  function MainCtrl($location, $rootScope, $scope, $filter, AuthenticationService, AlertService, APIService, CommunityService) {
     var vm = this;
 
     vm.login = login;
@@ -195,6 +234,7 @@
     vm.toggleUsernameRecovery = toggleUsernameRecovery;
     vm.clearAlertMessage = AlertService.clearAlertMessageAndDigest;
     vm.clearMenuAlertMessage = AlertService.clearMenuAlertMessageAndDigest;
+    vm.isCommunityAdmin = CommunityService.isAdmin;
 
     var logoutPromise;
 
