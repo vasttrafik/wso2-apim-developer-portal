@@ -102,11 +102,11 @@
           vm.curl.client = 'curl -k -d "grant_type=client_credentials" -H "Authorization: Basic ' +
             btoa(vm.applications[i].consumerKey +
               ':' + vm.applications[i].consumerSecret) +
-            ', Content-Type: application/x-www-form-urlencoded" https://api.vasttrafik.se:443/token';
+            '" https://api.vasttrafik.se:443/token';
           vm.curl.password = 'curl -k -d "grant_type=password&username=<USER>&password=<PASSWORD>" -H "Authorization: Basic ' +
             btoa(vm.applications[i].consumerKey +
               ':' + vm.applications[i].consumerSecret) +
-            ', Content-Type: application/x-www-form-urlencoded" https://api.vasttrafik.se:443/token';
+            '" https://api.vasttrafik.se:443/token';
 
           resetUpdateApplicationForm();
           break;
