@@ -97,16 +97,18 @@
       <tbody>
         <tr ng-repeat="entries in vm.forum.topics | orderBy:'lastPostDate' : true">
           <td style="width: 50px">
+            <span uib-popover-html="entries.createdBy.gravatarProfileInfo.bioHTML + '<b>Community-poäng:</b> 5'"
+          popover-is-open="popoverIsOpen"
+          ng-mouseenter="popoverIsOpen = !popoverIsOpen" ng-mouseleave="popoverIsOpen = !popoverIsOpen"
+          popover-title="{{entries.createdBy.gravatarProfileInfo.name}}">
             <div class="area area-small">
-              <span ng-if="!entries.createdBy.useGravatar" class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x color-blue"></i>
-                    <i class="fa fa-user fa-stack-1x fa-inverse color-white"></i>
-                  </span>
-              <img ng-if="entries.createdBy.useGravatar" src="http://www.gravatar.com/avatar/{{entries.createdBy.gravatarEmail | hash}}?s=45" class="avatar">
+              <span ng-if="!entries.createdBy.useGravatar" class="fa fa-2x fa-user" aria-hidden="true"></span>
+              <img ng-if="entries.createdBy.useGravatar" src="https://www.gravatar.com/avatar/{{entries.createdBy.gravatarEmailHash}}?s=45" class="avatar">
             </div>
+          </span>
           </td>
           <td>
-            <h2 class="no-margin-bottom"><a href="#/community/topic/{{entries.id}}">{{entries.subject}}</a></h2>
+            <h2 class="no-margin-bottom"><a href="#/community/topic/{{entries.id}}" data-balloon="{{entries.firstPost.text | limitTo:200}}" data-balloon-length="xlarge" data-balloon-pos="up">{{entries.subject}}</a></h2>
             <span class="padding-right-mini"><strong>{{entries.createdBy.signature}}</strong></span>&bull;
             <span class="margin-left-mini">Skapades för {{entries.createDate | relativeDate}}</span> &bull;
             <span class="margin-left-mini">Senaste inlägg skrevs för {{entries.lastPostDate | relativeDate}}</span>

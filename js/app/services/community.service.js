@@ -8,9 +8,9 @@
     .module('vtPortal')
     .factory('CommunityService', CommunityService);
 
-  CommunityService.$inject = ['$q', '$rootScope', 'APIService'];
+  CommunityService.$inject = ['$q', '$http', '$rootScope', 'APIService'];
 
-  function CommunityService($q, $rootScope, APIService) {
+  function CommunityService($q, $http, $rootScope, APIService) {
     var service = {};
 
     service.getFirstTopicByLabel = getFirstTopicByLabel;
@@ -19,6 +19,10 @@
     service.getFirstPostByLabels = getFirstPostByLabels;
     service.isMember = isMember;
     service.isAdmin = isAdmin;
+    service.addGravatarProfileInfoToPosts = addGravatarProfileInfoToPosts;
+    service.addGravatarProfileInfoToPost = addGravatarProfileInfoToPost;
+    service.setHasVotedToPost = setHasVotedToPost;
+    service.setHasVotedToPosts = setHasVotedToPosts;
 
     return service;
 
@@ -130,6 +134,60 @@
       };
 
       deferred.reject(response);
+    }
+
+    function addGravatarProfileInfoToPost(post) {
+
+      post.createdBy.gravatarProfileInfo = {};
+
+      if (post.createdBy.useGravatar) {
+        var profileUrl = 'https://www.gravatar.com/' + post.createdBy.gravatarEmailHash + '.json?callback=JSON_CALLBACK';
+        $http.jsonp(profileUrl).then(function(success) {
+            if (Array.isArray(success.data.entry) && success.data.entry.length > 0) {
+              post.createdBy.gravatarProfileInfo.name = success.data.entry[0].name.formatted;
+              post.createdBy.gravatarProfileInfo.bioHTML = success.data.entry[0].aboutMe + '<br>' + success.data.entry[0].currentLocation + '<br><br>';
+            }
+          })
+          .catch(function(error) {
+            post.createdBy.gravatarProfileInfo.name = post.createdBy.signature;
+            post.createdBy.gravatarProfileInfo.bioHTML = '';
+          });
+      } else {
+        post.createdBy.gravatarProfileInfo.name = post.createdBy.signature;
+        post.createdBy.gravatarProfileInfo.bioHTML = '';
+      }
+
+    }
+
+    /* Cycles through all users and retrieves their gravatar profile info if available. Info is added to json object for createdBy */
+    function addGravatarProfileInfoToPosts(posts) {
+
+      angular.forEach(posts, function(value, key) {
+        addGravatarProfileInfoToPost(value);
+      });
+
+    }
+
+    function setHasVotedToPost(post) {
+
+      if ($rootScope.user.loggedIn) {
+        post.hasVoted = false;
+
+        for (var i = 0; i < post.votes.length; i++) {
+          if (post.votes[i].memberId === $rootScope.globals.currentUser.memberId) {
+            post.hasVoted = true;
+            break;
+          }
+        }
+      }
+
+    }
+
+    function setHasVotedToPosts(posts) {
+
+      angular.forEach(posts, function(value, key) {
+        setHasVotedToPost(value);
+      });
     }
 
   }

@@ -746,6 +746,14 @@ div.fader {
 span.toggleItem {
   margin: 10px 10px 0 20px;
 }
+.toggleItem-left {
+  float: left;
+  cursor: pointer;
+  display: inline-block;
+}
+span.toggleItem-left {
+  margin: 10px 10px 0 0px;
+}
 section.card {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
   margin: 10px 0;
@@ -1079,7 +1087,14 @@ article.newsItem > h2 {
 .margin-right-mini {
   margin-right: 5px;
 }
+.margin-right-small {
+  margin-right: 25px;
+}
 .margin-left-mini {
+  margin-left: 5px;
+}
+.margin-right-left-mini {
+  margin-right: 5px;
   margin-left: 5px;
 }
 .margin-bottom-small {
@@ -1176,9 +1191,6 @@ article.newsItem > h2 {
 .voted {
   color: #00AAEB;
 }
-.voted:hover {
-  cursor: pointer;
-}
 .vote {
   color: #3C4650;
 }
@@ -1204,4 +1216,15 @@ article.newsItem > h2 {
   border-radius: 45px;
   height: 35px !important;
   width: 35px !important;
+}
+
+.signature {
+  font-weight: bold;
+}
+
+
+/* Popover for gravatar titles */
+.popover-title {
+    font-size: 18px;
+    font-weight: bold;
 }

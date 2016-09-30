@@ -15,6 +15,7 @@
 
     vm.addAnswer = addAnswer;
     vm.addComment = addComment;
+    vm.addVote = addVote;
     vm.removePost = removePost;
     vm.updatePost = updatePost;
     vm.togglePostComment = togglePostComment;
@@ -49,6 +50,9 @@
 
         vm.topic = response.data;
 
+        CommunityService.addGravatarProfileInfoToPosts(vm.topic.posts);
+        CommunityService.setHasVotedToPosts(vm.topic.posts);
+
         /* Initiating input for admin purposes */
         vm.form.posts[vm.topic.posts[0].id] = angular.copy(vm.topic.posts[0].text);
         vm.form.subject = angular.copy(vm.topic.subject);
@@ -70,16 +74,20 @@
             id: postId
           }
         }])
-        .then(postsPostCommentResponse);
+        .then(postsPostCommentResponse)
+        .catch(function(response) {
+          AlertService.error('Problem att skicka kommentar');
+        });
 
       function postsPostCommentResponse(response) {
         if (response.status === 201) {
           AlertService.success('Kommentar skickat!');
+          CommunityService.addGravatarProfileInfoToPost(response.data);
           vm.topic.posts.push(response.data);
           togglePostComment(postId);
 
         } else {
-          AlertService.error('Problem att skicka kommentar');
+          AlertService.errorWithStatus(response.status, 'Problem att skicka kommentar');
         }
       }
 
@@ -94,17 +102,56 @@
           text: vm.form.answer,
           textFormat: 'md'
         }])
-        .then(postsPostAnswerResponse);
+        .then(postsPostAnswerResponse)
+        .catch(function(response) {
+          AlertService.error('Problem att skicka svar');
+        });
 
       function postsPostAnswerResponse(response) {
         if (response.status === 201) {
           AlertService.success('Svar skickat!');
+          CommunityService.addGravatarProfileInfoToPost(response.data);
           vm.topic.posts.push(response.data);
           vm.topic.numberOfAnswers++;
           resetAddAnswerForm();
 
         } else {
-          AlertService.error('Problem att skicka svar');
+          AlertService.errorWithStatus(response.status, 'Problem att skicka svar');
+        }
+      }
+    }
+
+    function addVote(postId, type) {
+
+      APIService.communityCall('postsIdVotesPost', [postId, {
+          topicId: vm.topic.id,
+          postId: postId,
+          type: type,
+          points: 1
+        }])
+        .then(postsIdVotesPostResponse)
+        .catch(function(response) {
+          AlertService.error('Problem att skicka röst');
+        });
+
+      function postsIdVotesPostResponse(response) {
+        if (response.status === 201) {
+          AlertService.success('Röst skickat!');
+
+          for (var i = 0; i < vm.topic.posts.length; i++) {
+
+            if (vm.topic.posts[i].id === postId) {
+              // Add vote to post, update points awarded
+              vm.topic.posts[i].votes.push(response.data);
+              vm.topic.posts[i].pointsAwarded++;
+              // Update has voted property
+              CommunityService.setHasVotedToPost(vm.topic.posts[i]);
+              break;
+            }
+          }
+
+        } else {
+          AlertService.errorWithStatus(response.status, 'Problem att skicka röst');
         }
       }
 
@@ -124,7 +171,10 @@
         if (vm.topic.posts[i].id === postId) {
           if (confirm('Är du säker på att du vill ta bort ' + (comment ? 'kommentaren' : 'svaret') + ': ' + vm.topic.posts[i].text.substring(0, 20) + '...?') === true) {
             APIService.communityCall('postsIdDelete', [postId])
-              .then(postsIdDeleteResponse);
+              .then(postsIdDeleteResponse)
+              .catch(function(response) {
+                AlertService.error('Problem att ta bort svar');
+              });
             break;
           }
         }
@@ -143,7 +193,7 @@
             vm.topic.answeredByPostId = null;
           }
         } else {
-          AlertService.error('Problem att ta bort svar');
+          AlertService.errorWithStatus(response.status, 'Problem att ta bort svar');
         }
       }
     }
@@ -161,7 +211,10 @@
               textFormat: vm.topic.posts[i].textFormat,
               text: vm.form.posts[postId]
             }])
-            .then(postsIdPutResponse);
+            .then(postsIdPutResponse)
+            .catch(function(response) {
+              AlertService.error('Problem att uppdatera inlägg');
+            });
           break;
         }
       }
@@ -173,7 +226,7 @@
           vm.form.posts[response.data.id] = response.data.text;
           togglePostCommentUpdate(postId);
         } else {
-          AlertService.error('Problem att uppdatera inlägg');
+          AlertService.errorWithStatus(response.status, 'Problem att uppdatera inlägg');
         }
       }
 
@@ -186,7 +239,10 @@
           forumId: vm.topic.forumId,
           subject: vm.form.subject
         }])
-        .then(topicsIdPutResponse);
+        .then(topicsIdPutResponse)
+        .catch(function(response) {
+          AlertService.error('Problem att uppdatera fråga');
+        });
 
       function topicsIdPutResponse(response) {
         if (response.status === 200) {
@@ -194,7 +250,7 @@
           vm.topic.subject = vm.form.subject;
           vm.toggleTopicUpdate = false;
         } else {
-          AlertService.error('Problem att uppdatera fråga');
+          AlertService.errorWithStatus(response.status, 'Problem att uppdatera fråga');
         }
       }
 
@@ -204,7 +260,10 @@
 
       if (confirm('Är du säker på att du vill ta bort denna fråga?') === true) {
         APIService.communityCall('topicsIdDelete', [vm.topic.id])
-          .then(topicsIdDeleteResponse);
+          .then(topicsIdDeleteResponse)
+          .catch(function(response) {
+            AlertService.error('Problem att ta bort fråga');
+          });
       }
 
       function topicsIdDeleteResponse(response) {
@@ -214,7 +273,7 @@
           $location.path('/' + ($location.path().split('/')[1] === 'community' ? 'community' : 'admin') + '/forum/' + vm.topic.forumId); // Redirect to parent forum
 
         } else {
-          AlertService.error('Problem att uppdatera fråga');
+          AlertService.errorWithStatus(response.status, 'Problem att ta bort fråga');
         }
       }
 
@@ -229,7 +288,10 @@
       }
 
       APIService.communityCall('postsIdPut', [postId, 'answered', vm.topic.posts[i]])
-        .then(postsIdPutResponse);
+        .then(postsIdPutResponse)
+        .catch(function(response) {
+          AlertService.error('Problem att specificera utpekat svar till frågan');
+        });
 
       function postsIdPutResponse(response) {
         if (response.status === 200) {
@@ -238,7 +300,7 @@
           vm.topic.answeredByPostId = postId;
           vm.topic.posts[i].isAnswer = true;
         } else {
-          AlertService.error('Problem att specificera utpekat svar till frågan');
+          AlertService.errorWithStatus(response.status, 'Problem att specificera utpekat svar till frågan');
         }
       }
     }

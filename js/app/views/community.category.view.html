@@ -99,7 +99,7 @@
       </table>
   </div>
 
-  <div class="container padding-bottom-small" ng-show="vm.communityService.isMember()">
+  <div class="container padding-bottom-small" ng-show="vm.communityService.isAdmin()">
     <h2>Skapa nytt forum</h2>
     <div class="row well">
       <form name="addForumForm" ng-submit="vm.addForum()" role="form">

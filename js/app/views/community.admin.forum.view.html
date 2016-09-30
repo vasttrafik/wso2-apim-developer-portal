@@ -25,16 +25,13 @@
           <tr ng-repeat="entries in vm.forum.topics | orderBy:'id'">
             <td style="width: 50px">
               <div class="area area-small">
-                  <span ng-if="!entries.createdBy.useGravatar" class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x" style="color:#00AAEB"></i>
-                    <i class="fa fa-user fa-stack-1x fa-inverse" style="color:#FFFFFF"></i>
-                  </span>
-                  <img ng-if="entries.createdBy.useGravatar" src="http://www.gravatar.com/avatar/{{entries.createdBy.email | hash}}?s=45" class="avatar">
+                  <span ng-if="!entries.createdBy.useGravatar" class="fa fa-2x fa-user" aria-hidden="true"></span>
+                  <img ng-if="entries.createdBy.useGravatar" src="https://www.gravatar.com/avatar/{{entries.createdBy.email | hash}}?s=45" class="avatar">
               </div>
             </td>
             <td>
               <h2 style="margin-bottom: 0px"><a href="#/admin/topic/{{entries.id}}">{{entries.subject}}</a></h2>
-              <a href="signature" style="padding-right: 10px">{{entries.createdBy.signature}}</a>&bull;
+              <span class="signature" style="padding-right: 10px">{{entries.createdBy.signature}}</span>&bull;
               <span style="margin-left: 5px">{{entries.createDate | relativeDate}}</span>
             </td>
           </tr>

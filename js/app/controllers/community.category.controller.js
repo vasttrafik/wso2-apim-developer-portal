@@ -69,7 +69,7 @@
           resetAddForumForm();
 
         } else {
-          AlertService.error('Problem att skapa nytt forum');
+          AlertService.errorWithStatus(response.status, 'Problem att skapa forum');
         }
         vm.dataLoadingAddForum = false;
       }
@@ -94,7 +94,10 @@
           name: vm.form.name,
           isPublic: true
         }])
-        .then(categoriesIdPutResponse);
+        .then(categoriesIdPutResponse)
+        .catch(function(response) {
+          AlertService.error('Problem att uppdatera kategori');
+        });
 
       function categoriesIdPutResponse(response) {
         if (response.status === 200) {
@@ -102,7 +105,7 @@
           vm.category.name = response.data.name;
           vm.toggleCategoryUpdate = false;
         } else {
-          AlertService.error('Problem att uppdatera kategori');
+          AlertService.errorWithStatus(response.status, 'Problem att uppdatera kategori');
         }
       }
 

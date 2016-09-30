@@ -37,27 +37,59 @@
 
       <!-- Main post if not deleted -->
       <div ng-if="!entries.isDeleted && vm.togglePostsCommentsUpdate.indexOf(entries.id) === -1">
+
         <div class="row padding-bottom-mini">
+          <span uib-popover-html="entries.createdBy.gravatarProfileInfo.bioHTML + '<b>Community-poäng:</b> ' + entries.createdBy.rankings[0].currentPoints"
+        popover-is-open="popoverIsOpen"
+        ng-mouseenter="popoverIsOpen = !popoverIsOpen" ng-mouseleave="popoverIsOpen = !popoverIsOpen"
+        popover-title="{{entries.createdBy.gravatarProfileInfo.name}}">
           <span ng-if="!entries.createdBy.useGravatar" class="fa-stack">
                       <i class="fa fa-circle fa-stack-2x color-blue"></i>
                       <i class="fa fa-user fa-stack-1x fa-inverse color-white"></i>
           </span>
-          <img ng-if="entries.createdBy.useGravatar" src="http://www.gravatar.com/avatar/{{entries.createdBy.gravatarEmail | hash}}?s=35" class="avatar-small margin-right-mini fa-stack">
-          <a href="signature" class="padding-right-mini">{{entries.createdBy.signature}}</a>&bull;
+          <img ng-if="entries.createdBy.useGravatar" src="https://www.gravatar.com/avatar/{{entries.createdBy.gravatarEmailHash}}?s=35" class="avatar-small margin-right-mini fa-stack">
+          <span class="signature padding-right-mini">{{entries.createdBy.signature}}</span>&bull;
+        </span>
           <span class="margin-left-mini">{{entries.createDate | relativeDate}}</span>
-          <span ng-if="entries.numberOfTimesEdited > 0" class="margin-left-mini"><span class="margin-right-mini">&bull;</span> Editerad {{entries.editDate | relativeDate}}</span>
-          <span class="pull-right pointer" ng-if="entries.createdBy.id === globals.currentUser.memberId" ng-click="vm.removePost(entries.id)"><i class="fa fa-trash"></i></span>
-          <span class="pull-right pointer margin-right-mini" ng-if="entries.createdBy.id === globals.currentUser.memberId" ng-click="vm.addPostCommentUpdate(entries.id)"><i class="fa fa-pencil-square-o"></i></span>
+          <span ng-if="entries.numberOfTimesEdited > 0" class="margin-left-mini"><span class="margin-right-mini">&bull;</span> Editerad för {{entries.editDate | relativeDate}}</span> <span ng-if="entries.editedBy.id != null && entries.editedBy.id !== entries.createdBy.id"> av {{entries.editedBy.signature}}</span>
+
+          <!-- Votes -->
+          <span class="pull-right" data-balloon="Inläggets poäng" data-balloon-pos="up">
+            <span ng-if="!user.loggedIn && entries.pointsAwarded > 0 || entries.createdBy.id === globals.currentUser.memberId"><i class="fa fa-chevron-up"></i> {{entries.pointsAwarded}}</span>
+            <span ng-if="entries.hasVoted && user.loggedIn && entries.createdBy.id !== globals.currentUser.memberId" class="voted"><i class="fa fa-chevron-up"></i> {{entries.pointsAwarded}}</span>
+            <span ng-if="!entries.hasVoted && user.loggedIn && entries.createdBy.id !== globals.currentUser.memberId" class="vote" ng-click="vm.addVote(entries.id, entries.type)"><i class="fa fa-chevron-up"></i> {{entries.pointsAwarded}}</span>
+          </span>
+          <!-- End votes -->
+
+          <span class="pull-right pointer margin-right-small" ng-if="entries.createdBy.id === globals.currentUser.memberId || vm.communityService.isAdmin()" ng-click="vm.removePost(entries.id)" data-balloon="Ta bort inlägg" data-balloon-pos="up"><i class="fa fa-trash"></i></span>
+          <span class="pull-right pointer margin-right-mini" ng-if="entries.createdBy.id === globals.currentUser.memberId || vm.communityService.isAdmin()" ng-click="vm.addPostCommentUpdate(entries.id)" data-balloon="Editera inlägg" data-balloon-pos="up"><i class="fa fa-pencil-square-o"></i></span>
+          <span class="pull-right margin-right-mini" ng-if="entries.isAnswer" data-balloon="Utpekat som korrekt svar på frågan" data-balloon-pos="up"><i class="fa fa-check-square-o"></i></span>
+          <span class="pull-right pointer margin-right-mini" ng-if="$index !== 0 && !entries.isAnswer && !vm.topic.answeredByPostId && (vm.topic.createdBy.id === globals.currentUser.memberId || vm.communityService.isAdmin())" ng-click="vm.setAnswer(entries.id)" data-balloon="Utpeka detta svar som korrekt svar på frågan" data-balloon-pos="up"><i class="fa fa-square-o"></i></span>
         </div>
 
-        <div class="row simple-well margin-bottom-mini" ng-if="$index === 0 || vm.topic.answeredByPostId || vm.topic.createdBy.id !== globals.currentUser.memberId" ng-class="entries.isAnswer ? 'answer' : ''" btf-markdown="entries.text"></div>
-        <div class="row simple-well margin-bottom-mini pointer" ng-if="$index !== 0 && !vm.topic.answeredByPostId && vm.topic.createdBy.id === globals.currentUser.memberId" ng-class="entries.isAnswer ? 'answer' : 'not-answer'" ng-click="vm.setAnswer(entries.id)" btf-markdown="entries.text">
-        </div>
+          <div class="row simple-well margin-bottom-mini" ng-if="$index === 0 || vm.topic.answeredByPostId || (vm.topic.createdBy.id !== globals.currentUser.memberId && !vm.communityService.isAdmin())" ng-class="entries.isAnswer ? 'answer' : ''" btf-markdown="entries.text"></div>
+          <div class="row simple-well margin-bottom-mini pointer" ng-if="$index !== 0 && !vm.topic.answeredByPostId && (vm.topic.createdBy.id === globals.currentUser.memberId || vm.communityService.isAdmin())" ng-class="entries.isAnswer ? 'answer' : 'not-answer'" ng-click="vm.setAnswer(entries.id)" data-balloon="Utpeka detta svar som korrekt svar på frågan" data-balloon-pos="up" btf-markdown="entries.text"></div>
+
       </div>
       <!-- End main post if not deleted -->
 
       <!-- Edit main post -->
-      <div ng-if="!entries.isDeleted && vm.togglePostsCommentsUpdate.indexOf(entries.id) !== -1" class="row well">
+      <div ng-if="!entries.isDeleted && vm.togglePostsCommentsUpdate.indexOf(entries.id) !== -1">
+      <span ng-if="entries.numberOfTimesEdited > 0"  ng-init="vm.togglePreviousEdits = false" ng-click="vm.togglePreviousEdits = !vm.togglePreviousEdits" class="margin-bottom-small">
+
+        <span class="toggleItem-left">
+          <span class="showMore" ng-show="!vm.togglePreviousEdits"><i class="glyphicon glyphicon-chevron-down" ng-click="vm.togglePreviousEdits"></i></span>
+        <span class="showLess" ng-show="vm.togglePreviousEdits"><i class="glyphicon glyphicon-chevron-up" ng-click="!vm.togglePreviousEdits"></i></span>
+        </span>
+        <h2 class="pointer">Visa tidigare editeringar</h2>
+      </span>
+
+      <div ng-hide="!vm.togglePreviousEdits" class="row well margin-bottom-small" ng-repeat="edits in entries.edits">
+            <label for="description">Uppdaterad av {{edits.createdBy.signature}} för {{edits.createDate | relativeDate}}</label>
+            <div btf-markdown="edits.text">
+          </div>
+      </div>
+      <div class="row well">
         <form name="updatetPostForm" ng-submit="vm.updatePost(entries.id)" role="form">
           <div class="form-group" ng-class="{ 'has-error': updatePostForm.answer.$dirty && updatePostForm.answer.$invalid,
 'has-success' : updatePostForm.answer.$valid}">
@@ -76,25 +108,57 @@
           </div>
         </form>
       </div>
+          </div>
       <!-- End edit main post -->
 
       <!-- Main post if deleted -->
       <div ng-if="entries.isDeleted" class="row simple-well margin-bottom-mini">
-        <p>Svaret borttaget av användaren {{entries.editDate | relativeDate}}</p>
+        <p>Svaret borttaget av användaren för {{entries.editDate | relativeDate}}</p>
       </div>
       <!-- End main post if deleted -->
 
       <!-- Comments to main post -->
       <div ng-class="$index !== 0 ? 'border-top' : ''" ng-repeat="comment in vm.topic.posts | limitTo:vm.topic.posts.length-$parent.$index:$parent.$index+1" ng-if="comment.commentTo.id === entries.id" style="padding-bottom: 10px;">
         <div ng-if="!comment.isDeleted && vm.togglePostsCommentsUpdate.indexOf(comment.id) === -1">
-          <a href="something" class="padding-right-mini">{{comment.createdBy.signature}}</a>&bull;
+          <span uib-popover-html="comment.createdBy.gravatarProfileInfo.bioHTML + '<b>Community-poäng:</b> ' + comment.createdBy.rankings[0].currentPoints"
+        popover-is-open="popoverIsOpen"
+        ng-mouseenter="popoverIsOpen = !popoverIsOpen" ng-mouseleave="popoverIsOpen = !popoverIsOpen"
+        popover-title="{{comment.createdBy.gravatarProfileInfo.name}}">
+          <span class="signature padding-right-mini">{{comment.createdBy.signature}}</span>&bull;
+        </span>
           <span class="margin-left: 5px">{{comment.createDate | relativeDate}}</span>
-          <span class="pull-right pointer" ng-if="comment.createdBy.id === globals.currentUser.memberId" ng-click="vm.removePost(comment.id, true)"><i class="fa fa-trash"></i></span>
-          <span  class="pull-right pointer margin-right-mini" ng-if="comment.createdBy.id === globals.currentUser.memberId" ng-click="vm.addPostCommentUpdate(comment.id)"><i class="fa fa-pencil-square-o"></i></span>
+          <span ng-if="comment.numberOfTimesEdited > 0" class="margin-left-mini"><span class="margin-right-mini">&bull;</span> Editerad för {{comment.editDate | relativeDate}}</span>
+
+          <!-- Votes -->
+          <span class="pull-right" data-balloon="Kommentarens poäng" data-balloon-pos="up">
+            <span ng-if="!user.loggedIn && comment.pointsAwarded > 0 || comment.createdBy.id === globals.currentUser.memberId"><i class="fa fa-chevron-up"></i> {{comment.pointsAwarded}}</span>
+            <span ng-if="comment.hasVoted && user.loggedIn && comment.createdBy.id !== globals.currentUser.memberId" class="voted"><i class="fa fa-chevron-up"></i> {{comment.pointsAwarded}}</span>
+            <span ng-if="!comment.hasVoted && user.loggedIn && comment.createdBy.id !== globals.currentUser.memberId" class="vote" ng-click="vm.addVote(comment.id, comment.type)"><i class="fa fa-chevron-up"></i> {{comment.pointsAwarded}}</span>
+          </span>
+          <!-- End votes -->
+
+          <span class="pull-right pointer margin-right-small" ng-if="comment.createdBy.id === globals.currentUser.memberId || vm.communityService.isAdmin()" ng-click="vm.removePost(comment.id, true)" data-balloon="Ta bort kommentar" data-balloon-pos="up"><i class="fa fa-trash"></i></span>
+          <span  class="pull-right pointer margin-right-mini" ng-if="comment.createdBy.id === globals.currentUser.memberId || vm.communityService.isAdmin()" ng-click="vm.addPostCommentUpdate(comment.id)" data-balloon="Editera kommentar" data-balloon-pos="up"><i class="fa fa-pencil-square-o"></i></span>
           <div btf-markdown="comment.text">
           </div>
+
         </div>
+
+        <!-- Edit comment -->
         <div ng-if="!comment.isDeleted && vm.togglePostsCommentsUpdate.indexOf(comment.id) !== -1">
+          <span ng-if="comment.numberOfTimesEdited > 0"  ng-init="vm.togglePreviousEdits = false" ng-click="vm.togglePreviousEdits = !vm.togglePreviousEdits" class="margin-bottom-small">
+            <span class="toggleItem-left">
+              <span class="showMore" ng-show="!vm.togglePreviousEdits"><i class="glyphicon glyphicon-chevron-down" ng-click="vm.togglePreviousEdits"></i></span>
+            <span class="showLess" ng-show="vm.togglePreviousEdits"><i class="glyphicon glyphicon-chevron-up" ng-click="!vm.togglePreviousEdits"></i></span>
+            </span>
+            <h2 class="pointer">Visa tidigare editeringar</h2>
+          </span>
+
+          <div ng-hide="!vm.togglePreviousEdits" class="row well margin-bottom-small" ng-repeat="edits in comment.edits">
+                <label for="description">Uppdaterad av {{edits.createdBy.signature}} för {{edits.createDate | relativeDate}}</label>
+                <div btf-markdown="edits.text">
+              </div>
+          </div>
           <form name="updateCommentForm{{comment.id}}" ng-submit="vm.updatePost(comment.id)" role="form">
             <div class="form-group" ng-class="{ 'has-error': updateCommentForm{{comment.id}}.comment.$dirty && updateCommentForm{{comment.id}}.comment.$invalid,
       'has-success' : updateCommentForm{{comment.id}}.comment.$valid}">
@@ -108,9 +172,10 @@
           </form>
         </div>
         <div ng-if="comment.isDeleted">
-          Kommentaren borttagen av användaren {{comment.editdDate | relativeDate}}
+          Kommentaren borttagen av användaren för {{comment.editDate | relativeDate}}
         </div>
       </div>
+      <!-- End edit comment -->
       <!-- End comments to main post -->
 
       <div class="pull-right pointer" ng-click="vm.togglePostComment(entries.id)" ng-if="vm.togglePostsComments.indexOf(entries.id) === -1 && globals.currentUser.memberId && user.loggedIn"><u>Skriv en kommentar</u></div>
