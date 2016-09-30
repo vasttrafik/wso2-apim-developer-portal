@@ -52,11 +52,13 @@
 
     return service;
 
-    function setUser(user, communityProfile) {
+    function setUser(user, communityProfile, communityPoints, gravatarEmailHash) {
       var deferred = $q.defer();
 
       try {
         user.memberId = ((communityProfile || user.memberId) ? user.id : null);
+        user.communityPoints = communityPoints;
+        user.gravatarEmailHash = gravatarEmailHash;
         localStorage.user = JSON.stringify(user);
 
         /* Update root scope globals object for easy access */
@@ -65,6 +67,8 @@
             id: user.id,
             role: (user.roles.indexOf('community-admin') > -1 ? 'community-admin' : 'community-member'),
             memberId: user.memberId,
+            communityPoints: user.communityPoints,
+            gravatarEmailHash: user.gravatarEmailHash,
             userName: user.userName,
             email: user.claims.filter(function(el) {
               return el.claimUri === 'http://wso2.org/claims/emailaddress';
@@ -106,13 +110,13 @@
       delete $http.defaults.headers.common['X-JWT-Assertion'];
     }
 
-    function setMemberId(memberId) {
+    function setMemberId(memberId, communityPoints, gravatarEmailHash) {
       var deferred = $q.defer();
 
       getUser()
         .then(function(userObject) {
-          /* Update user with new meember id */
-          setUser(userObject, true)
+          /* Update user with new member id */
+          setUser(userObject, true, communityPoints, gravatarEmailHash)
             .then(function() {
               deferred.resolve();
             })

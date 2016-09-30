@@ -28,7 +28,11 @@
     })
     .filter('relativeDate', function() {
       return function(input, all) {
-        return Date.create(input).relative();
+        if (Date.create(input).isAfter(Date.now())) {
+          return Date.create(Date.now()).relative();
+        } else {
+          return Date.create(input).relative();
+        }
       };
     })
     .filter('hash', function() {
@@ -219,7 +223,7 @@
 
         if (!$.isEmptyObject(user)) {
           $rootScope.user.loggedIn = true;
-          UserService.setUser(user, (user.memberId ? true : false)); // Since this also sets the user scope
+          UserService.setUser(user, (user.memberId ? true : false), user.communityPoints, user.gravatarEmailHash); // Since this also sets the user scope
           AuthenticationService.setLogoutTimer();
 
           $http.defaults.headers.common['X-JWT-Assertion'] = user.accessToken.token;
@@ -245,9 +249,9 @@
 
   }
 
-  MainCtrl.$inject = ['$location', '$rootScope', '$scope', '$filter', 'AuthenticationService', 'AlertService', 'APIService'];
+  MainCtrl.$inject = ['$location', '$rootScope', '$scope', '$filter', 'AuthenticationService', 'AlertService', 'APIService', 'CommunityService'];
 
-  function MainCtrl($location, $rootScope, $scope, $filter, AuthenticationService, AlertService, APIService) {
+  function MainCtrl($location, $rootScope, $scope, $filter, AuthenticationService, AlertService, APIService, CommunityService) {
     var vm = this;
 
     vm.login = login;
@@ -258,6 +262,7 @@
     vm.toggleUsernameRecovery = toggleUsernameRecovery;
     vm.clearAlertMessage = AlertService.clearAlertMessageAndDigest;
     vm.clearMenuAlertMessage = AlertService.clearMenuAlertMessageAndDigest;
+    vm.isCommunityAdmin = CommunityService.isAdmin;
 
     var logoutPromise;
 

@@ -89,7 +89,13 @@
         function membersIdGetResponse(membersObject) {
 
           if (membersObject.status === 200) {
-            UserService.setUser(userAccountObject.data, membersObject.data.id ? true : false)
+
+            var currentPoints = 0;
+            if (membersObject.data.rankings != null && membersObject.data.rankings.length > 0) {
+              currentPoints = membersObject.data.rankings[0].currentPoints;
+            }
+
+            UserService.setUser(userAccountObject.data, membersObject.data.id ? true : false, currentPoints, membersObject.data.gravatarEmailHash)
               .then(function(response) {
                 setLogoutTimer();
                 deferred.resolve();

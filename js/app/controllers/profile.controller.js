@@ -24,7 +24,7 @@
     (function init() {
       vm.form = {};
 
-      APIService.communityCall('membersIdGet', [$rootScope.globals.currentUser.id])
+      APIService.communityCall('membersIdGet', [$rootScope.globals.currentUser.id], false)
         .then(membersIdGetResponse);
 
       resetProfileForm();
@@ -143,7 +143,12 @@
 
           var created = ($rootScope.globals.currentUser.memberId ? false : true);
 
-          UserService.setMemberId(response.data.id)
+          var currentPoints = 0;
+          if (response.data.rankings != null && response.data.rankings.length > 0) {
+            currentPoints = response.data.rankings[0].currentPoints;
+          }
+
+          UserService.setMemberId(response.data.id, currentPoints, response.data.gravatarEmailHash)
             .then(function() {
 
               vm.member = response.data;
@@ -244,7 +249,6 @@
       if (!$rootScope.globals.currentUser.memberId) {
         vm.form.community.signature = $rootScope.globals.currentUser.userName;
         vm.form.community.email = $rootScope.globals.currentUser.email;
-        vm.form.community.gravatarEmail = $rootScope.globals.currentUser.email;
       } else {
         vm.form.community = angular.copy(vm.member);
       }
