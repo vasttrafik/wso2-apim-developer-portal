@@ -75,7 +75,7 @@
           APIService.call('statisticsGet', ['applications', ['totalRequestsFaults', 'faultsPercentage', 'requestResponseTimes', 'uniqueUsers']])
             .then(statisticsGetResponse);
         } else {
-          APIService.call('statisticsApplicationNameGet', [application.name, ['totalRequestsFaults', 'faultsPercentage', 'requestResponseTimes', 'uniqueUsers']])
+          APIService.call('statisticsApplicationNameGet', [encodeURIComponent(application.name), ['totalRequestsFaults', 'faultsPercentage', 'requestResponseTimes', 'uniqueUsers']])
             .then(statisticsGetResponse);
         }
       }
