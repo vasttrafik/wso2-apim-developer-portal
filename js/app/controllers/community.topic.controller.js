@@ -136,7 +136,7 @@
 
       function postsIdVotesPostResponse(response) {
         if (response.status === 201) {
-          AlertService.success('Röst skickat!');
+          AlertService.success('Röst skickad!');
 
           for (var i = 0; i < vm.topic.posts.length; i++) {
 

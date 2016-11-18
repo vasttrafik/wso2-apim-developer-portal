@@ -40,6 +40,57 @@
         return md5(input);
       };
     })
+    .filter('removeMd', function() {
+      return function(input, all) {
+
+        return input
+          // Remove HTML tags
+          .replace(/<(.*?)>/g, '$1')
+          // Remove setext-style headers
+          .replace(/^[=\-]{2,}\s*$/g, '')
+          // Remove footnotes?
+          .replace(/\[\^.+?\](\: .*?$)?/g, '')
+          .replace(/\s{0,2}\[.*?\]: .*?$/g, '')
+          // Remove images
+          .replace(/\!\[.*?\][\[\(].*?[\]\)]/g, '')
+          // Remove inline links
+          .replace(/\[(.*?)\][\[\(].*?[\]\)]/g, '$1')
+          // Remove Blockquotes
+          .replace(/>/g, '')
+          // Remove reference-style links?
+          .replace(/^\s{1,2}\[(.*?)\]: (\S+)( ".*?")?\s*$/g, '')
+          // Remove atx-style headers
+          .replace(/^\#{1,6}\s*([^#]*)\s*(\#{1,6})?/gm, '$1')
+          .replace(/([\*_]{1,3})(\S.*?\S)\1/g, '$2')
+          .replace(/(`{3,})(.*?)\1/gm, '$2')
+          .replace(/^-{3,}\s*$/g, '')
+          .replace(/`(.+?)`/g, '$1')
+          .replace(/\n{2,}/g, '\n\n');
+      };
+    })
+    .filter('cut', function() {
+      return function(value, wordwise, max, tail) {
+        if (!value) return '';
+
+        max = parseInt(max, 10);
+        if (!max) return value;
+        if (value.length <= max) return value;
+
+        value = value.substr(0, max);
+        if (wordwise) {
+          var lastspace = value.lastIndexOf(' ');
+          if (lastspace != -1) {
+            //Also remove . and , so its gives a cleaner result.
+            if (value.charAt(lastspace - 1) == '.' || value.charAt(lastspace - 1) == ',') {
+              lastspace = lastspace - 1;
+            }
+            value = value.substr(0, lastspace);
+          }
+        }
+
+        return value + (tail || ' …');
+      };
+    })
     .filter('trustAsHtml', function($sce) {
       return function(value) {
         return $sce.trustAsHtml(value);
@@ -67,7 +118,7 @@
       controllerAs: 'vm'
     })
 
-    .when('/contact', {
+    .when('/contact:subject?', {
       controller: 'ContactCtrl',
       templateUrl: 'js/app/views/contact.view.html',
       controllerAs: 'vm'

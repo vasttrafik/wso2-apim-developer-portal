@@ -8,9 +8,9 @@
     .module('vtPortal')
     .factory('CommunityService', CommunityService);
 
-  CommunityService.$inject = ['$q', '$http', '$rootScope', 'APIService'];
+  CommunityService.$inject = ['$location', '$q', '$http', '$rootScope', 'APIService'];
 
-  function CommunityService($q, $http, $rootScope, APIService) {
+  function CommunityService($location, $q, $http, $rootScope, APIService) {
     var service = {};
 
     service.getFirstTopicByLabel = getFirstTopicByLabel;
@@ -23,6 +23,7 @@
     service.addGravatarProfileInfoToPost = addGravatarProfileInfoToPost;
     service.setHasVotedToPost = setHasVotedToPost;
     service.setHasVotedToPosts = setHasVotedToPosts;
+    service.redirectToTopic = redirectToTopic;
 
     return service;
 
@@ -188,6 +189,10 @@
       angular.forEach(posts, function(value, key) {
         setHasVotedToPost(value);
       });
+    }
+
+    function redirectToTopic(topicId) {
+      $location.path('/community/topic/' + topicId);
     }
 
   }

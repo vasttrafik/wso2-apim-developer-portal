@@ -41,6 +41,12 @@
       if (response.status === 200) {
         vm.category = response.data;
 
+        angular.forEach(vm.category.forums, function(value, key) {
+          if (value.lastPost != null) {
+            CommunityService.addGravatarProfileInfoToPost(value.lastPost);
+          }
+        });
+
       } else {
         AlertService.error('Problem att hämta kategori');
       }
@@ -84,6 +90,8 @@
 
       vm.toggleCategoryUpdate = !vm.toggleCategoryUpdate;
       vm.form.name = angular.copy(vm.category.name);
+      vm.form.imageURL = angular.copy(vm.category.imageURL);
+      console.log(vm.form.imageURL);
 
     }
 
@@ -92,7 +100,8 @@
       APIService.communityCall('categoriesIdPut', [vm.category.id, {
           id: vm.category.id,
           name: vm.form.name,
-          isPublic: true
+          isPublic: true,
+          imageURL: vm.form.imageURL
         }])
         .then(categoriesIdPutResponse)
         .catch(function(response) {
