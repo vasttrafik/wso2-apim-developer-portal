@@ -87,56 +87,6 @@ var CommunityAPI;
        * @param includeForums If forums should be included in the result
        */
       CommunityApi.prototype.categoriesGet = function(includePrivate, includeForums, extraHttpRequestParams) {
-        var path = this.basePath + '/categories';
-        var queryParameters = {};
-        var headerParams = this.extendObj({}, this.defaultHeaders);
-        if (includePrivate !== undefined) {
-          queryParameters['includePrivate'] = includePrivate;
-        }
-        if (includeForums !== undefined) {
-          queryParameters['includeForums'] = includeForums;
-        }
-        var httpRequestParams = {
-          method: 'GET',
-          url: path,
-          json: true,
-          params: queryParameters,
-          headers: headerParams
-        };
-        if (extraHttpRequestParams) {
-          httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
-        }
-        return this.$http(httpRequestParams);
-      };
-      /**
-       *
-       * Admin function to create a category
-       * @param body The category to create
-       */
-      CommunityApi.prototype.categoriesPost = function(body, extraHttpRequestParams) {
-        var path = this.basePath + '/categories';
-        var queryParameters = {};
-        var headerParams = this.extendObj({}, this.defaultHeaders);
-        var httpRequestParams = {
-          method: 'POST',
-          url: path,
-          json: true,
-          data: body,
-          params: queryParameters,
-          headers: headerParams
-        };
-        if (extraHttpRequestParams) {
-          httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
-        }
-        return this.$http(httpRequestParams);
-      };
-      /**
-       *
-       * Retrieves forum categories
-       * @param includePrivate If all (including private) categories should be included in the result
-       * @param includeForums If forums should be included in the result
-       */
-      CommunityApi.prototype.categoriesGet = function(includePrivate, includeForums, extraHttpRequestParams) {
         var localVarPath = this.basePath + '/categories';
         var queryParameters = {};
         var headerParams = this.extendObj({}, this.defaultHeaders);
