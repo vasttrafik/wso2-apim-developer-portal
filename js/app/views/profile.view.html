@@ -72,6 +72,11 @@
 
           <h3>Din community profil används vid användning av utvecklarportalens <a href="#/community">community forum</a></h3>
           <br/>
+            <div ng-if="globals.currentUser.communityPoints">
+              <label for="communityPoints">Community-poäng:</label> {{globals.currentUser.communityPoints}}
+              <div style="font-size: 0.8em;font-style: italic">Du får community-poäng när andra användare röstar på dina inlägg</div>
+            </div>
+            <br/>
 
           <form name="communityForm" ng-submit="vm.saveCommunityProfile()" role="form">
             <div class="form-group" ng-class="{ 'has-error': communityForm.signature.$dirty && communityForm.signature.$invalid,
