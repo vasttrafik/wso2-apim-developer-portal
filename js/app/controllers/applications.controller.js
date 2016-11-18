@@ -182,7 +182,10 @@
         if (vm.applications[i].id === applicationId) {
           if (confirm('Är du säker på att du vill ta bort applikation ' + vm.applications[i].name + '? Betänk att även relaterade prenumerationer för applikationen kommer tas bort') === true) {
             APIService.call('applicationsApplicationIdDelete', [vm.applications[i].id])
-              .then(applicationsApplicationIdDeleteResponse);
+              .then(applicationsApplicationIdDeleteResponse).
+              catch(function(response) {
+                AlertService.error('Problem att ta bort applikationen');
+              });
             break;
           }
         }
