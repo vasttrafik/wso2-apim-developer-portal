@@ -24,9 +24,9 @@
         <tbody>
           <tr ng-repeat="entries in vm.forum.topics | orderBy:'id'">
             <td style="width: 50px">
-              <div class="area area-small">
-                  <span ng-if="!entries.createdBy.useGravatar" class="fa fa-2x fa-user" aria-hidden="true"></span>
-                  <img ng-if="entries.createdBy.useGravatar" src="https://www.gravatar.com/avatar/{{entries.createdBy.email | hash}}?s=45" class="avatar">
+              <div ng-class="{'area': !entries.createdBy.useGravatar}" class="area-small">
+                <span ng-if="!entries.createdBy.useGravatar" class="fa fa-2x fa-user" aria-hidden="true"></span>
+                <img ng-if="entries.createdBy.useGravatar" src="https://www.gravatar.com/avatar/{{entries.createdBy.gravatarEmailHash}}?s=45  " class="avatar">
               </div>
             </td>
             <td>
@@ -46,11 +46,11 @@
         <div class="form-group" ng-class="{ 'has-error': addTopicForm.topic.$dirty && addTopicForm.topic.$invalid,
   'has-success' : addTopicForm.answer.$valid}">
           <label for="subject">Titel</label>
-          <input type="text" name="subject" id="subject" class="form-control" ng-model="vm.form.topic.subject" style="margin-bottom: 20px" maxlength="50" required />
+          <input type="text" name="subject" id="subject" class="form-control" ng-model="vm.form.addTopic.subject" style="margin-bottom: 20px" maxlength="50" required />
           <label for="question">Text</label>
-          <textarea id="question" type="text" class="form-control" ng-model="vm.form.topic.question" style="height: 100px; margin-bottom: 20px" required></textarea>
-          <label for="preview" ng-show="vm.form.topic.question">Förhandsgranskning</label>
-          <div ng-bind-html="vm.form.topic.question | trustAsHtml">
+          <textarea id="question" type="text" class="form-control" ng-model="vm.form.addTopic.question" style="height: 100px; margin-bottom: 20px" required></textarea>
+          <label for="preview" ng-show="vm.form.addTopic.question">Förhandsgranskning</label>
+          <div ng-bind-html="vm.form.addTopic.question | trustAsHtml">
           </div>
         </div>
 
