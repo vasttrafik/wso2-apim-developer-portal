@@ -98,6 +98,10 @@
                     <p><a href="#/overview">Mina sidor</a></p>
                     <a id="my-profile-menu-item" href="#/profile">Min profil</a>
                     <br />
+                    <span ng-if="vm.isMember()">
+                      <a id="my-profile-menu-item" href="#/overview/community">Min community</a>
+                      <br />
+                    </span>
                     <a id="my-applications-menu-item" href="#/applications">Mina applikationer</a>
                     <br />
                     <a id="my-subscriptions-menu-item" href="#/subscriptions">Mina prenumerationer</a>
@@ -325,6 +329,7 @@
   <script src="js/vendor/md5.js"></script>
   <script src="js/vendor/ui-bootstrap-tpls-1.3.1.min.js"></script>
   <script src="js/vendor/ui-iconpicker.js"></script>
+  <script src="js/vendor/dirPagination.js"></script>
 
   <script src="js/main.js"></script>
 
@@ -350,11 +355,13 @@
   <script src="js/app/controllers/applications.controller.js"></script>
   <script src="js/app/controllers/subscriptions.controller.js"></script>
   <script src="js/app/controllers/overview.controller.js"></script>
+  <script src="js/app/controllers/overview.community.controller.js"></script>
   <script src="js/app/controllers/media.controller.js"></script>
   <script src="js/app/controllers/community.controller.js"></script>
   <script src="js/app/controllers/community.category.controller.js"></script>
   <script src="js/app/controllers/community.forum.controller.js"></script>
   <script src="js/app/controllers/community.topic.controller.js"></script>
+  <script src="js/app/controllers/community.label.controller.js"></script>
   <script src="js/app/controllers/statistics.applications.controller.js"></script>
   <script src="js/app/controllers/statistics.apis.controller.js"></script>
 
