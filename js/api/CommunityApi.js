@@ -87,56 +87,6 @@ var CommunityAPI;
        * @param includeForums If forums should be included in the result
        */
       CommunityApi.prototype.categoriesGet = function(includePrivate, includeForums, extraHttpRequestParams) {
-        var path = this.basePath + '/categories';
-        var queryParameters = {};
-        var headerParams = this.extendObj({}, this.defaultHeaders);
-        if (includePrivate !== undefined) {
-          queryParameters['includePrivate'] = includePrivate;
-        }
-        if (includeForums !== undefined) {
-          queryParameters['includeForums'] = includeForums;
-        }
-        var httpRequestParams = {
-          method: 'GET',
-          url: path,
-          json: true,
-          params: queryParameters,
-          headers: headerParams
-        };
-        if (extraHttpRequestParams) {
-          httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
-        }
-        return this.$http(httpRequestParams);
-      };
-      /**
-       *
-       * Admin function to create a category
-       * @param body The category to create
-       */
-      CommunityApi.prototype.categoriesPost = function(body, extraHttpRequestParams) {
-        var path = this.basePath + '/categories';
-        var queryParameters = {};
-        var headerParams = this.extendObj({}, this.defaultHeaders);
-        var httpRequestParams = {
-          method: 'POST',
-          url: path,
-          json: true,
-          data: body,
-          params: queryParameters,
-          headers: headerParams
-        };
-        if (extraHttpRequestParams) {
-          httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
-        }
-        return this.$http(httpRequestParams);
-      };
-      /**
-       *
-       * Retrieves forum categories
-       * @param includePrivate If all (including private) categories should be included in the result
-       * @param includeForums If forums should be included in the result
-       */
-      CommunityApi.prototype.categoriesGet = function(includePrivate, includeForums, extraHttpRequestParams) {
         var localVarPath = this.basePath + '/categories';
         var queryParameters = {};
         var headerParams = this.extendObj({}, this.defaultHeaders);
@@ -810,8 +760,9 @@ var CommunityAPI;
        * @param query Query string that will be matched against the following attributes: createDate, createdBy, subject, text, categoryId and forumId
        * @param offset Starting point of the list
        * @param limit Maximum size array to return
+       * @param setInfo If First and Last post should be set on each topic. Has a performance hit
        */
-      CommunityApi.prototype.topicsGet = function(label, query, offset, limit, extraHttpRequestParams) {
+      CommunityApi.prototype.topicsGet = function(label, query, offset, limit, setInfo, extraHttpRequestParams) {
         var localVarPath = this.basePath + '/topics';
         var queryParameters = {};
         var headerParams = this.extendObj({}, this.defaultHeaders);
@@ -826,6 +777,9 @@ var CommunityAPI;
         }
         if (limit !== undefined) {
           queryParameters['limit'] = limit;
+        }
+        if (setInfo !== undefined) {
+          queryParameters['setInfo'] = setInfo;
         }
         var httpRequestParams = {
           method: 'GET',
@@ -867,10 +821,15 @@ var CommunityAPI;
        * Retrieves a forum topic, inluding all posts
        * @param id Resource id
        */
-      CommunityApi.prototype.topicsIdGet = function(id, extraHttpRequestParams) {
+      CommunityApi.prototype.topicsIdGet = function(id, includePosts, extraHttpRequestParams) {
         var localVarPath = this.basePath + '/topics/{id}'
           .replace('{' + 'id' + '}', String(id));
         var queryParameters = {};
+
+        if (includePosts !== undefined) {
+          queryParameters['includePosts'] = includePosts;
+        }
+
         var headerParams = this.extendObj({}, this.defaultHeaders);
         // verify required parameter 'id' is set
         if (!id) {

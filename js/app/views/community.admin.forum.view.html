@@ -24,17 +24,14 @@
         <tbody>
           <tr ng-repeat="entries in vm.forum.topics | orderBy:'id'">
             <td style="width: 50px">
-              <div class="area area-small">
-                  <span ng-if="!entries.createdBy.useGravatar" class="fa-stack fa-lg">
-                    <i class="fa fa-circle fa-stack-2x" style="color:#00AAEB"></i>
-                    <i class="fa fa-user fa-stack-1x fa-inverse" style="color:#FFFFFF"></i>
-                  </span>
-                  <img ng-if="entries.createdBy.useGravatar" src="http://www.gravatar.com/avatar/{{entries.createdBy.email | hash}}?s=45" class="avatar">
+              <div ng-class="{'area': !entries.createdBy.useGravatar}" class="area-small">
+                <span ng-if="!entries.createdBy.useGravatar" class="fa fa-2x fa-user" aria-hidden="true"></span>
+                <img ng-if="entries.createdBy.useGravatar" src="https://www.gravatar.com/avatar/{{entries.createdBy.gravatarEmailHash}}?s=45  " class="avatar">
               </div>
             </td>
             <td>
               <h2 style="margin-bottom: 0px"><a href="#/admin/topic/{{entries.id}}">{{entries.subject}}</a></h2>
-              <a href="signature" style="padding-right: 10px">{{entries.createdBy.signature}}</a>&bull;
+              <span class="signature" style="padding-right: 10px">{{entries.createdBy.signature}}</span>&bull;
               <span style="margin-left: 5px">{{entries.createDate | relativeDate}}</span>
             </td>
           </tr>
@@ -49,11 +46,11 @@
         <div class="form-group" ng-class="{ 'has-error': addTopicForm.topic.$dirty && addTopicForm.topic.$invalid,
   'has-success' : addTopicForm.answer.$valid}">
           <label for="subject">Titel</label>
-          <input type="text" name="subject" id="subject" class="form-control" ng-model="vm.form.topic.subject" style="margin-bottom: 20px" maxlength="50" required />
+          <input type="text" name="subject" id="subject" class="form-control" ng-model="vm.form.addTopic.subject" style="margin-bottom: 20px" maxlength="50" required />
           <label for="question">Text</label>
-          <textarea id="question" type="text" class="form-control" ng-model="vm.form.topic.question" style="height: 100px; margin-bottom: 20px" required></textarea>
-          <label for="preview" ng-show="vm.form.topic.question">Förhandsgranskning</label>
-          <div ng-bind-html="vm.form.topic.question | trustAsHtml">
+          <textarea id="question" type="text" class="form-control" ng-model="vm.form.addTopic.question" style="height: 100px; margin-bottom: 20px" required></textarea>
+          <label for="preview" ng-show="vm.form.addTopic.question">Förhandsgranskning</label>
+          <div ng-bind-html="vm.form.addTopic.question | trustAsHtml">
           </div>
         </div>
 

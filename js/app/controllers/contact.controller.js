@@ -1,13 +1,14 @@
-﻿(function() {
+﻿
+(function() {
   'use strict';
 
   angular
     .module('vtPortal')
     .controller('ContactCtrl', ContactCtrl);
 
-  ContactCtrl.$inject = ['$location', '$scope', '$rootScope', '$routeParams', 'AlertService', 'APIService'];
+  ContactCtrl.$inject = ['$timeout', '$location', '$scope', '$rootScope', '$routeParams', 'AlertService', 'APIService'];
 
-  function ContactCtrl($location, $scope, $rootScope, $routeParams, AlertService, APIService) {
+  function ContactCtrl($timeout, $location, $scope, $rootScope, $routeParams, AlertService, APIService) {
     var vm = this;
 
     vm.submitContact = submitContact;
@@ -15,6 +16,16 @@
 
     (function init() {
       resetContactForm();
+
+      if ($rootScope.user.loggedIn && $routeParams.subject) {
+        // Check if we're coming to this page directly or from api list.
+        vm.form.contact.subject = $routeParams.subject;
+
+        $timeout(function() {
+          angular.element(document.getElementById('contact-tab-2')).trigger('click');
+        }, 0);
+      }
+
     })();
 
     function submitContact() {

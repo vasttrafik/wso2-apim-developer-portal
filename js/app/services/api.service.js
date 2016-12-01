@@ -63,16 +63,18 @@
     function communityCall(funcName, args, doNotLogout) {
       var deferred = $q.defer();
 
+      var logout = doNotLogout === false ? false : true;
+
       communityApiClient[funcName].apply(communityApiClient, args)
         .then(function(response) {
           deferred.resolve(response);
         }, function(response) {
           // Never logout someone from community view
-          apiErrorResponse(response, deferred, true);
+          apiErrorResponse(response, deferred, logout);
         })
         .catch(function(response) {
           // Never logout someone from community view
-          apiErrorResponse(response, deferred, true);
+          apiErrorResponse(response, deferred, logout);
         });
 
       return deferred.promise;

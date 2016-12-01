@@ -13,6 +13,8 @@
 
     vm.communityService = CommunityService;
 
+    vm.locationPath = $location.path();
+
     vm.addTopic = addTopic;
     vm.addForumUpdate = addForumUpdate;
     vm.updateForum = updateForum;
@@ -22,6 +24,8 @@
     (function init() {
 
       if ($location.path().indexOf('admin') > -1 && !CommunityService.isAdmin()) {
+        $location.path('/');
+      } else if (($location.path().indexOf('admin') === -1) && $.inArray(parseInt($routeParams.forumId), [1, 2, 3, 4]) > 0) {
         $location.path('/');
       }
 
@@ -42,6 +46,8 @@
       if (response.status === 200) {
         vm.forum = response.data;
 
+        CommunityService.addGravatarProfileInfoToPosts(vm.forum.topics);
+
       } else {
         AlertService.error('Problem att hämta forum');
       }
@@ -52,12 +58,12 @@
 
       APIService.communityCall('topicsPost', [{
           forumId: vm.forum.id,
-          subject: vm.form.topic.subject,
+          subject: vm.form.addTopic.subject,
           posts: [{
             topicId: vm.forum.topicId,
             forumId: vm.forum.id,
             type: 'question',
-            text: vm.form.topic.question,
+            text: vm.form.addTopic.question,
             textFormat: ($location.path().split('/')[1] === 'community' ? 'md' : 'html')
           }]
         }], true)
@@ -71,11 +77,13 @@
         if (response.status === 201) {
 
           AlertService.success('Fråga ' + response.data.subject + ' skapad!');
-          vm.forum.topics.push(response.data);
+          //vm.forum.topics.push(response.data);
+          $location.path('/community/topic/' + response.data.id);
+
           resetAddTopicForm();
 
         } else {
-          AlertService.error('Problem att skapa ny fråga');
+          AlertService.errorWithStatus(response.status, 'Problem att skapa ny fråga');
         }
         vm.dataLoadingAddTopic = false;
       }
@@ -98,7 +106,10 @@
           description: vm.form.description,
           imageURL: vm.form.imageURL
         }])
-        .then(forumsIdPutResponse);
+        .then(forumsIdPutResponse)
+        .catch(function(response) {
+          AlertService.error('Problem att uppdatera forum');
+        });
 
       function forumsIdPutResponse(response) {
         if (response.status === 200) {
@@ -107,14 +118,14 @@
           vm.forum.description = vm.form.description;
           vm.toggleForumUpdate = false;
         } else {
-          AlertService.error('Problem att uppdatera forum');
+          AlertService.errorWithStatus(response.status, 'Problem att uppdatera forum');
         }
       }
 
     }
 
     function resetAddTopicForm() {
-      vm.form.topic = {};
+      vm.form.addTopic = {};
       $scope.addTopicForm.$setPristine();
     }
 
@@ -122,7 +133,10 @@
 
       if (confirm('Är du säker på att du vill ta bort detta forum?') === true) {
         APIService.communityCall('forumsIdDelete', [vm.forum.id])
-          .then(forumsIdDeleteResponse);
+          .then(forumsIdDeleteResponse)
+          .catch(function(response) {
+            AlertService.error('Problem att ta bort forum');
+          });
       }
 
       function forumsIdDeleteResponse(response) {
@@ -132,7 +146,7 @@
           $location.path('/' + ($location.path().split('/')[1] === 'community' ? 'community' : 'admin') + '/category/' + vm.forum.categoryId); // Redirect to parent catrgory
 
         } else {
-          AlertService.error('Problem att ta bort forum');
+          AlertService.errorWithStatus(response.status, 'Problem att ta bort forum');
         }
       }
 

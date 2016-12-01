@@ -1,0 +1,57 @@
+<div class="jumbotron title">
+    <div class="container no-padding-left">
+        <ol class="breadcrumb">
+            <li><a href="#/" target="_self">Hem</a></li>
+            <li><a href="#/community" target="_self">Community</a></li>
+            <li ng-if="vm.isCategory || vm.isForum"><a href="#/community/category/{{vm.topics[0].categoryId}}" target="_self">{{vm.topics[0].categoryName}}</a></li>
+            <li ng-if="vm.isForum"><a href="#/community/forum/{{vm.topics[0].forumId}}" target="_self">{{vm.topics[0].forumName}}</a></li>
+            <li class="active">{{vm.text}}</li>
+        </ol>
+
+    </div>
+</div>
+
+<div class="container no-padding-top word-wrap">
+    <div class="row">
+        <table class="table table-borderless">
+            <thead class="table-header">
+                <tr>
+                    <th colspan="3">
+                        <h1>{{vm.text}}</h1></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr dir-paginate="entries in vm.topics | itemsPerPage: 5">
+                    <td style="width: 50px">
+                        <span uib-popover-html="entries.createdBy.gravatarProfileInfo.bioHTML + '<b>Community-poäng:</b>' + entries.createdBy.rankings[0].currentPoints" popover-is-open="popoverIsOpen" ng-mouseenter="popoverIsOpen = !popoverIsOpen" ng-mouseleave="popoverIsOpen = !popoverIsOpen"
+                            popover-title="{{entries.createdBy.gravatarProfileInfo.name}}">
+            <div ng-class="{'area area-small': !entries.createdBy.useGravatar}">
+              <span ng-if="!entries.createdBy.useGravatar" class="fa fa-2x fa-user" aria-hidden="true"></span>
+                        <img ng-if="entries.createdBy.useGravatar" src="https://www.gravatar.com/avatar/{{entries.createdBy.gravatarEmailHash}}?s=45" class="avatar">
+    </div>
+    </span>
+    </td>
+    <td>
+        <h2 class="no-margin-bottom"><a href="#/community/topic/{{entries.id}}" data-balloon="{{entries.firstPost.text | removeMd | limitTo:200}}" data-balloon-length="xlarge" data-balloon-pos="up">{{entries.subject}}</a></h2>
+        <span class="padding-right-mini"><strong>{{entries.createdBy.signature}}</strong></span>&bull;
+        <span class="margin-left-mini">Skapades för {{entries.createDate | relativeDate}}</span> &bull;
+        <span class="margin-left-mini">Senaste inlägg skrevs för {{entries.lastPostDate | relativeDate}}</span>
+    </td>
+    <td class="text-center">
+        <h2 class="no-margin-bottom">{{entries.numberOfPosts}}</h2>
+        <p>Inlägg</p>
+    </td>
+    <td class="text-center">
+        <h2 class="no-margin-bottom">{{entries.numberOfViews}}</h2>
+        <p>Visningar</p>
+    </td>
+    <td class="text-center">
+        <h2 class="no-margin-bottom" ng-class="{answer: entries.answeredByPostId}">{{entries.numberOfAnswers}}</h2>
+        <p>Svar</p>
+    </td>
+    </tr>
+    </tbody>
+    </table>
+</div>
+<dir-pagination-controls></dir-pagination-controls>
+</div>

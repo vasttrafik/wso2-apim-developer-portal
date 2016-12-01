@@ -269,23 +269,6 @@ var UserAPI;
         }
         return this.$http(httpRequestParams);
       };
-      UserApi.prototype.challengequestionsGet = function(accept, extraHttpRequestParams) {
-        var path = this.basePath + '/challengequestions';
-        var queryParameters = {};
-        var headerParams = this.extendObj({}, this.defaultHeaders);
-        headerParams['Accept'] = accept;
-        var httpRequestParams = {
-          method: 'GET',
-          url: path,
-          json: true,
-          params: queryParameters,
-          headers: headerParams
-        };
-        if (extraHttpRequestParams) {
-          httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
-        }
-        return this.$http(httpRequestParams);
-      };
       UserApi.prototype.challengequestionsPut = function(accept, contentType, body, extraHttpRequestParams) {
         var path = this.basePath + '/challengequestions';
         var queryParameters = {};

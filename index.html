@@ -75,16 +75,17 @@
             <!-- Logged in -->
             <div class="btn-group" ng-show="user.loggedIn">
               <a class="menu-user dropdown-toggle" data-toggle="dropdown">
-                <span ng-if="globals.currentUser.firstName && globals.currentUser.lastName">
+                <span id="display-name" ng-if="globals.currentUser.firstName && globals.currentUser.lastName">
                   {{globals.currentUser.firstName + ' ' + globals.currentUser.lastName}}
                 </span>
-                <span ng-if="!globals.currentUser.firstName && !globals.currentUser.lastName">
+                <span id="display-username" ng-if="!globals.currentUser.firstName && !globals.currentUser.lastName">
                   {{globals.currentUser.userName}}
                 </span>
-                <span class="fa-stack fa-lg">
+                <span ng-if="!globals.currentUser.gravatarEmailHash" class="fa-stack fa-lg">
                   <i class="fa fa-circle fa-stack-2x"></i>
                   <i class="fa fa-user fa-stack-1x fa-inverse"></i>
                 </span>
+                <img ng-if="globals.currentUser.gravatarEmailHash" src="https://www.gravatar.com/avatar/{{globals.currentUser.gravatarEmailHash}}?s=35" class="avatar-small margin-right-left-mini fa-stack">
 
                 <i class="fa fa-bars"></i>
               </a>
@@ -92,19 +93,23 @@
                 <div class="row">
                   <div class="col-md-12">
                     <p><a href="#/overview">Mina sidor</a></p>
-                    <a href="#/profile">Min profil</a>
+                    <a id="my-profile-menu-item" href="#/profile">Min profil</a>
                     <br />
-                    <a href="#/applications">Mina applikationer</a>
+                    <span ng-if="vm.isMember()">
+                      <a id="my-profile-menu-item" href="#/overview/community">Min community</a>
+                      <br />
+                    </span>
+                    <a id="my-applications-menu-item" href="#/applications">Mina applikationer</a>
                     <br />
-                    <a href="#/subscriptions">Mina prenumerationer</a>
+                    <a id="my-subscriptions-menu-item" href="#/subscriptions">Mina prenumerationer</a>
                     <br />
-                    <a href="#/statistics/applications">Min statistik</a>
+                    <a id="my-statistics-menu-item" href="#/statistics/applications">Min statistik</a>
                     <br />
                     <span ng-if="vm.isCommunityAdmin()">
-                    <a href="#/admin">Administrera media</a>
+                    <a id="administrate-media-menu-item" href="#/admin">Administrera media</a>
                     <br />
                     </span>
-                    <a href="#/" ng-click="vm.logout()">Logga ut</a>
+                    <a id="logout-menu-item" href="#/" ng-click="vm.logout()">Logga ut</a>
                     <br />
                   </div>
                 </div>
@@ -114,7 +119,7 @@
             <!-- Login/Create -->
             <div class="btn-group" ng-show="!user.loggedIn">
               <a class="dropdown-toggle logincreate" data-toggle="dropdown">
-                <div class="form-action" ng-if="!user.create">
+                <div id="login-toggle" class="form-action" ng-if="!user.create">
                   Logga in
                 </div>
                 <div class="form-action" ng-if="user.create">
@@ -144,7 +149,7 @@
                       <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Lösenord är obligatoriskt</span>
                     </div>
                     <div class="form-actions noclick">
-                      <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Logga in</button>
+                      <button id="login-button" type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Logga in</button>
                       <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
                       />
                       <span ng-click="vm.toggleCreate()" class="btn btn-link" style="float: right">Skapa konto</span>
@@ -160,9 +165,9 @@
 
                     <div class="form-group" ng-class="{ 'has-error': form.createUsername.$dirty && form.createUsername.$invalid, 'has-success' : form.createUsername.$valid}">
                       <label for="createUsername">Användarnamn</label>
-                      <input type="text" name="createUsername" id="createUsername" class="form-control" ng-model="vm.user.username" ng-minlength="3" required />
+                      <input type="text" name="createUsername" id="createUsername" class="form-control" ng-model="vm.user.username" ng-minlength="5" required />
                       <span ng-show="form.createUsername.$dirty && form.createUsername.$error.required" class="help-block">Användarnamn är obligatoriskt</span>
-                      <span ng-show="form.createUsername.$error.minlength" class="help-block">Användarnamn måste vara minst 3 tecken långt</span>
+                      <span ng-show="form.createUsername.$error.minlength" class="help-block">Användarnamn måste vara minst 5 tecken långt</span>
                     </div>
                     <div class="form-group" ng-class="{ 'has-error': form.createPassword.$dirty && form.createPassword.$invalid, 'has-success' : form.createPassword.$valid}">
                       <label for="createPassword">Lösenord</label>
@@ -230,16 +235,16 @@
           <ul class="list-unstyled truncate">
             <li><a href="#/apis">API</a></li>
             <li><a href="#/statistics/apis">Statistik</a></li>
-            <li class="color-white">Showcase (v2)</li>
-            <li class="color-white">Driftinfo (v2)</li>
+            <li class="color-gray">Showcase</li>
+            <li class="color-gray">Driftinfo</li>
           </ul>
         </div>
         <div class="col-sm-2 col-md-2 col-centered">
           <ul class="list-unstyled truncate">
             <li><a href="#/guides/get-started">Kom-igång</a></li>
             <li><a href="#/guides/oauth2">Guider</a></li>
-            <li class="color-white">Support (v2)</li>
-            <li class="color-white">Verktyg (v2)</li>
+            <li class="color-gray">Support</li>
+            <li class="color-gray">Verktyg</li>
           </ul>
         </div>
         <div class="col-sm-2 col-md-2 col-centered">
@@ -247,7 +252,7 @@
             <li><a href="#/news">Nyheter</a></li>
             <li><a href="#/community">Community</a></li>
             <li><a href="#/blog">Blogg</a></li>
-            <li class="color-white">Kalender (v2)</li>
+            <li class="color-gray">Kalender</li>
           </ul>
         </div>
         <div class="col-sm-2 col-md-2 col-centered">
@@ -321,6 +326,7 @@
   <script src="js/vendor/md5.js"></script>
   <script src="js/vendor/ui-bootstrap-tpls-1.3.1.min.js"></script>
   <script src="js/vendor/ui-iconpicker.js"></script>
+  <script src="js/vendor/dirPagination.js"></script>
 
   <script src="js/main.js"></script>
 
@@ -346,11 +352,13 @@
   <script src="js/app/controllers/applications.controller.js"></script>
   <script src="js/app/controllers/subscriptions.controller.js"></script>
   <script src="js/app/controllers/overview.controller.js"></script>
+  <script src="js/app/controllers/overview.community.controller.js"></script>
   <script src="js/app/controllers/media.controller.js"></script>
   <script src="js/app/controllers/community.controller.js"></script>
   <script src="js/app/controllers/community.category.controller.js"></script>
   <script src="js/app/controllers/community.forum.controller.js"></script>
   <script src="js/app/controllers/community.topic.controller.js"></script>
+  <script src="js/app/controllers/community.label.controller.js"></script>
   <script src="js/app/controllers/statistics.applications.controller.js"></script>
   <script src="js/app/controllers/statistics.apis.controller.js"></script>
 

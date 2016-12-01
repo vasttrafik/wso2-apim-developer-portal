@@ -8,9 +8,9 @@
     .module('vtPortal')
     .factory('CommunityService', CommunityService);
 
-  CommunityService.$inject = ['$q', '$rootScope', 'APIService'];
+  CommunityService.$inject = ['$location', '$q', '$http', '$rootScope', 'APIService'];
 
-  function CommunityService($q, $rootScope, APIService) {
+  function CommunityService($location, $q, $http, $rootScope, APIService) {
     var service = {};
 
     service.getFirstTopicByLabel = getFirstTopicByLabel;
@@ -18,7 +18,13 @@
     service.getFirstPostByLabel = getFirstPostByLabel;
     service.getFirstPostByLabels = getFirstPostByLabels;
     service.isMember = isMember;
+    service.getMemberId = getMemberId;
     service.isAdmin = isAdmin;
+    service.addGravatarProfileInfoToPosts = addGravatarProfileInfoToPosts;
+    service.addGravatarProfileInfoToPost = addGravatarProfileInfoToPost;
+    service.setHasVotedToPost = setHasVotedToPost;
+    service.setHasVotedToPosts = setHasVotedToPosts;
+    service.redirectToTopic = redirectToTopic;
 
     return service;
 
@@ -42,7 +48,7 @@
     function getFirstByLabel(label, forumId, categoryId, isPost) {
       var deferred = $q.defer();
 
-      APIService.communityCall(isPost ? 'postsGet' : 'topicsGet', [label])
+      APIService.communityCall(isPost ? 'postsGet' : 'topicsGet', [label, null, null, 100])
         .then(function topicsGetResponse(response) {
           if (response.status === 200) {
 
@@ -122,6 +128,14 @@
       }
     }
 
+    function getMemberId() {
+      try {
+        return $rootScope.globals.currentUser.memberId;
+      } catch (err) {
+        return -1;
+      }
+    }
+
     function errorResponse(status, message, deferred) {
 
       var response = {
@@ -130,6 +144,75 @@
       };
 
       deferred.reject(response);
+    }
+
+    function addGravatarProfileInfoToPost(post) {
+
+      post.createdBy.gravatarProfileInfo = {};
+
+      if (post.createdBy.useGravatar) {
+        var profileUrl = 'https://www.gravatar.com/' + post.createdBy.gravatarEmailHash + '.json?callback=JSON_CALLBACK';
+        $http.jsonp(profileUrl).then(function(success) {
+            if (Array.isArray(success.data.entry) && success.data.entry.length > 0) {
+              post.createdBy.gravatarProfileInfo.name = success.data.entry[0].name.formatted;
+              post.createdBy.gravatarProfileInfo.bioHTML = ''
+
+              if (success.data.entry[0].aboutMe != null) {
+                post.createdBy.gravatarProfileInfo.bioHTML = success.data.entry[0].aboutMe + '<br>';
+              }
+
+              if (success.data.entry[0].currentLocation != null) {
+                post.createdBy.gravatarProfileInfo.bioHTML = post.createdBy.gravatarProfileInfo.bioHTML + success.data.entry[0].currentLocation + '<br>';
+              }
+
+              post.createdBy.gravatarProfileInfo.bioHTML = post.createdBy.gravatarProfileInfo.bioHTML + '<br>';
+
+            }
+          })
+          .catch(function(error) {
+            post.createdBy.gravatarProfileInfo.name = post.createdBy.signature;
+            post.createdBy.gravatarProfileInfo.bioHTML = '';
+          });
+      } else {
+        post.createdBy.gravatarProfileInfo.name = post.createdBy.signature;
+        post.createdBy.gravatarProfileInfo.bioHTML = '';
+      }
+
+    }
+
+    /* Cycles through all users and retrieves their gravatar profile info if available. Info is added to json object for createdBy */
+    function addGravatarProfileInfoToPosts(posts) {
+
+      angular.forEach(posts, function(value, key) {
+        addGravatarProfileInfoToPost(value);
+      });
+
+    }
+
+    function setHasVotedToPost(post) {
+
+      if ($rootScope.user.loggedIn) {
+        post.hasVoted = false;
+
+        for (var i = 0; i < post.votes.length; i++) {
+          if (post.votes[i].memberId === $rootScope.globals.currentUser.memberId) {
+            post.hasVoted = true;
+            break;
+          }
+        }
+      }
+
+    }
+
+    function setHasVotedToPosts(posts) {
+
+      angular.forEach(posts, function(value, key) {
+        setHasVotedToPost(value);
+      });
+    }
+
+    function redirectToTopic(topicId) {
+      $location.path('/community/topic/' + topicId);
     }
 
   }
