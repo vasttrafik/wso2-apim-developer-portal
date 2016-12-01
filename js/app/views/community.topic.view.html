@@ -9,8 +9,8 @@
         </ol>
 
         <!-- Subject -->
-        <span class="pull-right pointer" ng-if="vm.topic.createdBy.id === globals.currentUser.memberId && vm.topic.numberOfPosts < 2 || vm.communityService.isAdmin()" ng-click="vm.removeTopic()"><i class="fa fa-trash"></i></span>
-        <span class="pull-right margin-right-mini pointer" ng-if="vm.topic.createdBy.id != null && vm.topic.createdBy.id === globals.currentUser.memberId || vm.communityService.isAdmin()" ng-click="vm.addTopicUpdate()"><i class="fa fa-pencil-square-o"></i></span>
+        <span class="pull-right pointer" ng-if="vm.topic.createdBy.id === vm.communityService.getMemberId() && vm.topic.numberOfPosts < 2 || vm.communityService.isAdmin()" ng-click="vm.removeTopic()"><i class="fa fa-trash"></i></span>
+        <span class="pull-right margin-right-mini pointer" ng-if="vm.topic.createdBy.id != null && vm.topic.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin()" ng-click="vm.addTopicUpdate()"><i class="fa fa-pencil-square-o"></i></span>
 
         <h1 ng-if="!vm.toggleTopicUpdate">{{vm.topic.subject}}</h1>
 
@@ -18,8 +18,8 @@
             <form name="updateTopicForm" ng-submit="vm.updateTopic()" role="form">
                 <div class="form-group" ng-class="{ 'has-error': updateTopicForm.subject.$dirty && updateTopicForm.subject.$invalid,
   'has-success' : updateTopicForm.subject.$valid}">
-                    <input type="text" name="subject" id="subject" class="form-control" ng-model="vm.form.subject" maxlength="100" required />
-                    <div ng-show="vm.form.subject.length === 100" class="help-block">Maxlängd för en fråga är 100 tecken</div>
+                    <input type="text" name="subject" id="subject" class="form-control" ng-model="vm.form.subject" ng-maxlength="100" required />
+                    <div ng-show="updateTopicForm.text.$error.maxlength" class="help-block">Maxlängd för en fråga är 100 tecken</div>
                 </div>
 
                 <div class="form-actions pull-right">
@@ -54,21 +54,21 @@
 
                     <!-- Votes -->
                     <span class="pull-right" data-balloon="Inläggets poäng" data-balloon-pos="up">
-                    <span ng-if="!vm.communityService.isMember() && entries.pointsAwarded > 0 || entries.createdBy.id === globals.currentUser.memberId"><strong><i class="fa fa-chevron-up"></i> {{entries.pointsAwarded}}</strong></span>
-                    <span ng-if="entries.hasVoted && vm.communityService.isMember() && entries.createdBy.id !== globals.currentUser.memberId" class="voted"><strong><i class="fa fa-chevron-up"></i> {{entries.pointsAwarded}}</strong></span>
-                    <span ng-if="!entries.hasVoted && vm.communityService.isMember() && entries.createdBy.id !== globals.currentUser.memberId" class="vote" ng-click="vm.addVote(entries.id, entries.type)"><strong><i class="fa fa-chevron-up"></i> {{entries.pointsAwarded}}</strong></span>
+                    <span ng-if="!vm.communityService.isMember() && entries.pointsAwarded > 0 || entries.createdBy.id === vm.communityService.getMemberId()"><strong><i class="fa fa-chevron-up"></i> {{entries.pointsAwarded}}</strong></span>
+                    <span ng-if="entries.hasVoted && vm.communityService.isMember() && entries.createdBy.id !== vm.communityService.getMemberId()" class="voted"><strong><i class="fa fa-chevron-up"></i> {{entries.pointsAwarded}}</strong></span>
+                    <span ng-if="!entries.hasVoted && vm.communityService.isMember() && entries.createdBy.id !== vm.communityService.getMemberId()" class="vote" ng-click="vm.addVote(entries.id, entries.type)"><strong><i class="fa fa-chevron-up"></i> {{entries.pointsAwarded}}</strong></span>
                     </span>
                     <!-- End votes -->
 
-                    <span class="pull-right pointer margin-right-small" ng-if="entries.createdBy.id === globals.currentUser.memberId || vm.communityService.isAdmin()" ng-click="vm.removePost(entries.id)" data-balloon="Ta bort inlägg" data-balloon-pos="up"><i class="fa fa-trash"></i></span>
-                    <span class="pull-right pointer margin-right-mini" ng-if="entries.createdBy.id === globals.currentUser.memberId || vm.communityService.isAdmin()" ng-click="vm.addPostCommentUpdate(entries.id)" data-balloon="Redigera inlägg" data-balloon-pos="up"><i class="fa fa-pencil-square-o"></i></span>
+                    <span class="pull-right pointer margin-right-small" ng-if="entries.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin()" ng-click="vm.removePost(entries.id)" data-balloon="Ta bort inlägg" data-balloon-pos="up"><i class="fa fa-trash"></i></span>
+                    <span class="pull-right pointer margin-right-mini" ng-if="entries.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin()" ng-click="vm.addPostCommentUpdate(entries.id)" data-balloon="Redigera inlägg" data-balloon-pos="up"><i class="fa fa-pencil-square-o"></i></span>
                     <span class="pull-right margin-right-mini" ng-if="entries.isAnswer" data-balloon="Utpekat som korrekt svar på frågan" data-balloon-pos="up"><i class="fa fa-check-square-o"></i></span>
-                    <span class="pull-right pointer margin-right-mini" ng-if="$index !== 0 && !entries.isAnswer && !vm.topic.answeredByPostId && (vm.topic.createdBy.id === globals.currentUser.memberId || vm.communityService.isAdmin())" ng-click="vm.setAnswer(entries.id)"
+                    <span class="pull-right pointer margin-right-mini" ng-if="$index !== 0 && !entries.isAnswer && !vm.topic.answeredByPostId && (vm.topic.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin())" ng-click="vm.setAnswer(entries.id)"
                         data-balloon="Utpeka detta svar som korrekt svar på frågan" data-balloon-pos="up"><i class="fa fa-square-o"></i></span>
                 </div>
 
-                <div class="row simple-well margin-bottom-mini" ng-if="$index === 0 || vm.topic.answeredByPostId || (vm.topic.createdBy.id !== globals.currentUser.memberId && !vm.communityService.isAdmin())" ng-class="entries.isAnswer ? 'answer' : ''" btf-markdown="entries.text"></div>
-                <div class="row simple-well margin-bottom-mini pointer" ng-if="$index !== 0 && !vm.topic.answeredByPostId && (vm.topic.createdBy.id === globals.currentUser.memberId || vm.communityService.isAdmin())" ng-class="entries.isAnswer ? 'answer' : 'not-answer'"
+                <div class="row simple-well margin-bottom-mini" ng-if="$index === 0 || vm.topic.answeredByPostId || (vm.topic.createdBy.id !== vm.communityService.getMemberId() && !vm.communityService.isAdmin())" ng-class="entries.isAnswer ? 'answer' : ''" btf-markdown="entries.text"></div>
+                <div class="row simple-well margin-bottom-mini pointer" ng-if="$index !== 0 && !vm.topic.answeredByPostId && (vm.topic.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin())" ng-class="entries.isAnswer ? 'answer' : 'not-answer'"
                     ng-click="vm.setAnswer(entries.id)" data-balloon="Utpeka detta svar som korrekt svar på frågan" data-balloon-pos="up" btf-markdown="entries.text"></div>
 
             </div>
@@ -96,8 +96,8 @@
                             <label for="post{{entries.id}}" ng-if="$index === 0">Fråga</label>
                             <label for="post{{entries.id}}" ng-if="$index !== 0">Svar</label>
                             <span class="pull-right" style="font-size: 0.9em"><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">Markdown Cheat Sheet</a></span>
-                            <textarea name="description" id="post{{entries.id}}" type="text" class="form-control" ng-model="vm.form.posts[entries.id]" style="height: 100px; margin-bottom: 20px" maxlength="30000" required></textarea>
-                            <div ng-show="vm.form.posts[entries.id].length === 30000" class="help-block">Maxlängd är 30000 tecken</div>
+                            <textarea name="description" id="post{{entries.id}}" type="text" class="form-control" ng-model="vm.form.posts[entries.id]" style="height: 100px; margin-bottom: 20px" ng-maxlength="10000" required></textarea>
+                            <div ng-show="updatePostForm.description.$error.maxlength" class="help-block">Maxlängd är 10000 tecken</div>
                             <label for="description" ng-show="vm.form.posts[entries.id]">Förhandsgranskning</label>
                             <div btf-markdown="vm.form.posts[entries.id]">
                             </div>
@@ -139,7 +139,7 @@
             </div>
 
             <div ng-if="entries.isDeleted && vm.togglePostsCommentsUpdate.indexOf(entries.id) === -1" class="row simple-well margin-bottom-mini">
-                <span class="pull-right pointer margin-right-mini" ng-if="entries.createdBy.id === globals.currentUser.memberId || vm.communityService.isAdmin()" ng-click="vm.addPostCommentUpdate(entries.id)" data-balloon="Redigera inlägg" data-balloon-pos="up"><i class="fa fa-pencil-square-o"></i></span>
+                <span class="pull-right pointer margin-right-mini" ng-if="entries.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin()" ng-click="vm.addPostCommentUpdate(entries.id)" data-balloon="Redigera inlägg" data-balloon-pos="up"><i class="fa fa-pencil-square-o"></i></span>
                 <p>Svaret borttaget av användaren för {{entries.editDate | relativeDate}}</p>
             </div>
             <!-- End main post if deleted -->
@@ -156,14 +156,14 @@
 
                     <!-- Votes -->
                     <span class="pull-right" data-balloon="Kommentarens poäng" data-balloon-pos="up">
-                    <span ng-if="!vm.communityService.isMember() && comment.pointsAwarded > 0 || comment.createdBy.id === globals.currentUser.memberId"><strong><i class="fa fa-chevron-up"></i> {{comment.pointsAwarded}}</strong></span>
-                    <span ng-if="comment.hasVoted && vm.communityService.isMember() && comment.createdBy.id !== globals.currentUser.memberId" class="voted"><strong><i class="fa fa-chevron-up"></i> {{comment.pointsAwarded}}</strong></span>
-                    <span ng-if="!comment.hasVoted && vm.communityService.isMember() && comment.createdBy.id !== globals.currentUser.memberId" class="vote" ng-click="vm.addVote(comment.id, comment.type)"><strong><i class="fa fa-chevron-up"></i> {{comment.pointsAwarded}}</strong></span>
+                    <span ng-if="!vm.communityService.isMember() && comment.pointsAwarded > 0 || comment.createdBy.id === vm.communityService.getMemberId()"><strong><i class="fa fa-chevron-up"></i> {{comment.pointsAwarded}}</strong></span>
+                    <span ng-if="comment.hasVoted && vm.communityService.isMember() && comment.createdBy.id !== vm.communityService.getMemberId()" class="voted"><strong><i class="fa fa-chevron-up"></i> {{comment.pointsAwarded}}</strong></span>
+                    <span ng-if="!comment.hasVoted && vm.communityService.isMember() && comment.createdBy.id !== vm.communityService.getMemberId()" class="vote" ng-click="vm.addVote(comment.id, comment.type)"><strong><i class="fa fa-chevron-up"></i> {{comment.pointsAwarded}}</strong></span>
                     </span>
                     <!-- End votes -->
 
-                    <span class="pull-right pointer margin-right-small" ng-if="comment.createdBy.id === globals.currentUser.memberId || vm.communityService.isAdmin()" ng-click="vm.removePost(comment.id, true)" data-balloon="Ta bort kommentar" data-balloon-pos="up"><i class="fa fa-trash"></i></span>
-                    <span class="pull-right pointer margin-right-mini" ng-if="comment.createdBy.id === globals.currentUser.memberId || vm.communityService.isAdmin()" ng-click="vm.addPostCommentUpdate(comment.id)" data-balloon="Editera kommentar" data-balloon-pos="up"><i class="fa fa-pencil-square-o"></i></span>
+                    <span class="pull-right pointer margin-right-small" ng-if="comment.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin()" ng-click="vm.removePost(comment.id, true)" data-balloon="Ta bort kommentar" data-balloon-pos="up"><i class="fa fa-trash"></i></span>
+                    <span class="pull-right pointer margin-right-mini" ng-if="comment.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin()" ng-click="vm.addPostCommentUpdate(comment.id)" data-balloon="Editera kommentar" data-balloon-pos="up"><i class="fa fa-pencil-square-o"></i></span>
                     <div btf-markdown="comment.text">
                     </div>
 
@@ -187,7 +187,8 @@
                     <form name="updateCommentForm{{comment.id}}" ng-submit="vm.updatePost(comment.id)" role="form">
                         <div class="form-group" ng-class="{ 'has-error': updateCommentForm{{comment.id}}.comment.$dirty && updateCommentForm{{comment.id}}.comment.$invalid,
       'has-success' : updateCommentForm{{comment.id}}.comment.$valid}">
-                            <input type="text" name="comment" id="comment{{comment.id}}" class="form-control" ng-model="vm.form.posts[comment.id]" required></input>
+                            <textarea name="comment" id="comment{{comment.id}}" class="form-control" ng-model="vm.form.posts[comment.id]" ng-maxlength="1000" required />
+                            <div ng-show="updateCommentForm{{comment.id}}.comment.$error.maxlength" class="help-block">Maxlängd är 1000 tecken</div>
                         </div>
 
                         <div class="form-actions text-right">
@@ -221,20 +222,21 @@
 
                 </div>
                 <div ng-if="comment.isDeleted && vm.togglePostsCommentsUpdate.indexOf(comment.id) === -1">
-                    <span class="pull-right pointer margin-right-mini" ng-if="comment.createdBy.id === globals.currentUser.memberId || vm.communityService.isAdmin()" ng-click="vm.addPostCommentUpdate(comment.id)" data-balloon="Redigera kommentar" data-balloon-pos="up"><i class="fa fa-pencil-square-o"></i></span>                    Kommentaren borttagen av användaren för {{comment.editDate | relativeDate}}
+                    <span class="pull-right pointer margin-right-mini" ng-if="comment.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin()" ng-click="vm.addPostCommentUpdate(comment.id)" data-balloon="Redigera kommentar" data-balloon-pos="up"><i class="fa fa-pencil-square-o"></i></span>                    Kommentaren borttagen av användaren för {{comment.editDate | relativeDate}}
                 </div>
                 <!-- End comment if deleted -->
             </div>
             <!-- End comments to main post -->
 
-            <div class="pull-right pointer" ng-click="vm.togglePostComment(entries.id)" ng-if="vm.togglePostsComments.indexOf(entries.id) === -1 && globals.currentUser.memberId && user.loggedIn"><u>Skriv en kommentar</u></div>
+            <div class="pull-right pointer" ng-click="vm.togglePostComment(entries.id)" ng-if="vm.togglePostsComments.indexOf(entries.id) === -1 && vm.communityService.getMemberId() && user.loggedIn"><u>Skriv en kommentar</u></div>
 
             <!-- Add comment -->
             <div ng-if="vm.togglePostsComments.indexOf(entries.id) !== -1">
                 <form name="addCommentForm{{entries.id}}" ng-submit="vm.addComment(entries.id)" role="form">
                     <div class="form-group" ng-class="{ 'has-error': addCommentForm{{entries.id}}.comment.$dirty && addCommentForm{{entries.id}}.comment.$invalid,
     'has-success' : addCommentForm{{entries.id}}.comment.$valid}">
-                        <input type="text" name="comment" id="comment{{entries.id}}" class="form-control" ng-model="vm.form.comments[entries.id]" placeholder="Skriv en kommentar..." required />
+                        <textarea name="comment" id="comment{{entries.id}}" class="form-control" ng-model="vm.form.comments[entries.id]" ng-maxlength="1000" placeholder="Skriv en kommentar..." required />
+                        <div ng-show="addCommentForm{{entries.id}}.comment.$error.maxlength" class="help-block">Maxlängd är 1000 tecken</div>
                     </div>
 
                     <div class="form-actions pull-right">
@@ -269,8 +271,8 @@
 'has-success' : addAnswerForm.answer.$valid}">
                         <label for="answer">Svar</label>
                         <span style="float: right; font-size: 0.9em"><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank">Markdown Cheat Sheet</a></span>
-                        <textarea name="answer" id="answer" type="text" class="form-control margin-bottom-small" ng-model="vm.form.answer" style="height: 100px" maxlength="30000" required></textarea>
-                        <span ng-show="addAnswerForm.answer.$error.maxlength" class="help-block">Maxlängd för ett svar är 30000 tecken</span>
+                        <textarea name="answer" id="answer" type="text" class="form-control margin-bottom-small" ng-model="vm.form.answer" style="height: 100px" ng-maxlength="10000" required></textarea>
+                        <span ng-show="addAnswerForm.answer.$error.maxlength" class="help-block">Maxlängd för ett svar är 10000 tecken</span>
                         <label for="description" ng-show="vm.form.answer">Förhandsgranskning</label>
                         <div btf-markdown="vm.form.answer">
                         </div>

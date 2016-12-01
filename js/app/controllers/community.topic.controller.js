@@ -13,6 +13,8 @@
 
     vm.communityService = CommunityService;
 
+    vm.locationPath = $location.path();
+
     vm.addAnswer = addAnswer;
     vm.addComment = addComment;
     vm.addVote = addVote;
@@ -49,6 +51,10 @@
       if (response.status === 200) {
 
         vm.topic = response.data;
+
+        if ($location.path().indexOf('admin') === -1 && vm.topic.categoryId === 1) {
+          $location.path('/');
+        }
 
         CommunityService.addGravatarProfileInfoToPosts(vm.topic.posts);
         CommunityService.setHasVotedToPosts(vm.topic.posts);
@@ -131,12 +137,12 @@
         }])
         .then(postsIdVotesPostResponse)
         .catch(function(response) {
-          AlertService.error('Problem att skicka röst');
+          AlertService.error('Problem att uppdatera poäng');
         });
 
       function postsIdVotesPostResponse(response) {
         if (response.status === 201) {
-          AlertService.success('Röst skickad!');
+          AlertService.success('Poäng på inlägget uppdaterades!');
 
           for (var i = 0; i < vm.topic.posts.length; i++) {
 
@@ -151,7 +157,7 @@
           }
 
         } else {
-          AlertService.errorWithStatus(response.status, 'Problem att skicka röst');
+          AlertService.errorWithStatus(response.status, 'Problem att uppdatera poäng');
         }
       }
 
@@ -268,7 +274,7 @@
 
       function topicsIdDeleteResponse(response) {
         if (response.status === 200) {
-          AlertService.success('Topic borttagen!');
+          AlertService.success('Fråga borttagen!');
 
           $location.path('/' + ($location.path().split('/')[1] === 'community' ? 'community' : 'admin') + '/forum/' + vm.topic.forumId); // Redirect to parent forum
 
@@ -299,6 +305,9 @@
 
           vm.topic.answeredByPostId = postId;
           vm.topic.posts[i].isAnswer = true;
+          vm.topic.posts[i].pointsAwarded = response.data.pointsAwarded;
+          vm.topic.posts[i].votes = response.data.votes;
+          CommunityService.setHasVotedToPost(vm.topic.posts[i]);
         } else {
           AlertService.errorWithStatus(response.status, 'Problem att specificera utpekat svar till frågan');
         }
