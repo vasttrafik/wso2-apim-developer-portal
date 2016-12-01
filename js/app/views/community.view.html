@@ -36,10 +36,10 @@
 
                 </div>
                 <div ng-if="!vm.labels.popular.id">
-                    <h3>Det finns inga populära frågor inom denna kategori ännu. <br/><br/>Ställ gärna en!</h3>
+                    <h3>Det finns inga populära frågor ännu. <br/><br/>Ställ gärna en!</h3>
                 </div>
 
-                <span style="position: absolute;bottom: 5px;right: 10px; font-size: 12px" data-balloon="Populär" data-balloon-pos="up">Populär</span>
+                <span style="position: absolute;bottom: 5px;right: 10px; font-size: 12px" data-balloon="Populär" data-balloon-pos="up"><a href="{{'#' + vm.locationPath + '/popular'}}" class="color-white">Populär</a></span>
             </div>
         </div>
         <div class="col-md-4 no-padding-right-lg">
@@ -64,9 +64,9 @@
 
                 </div>
                 <div ng-if="!vm.labels.answered.id">
-                    <h3>Inga frågor är ännu besvarade inom denna kategori. <br/><br/>Hjälp gärna till!</h3>
+                    <h3>Inga frågor är ännu besvarade. <br/><br/>Hjälp gärna till!</h3>
                 </div>
-                <span style="position: absolute;bottom: 5px;right: 10px; font-size: 12px" data-balloon="Senaste besvarade fråga" data-balloon-pos="up">Senast besvarad</span>
+                <span style="position: absolute;bottom: 5px;right: 10px; font-size: 12px" data-balloon="Senaste besvarade fråga" data-balloon-pos="up"><a href="{{'#' + vm.locationPath + '/answered'}}" class="color-white">Senast besvarad</a></span>
             </div>
         </div>
         <div class="col-md-4 no-padding-right-lg">
@@ -91,9 +91,9 @@
 
                 </div>
                 <div ng-if="!vm.labels.unanswered.id">
-                    <h3>Det finns inga obesvarade frågor inom denna kategori. <br/><br/>Ställ gärna en ny!</h3>
+                    <h3>Det finns inga obesvarade frågor. <br/><br/>Ställ gärna en ny!</h3>
                 </div>
-                <span style="position: absolute;bottom: 5px;right: 10px; font-size: 12px" data-balloon="Senaste obesvarade fråga" data-balloon-pos="up">Senast obesvarad</span>
+                <span style="position: absolute;bottom: 5px;right: 10px; font-size: 12px" data-balloon="Senaste obesvarade fråga" data-balloon-pos="up"><a href="{{'#' + vm.locationPath + '/unanswered'}}" class="color-white">Senast obesvarad</a></span>
             </div>
         </div>
     </div>
@@ -120,7 +120,7 @@
                         <h2 class="no-margin-bottom">{{entries.numberOfForums}}</h2>
                         <p>Forum</p>
                     </td>
-                    <td ng-if="entries.lastPost" class="padding-left-medium pointer" style="width: 50%" ng-click="vm.communityService.redirectToTopic(entries.lastPost.topicId)">
+                    <td ng-if="entries.lastPost.length > 0" class="padding-left-medium pointer" style="width: 50%" ng-click="vm.communityService.redirectToTopic(entries.lastPost.topicId)">
                         <div class="row padding-bottom-mini">
                             <span uib-popover-html="entries.lastPost.createdBy.gravatarProfileInfo.bioHTML + '<b>Community-poäng:</b> ' + entries.lastPost.createdBy.rankings[0].currentPoints" popover-is-open="popoverIsOpen" ng-mouseenter="popoverIsOpen = !popoverIsOpen" ng-mouseleave="popoverIsOpen = !popoverIsOpen"
                                 popover-title="{{entries.lastPost.createdBy.gravatarProfileInfo.name}}">

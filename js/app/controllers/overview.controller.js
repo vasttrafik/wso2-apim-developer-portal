@@ -1,3 +1,4 @@
+/*global helper*/
 (function() {
   'use strict';
 
@@ -5,10 +6,12 @@
     .module('vtPortal')
     .controller('OverviewCtrl', OverviewCtrl);
 
-  OverviewCtrl.$inject = ['$http', 'APIService', 'AlertService'];
+  OverviewCtrl.$inject = ['$http', 'APIService', 'AlertService', 'CommunityService'];
 
-  function OverviewCtrl($http, APIService, AlertService) {
+  function OverviewCtrl($http, APIService, AlertService, CommunityService) {
     var vm = this;
+
+    vm.communityService = CommunityService;
 
     (function init() {
       APIService.call('applicationsGet', [100, 0, null, 'application/json'])
@@ -16,6 +19,7 @@
 
       APIService.call('subscriptionsGet', [])
         .then(subscriptionsGetResponse);
+
     })();
 
     function subscriptionsGetResponse(response) {

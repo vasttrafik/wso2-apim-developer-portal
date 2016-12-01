@@ -6,7 +6,7 @@
   'use strict';
 
   angular
-    .module('vtPortal', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ngPasswordStrength', 'ui.validate', 'angular-clipboard', 'ngLocationUpdate', 'swaggerUi', 'duScroll', 'angular-loading-bar', 'ngJSONPath', 'highcharts-ng', 'btford.markdown', 'ui.bootstrap', 'ui-iconpicker'])
+    .module('vtPortal', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ngPasswordStrength', 'ui.validate', 'angular-clipboard', 'ngLocationUpdate', 'swaggerUi', 'duScroll', 'angular-loading-bar', 'ngJSONPath', 'highcharts-ng', 'btford.markdown', 'ui.bootstrap', 'ui-iconpicker', 'angularUtils.directives.dirPagination'])
     .config(config)
     .factory('timeoutHttpIntercept', function($rootScope, $q) {
       return {
@@ -142,6 +142,12 @@
       controllerAs: 'vm'
     })
 
+    .when('/overview/community/:type?', {
+      controller: 'OverviewCommunityCtrl',
+      templateUrl: 'js/app/views/overview.community.view.html',
+      controllerAs: 'vm'
+    })
+
     .when('/profile', {
       controller: 'ProfileCtrl',
       templateUrl: 'js/app/views/profile.view.html',
@@ -184,15 +190,33 @@
       controllerAs: 'vm'
     })
 
+    .when('/community/:label', {
+      controller: 'CommunityLabelCtrl',
+      templateUrl: 'js/app/views/community.label.view.html',
+      controllerAs: 'vm'
+    })
+
     .when('/community/category/:categoryId', {
       controller: 'CommunityCategoryCtrl',
       templateUrl: 'js/app/views/community.category.view.html',
       controllerAs: 'vm'
     })
 
+    .when('/community/category/:categoryId/:label', {
+      controller: 'CommunityLabelCtrl',
+      templateUrl: 'js/app/views/community.label.view.html',
+      controllerAs: 'vm'
+    })
+
     .when('/community/forum/:forumId', {
       controller: 'CommunityForumCtrl',
       templateUrl: 'js/app/views/community.forum.view.html',
+      controllerAs: 'vm'
+    })
+
+    .when('/community/forum/:forumId/:label', {
+      controller: 'CommunityLabelCtrl',
+      templateUrl: 'js/app/views/community.label.view.html',
       controllerAs: 'vm'
     })
 
@@ -314,6 +338,7 @@
     vm.clearAlertMessage = AlertService.clearAlertMessageAndDigest;
     vm.clearMenuAlertMessage = AlertService.clearMenuAlertMessageAndDigest;
     vm.isCommunityAdmin = CommunityService.isAdmin;
+    vm.isMember = CommunityService.isMember;
 
     var logoutPromise;
 
