@@ -8,8 +8,8 @@
         </ol>
 
         <!-- Subject -->
-        <span class="pull-right pointer" ng-if="vm.forum.createdBy.id === globals.currentUser.memberId && vm.forum.numberOfTopics === 0 || vm.communityService.isAdmin()" ng-click="vm.removeForum()"><i class="fa fa-trash" id="com-delete-forum"></i></span>
-        <span class="pull-right pointer margin-right-mini" ng-if="vm.forum.createdBy.id != null && vm.forum.createdBy.id === globals.currentUser.memberId || vm.communityService.isAdmin()" ng-click="vm.addForumUpdate()"><i class="fa fa-pencil-square-o" id="com-edit-forum"></i></span>
+        <span class="pull-right pointer" ng-if="vm.forum.createdBy.id === vm.communityService.getMemberId() && vm.forum.numberOfTopics === 0 || vm.communityService.isAdmin()" ng-click="vm.removeForum()"><i class="fa fa-trash" id="com-delete-forum"></i></span>
+        <span class="pull-right pointer margin-right-mini" ng-if="vm.forum.createdBy.id != null && vm.forum.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin()" ng-click="vm.addForumUpdate()"><i class="fa fa-pencil-square-o" id="com-edit-forum"></i></span>
 
         <h1 ng-if="!vm.toggleForumUpdate" id="forum-display-name">{{vm.forum.name}}</h1>
 
@@ -72,10 +72,10 @@
 
                 </div>
                 <div ng-if="!vm.labels.popular.id">
-                    <h3>Det finns inga populära frågor inom denna kategori ännu. <br/><br/>Ställ gärna en!</h3>
+                    <h3>Det finns inga populära frågor i detta forum ännu. <br/><br/>Ställ gärna en!</h3>
                 </div>
 
-                <span style="position: absolute;bottom: 5px;right: 10px; font-size: 12px" data-balloon="Populär" data-balloon-pos="up">Populär</span>
+                <span style="position: absolute;bottom: 5px;right: 10px; font-size: 12px" data-balloon="Populär" data-balloon-pos="up"><a href="{{'#' + vm.locationPath + '/popular'}}" class="color-white">Populär</a></span>
             </div>
         </div>
         <div class="col-md-4 no-padding-right-lg">
@@ -100,9 +100,9 @@
 
                 </div>
                 <div ng-if="!vm.labels.answered.id">
-                    <h3>Inga frågor är ännu besvarade inom denna kategori. <br/><br/>Hjälp gärna till!</h3>
+                    <h3>Inga frågor är ännu besvarade i detta forum. <br/><br/>Hjälp gärna till!</h3>
                 </div>
-                <span style="position: absolute;bottom: 5px;right: 10px; font-size: 12px" data-balloon="Senaste besvarade fråga" data-balloon-pos="up">Senast besvarad</span>
+                <span style="position: absolute;bottom: 5px;right: 10px; font-size: 12px" data-balloon="Senaste besvarade fråga" data-balloon-pos="up"><a href="{{'#' + vm.locationPath + '/answered'}}" class="color-white">Senast besvarad</a></span>
             </div>
         </div>
         <div class="col-md-4 no-padding-right-lg">
@@ -127,15 +127,15 @@
 
                 </div>
                 <div ng-if="!vm.labels.unanswered.id">
-                    <h3>Det finns inga obesvarade frågor inom denna kategori. <br/><br/>Ställ gärna en ny!</h3>
+                    <h3>Det finns inga obesvarade frågor i detta forum. <br/><br/>Ställ gärna en ny!</h3>
                 </div>
-                <span style="position: absolute;bottom: 5px;right: 10px; font-size: 12px" data-balloon="Senaste obesvarade fråga" data-balloon-pos="up">Senast obesvarad</span>
+                <span style="position: absolute;bottom: 5px;right: 10px; font-size: 12px" data-balloon="Senaste obesvarade fråga" data-balloon-pos="up"><a href="{{'#' + vm.locationPath + '/unanswered'}}" class="color-white">Senast obesvarad</a></span>
             </div>
         </div>
     </div>
 
     <div class="row">
-        <table class="table table-borderless">
+        <table ng-if="vm.forum.topics.length > 0" class="table table-borderless">
             <thead class="table-header">
                 <tr>
                     <th colspan="3">
@@ -143,13 +143,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="entries in vm.forum.topics | orderBy:'lastPostDate' : true">
+                <tr dir-paginate="entries in vm.forum.topics | orderBy:'lastPostDate' : true | itemsPerPage: 5">
                     <td style="width: 50px">
                         <span uib-popover-html="entries.createdBy.gravatarProfileInfo.bioHTML + '<b>Community-poäng:</b>' + entries.createdBy.rankings[0].currentPoints" popover-is-open="popoverIsOpen" ng-mouseenter="popoverIsOpen = !popoverIsOpen" ng-mouseleave="popoverIsOpen = !popoverIsOpen"
                             popover-title="{{entries.createdBy.gravatarProfileInfo.name}}">
-            <div class="area area-small">
+            <div ng-class="{'area': !entries.createdBy.useGravatar}" class="area-small">
               <span ng-if="!entries.createdBy.useGravatar" class="fa fa-2x fa-user" aria-hidden="true"></span>
-                        <img ng-if="entries.createdBy.useGravatar" src="https://www.gravatar.com/avatar/{{entries.createdBy.gravatarEmailHash}}?s=45" class="avatar">
+              <img ng-if="entries.createdBy.useGravatar" src="https://www.gravatar.com/avatar/{{entries.createdBy.gravatarEmailHash}}?s=45  " class="avatar">
     </div>
     </span>
     </td>
@@ -168,13 +168,15 @@
         <p>Visningar</p>
     </td>
     <td class="text-center">
-        <h2 class="no-margin-bottom" ng-class="entries.answeredByPostId ? 'answer' : 'not-answer'">{{entries.numberOfAnswers}}</h2>
+        <h2 class="no-margin-bottom" ng-class="{answer: entries.answeredByPostId}">{{entries.numberOfAnswers}}</h2>
         <p>Svar</p>
     </td>
     </tr>
     </tbody>
     </table>
 </div>
+
+<dir-pagination-controls></dir-pagination-controls>
 
 <div class="container padding-bottom-small" ng-show="vm.communityService.isMember()" id="com-post-question">
     <h2>Ställ ny fråga</h2>
@@ -183,27 +185,26 @@
             <div class="form-group" ng-class="{ 'has-error': addTopicForm.subject.$dirty && addTopicForm.subject.$invalid,
   'has-success' : addTopicForm.subject.$valid}">
                 <label for="subject">Fråga</label>
-                <input type="text" name="subject" id="subject" class="form-control margin-bottom-small" ng-model="vm.form.topic.subject" maxlength="100" required />
+                <input type="text" name="subject" id="subject" class="form-control margin-bottom-small" ng-model="vm.form.addTopic.subject" maxlength="100" required />
                 <div ng-show="vm.form.topic.subject.length === 100" class="help-block">Maxlängd för en fråga är 100 tecken</div>
                 <label for="subject">Beskrivning</label>
                 <span class="pull-right" style="font-size: 0.9em"><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank">Markdown Cheat Sheet</a></span>
             </div>
             <div class="form-group" ng-class="{ 'has-error': addTopicForm.question.$dirty && addTopicForm.question.$invalid,
   'has-success' : addTopicForm.question.$valid}">
-                <textarea name="question" id="question" type="text" class="form-control margin-bottom-small" ng-model="vm.form.topic.question" style="height: 100px;" maxlength="30000" required></textarea>
-                <span ng-show="vm.form.topic.question.length === 30000" class="help-block">Maxlängd för beskrivningen är 30000 tecken</span>
+                <textarea name="question" id="question" type="text" class="form-control margin-bottom-small" ng-model="vm.form.addTopic.question" style="height: 100px;" ng-maxlength="10000" required></textarea>
+                <span ng-show="addTopicForm.question.$error.maxlength" class="help-block">Maxlängd för beskrivningen är 10000 tecken</span>
             </div>
-            <label for="preview" ng-show="vm.form.topic.question">Förhandsgranskning</label>
-            <div btf-markdown="vm.form.topic.question">
+            <label for="preview" ng-show="vm.form.addTopic.question">Förhandsgranskning</label>
+            <div btf-markdown="vm.form.addTopic.question">
             </div>
-    </div>
 
-    <div class="form-actions noclick pull-right">
-        <button type="submit" ng-disabled="addTopicForm.$invalid" class="btn btn-primary">Skicka</button>
-        <span ng-click="vm.resetAddTopicForm();" class="btn btn-link">Ångra</span>
+            <div class="form-actions noclick pull-right">
+                <button type="submit" ng-disabled="addTopicForm.$invalid" class="btn btn-primary">Skicka</button>
+                <span ng-click="vm.resetAddTopicForm();" class="btn btn-link">Ångra</span>
+            </div>
+        </form>
     </div>
-    </form>
-</div>
 </div>
 
 <div class="container padding-bottom-small" ng-show="user.loggedIn && !vm.communityService.isMember()">

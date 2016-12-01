@@ -6,7 +6,7 @@
             <li class="active">{{vm.category.name}}</li>
         </ol>
         <!-- Name -->
-        <span class="pull-right pointer margin-right-mini" ng-if="vm.category.createdBy.id && vm.category.createdBy.id === globals.currentUser.memberId || vm.communityService.isAdmin()" ng-click="vm.addCategoryUpdate()"><i class="fa fa-pencil-square-o" id="com-edit-category"></i></span>
+        <span class="pull-right pointer margin-right-mini" ng-if="vm.category.createdBy.id && vm.category.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin()" ng-click="vm.addCategoryUpdate()"><i class="fa fa-pencil-square-o" id="com-edit-category"></i></span>
 
         <h1 ng-if="!vm.toggleCategoryUpdate" id="category-display-name">{{vm.category.name}}</h1>
 
@@ -62,7 +62,7 @@
                     <h3>Det finns inga populära frågor inom denna kategori ännu. <br/><br/>Ställ gärna en!</h3>
                 </div>
 
-                <span style="position: absolute;bottom: 5px;right: 10px; font-size: 12px" data-balloon="Populär" data-balloon-pos="up">Populär</span>
+                <span style="position: absolute;bottom: 5px;right: 10px; font-size: 12px" data-balloon="Populär" data-balloon-pos="up"><a href="{{'#' + vm.locationPath + '/popular'}}" class="color-white">Populär</a></span>
             </div>
         </div>
         <div class="col-md-4 no-padding-right-lg">
@@ -89,7 +89,7 @@
                 <div ng-if="!vm.labels.answered.id">
                     <h3>Inga frågor är ännu besvarade inom denna kategori. <br/><br/>Hjälp gärna till!</h3>
                 </div>
-                <span style="position: absolute;bottom: 5px;right: 10px; font-size: 12px" data-balloon="Senaste besvarade fråga" data-balloon-pos="up">Senast besvarad</span>
+                <span style="position: absolute;bottom: 5px;right: 10px; font-size: 12px" data-balloon="Senaste besvarade fråga" data-balloon-pos="up"><a href="{{'#' + vm.locationPath + '/answered'}}" class="color-white">Senast besvarad</a></span>
             </div>
         </div>
         <div class="col-md-4 no-padding-right-lg">
@@ -116,7 +116,7 @@
                 <div ng-if="!vm.labels.unanswered.id">
                     <h3>Det finns inga obesvarade frågor inom denna kategori. <br/><br/>Ställ gärna en ny!</h3>
                 </div>
-                <span style="position: absolute;bottom: 5px;right: 10px; font-size: 12px" data-balloon="Senaste obesvarade fråga" data-balloon-pos="up">Senast obesvarad</span>
+                <span style="position: absolute;bottom: 5px;right: 10px; font-size: 12px" data-balloon="Senaste obesvarade fråga" data-balloon-pos="up"><a href="{{'#' + vm.locationPath + '/unanswered'}}" class="color-white">Senast obesvarad</a></span>
             </div>
         </div>
     </div>
@@ -130,7 +130,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="entries in vm.category.forums | orderBy:'id'">
+                <tr dir-paginate="entries in vm.category.forums | orderBy:'id' | itemsPerPage: 5">
                     <td style="width: 50px">
                         <div class="area area-small">
                             <span class="{{entries.imageURL}}" aria-hidden="true"></span>
@@ -169,6 +169,8 @@
             </tbody>
         </table>
     </div>
+
+    <dir-pagination-controls></dir-pagination-controls>
 
     <div class="container padding-bottom-small" ng-show="vm.communityService.isAdmin()" id="com-post-forum">
         <h2>Skapa nytt forum</h2>
@@ -214,6 +216,4 @@
     <div class="row">
         <h3><a href="#/profile" id="com-create-link">Skapa en community profil för att kunna interagera med forumet</a></h3>
     </div>
-</div>
-
 </div>

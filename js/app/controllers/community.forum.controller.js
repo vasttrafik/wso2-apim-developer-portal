@@ -13,6 +13,8 @@
 
     vm.communityService = CommunityService;
 
+    vm.locationPath = $location.path();
+
     vm.addTopic = addTopic;
     vm.addForumUpdate = addForumUpdate;
     vm.updateForum = updateForum;
@@ -22,6 +24,8 @@
     (function init() {
 
       if ($location.path().indexOf('admin') > -1 && !CommunityService.isAdmin()) {
+        $location.path('/');
+      } else if (($location.path().indexOf('admin') === -1) && $.inArray(parseInt($routeParams.forumId), [1, 2, 3, 4]) > 0) {
         $location.path('/');
       }
 
@@ -54,12 +58,12 @@
 
       APIService.communityCall('topicsPost', [{
           forumId: vm.forum.id,
-          subject: vm.form.topic.subject,
+          subject: vm.form.addTopic.subject,
           posts: [{
             topicId: vm.forum.topicId,
             forumId: vm.forum.id,
             type: 'question',
-            text: vm.form.topic.question,
+            text: vm.form.addTopic.question,
             textFormat: ($location.path().split('/')[1] === 'community' ? 'md' : 'html')
           }]
         }], true)
@@ -121,7 +125,7 @@
     }
 
     function resetAddTopicForm() {
-      vm.form.topic = {};
+      vm.form.addTopic = {};
       $scope.addTopicForm.$setPristine();
     }
 

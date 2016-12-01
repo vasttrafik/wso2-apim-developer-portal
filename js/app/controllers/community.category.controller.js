@@ -13,14 +13,17 @@
 
     vm.communityService = CommunityService;
 
+    vm.locationPath = $location.path();
+
     vm.addForum = addForum;
     vm.addCategoryUpdate = addCategoryUpdate;
     vm.updateCategory = updateCategory;
     vm.resetAddForumForm = resetAddForumForm;
 
     (function init() {
-
       if ($location.path().indexOf('admin') > -1 && !CommunityService.isAdmin()) {
+        $location.path('/');
+      } else if (($location.path().indexOf('admin') === -1) && parseInt($routeParams.categoryId) === 1) {
         $location.path('/');
       }
 
@@ -91,7 +94,6 @@
       vm.toggleCategoryUpdate = !vm.toggleCategoryUpdate;
       vm.form.name = angular.copy(vm.category.name);
       vm.form.imageURL = angular.copy(vm.category.imageURL);
-      console.log(vm.form.imageURL);
 
     }
 
