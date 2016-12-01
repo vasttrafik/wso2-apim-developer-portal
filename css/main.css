@@ -1001,6 +1001,12 @@ article.newsItem > h2 {
     line-height: 1.5em;
 }
 
+/* Boostrap writeover for pagination in community */
+.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover, .pagination>.active>span:hover, .pagination>.active>a:focus, .pagination>.active>span:focus {
+    background-color: #00aaeb !important;
+    border-color: #00aaeb !important;
+}
+
 /* Border */
 .border-right {
   border-right: 1px solid #dddedf;
@@ -1144,6 +1150,12 @@ article.newsItem > h2 {
 .margin-top-mini {
   margin-top: 5px;
 }
+.margin-top-small {
+  margin-top: 25px;
+}
+.margin-top-medium {
+  margin-top: 50px;
+}
 .no-margin-bottom {
   margin-bottom: 0px !important;
 }
@@ -1246,12 +1258,16 @@ article.newsItem > h2 {
   background-color: #50B746;
   color: #ffffff;
 }
+.answer a {
+  color: #000;
+}
 .not-answer:hover {
   background-color: #50B746;
   color: #ffffff;
 }
 .avatar {
   border-radius: 45px;
+  margin-top: 20px;
 }
 .avatar-small {
   border-radius: 45px;

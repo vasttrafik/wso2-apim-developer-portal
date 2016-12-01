@@ -178,7 +178,7 @@
     }
 
     function setLogoutTimer() {
-      // Automaticly logout the user after 30 minutes
+      // Automaticly logout the user after 60 minutes
       $timeout.cancel(logoutPromise); // Cancel the logout promise
       logoutPromise = $timeout(function() {
         AlertService.error('Du kommer att bli automatiskt utloggad om 1 minut');
