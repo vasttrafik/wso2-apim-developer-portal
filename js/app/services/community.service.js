@@ -18,6 +18,7 @@
     service.getFirstPostByLabel = getFirstPostByLabel;
     service.getFirstPostByLabels = getFirstPostByLabels;
     service.isMember = isMember;
+    service.getMemberId = getMemberId;
     service.isAdmin = isAdmin;
     service.addGravatarProfileInfoToPosts = addGravatarProfileInfoToPosts;
     service.addGravatarProfileInfoToPost = addGravatarProfileInfoToPost;
@@ -47,7 +48,7 @@
     function getFirstByLabel(label, forumId, categoryId, isPost) {
       var deferred = $q.defer();
 
-      APIService.communityCall(isPost ? 'postsGet' : 'topicsGet', [label])
+      APIService.communityCall(isPost ? 'postsGet' : 'topicsGet', [label, null, null, 100])
         .then(function topicsGetResponse(response) {
           if (response.status === 200) {
 
@@ -127,6 +128,14 @@
       }
     }
 
+    function getMemberId() {
+      try {
+        return $rootScope.globals.currentUser.memberId;
+      } catch (err) {
+        return -1;
+      }
+    }
+
     function errorResponse(status, message, deferred) {
 
       var response = {
@@ -146,7 +155,18 @@
         $http.jsonp(profileUrl).then(function(success) {
             if (Array.isArray(success.data.entry) && success.data.entry.length > 0) {
               post.createdBy.gravatarProfileInfo.name = success.data.entry[0].name.formatted;
-              post.createdBy.gravatarProfileInfo.bioHTML = success.data.entry[0].aboutMe + '<br>' + success.data.entry[0].currentLocation + '<br><br>';
+              post.createdBy.gravatarProfileInfo.bioHTML = ''
+
+              if (success.data.entry[0].aboutMe != null) {
+                post.createdBy.gravatarProfileInfo.bioHTML = success.data.entry[0].aboutMe + '<br>';
+              }
+
+              if (success.data.entry[0].currentLocation != null) {
+                post.createdBy.gravatarProfileInfo.bioHTML = post.createdBy.gravatarProfileInfo.bioHTML + success.data.entry[0].currentLocation + '<br>';
+              }
+
+              post.createdBy.gravatarProfileInfo.bioHTML = post.createdBy.gravatarProfileInfo.bioHTML + '<br>';
+
             }
           })
           .catch(function(error) {
