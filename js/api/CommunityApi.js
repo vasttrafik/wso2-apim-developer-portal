@@ -760,8 +760,9 @@ var CommunityAPI;
        * @param query Query string that will be matched against the following attributes: createDate, createdBy, subject, text, categoryId and forumId
        * @param offset Starting point of the list
        * @param limit Maximum size array to return
+       * @param setInfo If First and Last post should be set on each topic. Has a performance hit
        */
-      CommunityApi.prototype.topicsGet = function(label, query, offset, limit, extraHttpRequestParams) {
+      CommunityApi.prototype.topicsGet = function(label, query, offset, limit, setInfo, extraHttpRequestParams) {
         var localVarPath = this.basePath + '/topics';
         var queryParameters = {};
         var headerParams = this.extendObj({}, this.defaultHeaders);
@@ -776,6 +777,9 @@ var CommunityAPI;
         }
         if (limit !== undefined) {
           queryParameters['limit'] = limit;
+        }
+        if (setInfo !== undefined) {
+          queryParameters['setInfo'] = setInfo;
         }
         var httpRequestParams = {
           method: 'GET',
@@ -817,10 +821,15 @@ var CommunityAPI;
        * Retrieves a forum topic, inluding all posts
        * @param id Resource id
        */
-      CommunityApi.prototype.topicsIdGet = function(id, extraHttpRequestParams) {
+      CommunityApi.prototype.topicsIdGet = function(id, includePosts, extraHttpRequestParams) {
         var localVarPath = this.basePath + '/topics/{id}'
           .replace('{' + 'id' + '}', String(id));
         var queryParameters = {};
+
+        if (includePosts !== undefined) {
+          queryParameters['includePosts'] = includePosts;
+        }
+
         var headerParams = this.extendObj({}, this.defaultHeaders);
         // verify required parameter 'id' is set
         if (!id) {
