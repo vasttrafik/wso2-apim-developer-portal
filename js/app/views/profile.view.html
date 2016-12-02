@@ -16,7 +16,7 @@
         <li role="presentation" class="active">
           <a href="#_profile" target="_self" role="tab" data-toggle="tab">Profil</a>
         </li>
-        <li role="presentation" ng-if="vm.communityService.isAdmin()">
+        <li role="presentation">
           <a href="#_community" target="_self" role="tab" data-toggle="tab">Community</a>
         </li>
         <li role="presentation">
@@ -68,9 +68,9 @@
           </form>
         </div>
 
-        <div role="tabpanel" class="tab-pane" id="_community" ng-if="vm.communityService.isAdmin()">
+        <div role="tabpanel" class="tab-pane" id="_community">
 
-          <h3>Din community profil används vid användning av utvecklarportalens <a href="#/admin">administrering av media</a></h3>
+          <h3>Din community profil används vid användning av utvecklarportalens <a href="#/community">community forum</a></h3>
           <br/>
             <div ng-if="globals.currentUser.communityPoints">
               <label for="communityPoints">Community-poäng:</label> {{globals.currentUser.communityPoints}}
