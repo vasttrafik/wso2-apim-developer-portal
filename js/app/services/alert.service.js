@@ -16,6 +16,7 @@
     service.success = success;
     service.menuSuccess = menuSuccess;
     service.error = error;
+    service.errorWithStatus = errorWithStatus;
     service.menuError = menuError;
     service.clearAlertMessage = clearAlertMessage;
     service.clearMenuAlertMessage = clearMenuAlertMessage;
@@ -53,6 +54,17 @@
       };
 
       $timeout(clearAlertMessage, timeoutValue);
+    }
+
+    function errorWithStatus(status, message, heading, timeout) {
+
+      // Handle 401 errors with better error message
+      if (status != null && status === 401) {
+        message = message + '. Var vänlig logga in igen';
+      }
+
+      error(message, heading, timeout);
+
     }
 
     function error(message, heading, timeout) { // jshint ignore:line

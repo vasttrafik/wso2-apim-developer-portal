@@ -102,11 +102,11 @@
           vm.curl.client = 'curl -k -d "grant_type=client_credentials" -H "Authorization: Basic ' +
             btoa(vm.applications[i].consumerKey +
               ':' + vm.applications[i].consumerSecret) +
-            ', Content-Type: application/x-www-form-urlencoded" https://api.vasttrafik.se:443/token';
+            '" https://api.vasttrafik.se:443/token';
           vm.curl.password = 'curl -k -d "grant_type=password&username=<USER>&password=<PASSWORD>" -H "Authorization: Basic ' +
             btoa(vm.applications[i].consumerKey +
               ':' + vm.applications[i].consumerSecret) +
-            ', Content-Type: application/x-www-form-urlencoded" https://api.vasttrafik.se:443/token';
+            '" https://api.vasttrafik.se:443/token';
 
           resetUpdateApplicationForm();
           break;
@@ -182,7 +182,10 @@
         if (vm.applications[i].id === applicationId) {
           if (confirm('Är du säker på att du vill ta bort applikation ' + vm.applications[i].name + '? Betänk att även relaterade prenumerationer för applikationen kommer tas bort') === true) {
             APIService.call('applicationsApplicationIdDelete', [vm.applications[i].id])
-              .then(applicationsApplicationIdDeleteResponse);
+              .then(applicationsApplicationIdDeleteResponse).
+              catch(function(response) {
+                AlertService.error('Problem att ta bort applikationen');
+              });
             break;
           }
         }

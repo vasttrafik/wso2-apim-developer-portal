@@ -1,77 +1,87 @@
 <!-- Areas -->
 <div class="container-fluid">
 
-  <div class="jumbotron title">
-    <div class="container" style="padding-left: 0">
-      <ol class="breadcrumb">
-        <li><a href="#/" target="_self">Hem</a></li>
-        <li class="active">Mina sidor</li>
-      </ol>
-      <h1 class="heading-large">Mina sidor</h1>
+    <div class="jumbotron title">
+        <div class="container" style="padding-left: 0">
+            <ol class="breadcrumb">
+                <li><a href="#/" target="_self">Hem</a></li>
+                <li class="active">Mina sidor</li>
+            </ol>
+            <h1 class="heading-large">Mina sidor</h1>
+        </div>
     </div>
-  </div>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-md-3 col-sm-6 overview">
-        <a href="#/profile" title="Profil">
-          <div class="area overview">
-            <span class="fa fa-user fa-2x" aria-hidden="true"></span>
-          </div>
-        </a>
-        <h3>Min Profil</h3>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 col-sm-6 overview">
+                <a href="#/profile" title="Profil">
+                    <div class="area overview">
+                        <span class="fa fa-user fa-2x" aria-hidden="true"></span>
+                    </div>
+                </a>
+                <h3>Min profil</h3>
 
-        <p>
-          <span ng-if="globals.currentUser.firstName && globals.currentUser.lastName">
+                <p>
+                    <span ng-if="globals.currentUser.firstName && globals.currentUser.lastName">
             {{globals.currentUser.firstName + ' ' + globals.currentUser.lastName}}
           </span>
-          <span ng-if="!globals.currentUser.firstName && !globals.currentUser.lastName">
+                    <span ng-if="!globals.currentUser.firstName && !globals.currentUser.lastName">
             {{globals.currentUser.userName}}
           </span>
-        </p>
-        <p>{{globals.currentUser.email}}</p>
+                </p>
+                <p>{{globals.currentUser.email}}</p>
 
-        <a href="#/profile" title="Profil">
-          <strong>Visa Detaljer</strong>
-        </a>
-      </div>
+                <a href="#/profile" title="Profil">
+                    <strong>Visa detaljer</strong>
+                </a>
 
-      <div class="col-md-3 col-sm-6 overview">
-        <a href="#/applications" title="Mina applikationer">
-          <div class="area overview">
-            <span class="fa fa-star fa-2x" aria-hidden="true"></span>
-          </div>
-        </a>
-        <h3>Mina applikationer</h3>
-        <p ng-repeat="entries in vm.applications"><a href="#/applications/{{entries.id}}">{{entries.name}}</a></p>
-        <a href="#/applications" title="Mina applikationer">
-          <strong>Visa Detaljer</strong>
-        </a>
-      </div>
+                <div ng-if="vm.communityService.isMember()">
+                    <h3 class="margin-top-small">Min community</h3>
+                    <p><a href="#/overview/community/questions">Mina frågor</a></p>
+                    <p><a href="#/overview/community/posts">Mina inlägg</a></p>
+                    <a href="#/overview/community" title="Community">
+                        <strong>Visa detaljer</strong>
+                    </a>
+                </div>
+            </div>
 
-      <div class="col-md-3 col-sm-6 overview">
-        <a href="#/subscriptions" title="Prenumerationer">
-          <div class="area overview">
-            <span class="fa fa-paper-plane fa-2x" aria-hidden="true"></span>
-          </div>
-        </a>
-        <h3>Mina prenumerationer</h3>
-        <p ng-repeat="entries in vm.subscriptions"><a href="#/api/{{entries.api.name}}/{{entries.api.version}}/{{entries.api.provider}}/direct">{{entries.api.name}} {{entries.api.version}}</a></p>
-        <a href="#/subscriptions" title="Prenumerationer">
-          <strong>Visa Detaljer</strong>
-        </a>
-      </div>
+            <div class="col-md-3 col-sm-6 overview">
+                <a href="#/applications" title="Mina applikationer">
+                    <div class="area overview">
+                        <span class="fa fa-star fa-2x" aria-hidden="true"></span>
+                    </div>
+                </a>
+                <h3>Mina applikationer</h3>
+                <p ng-repeat="entries in vm.applications"><a href="#/applications/{{entries.id}}">{{entries.name}}</a></p>
+                <a href="#/applications" title="Mina applikationer">
+                    <strong>Visa detaljer</strong>
+                </a>
+            </div>
 
-      <div class="col-md-3 col-sm-6 overview">
-        <div class="area overview">
-          <span class="fa fa-bar-chart fa-2x" aria-hidden="true"></span>
+            <div class="col-md-3 col-sm-6 overview">
+                <a href="#/subscriptions" title="Prenumerationer">
+                    <div class="area overview">
+                        <span class="fa fa-paper-plane fa-2x" aria-hidden="true"></span>
+                    </div>
+                </a>
+                <h3>Mina prenumerationer</h3>
+                <p ng-repeat="entries in vm.subscriptions"><a href="#/api/{{entries.api.name}}/{{entries.api.version}}/{{entries.api.provider}}/direct">{{entries.api.name}} {{entries.api.version}}</a></p>
+                <a href="#/subscriptions" title="Prenumerationer">
+                    <strong>Visa detaljer</strong>
+                </a>
+            </div>
+
+            <div class="col-md-3 col-sm-6 overview">
+                <div class="area overview">
+                    <span class="fa fa-bar-chart fa-2x" aria-hidden="true"></span>
+                </div>
+                <h3>Min statistik</h3>
+                <p ng-repeat="entries in vm.applications"><a href="#/statistics/applications/{{entries.id}}">{{entries.name}}</a></p>
+                <a href="#/statistics/applications" title="Statistik">
+                    <strong>Visa detaljer</strong>
+                </a>
+            </div>
+
         </div>
-        <h3>Min Statistik</h3>
-        <p ng-repeat="entries in vm.applications"><a href="#/statistics/applications/{{entries.id}}">{{entries.name}}</a></p>
-        <a href="#/statistics/applications" title="Statistik">
-          <strong>Visa Detaljer</strong>
-        </a>
-      </div>
     </div>
-  </div>
 </div>

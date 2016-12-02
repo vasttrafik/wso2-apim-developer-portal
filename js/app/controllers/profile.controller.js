@@ -24,7 +24,7 @@
     (function init() {
       vm.form = {};
 
-      APIService.communityCall('membersIdGet', [$rootScope.globals.currentUser.id])
+      APIService.communityCall('membersIdGet', [$rootScope.globals.currentUser.id], false)
         .then(membersIdGetResponse);
 
       resetProfileForm();
@@ -143,7 +143,12 @@
 
           var created = ($rootScope.globals.currentUser.memberId ? false : true);
 
-          UserService.setMemberId(response.data.id)
+          var currentPoints = 1;
+          if (response.data.rankings != null && response.data.rankings.length > 0) {
+            currentPoints = response.data.rankings[0].currentPoints;
+          }
+
+          UserService.setMemberId(response.data.id, currentPoints, response.data.gravatarEmailHash)
             .then(function() {
 
               vm.member = response.data;
@@ -244,7 +249,6 @@
       if (!$rootScope.globals.currentUser.memberId) {
         vm.form.community.signature = $rootScope.globals.currentUser.userName;
         vm.form.community.email = $rootScope.globals.currentUser.email;
-        vm.form.community.gravatarEmail = $rootScope.globals.currentUser.email;
       } else {
         vm.form.community = angular.copy(vm.member);
       }
@@ -260,46 +264,47 @@
 
             APIService.userCall('challengequestionsGet', ['application/json'])
               .then(challengeQuestionsGetResponse);
+          }
 
-            function challengeQuestionsGetResponse(questionsResponse) {
-              var deferred = $q.defer();
+          function challengeQuestionsGetResponse(questionsResponse) {
+            var deferred = $q.defer();
 
-              if (questionsResponse.status === 200) {
-                vm.challengequestions = questionsResponse.data.filter(function(el) {
-                  return el.id === 'http://wso2.org/claims/challengeQuestion1';
-                });
+            if (questionsResponse.status === 200) {
+              vm.challengequestions = questionsResponse.data.filter(function(el) {
+                return el.id === 'http://wso2.org/claims/challengeQuestion1';
+              });
 
-                vm.form.question = {};
+              vm.form.question = {};
 
-                var question = '';
+              var question = '';
 
-                /* The challenge question isn't correctly formatted */
-                if (response.object.claimValue == null) {
-                  question = '';
-                } else if (response.object.claimValue.indexOf('!') > -1) {
-                  question = response.object.claimValue.substring(0, response.object.claimValue.indexOf('!'));
-                } else {
-                  question = response.object.claimValue;
-                }
-
-                for (var i = 0; i < vm.challengequestions.length; i++) {
-                  if (question === vm.challengequestions[i].question) {
-                    // Set the form to the question the user has previously chosen
-                    vm.form.question.question = vm.challengequestions[i].question;
-                  }
-                }
-
-                if ($scope.challengeQuestionForm != null) {
-                  $scope.challengeQuestionForm.$setPristine();
-                }
-
-                deferred.resolve();
+              /* The challenge question isn't correctly formatted */
+              if (response.object.claimValue == null) {
+                question = '';
+              } else if (response.object.claimValue.indexOf('!') > -1) {
+                question = response.object.claimValue.substring(0, response.object.claimValue.indexOf('!'));
               } else {
-                AlertService.error('Problem att hämta lista med säkerhetsfrågor');
-                deferred.reject();
+                question = response.object.claimValue;
               }
+
+              for (var i = 0; i < vm.challengequestions.length; i++) {
+                if (question === vm.challengequestions[i].question) {
+                  // Set the form to the question the user has previously chosen
+                  vm.form.question.question = vm.challengequestions[i].question;
+                }
+              }
+
+              if ($scope.challengeQuestionForm != null) {
+                $scope.challengeQuestionForm.$setPristine();
+              }
+
+              deferred.resolve();
+            } else {
+              AlertService.error('Problem att hämta lista med säkerhetsfrågor');
+              deferred.reject();
             }
           }
+
         });
     }
 

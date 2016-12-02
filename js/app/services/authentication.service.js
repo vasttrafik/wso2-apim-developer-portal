@@ -89,7 +89,13 @@
         function membersIdGetResponse(membersObject) {
 
           if (membersObject.status === 200) {
-            UserService.setUser(userAccountObject.data, membersObject.data.id ? true : false)
+
+            var currentPoints = 0;
+            if (membersObject.data.rankings != null && membersObject.data.rankings.length > 0) {
+              currentPoints = membersObject.data.rankings[0].currentPoints;
+            }
+
+            UserService.setUser(userAccountObject.data, membersObject.data.id ? true : false, currentPoints, membersObject.data.gravatarEmailHash)
               .then(function(response) {
                 setLogoutTimer();
                 deferred.resolve();
@@ -172,7 +178,7 @@
     }
 
     function setLogoutTimer() {
-      // Automaticly logout the user after 30 minutes
+      // Automaticly logout the user after 60 minutes
       $timeout.cancel(logoutPromise); // Cancel the logout promise
       logoutPromise = $timeout(function() {
         AlertService.error('Du kommer att bli automatiskt utloggad om 1 minut');

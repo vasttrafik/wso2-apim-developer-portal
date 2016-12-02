@@ -6,7 +6,7 @@
   'use strict';
 
   angular
-    .module('vtPortal', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ngPasswordStrength', 'ui.validate', 'angular-clipboard', 'ngLocationUpdate', 'swaggerUi', 'duScroll', 'angular-loading-bar', 'ngJSONPath', 'highcharts-ng', 'btford.markdown', 'ui.bootstrap', 'ui-iconpicker'])
+    .module('vtPortal', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ngPasswordStrength', 'ui.validate', 'angular-clipboard', 'ngLocationUpdate', 'swaggerUi', 'duScroll', 'angular-loading-bar', 'ngJSONPath', 'highcharts-ng', 'btford.markdown', 'ui.bootstrap', 'ui-iconpicker', 'angularUtils.directives.dirPagination'])
     .config(config)
     .factory('timeoutHttpIntercept', function($rootScope, $q) {
       return {
@@ -28,12 +28,67 @@
     })
     .filter('relativeDate', function() {
       return function(input, all) {
-        return Date.create(input).relative();
+        if (Date.create(input).isAfter(Date.now())) {
+          return Date.create(Date.now()).relative();
+        } else {
+          return Date.create(input).relative();
+        }
       };
     })
     .filter('hash', function() {
       return function(input, all) {
         return md5(input);
+      };
+    })
+    .filter('removeMd', function() {
+      return function(input, all) {
+
+        return input
+          // Remove HTML tags
+          .replace(/<(.*?)>/g, '$1')
+          // Remove setext-style headers
+          .replace(/^[=\-]{2,}\s*$/g, '')
+          // Remove footnotes?
+          .replace(/\[\^.+?\](\: .*?$)?/g, '')
+          .replace(/\s{0,2}\[.*?\]: .*?$/g, '')
+          // Remove images
+          .replace(/\!\[.*?\][\[\(].*?[\]\)]/g, '')
+          // Remove inline links
+          .replace(/\[(.*?)\][\[\(].*?[\]\)]/g, '$1')
+          // Remove Blockquotes
+          .replace(/>/g, '')
+          // Remove reference-style links?
+          .replace(/^\s{1,2}\[(.*?)\]: (\S+)( ".*?")?\s*$/g, '')
+          // Remove atx-style headers
+          .replace(/^\#{1,6}\s*([^#]*)\s*(\#{1,6})?/gm, '$1')
+          .replace(/([\*_]{1,3})(\S.*?\S)\1/g, '$2')
+          .replace(/(`{3,})(.*?)\1/gm, '$2')
+          .replace(/^-{3,}\s*$/g, '')
+          .replace(/`(.+?)`/g, '$1')
+          .replace(/\n{2,}/g, '\n\n');
+      };
+    })
+    .filter('cut', function() {
+      return function(value, wordwise, max, tail) {
+        if (!value) return '';
+
+        max = parseInt(max, 10);
+        if (!max) return value;
+        if (value.length <= max) return value;
+
+        value = value.substr(0, max);
+        if (wordwise) {
+          var lastspace = value.lastIndexOf(' ');
+          if (lastspace != -1) {
+            //Also remove . and , so its gives a cleaner result.
+            if (value.charAt(lastspace - 1) == '.' || value.charAt(lastspace - 1) == ',') {
+              lastspace = lastspace - 1;
+            }
+            value = value.substr(0, lastspace);
+          }
+        }
+
+        return value + (tail || ' …');
       };
     })
     .filter('trustAsHtml', function($sce) {
@@ -63,7 +118,7 @@
       controllerAs: 'vm'
     })
 
-    .when('/contact', {
+    .when('/contact:subject?', {
       controller: 'ContactCtrl',
       templateUrl: 'js/app/views/contact.view.html',
       controllerAs: 'vm'
@@ -84,6 +139,12 @@
     .when('/overview', {
       controller: 'OverviewCtrl',
       templateUrl: 'js/app/views/overview.view.html',
+      controllerAs: 'vm'
+    })
+
+    .when('/overview/community/:type?', {
+      controller: 'OverviewCommunityCtrl',
+      templateUrl: 'js/app/views/overview.community.view.html',
       controllerAs: 'vm'
     })
 
@@ -120,6 +181,48 @@
     .when('/recover', {
       controller: 'RecoverCtrl',
       templateUrl: 'js/app/views/recover.view.html',
+      controllerAs: 'vm'
+    })
+
+    .when('/community', {
+      controller: 'CommunityCtrl',
+      templateUrl: 'js/app/views/community.view.html',
+      controllerAs: 'vm'
+    })
+
+    .when('/community/:label', {
+      controller: 'CommunityLabelCtrl',
+      templateUrl: 'js/app/views/community.label.view.html',
+      controllerAs: 'vm'
+    })
+
+    .when('/community/category/:categoryId', {
+      controller: 'CommunityCategoryCtrl',
+      templateUrl: 'js/app/views/community.category.view.html',
+      controllerAs: 'vm'
+    })
+
+    .when('/community/category/:categoryId/:label', {
+      controller: 'CommunityLabelCtrl',
+      templateUrl: 'js/app/views/community.label.view.html',
+      controllerAs: 'vm'
+    })
+
+    .when('/community/forum/:forumId', {
+      controller: 'CommunityForumCtrl',
+      templateUrl: 'js/app/views/community.forum.view.html',
+      controllerAs: 'vm'
+    })
+
+    .when('/community/forum/:forumId/:label', {
+      controller: 'CommunityLabelCtrl',
+      templateUrl: 'js/app/views/community.label.view.html',
+      controllerAs: 'vm'
+    })
+
+    .when('/community/topic/:topicId', {
+      controller: 'CommunityTopicCtrl',
+      templateUrl: 'js/app/views/community.topic.view.html',
       controllerAs: 'vm'
     })
 
@@ -195,7 +298,7 @@
 
         if (!$.isEmptyObject(user)) {
           $rootScope.user.loggedIn = true;
-          UserService.setUser(user, (user.memberId ? true : false)); // Since this also sets the user scope
+          UserService.setUser(user, (user.memberId ? true : false), user.communityPoints, user.gravatarEmailHash); // Since this also sets the user scope
           AuthenticationService.setLogoutTimer();
 
           $http.defaults.headers.common['X-JWT-Assertion'] = user.accessToken.token;
@@ -207,7 +310,7 @@
     $rootScope.$on('$locationChangeStart', function(event, next, current) {
 
       // redirect to startpage if not logged in and trying to access a restricted page
-      var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api', 'guides', 'docs', 'news', 'activation', 'recover', 'contact', 'blog']) === -1;
+      var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api', 'guides', 'docs', 'news', 'activation', 'recover', 'contact', 'blog', 'community']) === -1;
 
       if ($location.path().split('/')[1] === 'statistics') {
         restrictedPage = $location.path().split('/')[2] !== 'apis';
@@ -235,6 +338,7 @@
     vm.clearAlertMessage = AlertService.clearAlertMessageAndDigest;
     vm.clearMenuAlertMessage = AlertService.clearMenuAlertMessageAndDigest;
     vm.isCommunityAdmin = CommunityService.isAdmin;
+    vm.isMember = CommunityService.isMember;
 
     var logoutPromise;
 

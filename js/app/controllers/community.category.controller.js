@@ -13,12 +13,19 @@
 
     vm.communityService = CommunityService;
 
+    vm.locationPath = $location.path();
+
     vm.addForum = addForum;
     vm.addCategoryUpdate = addCategoryUpdate;
     vm.updateCategory = updateCategory;
     vm.resetAddForumForm = resetAddForumForm;
 
     (function init() {
+      if ($location.path().indexOf('admin') > -1 && !CommunityService.isAdmin()) {
+        $location.path('/');
+      } else if (($location.path().indexOf('admin') === -1) && parseInt($routeParams.categoryId) === 1) {
+        $location.path('/');
+      }
 
       if ($location.path().indexOf('admin') > -1 && !CommunityService.isAdmin()) {
         $location.path('/');
@@ -40,6 +47,12 @@
     function categoriesIdGetResponse(response) {
       if (response.status === 200) {
         vm.category = response.data;
+
+        angular.forEach(vm.category.forums, function(value, key) {
+          if (value.lastPost != null) {
+            CommunityService.addGravatarProfileInfoToPost(value.lastPost);
+          }
+        });
 
       } else {
         AlertService.error('Problem att hämta kategori');
@@ -69,7 +82,7 @@
           resetAddForumForm();
 
         } else {
-          AlertService.error('Problem att skapa nytt forum');
+          AlertService.errorWithStatus(response.status, 'Problem att skapa forum');
         }
         vm.dataLoadingAddForum = false;
       }
@@ -84,6 +97,7 @@
 
       vm.toggleCategoryUpdate = !vm.toggleCategoryUpdate;
       vm.form.name = angular.copy(vm.category.name);
+      vm.form.imageURL = angular.copy(vm.category.imageURL);
 
     }
 
@@ -92,9 +106,13 @@
       APIService.communityCall('categoriesIdPut', [vm.category.id, {
           id: vm.category.id,
           name: vm.form.name,
-          isPublic: true
+          isPublic: true,
+          imageURL: vm.form.imageURL
         }])
-        .then(categoriesIdPutResponse);
+        .then(categoriesIdPutResponse)
+        .catch(function(response) {
+          AlertService.error('Problem att uppdatera kategori');
+        });
 
       function categoriesIdPutResponse(response) {
         if (response.status === 200) {
@@ -102,7 +120,7 @@
           vm.category.name = response.data.name;
           vm.toggleCategoryUpdate = false;
         } else {
-          AlertService.error('Problem att uppdatera kategori');
+          AlertService.errorWithStatus(response.status, 'Problem att uppdatera kategori');
         }
       }
 
