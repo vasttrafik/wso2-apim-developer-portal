@@ -24,7 +24,7 @@
         vm.text = $routeParams.type === 'questions' ? 'frågor' : 'inlägg';
       }
 
-      APIService.communityCall('postsGet', [null, query, null, 50])
+      APIService.communityCall('postsGet', [null, query, null, 50], false)
         .then(function postsGetResponse(response) {
           if (response.status === 200) {
             vm.topics = [];

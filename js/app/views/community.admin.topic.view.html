@@ -1,54 +1,55 @@
 <div class="jumbotron title">
-  <div class="container no-padding-left">
-    <ol class="breadcrumb">
-      <li><a href="#/" target="_self">Hem</a></li>
-      <li><a href="#/admin" target="_self">Admin</a></li>
-      <li><a href="#/admin/forum/{{vm.topic.forumId}}" target="_self">{{vm.topic.forumName}}</a></li>
-      <li class="active">{{vm.topic.subject}}</li>
-    </ol>
-    <span style="float: right; cursor: pointer" ng-click="vm.removeTopic()"><i class="fa fa-trash"></i></span>
+    <div class="container no-padding-left">
+        <ol class="breadcrumb">
+            <li><a href="#/" target="_self">Hem</a></li>
+            <li><a href="#/admin" target="_self">Admin</a></li>
+            <li><a href="#/admin/forum/{{vm.topic.forumId}}" target="_self">{{vm.topic.forumName}}</a></li>
+            <li class="active">{{vm.topic.subject}}</li>
+        </ol>
+        <span style="float: right; cursor: pointer" ng-click="vm.removeTopic()"><i class="fa fa-trash"></i></span>
 
-    <div>
-      <form name="updateTopicForm" ng-submit="vm.updateTopic()" role="form">
-        <div class="form-group" ng-class="{ 'has-error': updateTopicForm.subject.$dirty && updateTopicForm.subject.$invalid,
+        <div>
+            <form name="updateTopicForm" ng-submit="vm.updateTopic()" role="form">
+                <div class="form-group" ng-class="{ 'has-error': updateTopicForm.subject.$dirty && updateTopicForm.subject.$invalid,
   'has-success' : updateTopicForm.subject.$valid}">
-          <input type="text" name="subject" id="subject" class="form-control" ng-model="vm.form.subject" maxlength="50" required />
-        </div>
+                    <input type="text" name="subject" id="subject" class="form-control" ng-model="vm.form.subject" maxlength="50" required />
+                </div>
 
-        <div class="form-actions" style="float: right">
-          <button type="submit" ng-disabled="updateTopicForm.$invalid || vm.dataLoadingUpdateTopic" class="btn btn-primary">Uppdatera</button>
-          <span ng-click="vm.form.subject = vm.topic.subject" class="btn btn-link">Ångra</span>
+                <div class="form-actions" style="float: right">
+                    <button type="submit" ng-disabled="updateTopicForm.$invalid || vm.dataLoadingUpdateTopic" class="btn btn-primary">Uppdatera</button>
+                    <span ng-click="vm.form.subject = vm.topic.subject" class="btn btn-link">Ångra</span>
+                </div>
+            </form>
         </div>
-      </form>
     </div>
-  </div>
 </div>
 
 <div class="container">
-  <div class="row padding-top-bottom">
-    <div class="col-md-12">
+    <div class="row padding-top-bottom">
+        <div class="col-md-12">
 
-      <div ng-if="!entries.isDeleted" class="row well">
-        <form name="updatetPostForm" ng-submit="vm.updatePost(vm.topic.posts[0].id)" role="form">
-          <div class="form-group" ng-class="{ 'has-error': updatePostForm.answer.$dirty && updatePostForm.answer.$invalid,
+            <div ng-if="!entries.isDeleted" class="row well">
+                <form name="updatetPostForm" ng-submit="vm.updatePost(vm.topic.posts[0].id)" role="form">
+                    <div class="form-group" ng-class="{ 'has-error': updatePostForm.answer.$dirty && updatePostForm.answer.$invalid,
 'has-success' : updatePostForm.answer.$valid}">
-            <label for="post{{vm.topic.posts[0].id}}">Text</label>
-            <textarea id="post{{vm.topic.posts[0].id}}" type="text" class="form-control" ng-model="vm.form.posts[vm.topic.posts[0].id]" style="height: 100px; margin-bottom: 20px" required></textarea>
-            <label for="description" ng-show="vm.form.posts[vm.topic.posts[0].id]">Förhandsgranskning</label>
-            <div class="news-item-content" ng-bind-html="vm.form.posts[vm.topic.posts[0].id] | trustAsHtml">
+                        <label for="post{{vm.topic.posts[0].id}}">Text</label>
+                        <textarea id="post{{vm.topic.posts[0].id}}" type="text" class="form-control" ng-model="vm.form.posts[vm.topic.posts[0].id]" style="height: 100px; margin-bottom: 20px" required></textarea>
+                        <label for="description" ng-show="vm.form.posts[vm.topic.posts[0].id]">Förhandsgranskning</label>
+                        <div class="news-item-content" ng-bind-html="vm.form.posts[vm.topic.posts[0].id] | trustAsHtml">
+                        </div>
+                    </div>
+
+                    <div class="form-actions noclick" style="float: right">
+                        <button type="submit" ng-disabled="updatePostForm.$invalid" class="btn btn-primary">Uppdatera</button>
+                        <span ng-click="vm.form.posts[vm.topic.posts[0].id] = vm.topic.posts[0].text" class="btn btn-link">Ångra</span>
+                    </div>
+                </form>
             </div>
-          </div>
 
-          <div class="form-actions noclick" style="float: right">
-            <button type="submit" ng-disabled="updatePostForm.$invalid" class="btn btn-primary">Uppdatera</button>
-            <span ng-click="vm.form.posts[vm.topic.posts[0].id] = vm.topic.posts[0].text" class="btn btn-link">Ångra</span>
-          </div>
-        </form>
-      </div>
+            <div ng-if="entries.isDeleted" class="row simple-well" style="margin-bottom: 10px; padding-bottom: 10px">
+                Inlägget borttaget av användaren {{entries.editDate | relativeDate}}
+            </div>
+        </div>
 
-      <div ng-if="entries.isDeleted" class="row simple-well" style="margin-bottom: 10px; padding-bottom: 10px">
-        Inlägget borttaget av användaren {{entries.editDate | relativeDate}}
-      </div>
     </div>
-
-  </div>
+</div>

@@ -1,0 +1,114 @@
+<div class="jumbotron title">
+    <div class="container no-padding-left">
+        <ol class="breadcrumb">
+            <li><a href="#/" target="_self">Hem</a></li>
+            <li><a href="#/overview" target="_self">Mina sidor</a></li>
+            <li><a href="#/community" target="_self">Community</a></li>
+            <li class="active">Mina bevakningar</li>
+        </ol>
+        <h1>Mina bevakningar</h1>
+    </div>
+</div>
+
+<div class="container no-padding-top word-wrap">
+    <div class="row">
+        <table class="table table-borderless">
+            <thead class="table-header">
+                <tr>
+                    <th colspan="3">
+                        <h1>Forum</h1></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr dir-paginate="entries in vm.watches.forums | orderBy:'id'  | itemsPerPage: 5" pagination-id="forums">
+                  <td>
+                    <span class="pull-right pointer margin-right-mini" ng-click="vm.removeForumsWatch(entries.forum.id, entries.id)" data-balloon="Sluta bevaka detta forum" data-balloon-pos="up"><i style="line-height: 80px" class="fa fa-star" id="com-remove-watch"></i></span>
+                  </td>
+                    <td style="width: 50px">
+                        <div class="area area-small">
+                            <span class="{{entries.forum.imageURL}}" aria-hidden="true"></span>
+                        </div>
+                    </td>
+                    <td>
+                        <h2 class="no-margin-bottom"><a href="#/community/forum/{{entries.forum.id}}">{{entries.forum.name}}</a></h2>
+                        <p>{{entries.forum.description}}</p>
+                    </td>
+                    <td class="text-center">
+                        <h2 class="no-margin-bottom">{{entries.forum.numberOfTopics}}</h2>
+                        <p ng-if="entries.numberOfTopics != 1">Frågor</p>
+                        <p ng-if="entries.numberOfTopics == 1">Fråga</p>
+                    </td>
+                    <td class="text-center">
+                        <h2 class="no-margin-bottom">{{entries.forum.numberOfPosts}}</h2>
+                        <p>Inlägg</p>
+                    </td>
+                    <td ng-if="entries.forum.lastPost" class="padding-left-medium pointer" style="width: 40%" ng-click="vm.communityService.redirectToTopic(entries.forum.lastPost.topicId)">
+                        <div class="row padding-bottom-mini">
+                            <span uib-popover-html="entries.forum.lastPost.createdBy.gravatarProfileInfo.bioHTML + '<b>Community-poäng:</b> ' + entries.forum.lastPost.createdBy.rankings[0].currentPoints" popover-is-open="popoverIsOpen" ng-mouseenter="popoverIsOpen = !popoverIsOpen"
+                                ng-mouseleave="popoverIsOpen = !popoverIsOpen" popover-title="{{entries.forum.lastPost.createdBy.gravatarProfileInfo.name}}">
+            <span ng-if="!entries.forum.lastPost.createdBy.useGravatar" class="fa-stack">
+                        <i class="fa fa-circle fa-stack-2x color-blue"></i>
+                        <i class="fa fa-user fa-stack-1x fa-inverse color-white"></i>
+            </span>
+                            <img ng-if="entries.forum.lastPost.createdBy.useGravatar" src="https://www.gravatar.com/avatar/{{entries.forum.lastPost.createdBy.gravatarEmailHash}}?s=35" class="avatar-small margin-right-mini fa-stack">
+                            <span class="signature padding-right-mini">{{entries.forum.lastPost.createdBy.signature}}</span>&bull;
+                            </span>
+                            <span class="margin-left-mini">{{entries.forum.lastPost.createDate | relativeDate}}</span>
+
+                        </div>
+                        <div class="row simple-well margin-bottom-mini" style="font-size: 14px">{{entries.forum.lastPost.text | removeMd | cut:true:140:' ...'}}</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <dir-pagination-controls pagination-id="forums"></dir-pagination-controls>
+    </div>
+
+
+    <div class="row">
+        <table ng-if="vm.watches.topics.length > 0" class="table table-borderless">
+            <thead class="table-header">
+                <tr>
+                    <th colspan="3">
+                        <h1>Frågor</h1></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr dir-paginate="entries in vm.watches.topics | orderBy:'topic.lastPostDate' : true | itemsPerPage: 5" pagination-id="topics">
+                  <td>
+                    <span class="pull-right pointer margin-right-mini" ng-click="vm.removeTopicsWatch(entries.topic.id, entries.id)" data-balloon="Sluta bevaka denna fråga" data-balloon-pos="up"><i style="line-height: 80px" class="fa fa-star" id="com-remove-watch"></i></span>
+                  </td>
+                    <td style="width: 50px">
+                        <span uib-popover-html="entries.topic.createdBy.gravatarProfileInfo.bioHTML + '<b>Community-poäng:</b>' + entries.topic.createdBy.rankings[0].currentPoints" popover-is-open="popoverIsOpen" ng-mouseenter="popoverIsOpen = !popoverIsOpen" ng-mouseleave="popoverIsOpen = !popoverIsOpen"
+                            popover-title="{{entries.topic.createdBy.gravatarProfileInfo.name}}">
+        <div ng-class="{'area': !entries.topic.createdBy.useGravatar}" class="area-small">
+          <span ng-if="!entries.topic.createdBy.useGravatar" class="fa fa-2x fa-user" aria-hidden="true"></span>
+                        <img ng-if="entries.topic.createdBy.useGravatar" src="https://www.gravatar.com/avatar/{{entries.topic.createdBy.gravatarEmailHash}}?s=45  " class="avatar">
+    </div>
+    </span>
+    </td>
+    <td>
+        <h2 class="no-margin-bottom"><a href="#/community/topic/{{entries.id}}" data-balloon="{{entries.topic.firstPost.text | removeMd | limitTo:200}}" data-balloon-length="xlarge" data-balloon-pos="up">{{entries.topic.subject}}</a></h2>
+        <span class="padding-right-mini"><strong>{{entries.topic.createdBy.signature}}</strong></span>&bull;
+        <span class="margin-left-mini">Skapades för {{entries.topic.createDate | relativeDate}}</span> &bull;
+        <span class="margin-left-mini">Senaste inlägg skrevs för {{entries.topic.lastPostDate | relativeDate}}</span>
+    </td>
+    <td class="text-center">
+        <h2 class="no-margin-bottom">{{entries.topic.numberOfPosts}}</h2>
+        <p>Inlägg</p>
+    </td>
+    <td class="text-center">
+        <h2 class="no-margin-bottom">{{entries.topic.numberOfViews}}</h2>
+        <p>Visningar</p>
+    </td>
+    <td class="text-center">
+        <h2 class="no-margin-bottom" ng-class="{answer: entries.answeredByPostId}">{{entries.topic.numberOfAnswers}}</h2>
+        <p>Svar</p>
+    </td>
+    </tr>
+    </tbody>
+    </table>
+    <dir-pagination-controls pagination-id="topics"></dir-pagination-controls>
+</div>
+
+</div>

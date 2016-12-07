@@ -148,6 +148,12 @@
       controllerAs: 'vm'
     })
 
+    .when('/overview/watches', {
+      controller: 'OverviewWatchesCtrl',
+      templateUrl: 'js/app/views/overview.watches.view.html',
+      controllerAs: 'vm'
+    })
+
     .when('/profile', {
       controller: 'ProfileCtrl',
       templateUrl: 'js/app/views/profile.view.html',

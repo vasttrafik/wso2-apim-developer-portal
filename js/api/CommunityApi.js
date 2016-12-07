@@ -965,6 +965,188 @@ var CommunityAPI;
         }
         return this.$http(httpRequestParams);
       };
+      /**
+       *
+       * Creates a forum watch
+       * @param id Resource id
+       */
+      CommunityApi.prototype.forumsIdWatchesPost = function(id, extraHttpRequestParams) {
+        var localVarPath = this.basePath + '/forums/{id}/watches'
+          .replace('{' + 'id' + '}', String(id));
+        var queryParameters = {};
+        var headerParams = this.extendObj({}, this.defaultHeaders);
+        // verify required parameter 'id' is set
+        if (!id) {
+          throw new Error('Missing required parameter id when calling forumsIdWatchesPost');
+        }
+        var httpRequestParams = {
+          method: 'POST',
+          url: localVarPath,
+          json: true,
+          params: queryParameters,
+          headers: headerParams
+        };
+        if (extraHttpRequestParams) {
+          httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+        }
+        return this.$http(httpRequestParams);
+      };
+      /**
+       *
+       * Deletes a forum watch
+       * @param id Resource id
+       * @param watchId The forum watch id
+       */
+      CommunityApi.prototype.forumsIdWatchesWatchIdDelete = function(id, watchId, extraHttpRequestParams) {
+        var localVarPath = this.basePath + '/forums/{id}/watches/{watchId}'
+          .replace('{' + 'id' + '}', String(id))
+          .replace('{' + 'watchId' + '}', String(watchId));
+        var queryParameters = {};
+        var headerParams = this.extendObj({}, this.defaultHeaders);
+        // verify required parameter 'id' is set
+        if (!id) {
+          throw new Error('Missing required parameter id when calling forumsIdWatchesWatchIdDelete');
+        }
+        // verify required parameter 'watchId' is set
+        if (!watchId) {
+          throw new Error('Missing required parameter watchId when calling forumsIdWatchesWatchIdDelete');
+        }
+        var httpRequestParams = {
+          method: 'DELETE',
+          url: localVarPath,
+          json: true,
+          params: queryParameters,
+          headers: headerParams
+        };
+        if (extraHttpRequestParams) {
+          httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+        }
+        return this.$http(httpRequestParams);
+      };
+      /**
+       *
+       * Deletes community member watches
+       * @param id Resource id
+       * @param body The watches to delete
+       */
+      CommunityApi.prototype.membersIdWatchesDelete = function(id, body, extraHttpRequestParams) {
+        var localVarPath = this.basePath + '/members/{id}/watches'
+          .replace('{' + 'id' + '}', String(id));
+        var queryParameters = {};
+        var headerParams = this.extendObj({}, this.defaultHeaders);
+        // verify required parameter 'id' is set
+        if (!id) {
+          throw new Error('Missing required parameter id when calling membersIdWatchesDelete');
+        }
+        var httpRequestParams = {
+          method: 'DELETE',
+          url: localVarPath,
+          json: true,
+          data: body,
+          params: queryParameters,
+          headers: headerParams
+        };
+        if (extraHttpRequestParams) {
+          httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+        }
+        return this.$http(httpRequestParams);
+      };
+      /**
+       *
+       * Retrieves the community member watches
+       * @param id Resource id
+       * @param setInfo If response should include topic and forum info
+       * @param offset Starting point of the list
+       * @param limit Maximum size array to return
+       */
+      CommunityApi.prototype.membersIdWatchesGet = function(id, setInfo, offset, limit, extraHttpRequestParams) {
+        var localVarPath = this.basePath + '/members/{id}/watches'
+          .replace('{' + 'id' + '}', String(id));
+        var queryParameters = {};
+        var headerParams = this.extendObj({}, this.defaultHeaders);
+        // verify required parameter 'id' is set
+        if (!id) {
+          throw new Error('Missing required parameter id when calling membersIdWatchesGet');
+        }
+        if (setInfo !== undefined) {
+          queryParameters['setInfo'] = setInfo;
+        }
+        if (offset !== undefined) {
+          queryParameters['offset'] = offset;
+        }
+        if (limit !== undefined) {
+          queryParameters['limit'] = limit;
+        }
+        var httpRequestParams = {
+          method: 'GET',
+          url: localVarPath,
+          json: true,
+          params: queryParameters,
+          headers: headerParams
+        };
+        if (extraHttpRequestParams) {
+          httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+        }
+        return this.$http(httpRequestParams);
+      };
+      /**
+       *
+       * Creates a topic watch
+       * @param id Resource id
+       */
+      CommunityApi.prototype.topicsIdWatchesPost = function(id, extraHttpRequestParams) {
+        var localVarPath = this.basePath + '/topics/{id}/watches'
+          .replace('{' + 'id' + '}', String(id));
+        var queryParameters = {};
+        var headerParams = this.extendObj({}, this.defaultHeaders);
+        // verify required parameter 'id' is set
+        if (!id) {
+          throw new Error('Missing required parameter id when calling topicsIdWatchesPost');
+        }
+        var httpRequestParams = {
+          method: 'POST',
+          url: localVarPath,
+          json: true,
+          params: queryParameters,
+          headers: headerParams
+        };
+        if (extraHttpRequestParams) {
+          httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+        }
+        return this.$http(httpRequestParams);
+      };
+      /**
+       *
+       * Deletes a topic watch
+       * @param id Resource id
+       * @param watchId The topic watch id
+       */
+      CommunityApi.prototype.topicsIdWatchesWatchIdDelete = function(id, watchId, extraHttpRequestParams) {
+        var localVarPath = this.basePath + '/topics/{id}/watches/{watchId}'
+          .replace('{' + 'id' + '}', String(id))
+          .replace('{' + 'watchId' + '}', String(watchId));
+        var queryParameters = {};
+        var headerParams = this.extendObj({}, this.defaultHeaders);
+        // verify required parameter 'id' is set
+        if (!id) {
+          throw new Error('Missing required parameter id when calling topicsIdWatchesWatchIdDelete');
+        }
+        // verify required parameter 'watchId' is set
+        if (!watchId) {
+          throw new Error('Missing required parameter watchId when calling topicsIdWatchesWatchIdDelete');
+        }
+        var httpRequestParams = {
+          method: 'DELETE',
+          url: localVarPath,
+          json: true,
+          params: queryParameters,
+          headers: headerParams
+        };
+        if (extraHttpRequestParams) {
+          httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+        }
+        return this.$http(httpRequestParams);
+      };
       CommunityApi.$inject = ['$http', '$httpParamSerializer'];
       return CommunityApi;
     })();

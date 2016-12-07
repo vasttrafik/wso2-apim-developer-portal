@@ -9,8 +9,12 @@
         </ol>
 
         <!-- Subject -->
-        <span class="pull-right pointer" ng-if="vm.topic.createdBy.id === vm.communityService.getMemberId() && vm.topic.numberOfPosts < 2 || vm.communityService.isAdmin()" ng-click="vm.removeTopic()"><i class="fa fa-trash"></i></span>
-        <span class="pull-right margin-right-mini pointer" ng-if="vm.topic.createdBy.id != null && vm.topic.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin()" ng-click="vm.addTopicUpdate()"><i class="fa fa-pencil-square-o"></i></span>
+        <span class="color-black">
+          <span class="pull-right pointer" ng-if="vm.topic.createdBy.id === vm.communityService.getMemberId() && vm.topic.numberOfPosts < 2 || vm.communityService.isAdmin()" ng-click="vm.removeTopic()"><i class="fa fa-trash"></i></span>
+          <span class="pull-right margin-right-mini pointer" ng-if="vm.topic.createdBy.id != null && vm.topic.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin()" ng-click="vm.addTopicUpdate()"><i class="fa fa-pencil-square-o"></i></span>
+          <span class="pull-right pointer margin-right-mini" ng-if="vm.communityService.isMember() && vm.watches.isWatching" ng-click="vm.removeWatch()" data-balloon="Sluta bevaka denna fråga" data-balloon-pos="up"><i class="fa fa-star" id="com-remove-forum-watch"></i></span>
+          <span class="pull-right pointer margin-right-mini" ng-if="vm.communityService.isMember() && !vm.watches.isWatching" ng-click="vm.addWatch()" data-balloon="Bevaka denna fråga" data-balloon-pos="up"><i class="fa fa-star-o" id="com-add-forum-watch"></i></span>
+        </span>
 
         <h1 ng-if="!vm.toggleTopicUpdate">{{vm.topic.subject}}</h1>
 

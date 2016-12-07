@@ -17,6 +17,8 @@
 
     vm.addTopic = addTopic;
     vm.addForumUpdate = addForumUpdate;
+    vm.addWatch = addWatch;
+    vm.removeWatch = removeWatch;
     vm.updateForum = updateForum;
     vm.removeForum = removeForum;
     vm.resetAddTopicForm = resetAddTopicForm;
@@ -31,6 +33,8 @@
 
       vm.toggleForumUpdate = false;
       vm.form = {};
+      vm.watches = {};
+      vm.watches.isWatching = false;
 
       APIService.communityCall('forumsIdGet', [$routeParams.forumId])
         .then(forumsIdGetResponse);
@@ -39,6 +43,11 @@
         .then(function(response) {
           vm.labels = response;
         });
+
+      if (CommunityService.isMember()) {
+        APIService.communityCall('membersIdWatchesGet', [CommunityService.getMemberId()])
+          .then(membersIdWatchesGetResponse);
+      }
 
     })();
 
@@ -51,6 +60,59 @@
       } else {
         AlertService.error('Problem att hämta forum');
       }
+    }
+
+    function membersIdWatchesGetResponse(response) {
+
+      if (response.status === 200) {
+        for (var i = 0; i < response.data.length; i++) {
+          if (response.data[i].forumId === parseInt($routeParams.forumId)) {
+            vm.watches.isWatching = true;
+            vm.watches.id = response.data[i].id;
+            break;
+          }
+        }
+      } else {
+        AlertService.error('Problem att hämta bevakningsstatus för detta forum');
+      }
+    }
+
+    function addWatch() {
+      APIService.communityCall('forumsIdWatchesPost', [$routeParams.forumId])
+        .then(forumsIdWatchesPostResponse)
+        .catch(function(response) {
+          AlertService.error('Problem att bevaka forum');
+        });
+
+      function forumsIdWatchesPostResponse(response) {
+        if (response.status === 201) {
+          AlertService.success('Du bevakar nu detta forum!');
+          vm.watches.isWatching = true;
+          vm.watches.id = response.data.id;
+        } else {
+          AlertService.errorWithStatus(response.status, 'Problem att bevaka forum');
+        }
+      }
+
+    }
+
+    function removeWatch() {
+      APIService.communityCall('forumsIdWatchesWatchIdDelete', [$routeParams.forumId, vm.watches.id])
+        .then(forumsIdWatchesWatchIdDeleteResponse)
+        .catch(function(response) {
+          AlertService.error('Problem att sluta bevaka forum');
+        });
+
+      function forumsIdWatchesWatchIdDeleteResponse(response) {
+        if (response.status === 200) {
+          vm.watches.isWatching = false;
+          vm.watches.id = -1;
+          AlertService.success('Du bevakar inte längre detta forum!');
+        } else {
+          AlertService.errorWithStatus(response.status, 'Problem att sluta bevaka forum');
+        }
+      }
+
     }
 
     function addTopic() {

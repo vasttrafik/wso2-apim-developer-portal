@@ -17,6 +17,8 @@
 
     vm.addAnswer = addAnswer;
     vm.addComment = addComment;
+    vm.addWatch = addWatch;
+    vm.removeWatch = removeWatch;
     vm.addVote = addVote;
     vm.removePost = removePost;
     vm.updatePost = updatePost;
@@ -41,9 +43,16 @@
       vm.form = {};
       vm.form.posts = [];
       vm.form.comments = [];
+      vm.watches = {};
+      vm.watches.isWatching = false;
 
       APIService.communityCall('topicsIdGet', [$routeParams.topicId])
         .then(topicsIdGetResponse);
+
+      if (CommunityService.isMember()) {
+        APIService.communityCall('membersIdWatchesGet', [CommunityService.getMemberId()])
+          .then(membersIdWatchesGetResponse);
+      }
 
     })();
 
@@ -66,6 +75,59 @@
       } else {
         AlertService.error('Problem att hämta fråga');
       }
+    }
+
+    function membersIdWatchesGetResponse(response) {
+
+      if (response.status === 200) {
+        for (var i = 0; i < response.data.length; i++) {
+          if (response.data[i].topicId === parseInt($routeParams.topicId)) {
+            vm.watches.isWatching = true;
+            vm.watches.id = response.data[i].id;
+            break;
+          }
+        }
+      } else {
+        AlertService.error('Problem att hämta bevakningsstatus för denna fråga');
+      }
+    }
+
+    function addWatch() {
+      APIService.communityCall('topicsIdWatchesPost', [$routeParams.topicId])
+        .then(topicsIdWatchesPostResponse)
+        .catch(function(response) {
+          AlertService.error('Problem att bevaka fråga');
+        });
+
+      function topicsIdWatchesPostResponse(response) {
+        if (response.status === 201) {
+          AlertService.success('Du bevakar nu denna fråga!');
+          vm.watches.isWatching = true;
+          vm.watches.id = response.data.id;
+        } else {
+          AlertService.errorWithStatus(response.status, 'Problem att bevaka fråga');
+        }
+      }
+
+    }
+
+    function removeWatch() {
+      APIService.communityCall('topicsIdWatchesWatchIdDelete', [$routeParams.topicId, vm.watches.id])
+        .then(topicsIdWatchesWatchIdDeleteResponse)
+        .catch(function(response) {
+          AlertService.error('Problem att sluta bevaka fråga');
+        });
+
+      function topicsIdWatchesWatchIdDeleteResponse(response) {
+        if (response.status === 200) {
+          vm.watches.isWatching = false;
+          vm.watches.id = -1;
+          AlertService.success('Du bevakar inte längre denna fråga!');
+        } else {
+          AlertService.errorWithStatus(response.status, 'Problem att sluta bevaka fråga');
+        }
+      }
+
     }
 
     function addComment(postId) {
