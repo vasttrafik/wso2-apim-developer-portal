@@ -11,8 +11,8 @@
         <span class="color-black">
           <span class="pull-right pointer" ng-if="vm.forum.createdBy.id === vm.communityService.getMemberId() && vm.forum.numberOfTopics === 0 || vm.communityService.isAdmin()" ng-click="vm.removeForum()"><i class="fa fa-trash" id="com-delete-forum"></i></span>
           <span class="pull-right pointer margin-right-mini" ng-if="vm.forum.createdBy.id != null && vm.forum.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin()" ng-click="vm.addForumUpdate()"><i class="fa fa-pencil-square-o" id="com-edit-forum"></i></span>
-          <span class="pull-right pointer margin-right-mini" ng-if="vm.communityService.isMember() && vm.watches.isWatching" ng-click="vm.removeWatch()" data-balloon="Sluta bevaka detta forum" data-balloon-pos="up"><i class="fa fa-star" id="com-remove-watch"></i></span>
-          <span class="pull-right pointer margin-right-mini" ng-if="vm.communityService.isMember() && !vm.watches.isWatching" ng-click="vm.addWatch()" data-balloon="Bevaka detta forum" data-balloon-pos="up"><i class="fa fa-star-o" id="com-add-watch"></i></span>
+          <span class="pull-right pointer margin-right-mini" ng-if="vm.communityService.isMember() && vm.watches.isWatching" ng-click="vm.removeWatch()" data-balloon="Sluta bevaka detta forum" data-balloon-pos="up"><i class="fa fa-binoculars color-green" id="com-remove-watch"></i></span>
+          <span class="pull-right pointer margin-right-mini" ng-if="vm.communityService.isMember() && !vm.watches.isWatching" ng-click="vm.addWatch()" data-balloon="Bevaka detta forum" data-balloon-pos="up"><i class="fa fa-binoculars" id="com-add-watch"></i></span>
         </span>
         <h1 ng-if="!vm.toggleForumUpdate" id="forum-display-name">{{vm.forum.name}}</h1>
 

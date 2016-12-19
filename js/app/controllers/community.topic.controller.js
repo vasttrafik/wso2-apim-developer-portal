@@ -30,6 +30,7 @@
     vm.addTopicUpdate = addTopicUpdate;
     vm.updateTopic = updateTopic;
     vm.removeTopic = removeTopic;
+    vm.closeTopic = closeTopic;
 
     (function init() {
 
@@ -319,6 +320,33 @@
           vm.toggleTopicUpdate = false;
         } else {
           AlertService.errorWithStatus(response.status, 'Problem att uppdatera fråga');
+        }
+      }
+
+    }
+
+    function closeTopic() {
+
+      if (confirm('Är du säker på att du vill stänga denna fråga?') === true) {
+        APIService.communityCall('topicsIdPut', [vm.topic.id, 'close', {
+            id: vm.topic.id,
+            forumId: vm.topic.forumId,
+            subject: vm.form.subject
+          }])
+          .then(topicsIdPutResponse)
+          .catch(function(response) {
+            AlertService.error('Problem att stänga fråga');
+          });
+      }
+
+      function topicsIdPutResponse(response) {
+        if (response.status === 200) {
+          AlertService.success('Fråga stängd!');
+          vm.topic.subject = vm.form.subject;
+          vm.topic.closedDate = response.data.closedDate;
+          vm.topic.closedBy = response.data.closedBy;
+        } else {
+          AlertService.errorWithStatus(response.status, 'Problem att stänga fråga');
         }
       }
 

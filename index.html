@@ -103,13 +103,12 @@
               <div class="dropdown-menu user">
                 <div class="row">
                   <div class="col-md-12">
-                    <p><a href="#/overview">Mina sidor</a></p>
-                    <a id="my-profile-menu-item" href="#/profile">Min profil</a>
-                    <br />
+                    <p><a href="#/overview">Mina sidor</a><p>
+                    <p><a id="my-profile-menu-item" href="#/profile">Min profil</a></p>
                     <span ng-if="vm.isMember()">
-                      <a id="my-profile-menu-item" href="#/overview/community">Min community</a>
-                      <br />
-                    </span>
+                    <a id="my-applications-menu-item" href="#/overview/community">Min community</a>
+                    <br />
+                  </span>
                     <a id="my-applications-menu-item" href="#/applications">Mina applikationer</a>
                     <br />
                     <a id="my-subscriptions-menu-item" href="#/subscriptions">Mina prenumerationer</a>
@@ -117,8 +116,9 @@
                     <a id="my-statistics-menu-item" href="#/statistics/applications">Min statistik</a>
                     <br />
                     <span ng-if="vm.isCommunityAdmin()">
-                    <a id="administrate-media-menu-item" href="#/admin">Administrera media</a>
-                    <br />
+                      <br />
+                    <p><a id="administrate-media-menu-item" href="#/admin">Administrera media</a></p>
+                    </br>
                     </span>
                     <a id="logout-menu-item" href="#/" ng-click="vm.logout()">Logga ut</a>
                     <br />
@@ -364,7 +364,6 @@
   <script src="js/app/controllers/subscriptions.controller.js"></script>
   <script src="js/app/controllers/overview.controller.js"></script>
   <script src="js/app/controllers/overview.community.controller.js"></script>
-  <script src="js/app/controllers/overview.watches.controller.js"></script>
   <script src="js/app/controllers/media.controller.js"></script>
   <script src="js/app/controllers/community.controller.js"></script>
   <script src="js/app/controllers/community.category.controller.js"></script>

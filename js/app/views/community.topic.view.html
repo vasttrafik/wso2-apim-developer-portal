@@ -10,13 +10,16 @@
 
         <!-- Subject -->
         <span class="color-black">
-          <span class="pull-right pointer" ng-if="vm.topic.createdBy.id === vm.communityService.getMemberId() && vm.topic.numberOfPosts < 2 || vm.communityService.isAdmin()" ng-click="vm.removeTopic()"><i class="fa fa-trash"></i></span>
-          <span class="pull-right margin-right-mini pointer" ng-if="vm.topic.createdBy.id != null && vm.topic.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin()" ng-click="vm.addTopicUpdate()"><i class="fa fa-pencil-square-o"></i></span>
-          <span class="pull-right pointer margin-right-mini" ng-if="vm.communityService.isMember() && vm.watches.isWatching" ng-click="vm.removeWatch()" data-balloon="Sluta bevaka denna fråga" data-balloon-pos="up"><i class="fa fa-star" id="com-remove-forum-watch"></i></span>
-          <span class="pull-right pointer margin-right-mini" ng-if="vm.communityService.isMember() && !vm.watches.isWatching" ng-click="vm.addWatch()" data-balloon="Bevaka denna fråga" data-balloon-pos="up"><i class="fa fa-star-o" id="com-add-forum-watch"></i></span>
+          <span class="pull-right pointer" ng-if="!vm.topic.closedBy && vm.communityService.isAdmin()" ng-click="vm.closeTopic()" data-balloon="Stäng fråga" data-balloon-pos="up"><i class="fa fa-times"></i></span>
+          <span class="pull-right margin-right-mini pointer" ng-if="vm.topic.createdBy.id === vm.communityService.getMemberId() && vm.topic.numberOfPosts < 2 || vm.communityService.isAdmin()" ng-click="vm.removeTopic()" data-balloon="Ta bort fråga" data-balloon-pos="up"><i class="fa fa-trash"></i></span>
+          <span class="pull-right margin-right-mini pointer" ng-if="!vm.topic.closedBy && vm.topic.createdBy.id != null && vm.topic.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin()" ng-click="vm.addTopicUpdate()" data-balloon="Uppdatera fråga" data-balloon-pos="up"><i class="fa fa-pencil-square-o"></i></span>
+          <span class="pull-right pointer margin-right-mini" ng-if="vm.communityService.isMember() && vm.watches.isWatching" ng-click="vm.removeWatch()" data-balloon="Sluta bevaka denna fråga" data-balloon-pos="up"><i class="fa fa-binoculars color-green" id="com-remove-forum-watch"></i></span>
+          <span class="pull-right pointer margin-right-mini" ng-if="vm.communityService.isMember() && !vm.watches.isWatching" ng-click="vm.addWatch()" data-balloon="Bevaka denna fråga" data-balloon-pos="up"><i class="fa fa-binoculars" id="com-add-forum-watch"></i></span>
         </span>
 
         <h1 ng-if="!vm.toggleTopicUpdate">{{vm.topic.subject}}</h1>
+
+        <h3 ng-if="vm.topic.closedBy" class="color-black">Stängd för vidare svar och kommentarer av {{vm.topic.closedBy.signature}} för {{vm.topic.closedDate | relativeDate}}</h3>
 
         <div ng-if="vm.toggleTopicUpdate">
             <form name="updateTopicForm" ng-submit="vm.updateTopic()" role="form">
@@ -59,16 +62,17 @@
                     <!-- Votes -->
                     <span class="pull-right" data-balloon="Inläggets poäng" data-balloon-pos="up">
                     <span ng-if="!vm.communityService.isMember() && entries.pointsAwarded > 0 || entries.createdBy.id === vm.communityService.getMemberId()"><strong><i class="fa fa-chevron-up"></i> {{entries.pointsAwarded}}</strong></span>
-                    <span ng-if="entries.hasVoted && vm.communityService.isMember() && entries.createdBy.id !== vm.communityService.getMemberId()" class="voted"><strong><i class="fa fa-chevron-up"></i> {{entries.pointsAwarded}}</strong></span>
-                    <span ng-if="!entries.hasVoted && vm.communityService.isMember() && entries.createdBy.id !== vm.communityService.getMemberId()" class="vote" ng-click="vm.addVote(entries.id, entries.type)"><strong><i class="fa fa-chevron-up"></i> {{entries.pointsAwarded}}</strong></span>
+                    <span ng-if="vm.topic.closedBy && entries.hasVoted && vm.communityService.isMember() && entries.createdBy.id !== vm.communityService.getMemberId()" class="voted"><strong><i class="fa fa-chevron-up"></i> {{entries.pointsAwarded}}</strong></span>
+                    <span ng-if="!vm.topic.closedBy && !entries.hasVoted && vm.communityService.isMember() && entries.createdBy.id !== vm.communityService.getMemberId()" class="vote" ng-click="vm.addVote(entries.id, entries.type)"><strong><i class="fa fa-chevron-up"></i> {{entries.pointsAwarded}}</strong></span>
                     </span>
                     <!-- End votes -->
 
-                    <span class="pull-right pointer margin-right-small" ng-if="entries.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin()" ng-click="vm.removePost(entries.id)" data-balloon="Ta bort inlägg" data-balloon-pos="up"><i class="fa fa-trash"></i></span>
-                    <span class="pull-right pointer margin-right-mini" ng-if="entries.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin()" ng-click="vm.addPostCommentUpdate(entries.id)" data-balloon="Redigera inlägg" data-balloon-pos="up"><i class="fa fa-pencil-square-o"></i></span>
+                    <span class="pull-right pointer margin-right-small" ng-if="!vm.topic.closedBy && entries.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin()" ng-click="vm.removePost(entries.id)" data-balloon="Ta bort inlägg" data-balloon-pos="up"><i class="fa fa-trash"></i></span>
+                    <span class="pull-right pointer margin-right-mini" ng-if="!vm.topic.closedBy && entries.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin()" ng-click="vm.addPostCommentUpdate(entries.id)" data-balloon="Redigera inlägg" data-balloon-pos="up"><i class="fa fa-pencil-square-o"></i></span>
                     <span class="pull-right margin-right-mini" ng-if="entries.isAnswer" data-balloon="Utpekat som korrekt svar på frågan" data-balloon-pos="up"><i class="fa fa-check-square-o"></i></span>
-                    <span class="pull-right pointer margin-right-mini" ng-if="$index !== 0 && !entries.isAnswer && !vm.topic.answeredByPostId && (vm.topic.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin())" ng-click="vm.setAnswer(entries.id)"
+                    <span class="pull-right pointer margin-right-mini" ng-if="!vm.topic.closedBy && $index !== 0 && !entries.isAnswer && !vm.topic.answeredByPostId && (vm.topic.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin())" ng-click="vm.setAnswer(entries.id)"
                         data-balloon="Utpeka detta svar som korrekt svar på frågan" data-balloon-pos="up"><i class="fa fa-square-o"></i></span>
+                    <span class="pull-right pointer margin-right-mini" ng-if="vm.topic.closedBy && $index !== 0 && !entries.isAnswer && !vm.topic.answeredByPostId && (vm.topic.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin())"><i class="fa fa-square-o"></i></span>
                 </div>
 
                 <div class="row simple-well margin-bottom-mini" ng-if="$index === 0 || vm.topic.answeredByPostId || (vm.topic.createdBy.id !== vm.communityService.getMemberId() && !vm.communityService.isAdmin())" ng-class="entries.isAnswer ? 'answer' : ''" btf-markdown="entries.text"></div>
@@ -160,14 +164,14 @@
 
                     <!-- Votes -->
                     <span class="pull-right" data-balloon="Kommentarens poäng" data-balloon-pos="up">
-                    <span ng-if="!vm.communityService.isMember() && comment.pointsAwarded > 0 || comment.createdBy.id === vm.communityService.getMemberId()"><strong><i class="fa fa-chevron-up"></i> {{comment.pointsAwarded}}</strong></span>
-                    <span ng-if="comment.hasVoted && vm.communityService.isMember() && comment.createdBy.id !== vm.communityService.getMemberId()" class="voted"><strong><i class="fa fa-chevron-up"></i> {{comment.pointsAwarded}}</strong></span>
-                    <span ng-if="!comment.hasVoted && vm.communityService.isMember() && comment.createdBy.id !== vm.communityService.getMemberId()" class="vote" ng-click="vm.addVote(comment.id, comment.type)"><strong><i class="fa fa-chevron-up"></i> {{comment.pointsAwarded}}</strong></span>
+                    <span ng-if="!vm.topic.closedBy &&!vm.communityService.isMember() && comment.pointsAwarded > 0 || comment.createdBy.id === vm.communityService.getMemberId()"><strong><i class="fa fa-chevron-up"></i> {{comment.pointsAwarded}}</strong></span>
+                    <span ng-if="vm.topic.closedBy && comment.hasVoted && vm.communityService.isMember() && comment.createdBy.id !== vm.communityService.getMemberId()" class="voted"><strong><i class="fa fa-chevron-up"></i> {{comment.pointsAwarded}}</strong></span>
+                    <span ng-if="!vm.topic.closedBy && !comment.hasVoted && vm.communityService.isMember() && comment.createdBy.id !== vm.communityService.getMemberId()" class="vote" ng-click="vm.addVote(comment.id, comment.type)"><strong><i class="fa fa-chevron-up"></i> {{comment.pointsAwarded}}</strong></span>
                     </span>
                     <!-- End votes -->
 
-                    <span class="pull-right pointer margin-right-small" ng-if="comment.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin()" ng-click="vm.removePost(comment.id, true)" data-balloon="Ta bort kommentar" data-balloon-pos="up"><i class="fa fa-trash"></i></span>
-                    <span class="pull-right pointer margin-right-mini" ng-if="comment.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin()" ng-click="vm.addPostCommentUpdate(comment.id)" data-balloon="Editera kommentar" data-balloon-pos="up"><i class="fa fa-pencil-square-o"></i></span>
+                    <span class="pull-right pointer margin-right-small" ng-if="!vm.topic.closedBy && comment.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin()" ng-click="vm.removePost(comment.id, true)" data-balloon="Ta bort kommentar" data-balloon-pos="up"><i class="fa fa-trash"></i></span>
+                    <span class="pull-right pointer margin-right-mini" ng-if="!vm.topic.closedBy && comment.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin()" ng-click="vm.addPostCommentUpdate(comment.id)" data-balloon="Editera kommentar" data-balloon-pos="up"><i class="fa fa-pencil-square-o"></i></span>
                     <div btf-markdown="comment.text">
                     </div>
 
@@ -232,7 +236,7 @@
             </div>
             <!-- End comments to main post -->
 
-            <div class="pull-right pointer" ng-click="vm.togglePostComment(entries.id)" ng-if="vm.togglePostsComments.indexOf(entries.id) === -1 && vm.communityService.getMemberId() && user.loggedIn"><u>Skriv en kommentar</u></div>
+            <div class="pull-right pointer" ng-click="vm.togglePostComment(entries.id)" ng-if="!vm.topic.closedBy && vm.togglePostsComments.indexOf(entries.id) === -1 && vm.communityService.getMemberId() && user.loggedIn"><u>Skriv en kommentar</u></div>
 
             <!-- Add comment -->
             <div ng-if="vm.togglePostsComments.indexOf(entries.id) !== -1">
@@ -263,7 +267,7 @@
     </div>
 
     <!-- Add reply -->
-    <div ng-show="vm.communityService.isMember()" id="com-post-answer">
+    <div ng-show="vm.communityService.isMember() && !vm.topic.closedBy" id="com-post-answer">
         <div class="container no-padding-left no-padding-bottom">
             <h2>Skriv ett svar</h2>
         </div>
@@ -290,6 +294,12 @@
         </div>
     </div>
     <!-- End add reply -->
+
+    <div class="container padding-bottom-small" ng-show="vm.communityService.isMember() && vm.topic.closedBy">
+        <div class="row">
+            <h3>Denna fråga är stängd för vidare svar och kommentarer</h3>
+        </div>
+    </div>
 
 </div>
 
