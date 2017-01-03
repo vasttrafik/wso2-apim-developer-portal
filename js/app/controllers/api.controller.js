@@ -73,7 +73,9 @@
               vm.applicationsSubscribing.push(a);
 
               // Adding accessToken to API Console if there's a subscribing application with a key
-              vm.accessToken = (a.accessToken != null ? a.accessToken : null);
+              if (vm.accessToken == null) {
+                vm.accessToken = (a.accessToken != null ? a.accessToken : null);
+              }
 
               return false;
             }

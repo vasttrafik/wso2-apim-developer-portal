@@ -17,8 +17,10 @@
 html {
   position: relative;
   min-height: 100%;
+  overflow-x:hidden;
 }
 body {
+  overflow-x:hidden;
   color: #3C4650;
   font-family: 'FoundersGroteskWeb-Regular', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 18px;
@@ -1121,7 +1123,12 @@ article.newsItem > h2 {
     margin-bottom: 10px;
   }
 
-  .hide-s {
+  .row-xs {
+    margin-right: 0px !important;
+    margin-left: -15px !important;
+  }
+
+  .hide-xs {
     display: none;
   }
 
@@ -1170,6 +1177,9 @@ article.newsItem > h2 {
 }
 .no-margin {
   margin: 0px !important;
+}
+.margin-medium {
+  margin: 50px !important;
 }
 
 .fa-small-top {
@@ -1230,8 +1240,14 @@ article.newsItem > h2 {
 .color-white {
   color: #FFFFFF !important;
 }
+.color-black {
+  color: #000000 !important;
+}
 .color-gray {
   color: #AAAAAA !important;
+}
+.color-green {
+  color: #50B746 !important;
 }
 
 .simple-well {

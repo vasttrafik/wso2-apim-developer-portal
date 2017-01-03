@@ -155,7 +155,7 @@
         $http.jsonp(profileUrl).then(function(success) {
             if (Array.isArray(success.data.entry) && success.data.entry.length > 0) {
               post.createdBy.gravatarProfileInfo.name = success.data.entry[0].name.formatted;
-              post.createdBy.gravatarProfileInfo.bioHTML = ''
+              post.createdBy.gravatarProfileInfo.bioHTML = '';
 
               if (success.data.entry[0].aboutMe != null) {
                 post.createdBy.gravatarProfileInfo.bioHTML = success.data.entry[0].aboutMe + '<br>';

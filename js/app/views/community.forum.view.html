@@ -8,9 +8,12 @@
         </ol>
 
         <!-- Subject -->
-        <span class="pull-right pointer" ng-if="vm.forum.createdBy.id === vm.communityService.getMemberId() && vm.forum.numberOfTopics === 0 || vm.communityService.isAdmin()" ng-click="vm.removeForum()"><i class="fa fa-trash" id="com-delete-forum"></i></span>
-        <span class="pull-right pointer margin-right-mini" ng-if="vm.forum.createdBy.id != null && vm.forum.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin()" ng-click="vm.addForumUpdate()"><i class="fa fa-pencil-square-o" id="com-edit-forum"></i></span>
-
+        <span class="color-black">
+          <span class="pull-right pointer" ng-if="vm.forum.createdBy.id === vm.communityService.getMemberId() && vm.forum.numberOfTopics === 0 || vm.communityService.isAdmin()" ng-click="vm.removeForum()"><i class="fa fa-trash" id="com-delete-forum"></i></span>
+          <span class="pull-right pointer margin-right-mini" ng-if="vm.forum.createdBy.id != null && vm.forum.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin()" ng-click="vm.addForumUpdate()"><i class="fa fa-pencil-square-o" id="com-edit-forum"></i></span>
+          <span class="pull-right pointer margin-right-mini" ng-if="vm.communityService.isMember() && vm.watches.isWatching" ng-click="vm.removeWatch()" data-balloon="Sluta bevaka detta forum" data-balloon-pos="up"><i class="fa fa-binoculars color-green" id="com-remove-watch"></i></span>
+          <span class="pull-right pointer margin-right-mini" ng-if="vm.communityService.isMember() && !vm.watches.isWatching" ng-click="vm.addWatch()" data-balloon="Bevaka detta forum" data-balloon-pos="up"><i class="fa fa-binoculars" id="com-add-watch"></i></span>
+        </span>
         <h1 ng-if="!vm.toggleForumUpdate" id="forum-display-name">{{vm.forum.name}}</h1>
 
         <div ng-show="vm.toggleForumUpdate">
@@ -50,14 +53,14 @@
         <h2 ng-if="!vm.toggleForumUpdate" id="forum-display-description">{{vm.forum.description}}</h2>
     </div>
     <div class="row color-white">
-        <div class="col-md-4 no-padding-right-lg no-padding-left-lg">
+        <div class="col-md-4 row-xs no-padding-right-lg no-padding-left-lg">
             <div class="col-md-12 com-popular quick-box">
                 <div ng-if="vm.labels.popular.id" data-balloon="{{vm.labels.popular.subject}}" data-balloon-pos="up">
                     <h3 class="truncate"><a href="#/community/topic/{{vm.labels.popular.id}}" class="color-white">{{vm.labels.popular.subject}}</a></h3>
                     <p><strong><a href="#/community/forum/{{vm.labels.popular.forumId}}" class="color-white">{{vm.labels.popular.forumName}}</a></strong></p>
                     <p>{{vm.labels.popular.lastPostDate | relativeDate}}</p>
 
-                    <div class="row no-word-wrap hide-s" style="width: 50%">
+                    <div class="row no-word-wrap hide-xs" style="width: 50%">
                         <div class="col-md-5 text-center no-padding-top">
                             <h3 class="no-margin-bottom no-margin-top">{{vm.labels.popular.numberOfPosts}}</h3>
                             <p>Inlägg</p>
@@ -78,14 +81,14 @@
                 <span style="position: absolute;bottom: 5px;right: 10px; font-size: 12px" data-balloon="Populär" data-balloon-pos="up"><a href="{{'#' + vm.locationPath + '/popular'}}" class="color-white">Populär</a></span>
             </div>
         </div>
-        <div class="col-md-4 no-padding-right-lg">
+        <div class="col-md-4 row-xs no-padding-right-lg">
             <div class="col-md-12 com-answered quick-box">
                 <div ng-if="vm.labels.answered.id" data-balloon="{{vm.labels.answered.subject}}" data-balloon-pos="up">
                     <h3 class="truncate"><a href="#/community/topic/{{vm.labels.answered.id}}" class="color-white">{{vm.labels.answered.subject}}</a></h3>
                     <p><strong><a href="#/community/forum/{{vm.labels.answered.forumId}}" class="color-white">{{vm.labels.answered.forumName}}</a></strong></p>
                     <p>{{vm.labels.answered.lastPostDate | relativeDate}}</p>
 
-                    <div class="row no-word-wrap hide-s" style="width: 50%">
+                    <div class="row no-word-wrap hide-xs" style="width: 50%">
                         <div class="col-md-5 text-center no-padding-top">
                             <h3 class="no-margin-bottom no-margin-top">{{vm.labels.answered.numberOfPosts}}</h3>
                             <p>Inlägg</p>
@@ -106,13 +109,13 @@
             </div>
         </div>
         <div class="col-md-4 no-padding-right-lg">
-            <div class="col-md-12 com-unanswered quick-box">
+            <div class="col-md-12 row-xs com-unanswered quick-box">
                 <div ng-if="vm.labels.unanswered.id" data-balloon="{{vm.labels.unanswered.subject}}" data-balloon-pos="up">
                     <h3 class="truncate"><a href="#/community/topic/{{vm.labels.unanswered.id}}" class="color-white">{{vm.labels.unanswered.subject}}</a></h3>
                     <p><strong><a href="#/community/forum/{{vm.labels.unanswered.forumId}}" class="color-white">{{vm.labels.unanswered.forumName}}</a></strong></p>
                     <p>{{vm.labels.unanswered.lastPostDate | relativeDate}}</p>
 
-                    <div class="row no-word-wrap hide-s" style="width: 50%">
+                    <div class="row no-word-wrap hide-xs" style="width: 50%">
                         <div class="col-md-5 text-center no-padding-top">
                             <h3 class="no-margin-bottom no-margin-top">{{vm.labels.unanswered.numberOfPosts}}</h3>
                             <p>Inlägg</p>
@@ -149,7 +152,7 @@
                             popover-title="{{entries.createdBy.gravatarProfileInfo.name}}">
             <div ng-class="{'area': !entries.createdBy.useGravatar}" class="area-small">
               <span ng-if="!entries.createdBy.useGravatar" class="fa fa-2x fa-user" aria-hidden="true"></span>
-              <img ng-if="entries.createdBy.useGravatar" src="https://www.gravatar.com/avatar/{{entries.createdBy.gravatarEmailHash}}?s=45  " class="avatar">
+                        <img ng-if="entries.createdBy.useGravatar" src="https://www.gravatar.com/avatar/{{entries.createdBy.gravatarEmailHash}}?s=45  " class="avatar">
     </div>
     </span>
     </td>
