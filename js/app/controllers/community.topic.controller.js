@@ -88,7 +88,7 @@
             break;
           }
         }
-      } else {
+      } else if (response.status !== 401) {
         AlertService.error('Problem att hämta bevakningsstatus för denna fråga');
       }
     }
