@@ -22,7 +22,7 @@
     vm.removeTopicsWatch = removeTopicsWatch;
     vm.removeForumsWatch = removeForumsWatch;
 
-    vm.initializedtopics = false;
+    vm.initializedTopics = false;
     vm.initializedWatches = false;
 
     (function init() {
@@ -60,7 +60,7 @@
               getAddTopic(topicIds[j], $.inArray(topicIds[j], questionIds) !== -1);
             }
 
-            vm.initializedtopics = true;
+            vm.initializedTopics = true;
 
           } else {
             AlertService.error('Problem att hämta medverkande community inlägg');
@@ -106,7 +106,9 @@
             CommunityService.addGravatarProfileInfoToPost(response.data[i].topic);
             vm.watches.topics.push(response.data[i]);
           } else {
-            CommunityService.addGravatarProfileInfoToPost(response.data[i].forum.lastPost);
+            if (response.data[i].forum.lastPost != null) {
+              CommunityService.addGravatarProfileInfoToPost(response.data[i].forum.lastPost);
+            }
             vm.watches.forums.push(response.data[i]);
           }
         }
