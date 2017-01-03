@@ -37,7 +37,7 @@
       APIService.communityCall('categoriesIdGet', [$routeParams.categoryId ? $routeParams.categoryId : 1])
         .then(categoriesIdGetResponse);
 
-      CommunityService.getFirstTopicByLabels(['popular', 'answered', 'unanswered'])
+      CommunityService.getFirstTopicByLabels(['popular', 'answered', 'unanswered'], null, $routeParams.categoryId)
         .then(function(response) {
           vm.labels = response;
         });
