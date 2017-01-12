@@ -1072,6 +1072,9 @@ article.newsItem > h2 {
 .padding-top-mini {
   padding-top: 5px;
 }
+.padding-top-small {
+  padding-top: 25px;
+}
 .padding-bottom {
   padding-bottom: 50px;
 }
@@ -1101,7 +1104,7 @@ article.newsItem > h2 {
   padding-right: 0px !important;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1023px) {
 
   .quick-box {
     height: 200px;
@@ -1115,7 +1118,7 @@ article.newsItem > h2 {
   }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1023px) {
 
   .quick-box {
     height: 150px;
