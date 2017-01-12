@@ -9,13 +9,16 @@
     .controller('ApiCtrl', ApiCtrl)
     .constant('defaultBaseUrl', defaultBaseUrl);
 
-  ApiCtrl.$inject = ['$rootScope', '$scope', '$location', '$routeParams', '$timeout', 'APIService', 'AlertService'];
+  ApiCtrl.$inject = ['$window', '$http', '$httpParamSerializer', '$rootScope', '$scope', '$location', '$routeParams', '$timeout', 'APIService', 'AlertService'];
 
-  function ApiCtrl($rootScope, $scope, $location, $routeParams, $timeout, APIService, AlertService) {
+  function ApiCtrl($window, $http, $httpParamSerializer, $rootScope, $scope, $location, $routeParams, $timeout, APIService, AlertService) {
     var vm = this;
+
+    var codegenClient = new CodegenAPI.Client.CodegenApi($http, $httpParamSerializer); // jshint ignore:line
 
     vm.addSubscription = addSubscription;
     vm.resetAddSubscriptionForm = resetAddSubscriptionForm;
+    vm.downloadClient = downloadClient;
 
     (function init() {
       vm.defaultBaseUrl = defaultBaseUrl;
@@ -36,6 +39,24 @@
       vm.apiIdSingle = $routeParams.apiName + '--' + $routeParams.apiVersion + '_' + $routeParams.apiProvider;
 
       vm.applicationsSubscribing = [];
+
+      codegenClient.clientOptions()
+        .then(function(clientOptionsResponse) {
+          vm.clientOptions = [];
+          angular.forEach(clientOptionsResponse.data, function(value) {
+            vm.clientOptions.push({
+              type: value,
+              text: value.replace('csharp', 'C#')
+                .replace('CsharpDotNet2', 'C# .Net 2.0')
+                .replace('qt5cpp', 'Qt 5 C++')
+                .replace('objc', 'Objective-C')
+                .replace(new RegExp('-', 'g'), ' ')
+                .replace(/\w\S*/g, function(txt) {
+                  return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                })
+            });
+          });
+        });
 
       $scope.$on('cfpLoadingBar:completed', function(event, data) {
         if (vm.accessToken != null) {
@@ -145,6 +166,17 @@
     function resetAddSubscriptionForm() {
       vm.selectedApplicationId = null;
       $scope.addSubscriptionForm.$setPristine();
+    }
+
+    /* Downloads client stubb from generator.swagger.io*/
+    function downloadClient(type) {
+      codegenClient.generateClient(type, '{"swaggerUrl":"' + vm.swaggerUrl + '"}')
+        .then(function(generateClientResponse) {
+          codegenClient.downloadFile(generateClientResponse.data.code)
+            .then(function(downloadFileResponse) {
+              $window.saveAs(downloadFileResponse.data, type + '-client-generated.zip');
+            });
+        });
     }
 
   }

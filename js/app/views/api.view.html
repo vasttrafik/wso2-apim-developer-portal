@@ -1,188 +1,210 @@
 <div class="jumbotron title">
-  <div class="container" style="padding-left: 0">
-    <ol class="breadcrumb" ng-if="!vm.direct">
-      <li><a href="#/" target="_self">Hem</a></li>
-      <li><a href="#/apis" target="_self">Våra API:er</a></li>
-      <li class="active">{{vm.apiName}} {{vm.apiVersion}}</li>
-    </ol>
-    <ol class="breadcrumb" ng-if="vm.direct">
-      <li><a href="#/" target="_self">Hem</a></li>
-      <li><a href="#/overview" target="_self">Mina Sidor</a></li>
-      <li><a href="#/subscriptions" target="_self">Prenumerationer</a></li>
-      <li class="active">{{vm.apiName}} {{vm.apiVersion}}</li>
-    </ol>
-    <h1>{{vm.apiName}} {{vm.apiVersion}}</h1>
-  </div>
+    <div class="container" style="padding-left: 0">
+        <ol class="breadcrumb" ng-if="!vm.direct">
+            <li><a href="#/" target="_self">Hem</a></li>
+            <li><a href="#/apis" target="_self">Våra API:er</a></li>
+            <li class="active">{{vm.apiName}} {{vm.apiVersion}}</li>
+        </ol>
+        <ol class="breadcrumb" ng-if="vm.direct">
+            <li><a href="#/" target="_self">Hem</a></li>
+            <li><a href="#/overview" target="_self">Mina Sidor</a></li>
+            <li><a href="#/subscriptions" target="_self">Prenumerationer</a></li>
+            <li class="active">{{vm.apiName}} {{vm.apiVersion}}</li>
+        </ol>
+        <h1>{{vm.apiName}} {{vm.apiVersion}}</h1>
+    </div>
 </div>
 
 <div class="container">
-  <!--<h1 class="sub-header">{{vm.api.name}} - v.{{vm.api.version}}</h1>-->
+    <!--<h1 class="sub-header">{{vm.api.name}} - v.{{vm.api.version}}</h1>-->
 
-  <div class="row col-md-2">
-    <!--Image-->
-    <img ng-src="{{vm.imageUrl}}" style="width: 70%; padding-bottom: 20px" />
-  </div>
-
-  <div class="row col-md-6">
-    <div class="row">
-      <label for="version" class="col-xs-4 col-md-3">Version:</label>
-      <div id="version" class="col-xs-8 col-md-9">{{vm.api.version}}</div>
+    <div class="row col-md-2">
+        <!--Image-->
+        <img ng-src="{{vm.imageUrl}}" style="width: 70%; padding-bottom: 20px" />
     </div>
 
-    <div class="row">
-      <label for="status" class="col-xs-4 col-md-3">Status:</label>
-      <div class="col-xs-8 col-md-9">{{vm.api.status}}</div>
+    <div class="row col-md-6">
+        <div class="row">
+            <label for="version" class="col-xs-4 col-md-3">Version:</label>
+            <div id="version" class="col-xs-8 col-md-9">{{vm.api.version}}</div>
+        </div>
+
+        <div class="row">
+            <label for="status" class="col-xs-4 col-md-3">Status:</label>
+            <div class="col-xs-8 col-md-9">{{vm.api.status}}</div>
+        </div>
+
+        <div class="row">
+            <label for="status" class="col-xs-4 col-md-3">Utgivare:</label>
+            <div class="col-xs-8 col-md-9">{{vm.api.provider}}</div>
+        </div>
     </div>
 
-    <div class="row">
-      <label for="status" class="col-xs-4 col-md-3">Utgivare:</label>
-      <div class="col-xs-8 col-md-9">{{vm.api.provider}}</div>
+    <div ng-show="!user.loggedIn" class="row col-md-4">
+        <div class="alert alert-warning" role="alert">
+            <span ng-if="vm.api.status && vm.api.status.toUpperCase() === 'PUBLISHED'"><span class="glyphicon glyphicon-info-sign">&nbsp;</span>Logga in för att kunna prenumerera på detta API!</span>
+            <span ng-if="vm.api.status && vm.api.status.toUpperCase() !== 'PUBLISHED'"><span class="glyphicon glyphicon-info-sign">&nbsp;</span>Det är inte möjligt att prenumerera på detta API!</span>
+        </div>
     </div>
-  </div>
 
-  <div ng-show="!user.loggedIn" class="row col-md-4">
-    <div class="alert alert-warning" role="alert">
-      <span ng-if="vm.api.status && vm.api.status.toUpperCase() === 'PUBLISHED'"><span class="glyphicon glyphicon-info-sign">&nbsp;</span>Logga in för att kunna prenumerera på detta API!</span>
-      <span ng-if="vm.api.status && vm.api.status.toUpperCase() !== 'PUBLISHED'"><span class="glyphicon glyphicon-info-sign">&nbsp;</span>Det är inte möjligt att prenumerera på detta API!</span>
+    <div ng-show="user.loggedIn && vm.api.status.toUpperCase() !== 'PUBLISHED'" class="row col-md-4">
+        <div class="alert alert-warning" role="alert">
+            <span><span class="glyphicon glyphicon-info-sign">&nbsp;</span>Det är inte möjligt att prenumerera på detta API!</span>
+        </div>
     </div>
-  </div>
 
-  <div ng-show="user.loggedIn && vm.api.status.toUpperCase() !== 'PUBLISHED'" class="row col-md-4">
-    <div class="alert alert-warning" role="alert">
-      <span><span class="glyphicon glyphicon-info-sign">&nbsp;</span>Det är inte möjligt att prenumerera på detta API!</span>
-    </div>
-  </div>
+    <div ng-show="user.loggedIn && vm.api.status.toUpperCase() === 'PUBLISHED'" class="row col-md-4 well">
+        <div class="form-group" ng-class="{ 'has-error': addSubscriptionForm.application.$dirty && addSubscriptionForm.application.$invalid, 'has-success' : addSubscriptionForm.application.$valid}">
+            <div ng-show="vm.applications.length === 0 && vm.applicationsSubscribing.length === 0">
+                <b>Du har inga registrerade applikationer.</b>
+                <p><a href="#/applications">Skapa en applikation först</a>, skapa sedan en prenumeration här!</p>
+            </div>
+            <div ng-show="vm.applications.length === 0 && vm.applicationsSubscribing.length > 0">
+                <b>Applikationer som prenumererar på detta API</b><br />
+                <p ng-repeat="entries in vm.applicationsSubscribing"><a href="#/applications/{{entries.id}}">{{entries.name}}</a></p>
+            </div>
 
-  <div ng-show="user.loggedIn && vm.api.status.toUpperCase() === 'PUBLISHED'" class="row col-md-4 well">
-    <div class="form-group" ng-class="{ 'has-error': addSubscriptionForm.application.$dirty && addSubscriptionForm.application.$invalid, 'has-success' : addSubscriptionForm.application.$valid}">
-      <div ng-show="vm.applications.length === 0 && vm.applicationsSubscribing.length === 0">
-        <b>Du har inga registrerade applikationer.</b>
-        <p><a href="#/applications">Skapa en applikation först</a>, skapa sedan en prenumeration här!</p>
-      </div>
-      <div ng-show="vm.applications.length === 0 && vm.applicationsSubscribing.length > 0">
-        <b>Applikationer som prenumererar på detta API</b><br />
-        <p ng-repeat="entries in vm.applicationsSubscribing"><a href="#/applications/{{entries.id}}">{{entries.name}}</a></p>
-      </div>
-
-      <div ng-show="vm.applications.length > 0">
-        <form name="addSubscriptionForm" ng-submit="vm.addSubscription()" role="form" class="ng-pristine ng-invalid ng-invalid-required">
-          <input type="hidden" name="apiId" ng-model="vm.apiId" value="{{vm.apiId}}" />
-          <div class="form-group" ng-class="{ 'has-error': addSubscriptionForm.application.$dirty && addSubscriptionForm.application.$invalid, 'has-success' : addSubscriptionForm.application.$valid}">
-            <label for="application">Applikation</label>
-            <select name="application" id="application" ng-model="vm.selectedApplicationId" class="form-control" required>
+            <div ng-show="vm.applications.length > 0">
+                <form name="addSubscriptionForm" ng-submit="vm.addSubscription()" role="form" class="ng-pristine ng-invalid ng-invalid-required">
+                    <input type="hidden" name="apiId" ng-model="vm.apiId" value="{{vm.apiId}}" />
+                    <div class="form-group" ng-class="{ 'has-error': addSubscriptionForm.application.$dirty && addSubscriptionForm.application.$invalid, 'has-success' : addSubscriptionForm.application.$valid}">
+                        <label for="application">Applikation</label>
+                        <select name="application" id="application" ng-model="vm.selectedApplicationId" class="form-control" required>
               <option ng-repeat="entry in vm.applications" value="{{entry.id}}">{{entry.name}}</option>
             </select>
-            <span ng-show="addSubscriptionForm.application.$dirty && addSubscriptionForm.application.$error.required" class="help-block">Applikation är obligatoriskt</span>
-          </div>
-          <div class="form-actions noclick">
-            <button type="submit" ng-disabled="addSubscriptionForm.$invalid || vm.dataLoadingAddSubscription" class="btn btn-primary" disabled="disabled">Skapa prenumeration</button>
-            <span ng-click="vm.resetAddSubscriptionForm()" class="btn btn-link">Ångra</span>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <div class="row col-md-12">
-    <div class="card">
-      <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation" class="active">
-          <a href="#apiOverview" target="_self" aria-controls="home" role="tab" data-toggle="tab">Översikt</a>
-        </li>
-        <li role="presentation">
-          <a href="#apiDocs" target="_self" aria-controls="profile" role="tab" data-toggle="tab">Dokumentation</a>
-        </li>
-        <li role="presentation">
-          <a href="#apiConsole" target="_self" aria-controls="messages" role="tab" data-toggle="tab">API-konsol</a>
-        </li>
-      </ul>
-
-      <!-- Tab panes -->
-      <div class="tab-content">
-
-        <div role="tabpanel" class="tab-pane active" id="apiOverview">
-
-          <h3>Beskrivning</h3>
-          <div id="desc" ng-bind-html="vm.api.description"></div>
-
-          <h3>URL</h3>
-          <div id="url">https://api.vasttrafik.se{{vm.api.context + '/' + vm.api.version}}</div>
-        </div>
-
-        <div role="tabpanel" class="tab-pane" id="apiDocs">
-
-          <table class="table table-hover table-striped" ng-show="vm.documents.length > 0">
-            <thead class="table-header">
-              <tr>
-                <th class="hidden-xs">Namn</th>
-                <th class="hidden-sm hidden-md hidden-lg">Dokument</th>
-
-                <th class="hidden-xs">Typ</th>
-                <th class="hidden-xs">Beskrivning</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr ng-repeat="doc in vm.documents" class="nga-default nga-fade">
-
-                <!-- Small device, a list instead -->
-                <td class="hidden-sm hidden-md hidden-lg">
-                  <!-- Url -->
-                  <strong>Namn:</strong>
-                  <span ng-if="doc.source === 'url'"><a href="{{doc.url}}" title="{{doc.type}}">{{doc.name}}</a></span>
-                  <span ng-if="doc.source !== 'url'"><a href="{{vm.defaultBaseUrl + '/apis/' + vm.apiIdSingle + '/documents/' + doc.id + '/content/' + doc.fileName}}" title="{{doc.type}}">{{doc.name}}</a></span>
-                  <br />
-                  <!-- Type -->
-                  <strong>Typ:</strong>
-                  <span ng-if="doc.type.type !== 'Other'"><span>{{doc.type.type}}</span></span>
-                  <span ng-if="doc.type.type === 'Other'"><span>{{doc.type.otherType}}</span></span>
-                  <br />
-                    <!-- Summary -->
-                  <strong>Beskrivning:</strong>
-                  <span>{{doc.summary}}</span>
-                </td>
-
-
-                <td class="hidden-xs" ng-if="doc.source === 'url'">
-                  <span><a href="{{doc.url}}" title="{{doc.type}}">{{doc.name}}</a></span>
-                </td>
-                <td class="hidden-xs" ng-if="doc.source !== 'url'">
-                  <span><a href="{{vm.defaultBaseUrl + '/apis/' + vm.apiIdSingle + '/documents/' + doc.id + '/content/' + doc.fileName}}" title="{{doc.type}}">{{doc.name}}</a></span>
-                </td>
-
-                <td class="hidden-xs" ng-if="doc.type.type !== 'Other'">
-                  <span>{{doc.type.type}}</span>
-                </td>
-                <td class="hidden-xs" ng-if="doc.type.type === 'Other'">
-                  <span>{{doc.type.otherType}}</span>
-                </td>
-
-                <td class="hidden-xs">
-                  <span>{{doc.summary}}</span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div ng-show="!(vm.documents.length > 0)" class="alert alert-warning" role="alert">
-            <span class="glyphicon glyphicon-info-sign">&nbsp;</span>Det finns inga dokument associerade till detta API!
-          </div>
-        </div>
-
-        <div role="tabpanel" class="tab-pane" id="apiConsole">
-          <div ng-if="vm.useAccessToken">
-            <label for="requestHeader">Ange access token</label>
-            <div class="input-group">
-              <span class="input-group-addon" id="basic-addon3">Authorization: Bearer </span>
-              <input type="text" class="form-control" id="requestHeader" ng-model="user.accessToken" aria-describedby="basic-addon3">
+                        <span ng-show="addSubscriptionForm.application.$dirty && addSubscriptionForm.application.$error.required" class="help-block">Applikation är obligatoriskt</span>
+                    </div>
+                    <div class="form-actions noclick">
+                        <button type="submit" ng-disabled="addSubscriptionForm.$invalid || vm.dataLoadingAddSubscription" class="btn btn-primary" disabled="disabled">Skapa prenumeration</button>
+                        <span ng-click="vm.resetAddSubscriptionForm()" class="btn btn-link">Ångra</span>
+                    </div>
+                </form>
             </div>
-          </div>
-
-          <div class="row" style="padding:20px;">
-            <div ng-if="vm.useAccessToken === true" swagger-ui url="vm.swaggerUrl" api-explorer="true" parser="json" validator-url="false"></div>
-            <div ng-if="vm.useAccessToken === false" swagger-ui url="vm.swaggerUrl" api-explorer="false" parser="json" validator-url="false"></div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
+
+    <div class="row col-md-12">
+        <div class="card">
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#apiOverview" target="_self" role="tab" data-toggle="tab">Översikt</a>
+                </li>
+                <li role="presentation">
+                    <a href="#apiDocs" target="_self" role="tab" data-toggle="tab">Dokumentation</a>
+                </li>
+                <li role="presentation">
+                    <a href="#apiConsole" target="_self" role="tab" data-toggle="tab">API-konsol</a>
+                </li>
+                <li role="presentation" ng-if="vm.api.status === 'PUBLISHED'">
+                    <a href="#apiClient" target="_self" role="tab" data-toggle="tab">Ladda ner klient</a>
+                </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+
+                <div role="tabpanel" class="tab-pane active" id="apiOverview">
+
+                    <h3>Beskrivning</h3>
+                    <div id="desc" ng-bind-html="vm.api.description"></div>
+
+                    <h3>URL</h3>
+                    <div id="url">https://api.vasttrafik.se{{vm.api.context + '/' + vm.api.version}}</div>
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="apiDocs">
+
+                    <table class="table table-hover table-striped" ng-show="vm.documents.length > 0">
+                        <thead class="table-header">
+                            <tr>
+                                <th class="hidden-xs">Namn</th>
+                                <th class="hidden-sm hidden-md hidden-lg">Dokument</th>
+
+                                <th class="hidden-xs">Typ</th>
+                                <th class="hidden-xs">Beskrivning</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="doc in vm.documents" class="nga-default nga-fade">
+
+                                <!-- Small device, a list instead -->
+                                <td class="hidden-sm hidden-md hidden-lg">
+                                    <!-- Url -->
+                                    <strong>Namn:</strong>
+                                    <span ng-if="doc.source === 'url'"><a href="{{doc.url}}" title="{{doc.type}}">{{doc.name}}</a></span>
+                                    <span ng-if="doc.source !== 'url'"><a href="{{vm.defaultBaseUrl + '/apis/' + vm.apiIdSingle + '/documents/' + doc.id + '/content/' + doc.fileName}}" title="{{doc.type}}">{{doc.name}}</a></span>
+                                    <br />
+                                    <!-- Type -->
+                                    <strong>Typ:</strong>
+                                    <span ng-if="doc.type.type !== 'Other'"><span>{{doc.type.type}}</span></span>
+                                    <span ng-if="doc.type.type === 'Other'"><span>{{doc.type.otherType}}</span></span>
+                                    <br />
+                                    <!-- Summary -->
+                                    <strong>Beskrivning:</strong>
+                                    <span>{{doc.summary}}</span>
+                                </td>
+
+
+                                <td class="hidden-xs" ng-if="doc.source === 'url'">
+                                    <span><a href="{{doc.url}}" title="{{doc.type}}">{{doc.name}}</a></span>
+                                </td>
+                                <td class="hidden-xs" ng-if="doc.source !== 'url'">
+                                    <span><a href="{{vm.defaultBaseUrl + '/apis/' + vm.apiIdSingle + '/documents/' + doc.id + '/content/' + doc.fileName}}" title="{{doc.type}}">{{doc.name}}</a></span>
+                                </td>
+
+                                <td class="hidden-xs" ng-if="doc.type.type !== 'Other'">
+                                    <span>{{doc.type.type}}</span>
+                                </td>
+                                <td class="hidden-xs" ng-if="doc.type.type === 'Other'">
+                                    <span>{{doc.type.otherType}}</span>
+                                </td>
+
+                                <td class="hidden-xs">
+                                    <span>{{doc.summary}}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div ng-show="!(vm.documents.length > 0)" class="alert alert-warning" role="alert">
+                        <span class="glyphicon glyphicon-info-sign">&nbsp;</span>Det finns inga dokument associerade till detta API!
+                    </div>
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="apiConsole">
+                    <div ng-if="vm.useAccessToken">
+                        <label for="requestHeader">Ange access token</label>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon3">Authorization: Bearer </span>
+                            <input type="text" class="form-control" id="requestHeader" ng-model="user.accessToken" aria-describedby="basic-addon3">
+                        </div>
+                    </div>
+
+                    <div class="row" style="padding:20px;">
+                        <div ng-if="vm.useAccessToken === true" swagger-ui url="vm.swaggerUrl" api-explorer="true" parser="json" validator-url="false"></div>
+                        <div ng-if="vm.useAccessToken === false" swagger-ui url="vm.swaggerUrl" api-explorer="false" parser="json" validator-url="false"></div>
+                    </div>
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="apiClient">
+
+                    <div ng-if="vm.clientOptions">
+                        <h3>Ladda ner klient-stubb för detta API för specificerat programspråk</h3>
+                        <table class="table table-hover table-striped margin-top-small">
+                            <tbody>
+                                <tr ng-repeat="entry in vm.clientOptions | limitTo:vm.clientOptions.length/3" class="nga-default nga-fade">
+                                    <td><a href="" ng-click="vm.downloadClient(vm.clientOptions[$index].type)">{{vm.clientOptions[$index].text}}</a></td>
+                                    <td><a href="" ng-click="vm.downloadClient(vm.clientOptions[$index + vm.clientOptions.length/3].type)">{{vm.clientOptions[$index + vm.clientOptions.length/3].text}}</a></td>
+                                    <td><a href="" ng-click="vm.downloadClient(vm.clientOptions[$index + (vm.clientOptions.length/3)*2].type)">{{vm.clientOptions[$index + (vm.clientOptions.length/3)*2].text}}</a></td>
+                                </tr>
+                        </table>
+                    </div>
+                    <div ng-if="!vm.clientOptions">
+                        <h3>Det är för närvarande inte möjligt att ladda ner klient-stubb för detta API, försök gärna senare igen.</h3>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

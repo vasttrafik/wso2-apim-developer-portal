@@ -15,7 +15,7 @@
 
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="shortcut icon" href="/portal/favicon.ico">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
   <link rel="stylesheet" href="css/angular-swagger-ui.css">
@@ -252,14 +252,6 @@
         </div>
         <div class="col-sm-2 col-md-2 col-centered">
           <ul class="list-unstyled truncate">
-            <li><a href="#/guides/get-started">Kom-igång</a></li>
-            <li><a href="#/guides/oauth2">Guider</a></li>
-            <li class="color-gray">Support</li>
-            <li class="color-gray">Verktyg</li>
-          </ul>
-        </div>
-        <div class="col-sm-2 col-md-2 col-centered">
-          <ul class="list-unstyled truncate">
             <li><a href="#/news">Nyheter</a></li>
             <li><a href="#/community">Community</a></li>
             <li><a href="#/blog">Blogg</a></li>
@@ -274,11 +266,17 @@
             <li><a href="#/docs/integrity">Integritetspolicy</a></li>
           </ul>
         </div>
+        <div class="col-sm-2 col-md-2 col-centered">
+          <ul class="list-unstyled truncate">
+            <li><a href="#/guides/get-started">Kom-igång</a></li>
+            <li><a href="#/guides/oauth2">Guider</a></li>
+          </ul>
+        </div>
       </div>
 
       <div class="row row-centered info">
         <div class="col-xs-12 col-sm-6 col-centered">
-          <div class="copyright">© Copyright 2016, Västtrafik</div>
+          <div class="copyright">© Copyright 2017, Västtrafik</div>
         </div>
         <div class="col-xs-12 col-sm-6">
           <a class="logo" href="#/index.html" title="Västtrafik - En del av Västra Götalandsregionen">
@@ -338,12 +336,15 @@
   <script src="js/vendor/ui-bootstrap-tpls-1.3.1.min.js"></script>
   <script src="js/vendor/ui-iconpicker.js"></script>
   <script src="js/vendor/dirPagination.js"></script>
+  <script src="js/vendor/FileSaver.min.js"></script>
 
   <script src="js/main.js"></script>
 
   <script src="js/api/DefaultApi.js"></script>
   <script src="js/api/UserApi.js"></script>
   <script src="js/api/CommunityApi.js"></script>
+
+  <script src="js/api/CodegenApi.js"></script>
 
   <script src="js/app/app.js"></script>
 
