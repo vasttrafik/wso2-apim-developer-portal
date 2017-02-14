@@ -385,7 +385,7 @@
         if (response.status === 401) {
 
           if (response.message === 'RemoteUserStoreManagerServiceUserStoreExceptionException') {
-            AlertService.menuError('Kontakta api@vasttrafik.se för att låsa upp', 'Ditt konto är låst');
+            AlertService.menuError('Kontakta api@vasttrafik.se om kontot är låst', "Felaktigt användarnamn eller låst konto");
           } else {
             AlertService.menuError('Användarnamn och lösenord stämmer inte.', 'Problem att logga in');
           }
@@ -409,7 +409,7 @@
     function create() {
       vm.dataLoading = true;
       AuthenticationService.create(vm.user, vm.claims).then(function(response) {
-        AlertService.success('Du kommer få ett mail med instruktioner för att aktivera ditt konto', 'Registrering skickad!', 10000);
+        AlertService.success('Du kommer få ett mail med instruktioner för att aktivera ditt konto', 'Registrering skickad!', 20000);
         $location.path('/activation').search('username', vm.user.username);
         $rootScope.user.create = false;
         vm.dataLoading = false;
