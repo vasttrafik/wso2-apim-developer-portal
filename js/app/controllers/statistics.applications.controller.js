@@ -191,8 +191,9 @@
         vm.statistics.uniqueUsersDayChange = calculatePercentageChange(uniqueUsers.series[0].values[valuesLength - 1], uniqueUsers.series[0].values[valuesLength - 2]);
         vm.statistics.uniqueUsersDayChangeNumber = Math.abs(uniqueUsers.series[0].values[valuesLength - 1] - uniqueUsers.series[0].values[valuesLength - 2]);
       }
+
       /* Check if first date is from last week and last date is from today. This means it's possible to compare them */
-      if (valuesLength > 1 && Date.create(uniqueUsers.series[0].names[0]).is('8 days ago') && Date.create(uniqueUsers.series[0].names[valuesLength - 1]).isToday()) {
+      if (valuesLength > 1 && (Date.create(uniqueUsers.series[0].names[0]).daysAgo() === 7) && Date.create(uniqueUsers.series[0].names[valuesLength - 1]).isToday()) {
         vm.statistics.uniqueUsersWeekChange = calculatePercentageChange(uniqueUsers.series[0].values[valuesLength - 1], uniqueUsers.series[0].values[0]);
         vm.statistics.uniqueUsersWeekChangeNumber = Math.abs(uniqueUsers.series[0].values[valuesLength - 1] - uniqueUsers.series[0].values[0]);
         uniqueUsers.series[0].values.shift(); // Remove first day
@@ -249,8 +250,8 @@
 
       var valuesLength = series[0].values.length;
 
-      /* Check if second last date is 3 days ago. This means that last element is 2 days ago and can be compared with */
-      if (valuesLength > 1 && Date.create(series[0].names[valuesLength - 2]).is('3 days ago')) {
+      /* Check if second last date is 2 days ago. This means that last element is 1 days ago and can be compared with */
+      if (valuesLength > 1 && Date.create(series[0].names[valuesLength - 2]).daysAgo() === 2) {
         vm.statistics.totalRequestsDayChangeNumber = Math.abs(series[0].values[valuesLength - 1] - series[0].values[valuesLength - 2]);
         vm.statistics.totalRequestsDayChange = calculatePercentageChange(series[0].values[valuesLength - 1], series[0].values[valuesLength - 2]);
 
@@ -261,8 +262,9 @@
         }
 
       }
+
       /* Check if first date is from last week and last date is from yesterday. This means it's possible to compare them */
-      if (valuesLength > 1 && Date.create(series[0].names[0]).is('9 days ago') && Date.create(series[0].names[valuesLength - 1]).is('2 days ago')) {
+      if (valuesLength > 1 && (Date.create(series[0].names[0]).daysAgo() === 8) && (Date.create(series[0].names[valuesLength - 1]).isYesterday())) {
         vm.statistics.totalRequestsWeekChangeNumber = Math.abs(series[0].values[valuesLength - 1] - series[0].values[0]);
         vm.statistics.totalRequestsWeekChange = calculatePercentageChange(series[0].values[valuesLength - 1], series[0].values[0]);
         series[0].names.shift(); // Remove first day
