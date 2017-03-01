@@ -19,8 +19,10 @@
     vm.addSubscription = addSubscription;
     vm.resetAddSubscriptionForm = resetAddSubscriptionForm;
     vm.downloadClient = downloadClient;
+    vm.getClientOptionsCeilingNumber = getClientOptionsCeilingNumber;
 
     (function init() {
+
       vm.defaultBaseUrl = defaultBaseUrl;
       vm.documents = {};
       vm.applications = {};
@@ -84,6 +86,10 @@
       }
 
     })();
+
+    function getClientOptionsCeilingNumber() {
+      return $window.Math.ceil(vm.clientOptions.length / 3);
+    }
 
     function applicationsGetResponse(response) {
 

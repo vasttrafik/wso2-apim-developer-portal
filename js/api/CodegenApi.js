@@ -8,7 +8,9 @@ var CodegenAPI;
                 this.$http = $http;
                 this.$httpParamSerializer = $httpParamSerializer;
                 this.basePath = 'https://generator.swagger.io/api';
-                this.defaultHeaders = {};
+                this.defaultHeaders = {
+                  'X-JWT-Assertion': undefined
+                };
                 if (basePath !== undefined) {
                     this.basePath = basePath;
                 }

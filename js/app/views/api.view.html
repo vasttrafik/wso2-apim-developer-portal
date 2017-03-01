@@ -192,10 +192,10 @@
                         <h3>Ladda ner klient-stubb för detta API för specificerat programspråk</h3>
                         <table class="table table-hover table-striped margin-top-small">
                             <tbody>
-                                <tr ng-repeat="entry in vm.clientOptions | limitTo:vm.clientOptions.length/3" class="nga-default nga-fade">
+                                <tr ng-repeat="entry in vm.clientOptions | limitTo:vm.getClientOptionsCeilingNumber()" class="nga-default nga-fade">
                                     <td><a href="" ng-click="vm.downloadClient(vm.clientOptions[$index].type)">{{vm.clientOptions[$index].text}}</a></td>
-                                    <td><a href="" ng-click="vm.downloadClient(vm.clientOptions[$index + vm.clientOptions.length/3].type)">{{vm.clientOptions[$index + vm.clientOptions.length/3].text}}</a></td>
-                                    <td><a href="" ng-click="vm.downloadClient(vm.clientOptions[$index + (vm.clientOptions.length/3)*2].type)">{{vm.clientOptions[$index + (vm.clientOptions.length/3)*2].text}}</a></td>
+                                    <td><a href="" ng-click="vm.downloadClient(vm.clientOptions[$index + vm.getClientOptionsCeilingNumber()].type)">{{vm.clientOptions[$index + vm.getClientOptionsCeilingNumber()].text}}</a></td>
+                                    <td><a href="" ng-click="vm.downloadClient(vm.clientOptions[$index + vm.getClientOptionsCeilingNumber()*2].type)">{{vm.clientOptions[$index + vm.getClientOptionsCeilingNumber()*2].text}}</a></td>
                                 </tr>
                         </table>
                     </div>
