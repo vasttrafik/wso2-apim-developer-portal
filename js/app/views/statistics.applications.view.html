@@ -43,11 +43,11 @@
             <h1>{{vm.statistics.totalRequests | number}}</h1>
             <p>Antal requests senaste veckan</p>
             <p data-toggle="tooltip" data-original-title="Förändring sedan föregående dag">
-              <span ng-if="vm.statistics.totalRequestsDayChange > 0" class="color-success">{{vm.statistics.totalRequestsDayChangeNumber | number}} <i class="fa fa-arrow-circle-up"></i> {{vm.statistics.totalRequestsDayChange}} % (dag)</span>
+              <span ng-if="vm.statistics.totalRequestsDayChange >= 0" class="color-success">{{vm.statistics.totalRequestsDayChangeNumber | number}} <i class="fa fa-arrow-circle-up"></i> {{vm.statistics.totalRequestsDayChange}} % (dag)</span>
               <span ng-if="vm.statistics.totalRequestsDayChange < 0" class="color-failure">{{vm.statistics.totalRequestsDayChangeNumber | number}} <i class="fa fa-arrow-circle-down"></i> {{vm.statistics.totalRequestsDayChange *-1}} % (dag)</span>
             </p>
             <p data-toggle="tooltip" data-original-title="Förändring sedan föregående vecka">
-              <span ng-if="vm.statistics.totalRequestsWeekChange > 0" class="color-success">{{vm.statistics.totalRequestsWeekChangeNumber | number}} <i class="fa fa-arrow-circle-up"></i> {{vm.statistics.totalRequestsWeekChange}} % (vecka)</span>
+              <span ng-if="vm.statistics.totalRequestsWeekChange >= 0" class="color-success">{{vm.statistics.totalRequestsWeekChangeNumber | number}} <i class="fa fa-arrow-circle-up"></i> {{vm.statistics.totalRequestsWeekChange}} % (vecka)</span>
               <span ng-if="vm.statistics.totalRequestsWeekChange < 0" class="color-failure">{{vm.statistics.totalRequestsWeekChangeNumber | number}} <i class="fa fa-arrow-circle-down"></i> {{vm.statistics.totalRequestsWeekChange *-1}} % (vecka)</span>
             </p>
           </div>
@@ -63,11 +63,11 @@
               <h1>{{vm.statistics.uniqueUsers | number}}</h1>
               <p>Unika användare idag</p>
               <p data-toggle="tooltip" data-original-title="Förändring sedan igår">
-                <span ng-if="vm.statistics.uniqueUsersDayChange > 0" class="color-success">{{vm.statistics.uniqueUsersDayChangeNumber | number}} <i class="fa fa-arrow-circle-up"></i> {{vm.statistics.uniqueUsersDayChange}} % (dag)</span>
+                <span ng-if="vm.statistics.uniqueUsersDayChange >= 0" class="color-success">{{vm.statistics.uniqueUsersDayChangeNumber | number}} <i class="fa fa-arrow-circle-up"></i> {{vm.statistics.uniqueUsersDayChange}} % (dag)</span>
                 <span ng-if="vm.statistics.uniqueUsersDayChange < 0" class="color-failure">{{vm.statistics.uniqueUsersDayChangeNumber | number}} <i class="fa fa-arrow-circle-down"></i> {{vm.statistics.uniqueUsersDayChange *-1}} % (dag)</span>
               </p>
               <p data-toggle="tooltip" data-original-title="Förändring sedan föregående vecka">
-                <span ng-if="vm.statistics.uniqueUsersWeekChange > 0" class="color-success">{{vm.statistics.uniqueUsersWeekChangeNumber | number}} <i class="fa fa-arrow-circle-up"></i> {{vm.statistics.uniqueUsersWeekChange}} % (vecka)</span>
+                <span ng-if="vm.statistics.uniqueUsersWeekChange >= 0" class="color-success">{{vm.statistics.uniqueUsersWeekChangeNumber | number}} <i class="fa fa-arrow-circle-up"></i> {{vm.statistics.uniqueUsersWeekChange}} % (vecka)</span>
                 <span ng-if="vm.statistics.uniqueUsersWeekChange < 0" class="color-failure">{{vm.statistics.uniqueUsersWeekChangeNumber | number}} <i class="fa fa-arrow-circle-down"></i> {{vm.statistics.uniqueUsersWeekChange *-1}} % (vecka)</span>
               </p>
             </div>
