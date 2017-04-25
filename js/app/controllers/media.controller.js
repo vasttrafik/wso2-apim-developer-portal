@@ -19,19 +19,30 @@
 
     vm.toggleExpand = toggleExpand;
 
+    vm.completedSearch = false;
+
     (function init() {
 
-      APIService.communityCall('forumsIdGet', [($location.path().split('/')[1] === 'news' ? 1 : 2)])
+      var forumId = 0;
+      if ($location.path().split('/')[1] === 'news') {
+        forumId = 1;
+      } else if ($location.path().split('/')[1] === 'blog') {
+        forumId = 2;
+      } else {
+        forumId = 3;
+      }
+
+      APIService.communityCall('forumsIdGet', [forumId])
         .then(forumsIdGetResponse);
 
       function forumsIdGetResponse(response) {
         if (response.status === 200) {
           vm.mediaItems = response.data.topics.filter(function(a) {
 
-            vm.years.push('20' + String(new Date(a.createDate).getYear()).substring(1,3));
+            vm.years.push('20' + String(new Date(a.createDate).getYear()).substring(1, 3));
 
             if ($routeParams.year) {
-              return (parseInt('20' + String(new Date(a.createDate).getYear()).substring(1,3))  === parseInt($routeParams.year));
+              return (parseInt('20' + String(new Date(a.createDate).getYear()).substring(1, 3)) === parseInt($routeParams.year));
             } else {
               return true;
             }
@@ -55,8 +66,10 @@
           }
 
         } else {
-          AlertService.error('Problem att hämta nyheter');
+          AlertService.error('Problem att hämta media');
         }
+
+        vm.completedSearch = true;
       }
 
     })();

@@ -19,7 +19,10 @@
         .then(forumsIdNewsGetResponse);
 
       APIService.communityCall('forumsIdGet', [2])
-          .then(forumsIdBlogGetResponse);
+        .then(forumsIdBlogGetResponse);
+
+      APIService.communityCall('forumsIdGet', [3])
+        .then(forumsIdCalendarGetResponse);
 
     })();
 
@@ -38,6 +41,15 @@
 
       } else {
         AlertService.error('Problem att hämta nyheter');
+      }
+    }
+
+    function forumsIdCalendarGetResponse(response) {
+      if (response.status === 200) {
+        vm.calendarItems = response.data.topics;
+
+      } else {
+        AlertService.error('Problem att hämta kalender');
       }
     }
 

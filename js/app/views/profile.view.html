@@ -61,7 +61,15 @@
               <span ng-show="profileForm.email.$dirty && profileForm.email.$error.required" class="help-block">E-Post är obligatoriskt</span>
             </div>
 
+            <div class="form-group checkbox alert alert-warning"role="warning">
+              <label>
+                <input class="small" type="checkbox" name="mailingList" id="mailingList" class="form-control" ng-model="vm.form.profile.mailingList" ng-checked="globals.currentUser.mailingList === 'true'" />
+                Jag accepterar att information kring Västtrafiks API:er och utvecklarportal skickas till min e-postadress.
+              </label>
+            </div>
+
             <div class="form-actions noclick">
+              <span ng-click="vm.deleteUser()" class="btn btn-link btn-danger" style="float: right">Ta bort mitt konto</span>
               <button type="submit" ng-disabled="profileForm.$invalid || vm.dataLoadingProfile" class="btn btn-primary">Uppdatera</button>
               <span ng-click="vm.resetProfileForm()" class="btn btn-link">Ångra</span>
             </div>

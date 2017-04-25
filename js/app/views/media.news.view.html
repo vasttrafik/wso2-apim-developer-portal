@@ -9,7 +9,7 @@
   <div class="container">
     <div class="row col-md-9">
       <section id="newsItemsList">
-        <div class="row" ng-if="vm.mediaItems.length === 0">
+        <div class="row" ng-if="vm.mediaItems.length === 0 && completedSearch">
           <h3>Det finns inte några nyheter med valda sökkriterier. Välj ett år i listan till höger.</h3>
         </div>
         <article id="{{'mediaArticle-' + newsItem.id}}" class="newsItem" ng-repeat="newsItem in vm.mediaItems | orderBy: 'createDate' : true">

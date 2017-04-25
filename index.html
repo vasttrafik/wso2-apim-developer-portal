@@ -167,10 +167,17 @@
                   </div>
 
                   <div id="formCreate" ng-if="user.create">
-                    <div class="form-group" ng-class="{ 'has-error': form.{{entries.claimValue}}.$dirty && form.{{entries.claimValue}}.$invalid, 'has-success' : form.{{entries.claimValue}}.$valid}" ng-repeat="entries in vm.claims">
+                    <div ng-if="entries.required === 'true'" class="form-group" ng-class="{ 'has-error': form.{{entries.claimValue}}.$dirty && form.{{entries.claimValue}}.$invalid, 'has-success' : form.{{entries.claimValue}}.$valid}" ng-repeat="entries in vm.claims">
                       <label for="{{entries.claimValue}}">{{entries.displayTag}}</label>
                       <input type="text" name="{{entries.claimValue}}" id="{{entries.claimValue}}" class="form-control" ng-model="vm.user[entries.claimValue].value" required />
                       <span ng-show="form.{{entries.claimValue}}.$dirty && form.{{entries.claimValue}}.$error.required" class="help-block">{{entries.displayTag}} är obligatoriskt</span>
+                    </div>
+
+                    <div ng-if="entries.required === 'false' && entries.claimUri === 'http://wso2.org/claims/mailinglist'" class="checkbox alert alert-warning" ng-repeat="entries in vm.claims" role="warning">
+                      <label>
+                        <input class="small" type="checkbox" name="{{entries.claimValue}}" id="{{entries.claimValue}}" class="form-control" ng-model="vm.user[entries.claimValue].value" />
+                        Jag accepterar att information kring Västtrafiks API:er och utvecklarportal skickas till min e-postadress.
+                      </label>
                     </div>
 
                     <div class="form-group" ng-class="{ 'has-error': form.createUsername.$dirty && form.createUsername.$invalid, 'has-success' : form.createUsername.$valid}">

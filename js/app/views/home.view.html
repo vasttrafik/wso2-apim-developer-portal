@@ -128,6 +128,17 @@
       <div class="col-sm-4">
         <div class="feed text-center">
           <h3><i class="fa fa-calendar"></i> Kalender</h3>
+          <ul class="list-unstyled truncate" style="line-height:2em">
+            <li ng-repeat="entry in vm.calendarItems | orderBy: 'createDate' : true | limitTo: 6">
+              <a href="#/calendar/{{entry.createDate | date:'yyyy'}}?id={{entry.id}}">
+                {{entry.subject}}
+              </a>
+            </li>
+          </ul>
+          <p ng-if="vm.blogItems.length > 0">
+            <a href="#/blog">Fler händelser</a>
+            <br />
+          </p>
         </div>
       </div>
     </div>

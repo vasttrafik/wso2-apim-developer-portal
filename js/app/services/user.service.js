@@ -25,7 +25,7 @@
 	   "value" : "string"
    },
    {
-   "claimURI" : "http://wso2.org/claims/emailaddress",
+   "claimURI" : "http://wso2.org/claims/mailinglist",
    "value" : "string"
    }
   ]
@@ -79,6 +79,9 @@
             lastName: user.claims.filter(function(el) {
               return el.claimUri === 'http://wso2.org/claims/lastname';
             })[0].claimValue,
+            mailingList: user.claims.filter(function(el) {
+              return el.claimUri === 'http://wso2.org/claims/mailinglist';
+            })[0].claimValue
           }
         };
 

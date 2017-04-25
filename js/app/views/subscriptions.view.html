@@ -27,26 +27,34 @@
           </th>
           <th>API</th>
           <th>Aktioner</th>
+          <th class="hidden-xs" style="width: 25px;">
+            <!--Img-->
+          </th>
         </tr>
       </thead>
 
       <tbody>
         <tr ng-repeat="entries in vm.subscriptions | orderBy:'application.name'" class="nga-default nga-fade">
           <td>
-            <span><a href="#/applications/{{entries.application.id}}">{{entries.application.name}}</a>
+            <span ng-if="entries.subStatus === 'ON_HOLD'" data-balloon="Prenumerationen väntar på att bli godkänd" data-balloon-pos="up">{{entries.application.name}}</span>
+            <span ng-if="entries.subStatus !== 'ON_HOLD'"><a href="#/applications/{{entries.application.id}}">{{entries.application.name}}</a>
             </span>
           </td>
           <td class="hidden-xs">
-            <img ng-src="{{entries.api.imageUrl}}" style="width:25px;height:25px" />
+            <img ng-src="{{entries.api.imageUrl}}" style="width:25px;height:25px float: right" />
           </td>
           <td>
-            <span><a href="#/api/{{entries.api.name}}/{{entries.api.version}}/{{entries.api.provider}}/direct">{{entries.api.name}} {{entries.api.version}}</a></span>
+            <span ng-if="entries.subStatus === 'ON_HOLD'" data-balloon="Prenumerationen väntar på att bli godkänd" data-balloon-pos="up">{{entries.api.name}} {{entries.api.version}}</span>
+            <span ng-if="entries.subStatus !== 'ON_HOLD'"><a href="#/api/{{entries.api.name}}/{{entries.api.version}}/{{entries.api.provider}}/direct">{{entries.api.name}} {{entries.api.version}}</a></span>
           </td>
           <td>
             <span ng-click="vm.removeSubscription(entries.id)" style="cursor: pointer" title="Ta bort">
               <span class="glyphicon glyphicon-trash" style="margin-left: 10px;"></span>
               <span class="hidden-xs">Ta bort</span>
             </span>
+          </td>
+          <td ng-if="entries.subStatus === 'ON_HOLD'" data-balloon="Prenumerationen väntar på att bli godkänd" data-balloon-pos="up">
+            <i class="fa fa-clock-o" aria-hidden="true"></i>
           </td>
         </tr>
       </tbody>
