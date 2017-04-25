@@ -5,12 +5,13 @@
     .module('vtPortal')
     .controller('ProfileCtrl', ProfileCtrl);
 
-  ProfileCtrl.$inject = ['$scope', '$rootScope', '$location', '$http', '$q', 'APIService', 'AlertService', 'UserService', 'CommunityService'];
+  ProfileCtrl.$inject = ['$scope', '$rootScope', '$location', '$http', '$q', 'APIService', 'AlertService', 'UserService', 'CommunityService', 'AuthenticationService'];
 
-  function ProfileCtrl($scope, $rootScope, $location, $http, $q, APIService, AlertService, UserService, CommunityService) {
+  function ProfileCtrl($scope, $rootScope, $location, $http, $q, APIService, AlertService, UserService, CommunityService, AuthenticationService) {
     var vm = this;
 
     vm.saveProfile = saveProfile;
+    vm.deleteUser = deleteUser;
     vm.saveCommunityProfile = saveCommunityProfile;
     vm.savePassword = savePassword;
     vm.resetProfileForm = resetProfileForm;
@@ -60,6 +61,9 @@
           }, {
             claimUri: 'http://wso2.org/claims/lastname',
             claimValue: vm.form.profile.lastName
+          }, {
+            claimUri: 'http://wso2.org/claims/mailinglist',
+            claimValue: (vm.form.profile.mailingList === true ? 'true' : 'false')
           }];
           newUserObject = angular.copy(response); // Keep a copy of the updated values
           response.tenantDomain = 'carbon.super';
@@ -74,6 +78,7 @@
               } else {
                 AlertService.error('Problem att uppdatera användaruppgifter');
               }
+              vm.dataLoadingProfile = false;
             });
         });
 
@@ -202,6 +207,42 @@
           AlertService.error(response.data.message);
         }
         vm.dataLoadingPassword = false;
+      }
+    }
+
+    function deleteUser() {
+      vm.dataLoadingProfile = true;
+
+      if (confirm('Är du helt säker på att du vill ta bort och radera allt innehåll för ditt konto?') === true) {
+        if (confirm('En gång till. Är du helt säker på att du vill ta bort och radera allt innehåll för ditt konto? ' +
+        'Det går inte att återställa! Detta radera alla dina kontouppgifter och dina eventuella inlägg i community anonymiseras. ' +
+        'Detta innebär också att inga requests till våra API:er längre kommer att fungera ifrån dina applikationer!') === true) {
+          APIService.userCall('usersUserIdDelete', [$rootScope.globals.currentUser.id])
+            .then(usersUserIdDeleteResponse);
+        } else {
+          vm.dataLoadingProfile = false;
+        }
+      } else {
+        vm.dataLoadingProfile = false;
+      }
+
+      function usersUserIdDeleteResponse(response) {
+        if (response.status === 200) {
+
+          if ($rootScope.globals.currentUser.memberId !== null) {
+            APIService.communityCall('membersIdDelete', [$rootScope.globals.currentUser.memberId])
+              .then(function() {
+                AuthenticationService.logout();
+                AlertService.success('Ditt konto är nu borttaget!');
+              });
+          } else {
+            AuthenticationService.logout();
+            AlertService.success('Ditt konto är nu borttaget!');
+          }
+        } else {
+          AlertService.error(response.data.message);
+          vm.dataLoadingProfile = false;
+        }
       }
     }
 

@@ -482,6 +482,32 @@ var CommunityAPI;
       };
       /**
        *
+       * Deletes a community member profile
+       * @param id Resource id
+       */
+      CommunityApi.prototype.membersIdDelete = function(id, extraHttpRequestParams) {
+        var localVarPath = this.basePath + '/members/{id}'
+          .replace('{' + 'id' + '}', String(id));
+        var queryParameters = {};
+        var headerParams = this.extendObj({}, this.defaultHeaders);
+        // verify required parameter 'id' is set
+        if (!id) {
+          throw new Error('Missing required parameter id when calling membersIdDelete');
+        }
+        var httpRequestParams = {
+          method: 'DELETE',
+          url: localVarPath,
+          json: true,
+          params: queryParameters,
+          headers: headerParams
+        };
+        if (extraHttpRequestParams) {
+          httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+        }
+        return this.$http(httpRequestParams);
+      };
+      /**
+       *
        * Creates a member profile
        * @param body The member profile to create
        */

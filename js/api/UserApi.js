@@ -42,6 +42,25 @@ var UserAPI;
         }
         return this.$http(httpRequestParams);
       };
+      UserApi.prototype.users = function(accept, contentType, body, extraHttpRequestParams) {
+        var path = this.basePath + '/users';
+        var queryParameters = {};
+        var headerParams = this.extendObj({}, this.defaultHeaders);
+        headerParams['Accept'] = accept;
+        headerParams['Content-Type'] = contentType;
+        var httpRequestParams = {
+          method: 'PUT',
+          url: path,
+          json: true,
+          data: body,
+          params: queryParameters,
+          headers: headerParams
+        };
+        if (extraHttpRequestParams) {
+          httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+        }
+        return this.$http(httpRequestParams);
+      };
       UserApi.prototype.usersPost = function(accept, contentType, body, extraHttpRequestParams) {
         var path = this.basePath + '/users';
         var queryParameters = {};
@@ -53,6 +72,28 @@ var UserAPI;
           url: path,
           json: true,
           data: body,
+          params: queryParameters,
+          headers: headerParams
+        };
+        if (extraHttpRequestParams) {
+          httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+        }
+        return this.$http(httpRequestParams);
+      };
+      UserApi.prototype.usersUserIdDelete = function(userId, accept, extraHttpRequestParams) {
+        var path = this.basePath + '/users/{userId}'
+          .replace('{' + 'userId' + '}', String(userId));
+        var queryParameters = {};
+        var headerParams = this.extendObj({}, this.defaultHeaders);
+        // verify required parameter 'userId' is set
+        if (!userId) {
+          throw new Error('Missing required parameter userId when calling usersUserIdDelete');
+        }
+        headerParams['Accept'] = accept;
+        var httpRequestParams = {
+          method: 'DELETE',
+          url: path,
+          json: true,
           params: queryParameters,
           headers: headerParams
         };
