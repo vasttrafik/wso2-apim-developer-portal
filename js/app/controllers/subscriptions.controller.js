@@ -102,11 +102,16 @@
 
       function subscriptionsPostResponse(response) {
         if (response.status === 201) {
+
           response.data.api.imageUrl = vm.defaultBaseUrl + '/' + response.data.api.imageUrl;
           response.data.api.swaggerUrl = vm.defaultBaseUrl + '/' + response.data.api.swaggerUrl;
           vm.subscriptions.push(response.data);
 
-          AlertService.success('Prenumerationen skapad!');
+          if (response.data.subStatus === 'ON_HOLD') {
+            AlertService.success('Prenumerationen mottagen. En administratör kommer granska och godkänna den innan den kan användas.');
+          } else {
+            AlertService.success('Prenumerationen skapad!');
+          }
 
           resetAddSubscriptionForm();
 
