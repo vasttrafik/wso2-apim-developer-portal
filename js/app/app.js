@@ -11,7 +11,7 @@
     .factory('timeoutHttpIntercept', function($rootScope, $q) {
       return {
         'request': function(config) {
-          config.timeout = 20000;
+          config.timeout = 120000;
           return config;
         }
       };
@@ -262,6 +262,12 @@
         controllerAs: 'vm'
       })
 
+      .when('/calendar/:year?', {
+        controller: 'MediaCtrl',
+        templateUrl: 'js/app/views/media.calendar.view.html',
+        controllerAs: 'vm'
+      })
+
       .when('/statistics/apis', {
         controller: 'StatisticsApisCtrl',
         templateUrl: 'js/app/views/statistics.apis.view.html',
@@ -310,7 +316,7 @@
     $rootScope.$on('$locationChangeStart', function(event, next, current) {
 
       // redirect to startpage if not logged in and trying to access a restricted page
-      var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api', 'guides', 'docs', 'news', 'activation', 'recover', 'contact', 'blog', 'community']) === -1;
+      var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api', 'guides', 'docs', 'news', 'activation', 'recover', 'contact', 'blog', 'calendar', 'community']) === -1;
 
       if ($location.path().split('/')[1] === 'statistics') {
         restrictedPage = $location.path().split('/')[2] !== 'apis';

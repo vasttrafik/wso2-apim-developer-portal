@@ -8,7 +8,7 @@
   <div class="container">
     <div class="row col-md-12">
       <section id="blogItemsList">
-        <div class="row" ng-if="vm.mediaItems.length === 0">
+        <div class="row" ng-if="vm.mediaItems.length === 0 && completedSearch">
           <h3>Det finns inte några blogginlägg med valda sökkriterier.</h3>
         </div>
         <article id="{{'mediaArticle-' + blogItem.id}}" ng-repeat="blogItem in vm.mediaItems | orderBy: 'createDate' : true" class="padding-bottom border-bottom">
