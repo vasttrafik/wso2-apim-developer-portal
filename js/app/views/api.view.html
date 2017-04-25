@@ -190,6 +190,9 @@
 
                     <div ng-if="vm.clientOptions">
                         <h3>Ladda ner klient-stubb för detta API för specificerat programspråk</h3>
+                        <div class="alert alert-warning" role="alert">
+                            <span><span class="glyphicon glyphicon-info-sign">&nbsp;</span>Dessa klienter innehåller ingen kod för <a href="#/guides/oauth2">OAuth 2 autentisering</a>. Detta måste implementeras i klienterna för att fungera.</span>
+                        </div>
                         <table class="table table-hover table-striped margin-top-small">
                             <tbody>
                                 <tr ng-repeat="entry in vm.clientOptions | limitTo:vm.getClientOptionsCeilingNumber()" class="nga-default nga-fade">
