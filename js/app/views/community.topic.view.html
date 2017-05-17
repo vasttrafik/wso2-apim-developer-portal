@@ -62,7 +62,7 @@
                     <!-- Votes -->
                     <span class="pull-right" data-balloon="Inläggets poäng" data-balloon-pos="up">
                     <span ng-if="!vm.communityService.isMember() && entries.pointsAwarded > 0 || entries.createdBy.id === vm.communityService.getMemberId()"><strong><i class="fa fa-chevron-up"></i> {{entries.pointsAwarded}}</strong></span>
-                    <span ng-if="vm.topic.closedBy && entries.hasVoted && vm.communityService.isMember() && entries.createdBy.id !== vm.communityService.getMemberId()" class="voted"><strong><i class="fa fa-chevron-up"></i> {{entries.pointsAwarded}}</strong></span>
+                    <span ng-if="(vm.communityService.isMember() && vm.topic.closedBy) || (entries.hasVoted && vm.communityService.isMember() && entries.createdBy.id !== vm.communityService.getMemberId())" class="voted"><strong><i class="fa fa-chevron-up"></i> {{entries.pointsAwarded}}</strong></span>
                     <span ng-if="!vm.topic.closedBy && !entries.hasVoted && vm.communityService.isMember() && entries.createdBy.id !== vm.communityService.getMemberId()" class="vote" ng-click="vm.addVote(entries.id, entries.type)"><strong><i class="fa fa-chevron-up"></i> {{entries.pointsAwarded}}</strong></span>
                     </span>
                     <!-- End votes -->
