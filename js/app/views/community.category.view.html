@@ -36,7 +36,7 @@
 </div>
 
 <div class="container no-padding-top user-input">
-    <div class="row color-white">
+    <div class="row color-white" ng-if="!vm.internalCategory">
         <div class="col-md-4 row-xs no-padding-right-lg no-padding-left-lg">
             <div class="col-md-12 com-popular quick-box">
                 <div ng-if="vm.labels.popular.id" data-balloon="{{vm.labels.popular.subject}}" data-balloon-pos="up">
@@ -142,8 +142,10 @@
                     </td>
                     <td class="text-center">
                         <h2 class="no-margin-bottom">{{entries.numberOfTopics}}</h2>
-                        <p ng-if="entries.numberOfTopics != 1">Frågor</p>
-                        <p ng-if="entries.numberOfTopics == 1">Fråga</p>
+                        <p ng-if="entries.numberOfTopics != 1 && !vm.internalCategory">Frågor</p>
+                        <p ng-if="entries.numberOfTopics == 1 && !vm.internalCategory">Fråga</p>
+                        <p ng-if="entries.numberOfTopics != 1 && vm.internalCategory">Rubriker</p>
+                        <p ng-if="entries.numberOfTopics == 1 && vm.internalCategory">Rubrik</p>
                     </td>
                     <td class="text-center">
                         <h2 class="no-margin-bottom">{{entries.numberOfPosts}}</h2>

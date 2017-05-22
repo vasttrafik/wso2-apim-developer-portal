@@ -15,6 +15,8 @@
 
     vm.locationPath = $location.path();
 
+    vm.internalForum = true;
+
     vm.addTopic = addTopic;
     vm.addForumUpdate = addForumUpdate;
     vm.addWatch = addWatch;
@@ -25,10 +27,8 @@
 
     (function init() {
 
-      if ($location.path().indexOf('admin') > -1 && !CommunityService.isAdmin()) {
-        $location.path('/');
-      } else if (($location.path().indexOf('admin') === -1) && $.inArray(parseInt($routeParams.forumId), [1, 2, 3, 4]) > 0) {
-        $location.path('/');
+      if ($.inArray(parseInt($routeParams.forumId), [1, 2, 3, 4]) === -1) {
+        vm.internalForum = false;
       }
 
       vm.toggleForumUpdate = false;
