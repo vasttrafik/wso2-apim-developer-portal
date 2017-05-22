@@ -15,20 +15,17 @@
 
     vm.locationPath = $location.path();
 
+    vm.internalCategory = true;
+
     vm.addForum = addForum;
     vm.addCategoryUpdate = addCategoryUpdate;
     vm.updateCategory = updateCategory;
     vm.resetAddForumForm = resetAddForumForm;
 
     (function init() {
-      if ($location.path().indexOf('admin') > -1 && !CommunityService.isAdmin()) {
-        $location.path('/');
-      } else if (($location.path().indexOf('admin') === -1) && parseInt($routeParams.categoryId) === 1) {
-        $location.path('/');
-      }
 
-      if ($location.path().indexOf('admin') > -1 && !CommunityService.isAdmin()) {
-        $location.path('/');
+      if (parseInt($routeParams.categoryId) !== 1) {
+        vm.internalCategory = false;
       }
 
       vm.toggleCategoryUpdate = false;
@@ -106,7 +103,6 @@
       APIService.communityCall('categoriesIdPut', [vm.category.id, {
           id: vm.category.id,
           name: vm.form.name,
-          isPublic: true,
           imageURL: vm.form.imageURL
         }])
         .then(categoriesIdPutResponse)

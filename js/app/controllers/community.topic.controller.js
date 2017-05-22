@@ -15,6 +15,8 @@
 
     vm.locationPath = $location.path();
 
+    vm.internalForum = true;
+
     vm.addAnswer = addAnswer;
     vm.addComment = addComment;
     vm.addWatch = addWatch;
@@ -33,10 +35,6 @@
     vm.closeTopic = closeTopic;
 
     (function init() {
-
-      if ($location.path().indexOf('admin') > -1 && !CommunityService.isAdmin()) {
-        $location.path('/');
-      }
 
       vm.togglePostsComments = [];
       vm.toggleTopicUpdate = false;
@@ -62,8 +60,8 @@
 
         vm.topic = response.data;
 
-        if ($location.path().indexOf('admin') === -1 && vm.topic.categoryId === 1) {
-          $location.path('/');
+        if (vm.topic.categoryId !== 1) {
+          vm.internalForum = false;
         }
 
         CommunityService.addGravatarProfileInfoToPosts(vm.topic.posts);

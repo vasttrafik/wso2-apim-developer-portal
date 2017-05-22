@@ -86,7 +86,7 @@
           <h3 class="text-center"><i class="fa fa-newspaper-o"></i> Nyheter</h3>
           <ul class="list-unstyled truncate" style="line-height:2em">
             <li ng-repeat="entry in vm.newsItems | orderBy: 'createDate' : true | limitTo: 6">
-              <a href="#/news/{{entry.createDate | date:'yyyy'}}?id={{entry.id}}">
+              <a href="#/community/topic/{{entry.id}}">
                 <div class="calYear no-box-shadow" style="margin-top:0;margin-bottom:2px;">
                   <div>{{ entry.createDate | date:'yyyy' }}</div>
                 </div>
@@ -98,7 +98,7 @@
             </li>
           </ul>
           <p>
-            <a href="#/news">Fler nyheter</a>
+            <a href="#/community/forum/1">Fler nyheter</a>
             <br />
           </p>
         </div>
@@ -108,7 +108,7 @@
           <h3 class="text-center"><i class="fa fa-pencil-square-o"></i> Blogg</h3>
           <ul class="list-unstyled truncate" style="line-height:2em">
             <li ng-repeat="entry in vm.blogItems | orderBy: 'createDate' : true | limitTo: 6">
-              <a href="#/blog/{{entry.createDate | date:'yyyy'}}?id={{entry.id}}">
+              <a href="#/community/topic/{{entry.id}}">
                 <div class="calYear no-box-shadow" style="margin-top:0;margin-bottom:2px;">
                   <div>{{ entry.createDate | date:'yyyy' }}</div>
                 </div>
@@ -120,7 +120,7 @@
             </li>
           </ul>
           <p ng-if="vm.blogItems.length > 0">
-            <a href="#/blog">Fler blogginlägg</a>
+            <a href="#/community/forum/2">Fler blogginlägg</a>
             <br />
           </p>
         </div>
@@ -130,13 +130,13 @@
           <h3><i class="fa fa-calendar"></i> Kalender</h3>
           <ul class="list-unstyled truncate" style="line-height:2em">
             <li ng-repeat="entry in vm.calendarItems | orderBy: 'createDate' : true | limitTo: 6">
-              <a href="#/calendar/{{entry.createDate | date:'yyyy'}}?id={{entry.id}}">
+              <a href="#/community/topic/{{entry.id}}">
                 {{entry.subject}}
               </a>
             </li>
           </ul>
           <p ng-if="vm.blogItems.length > 0">
-            <a href="#/blog">Fler händelser</a>
+            <a href="#/community/forum/3">Fler händelser</a>
             <br />
           </p>
         </div>

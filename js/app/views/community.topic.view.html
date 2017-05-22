@@ -75,8 +75,8 @@
                     <span class="pull-right pointer margin-right-mini" ng-if="vm.topic.closedBy && $index !== 0 && !entries.isAnswer && !vm.topic.answeredByPostId && (vm.topic.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin())"><i class="fa fa-square-o"></i></span>
                 </div>
 
-                <div class="row simple-well margin-bottom-mini" ng-if="$index === 0 || vm.topic.answeredByPostId || (vm.topic.createdBy.id !== vm.communityService.getMemberId() && !vm.communityService.isAdmin())" ng-class="entries.isAnswer ? 'answer' : ''" btf-markdown="entries.text"></div>
-                <div class="row simple-well margin-bottom-mini pointer" ng-if="$index !== 0 && !vm.topic.answeredByPostId && (vm.topic.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin())" ng-class="entries.isAnswer ? 'answer' : 'not-answer'"
+                <div class="row simple-well margin-bottom-mini community-post" ng-if="$index === 0 || vm.topic.answeredByPostId || (vm.topic.createdBy.id !== vm.communityService.getMemberId() && !vm.communityService.isAdmin())" ng-class="entries.isAnswer ? 'answer' : ''" btf-markdown="entries.text"></div>
+                <div class="row simple-well margin-bottom-mini pointer community-post" ng-if="$index !== 0 && !vm.topic.answeredByPostId && (vm.topic.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin())" ng-class="entries.isAnswer ? 'answer' : 'not-answer'"
                     ng-click="vm.setAnswer(entries.id)" data-balloon="Utpeka detta svar som korrekt svar på frågan" data-balloon-pos="up" btf-markdown="entries.text"></div>
 
             </div>
@@ -94,7 +94,7 @@
 
                 <div ng-hide="!vm.togglePreviousEdits" class="row well margin-bottom-small" ng-repeat="edits in entries.edits">
                     <label for="description">Uppdaterad av {{edits.createdBy.signature}} för {{edits.createDate | relativeDate}}</label>
-                    <div btf-markdown="edits.text">
+                    <div class="community-post" btf-markdown="edits.text">
                     </div>
                 </div>
                 <div class="row well">
@@ -107,7 +107,7 @@
                             <textarea name="description" id="post{{entries.id}}" type="text" class="form-control" ng-model="vm.form.posts[entries.id]" style="height: 100px; margin-bottom: 20px" ng-maxlength="10000" required></textarea>
                             <div ng-show="updatePostForm.description.$error.maxlength" class="help-block">Maxlängd är 10000 tecken</div>
                             <label for="description" ng-show="vm.form.posts[entries.id]">Förhandsgranskning</label>
-                            <div btf-markdown="vm.form.posts[entries.id]">
+                            <div class="community-post" btf-markdown="vm.form.posts[entries.id]">
                             </div>
                         </div>
 
@@ -133,12 +133,12 @@
 
                 <div ng-hide="!vm.togglePreviousEdits" class="row well margin-bottom-small" ng-repeat="edits in entries.edits">
                     <label for="description">Uppdaterad av {{edits.createdBy.signature}} för {{edits.createDate | relativeDate}}</label>
-                    <div btf-markdown="edits.text">
+                    <div class="community-post" btf-markdown="edits.text">
                     </div>
                 </div>
                 <div class="row well">
 
-                    <div btf-markdown="vm.form.posts[entries.id]"></div>
+                    <div class="community-post" btf-markdown="vm.form.posts[entries.id]"></div>
 
                     <div class="form-actions noclick" style="float: right">
                         <span ng-click="vm.togglePostCommentUpdate(entries.id)" class="btn btn-link">Ångra</span>
@@ -172,7 +172,7 @@
 
                     <span class="pull-right pointer margin-right-small" ng-if="!vm.topic.closedBy && comment.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin()" ng-click="vm.removePost(comment.id, true)" data-balloon="Ta bort kommentar" data-balloon-pos="up"><i class="fa fa-trash"></i></span>
                     <span class="pull-right pointer margin-right-mini" ng-if="!vm.topic.closedBy && comment.createdBy.id === vm.communityService.getMemberId() || vm.communityService.isAdmin()" ng-click="vm.addPostCommentUpdate(comment.id)" data-balloon="Editera kommentar" data-balloon-pos="up"><i class="fa fa-pencil-square-o"></i></span>
-                    <div btf-markdown="comment.text">
+                    <div class="community-post" btf-markdown="comment.text">
                     </div>
 
                 </div>
@@ -189,7 +189,7 @@
 
                     <div ng-hide="!vm.togglePreviousEdits" class="row well margin-bottom-small" ng-repeat="edits in comment.edits">
                         <label for="description">Uppdaterad av {{edits.createdBy.signature}} för {{edits.createDate | relativeDate}}</label>
-                        <div btf-markdown="edits.text">
+                        <div class="community-post" btf-markdown="edits.text">
                         </div>
                     </div>
                     <form name="updateCommentForm{{comment.id}}" ng-submit="vm.updatePost(comment.id)" role="form">
@@ -218,11 +218,11 @@
                     </span>
                     <div ng-hide="!vm.togglePreviousEdits" class="row well margin-bottom-small" ng-repeat="edits in comment.edits">
                         <label for="description">Uppdaterad av {{edits.createdBy.signature}} för {{edits.createDate | relativeDate}}</label>
-                        <div btf-markdown="edits.text">
+                        <div class="community-post" btf-markdown="edits.text">
                         </div>
                     </div>
 
-                    <div btf-markdown="comment.text"></div>
+                    <div class="community-post" btf-markdown="comment.text"></div>
 
                     <div class="form-actions text-right">
                         <span ng-click="vm.togglePostCommentUpdate(comment.id)" class="btn btn-link">Ångra</span>
@@ -260,7 +260,9 @@
         <!-- Number of replies only showed after first iteration -->
         <div ng-if="$index === 0" class="row">
             <div class="col-md-12" style="margin-bottom: -20px; margin-left: 20px">
-                <h2>{{vm.topic.numberOfAnswers}} svar</h2>
+                <h2 ng-if="!vm.internalForum">{{vm.topic.numberOfAnswers}} svar</h2>
+                <h2 ng-if="vm.internalForum && vm.topic.numberOfAnswers > 1">{{vm.topic.numberOfAnswers}} kommentarer</h2>
+                  <h2 ng-if="vm.internalForum && vm.topic.numberOfAnswers == 1">{{vm.topic.numberOfAnswers}} kommentar</h2>
             </div>
         </div>
 
@@ -269,7 +271,8 @@
     <!-- Add reply -->
     <div ng-show="vm.communityService.isMember() && !vm.topic.closedBy" id="com-post-answer">
         <div class="container no-padding-left no-padding-bottom">
-            <h2>Skriv ett svar</h2>
+            <h2 ng-if="!vm.internalForum">Skriv ett svar</h2>
+            <h2 ng-if="vm.internalForum">Skriv en kommentar</h2>
         </div>
 
         <div class="container padding-bottom-small">
@@ -277,12 +280,13 @@
                 <form name="addAnswerForm" ng-submit="vm.addAnswer()" role="form">
                     <div class="form-group" ng-class="{ 'has-error': addAnswerForm.answer.$dirty && addAnswerForm.answer.$invalid,
 'has-success' : addAnswerForm.answer.$valid}">
-                        <label for="answer">Svar</label>
+                        <label for="answer" ng-if="!vm.internalForum">Svar</label>
+                        <label for="answer" ng-if="vm.internalForum">Kommentar</label>
                         <span style="float: right; font-size: 0.9em"><a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank">Markdown Cheat Sheet</a></span>
                         <textarea name="answer" id="answer" type="text" class="form-control margin-bottom-small" ng-model="vm.form.answer" style="height: 100px" ng-maxlength="10000" required></textarea>
                         <span ng-show="addAnswerForm.answer.$error.maxlength" class="help-block">Maxlängd för ett svar är 10000 tecken</span>
                         <label for="description" ng-show="vm.form.answer">Förhandsgranskning</label>
-                        <div btf-markdown="vm.form.answer">
+                        <div class="community-post" btf-markdown="vm.form.answer">
                         </div>
                     </div>
                     <div class="form-actions noclick pull-right">

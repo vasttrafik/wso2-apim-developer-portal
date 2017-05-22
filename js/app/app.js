@@ -113,176 +113,140 @@
     $routeProvider
 
       .when('/', {
-        controller: 'HomeCtrl',
-        templateUrl: 'js/app/views/home.view.html',
-        controllerAs: 'vm'
-      })
+      controller: 'HomeCtrl',
+      templateUrl: 'js/app/views/home.view.html',
+      controllerAs: 'vm'
+    })
 
-      .when('/contact:subject?', {
-        controller: 'ContactCtrl',
-        templateUrl: 'js/app/views/contact.view.html',
-        controllerAs: 'vm'
-      })
+    .when('/contact:subject?', {
+      controller: 'ContactCtrl',
+      templateUrl: 'js/app/views/contact.view.html',
+      controllerAs: 'vm'
+    })
 
-      .when('/guides/:guide', {
-        controller: 'GuidesCtrl',
-        templateUrl: 'js/app/views/guides.view.html',
-        controllerAs: 'vm'
-      })
+    .when('/guides/:guide', {
+      controller: 'GuidesCtrl',
+      templateUrl: 'js/app/views/guides.view.html',
+      controllerAs: 'vm'
+    })
 
-      .when('/docs/:doc', {
-        controller: 'DocsCtrl',
-        templateUrl: 'js/app/views/docs.view.html',
-        controllerAs: 'vm'
-      })
+    .when('/docs/:doc', {
+      controller: 'DocsCtrl',
+      templateUrl: 'js/app/views/docs.view.html',
+      controllerAs: 'vm'
+    })
 
-      .when('/overview', {
-        controller: 'OverviewCtrl',
-        templateUrl: 'js/app/views/overview.view.html',
-        controllerAs: 'vm'
-      })
+    .when('/overview', {
+      controller: 'OverviewCtrl',
+      templateUrl: 'js/app/views/overview.view.html',
+      controllerAs: 'vm'
+    })
 
-      .when('/overview/community/:type?', {
-        controller: 'OverviewCommunityCtrl',
-        templateUrl: 'js/app/views/overview.community.view.html',
-        controllerAs: 'vm'
-      })
+    .when('/overview/community/:type?', {
+      controller: 'OverviewCommunityCtrl',
+      templateUrl: 'js/app/views/overview.community.view.html',
+      controllerAs: 'vm'
+    })
 
-      .when('/profile', {
-        controller: 'ProfileCtrl',
-        templateUrl: 'js/app/views/profile.view.html',
-        controllerAs: 'vm'
-      })
+    .when('/profile', {
+      controller: 'ProfileCtrl',
+      templateUrl: 'js/app/views/profile.view.html',
+      controllerAs: 'vm'
+    })
 
-      .when('/applications/:applicationId?', {
-        controller: 'ApplicationsCtrl',
-        templateUrl: 'js/app/views/applications.view.html',
-        controllerAs: 'vm'
-      })
+    .when('/applications/:applicationId?', {
+      controller: 'ApplicationsCtrl',
+      templateUrl: 'js/app/views/applications.view.html',
+      controllerAs: 'vm'
+    })
 
-      .when('/subscriptions', {
-        controller: 'SubscriptionsCtrl',
-        templateUrl: 'js/app/views/subscriptions.view.html',
-        controllerAs: 'vm'
-      })
+    .when('/subscriptions', {
+      controller: 'SubscriptionsCtrl',
+      templateUrl: 'js/app/views/subscriptions.view.html',
+      controllerAs: 'vm'
+    })
 
-      .when('/apis', {
-        controller: 'ApisCtrl',
-        templateUrl: 'js/app/views/apis.view.html',
-        controllerAs: 'vm'
-      })
+    .when('/apis', {
+      controller: 'ApisCtrl',
+      templateUrl: 'js/app/views/apis.view.html',
+      controllerAs: 'vm'
+    })
 
-      .when('/activation', {
-        controller: 'ActivationCtrl',
-        templateUrl: 'js/app/views/activation.view.html',
-        controllerAs: 'vm'
-      })
+    .when('/activation', {
+      controller: 'ActivationCtrl',
+      templateUrl: 'js/app/views/activation.view.html',
+      controllerAs: 'vm'
+    })
 
-      .when('/recover', {
-        controller: 'RecoverCtrl',
-        templateUrl: 'js/app/views/recover.view.html',
-        controllerAs: 'vm'
-      })
+    .when('/recover', {
+      controller: 'RecoverCtrl',
+      templateUrl: 'js/app/views/recover.view.html',
+      controllerAs: 'vm'
+    })
 
-      .when('/community', {
-        controller: 'CommunityCtrl',
-        templateUrl: 'js/app/views/community.view.html',
-        controllerAs: 'vm'
-      })
+    .when('/community', {
+      controller: 'CommunityCtrl',
+      templateUrl: 'js/app/views/community.view.html',
+      controllerAs: 'vm'
+    })
 
-      .when('/community/:label', {
-        controller: 'CommunityLabelCtrl',
-        templateUrl: 'js/app/views/community.label.view.html',
-        controllerAs: 'vm'
-      })
+    .when('/community/:label', {
+      controller: 'CommunityLabelCtrl',
+      templateUrl: 'js/app/views/community.label.view.html',
+      controllerAs: 'vm'
+    })
 
-      .when('/community/category/:categoryId', {
-        controller: 'CommunityCategoryCtrl',
-        templateUrl: 'js/app/views/community.category.view.html',
-        controllerAs: 'vm'
-      })
+    .when('/community/category/:categoryId', {
+      controller: 'CommunityCategoryCtrl',
+      templateUrl: 'js/app/views/community.category.view.html',
+      controllerAs: 'vm'
+    })
 
-      .when('/community/category/:categoryId/:label', {
-        controller: 'CommunityLabelCtrl',
-        templateUrl: 'js/app/views/community.label.view.html',
-        controllerAs: 'vm'
-      })
+    .when('/community/category/:categoryId/:label', {
+      controller: 'CommunityLabelCtrl',
+      templateUrl: 'js/app/views/community.label.view.html',
+      controllerAs: 'vm'
+    })
 
-      .when('/community/forum/:forumId', {
-        controller: 'CommunityForumCtrl',
-        templateUrl: 'js/app/views/community.forum.view.html',
-        controllerAs: 'vm'
-      })
+    .when('/community/forum/:forumId', {
+      controller: 'CommunityForumCtrl',
+      templateUrl: 'js/app/views/community.forum.view.html',
+      controllerAs: 'vm'
+    })
 
-      .when('/community/forum/:forumId/:label', {
-        controller: 'CommunityLabelCtrl',
-        templateUrl: 'js/app/views/community.label.view.html',
-        controllerAs: 'vm'
-      })
+    .when('/community/forum/:forumId/:label', {
+      controller: 'CommunityLabelCtrl',
+      templateUrl: 'js/app/views/community.label.view.html',
+      controllerAs: 'vm'
+    })
 
-      .when('/community/topic/:topicId', {
-        controller: 'CommunityTopicCtrl',
-        templateUrl: 'js/app/views/community.topic.view.html',
-        controllerAs: 'vm'
-      })
+    .when('/community/topic/:topicId', {
+      controller: 'CommunityTopicCtrl',
+      templateUrl: 'js/app/views/community.topic.view.html',
+      controllerAs: 'vm'
+    })
 
-      .when('/admin', {
-        controller: 'CommunityCategoryCtrl',
-        templateUrl: 'js/app/views/community.admin.view.html',
-        controllerAs: 'vm'
-      })
+    .when('/api/:apiName/:apiVersion/:apiProvider/:direct?', {
+      controller: 'ApiCtrl',
+      templateUrl: 'js/app/views/api.view.html',
+      controllerAs: 'vm'
+    })
 
-      .when('/admin/forum/:forumId', {
-        controller: 'CommunityForumCtrl',
-        templateUrl: 'js/app/views/community.admin.forum.view.html',
-        controllerAs: 'vm'
-      })
+    .when('/statistics/apis', {
+      controller: 'StatisticsApisCtrl',
+      templateUrl: 'js/app/views/statistics.apis.view.html',
+      controllerAs: 'vm'
+    })
 
-      .when('/admin/topic/:topicId', {
-        controller: 'CommunityTopicCtrl',
-        templateUrl: 'js/app/views/community.admin.topic.view.html',
-        controllerAs: 'vm'
-      })
+    .when('/statistics/applications/:applicationId?', {
+      controller: 'StatisticsApplicationsCtrl',
+      templateUrl: 'js/app/views/statistics.applications.view.html',
+      controllerAs: 'vm'
+    })
 
-      .when('/api/:apiName/:apiVersion/:apiProvider/:direct?', {
-        controller: 'ApiCtrl',
-        templateUrl: 'js/app/views/api.view.html',
-        controllerAs: 'vm'
-      })
-
-      .when('/news/:year?', {
-        controller: 'MediaCtrl',
-        templateUrl: 'js/app/views/media.news.view.html',
-        controllerAs: 'vm'
-      })
-
-      .when('/blog/:year?', {
-        controller: 'MediaCtrl',
-        templateUrl: 'js/app/views/media.blog.view.html',
-        controllerAs: 'vm'
-      })
-
-      .when('/calendar/:year?', {
-        controller: 'MediaCtrl',
-        templateUrl: 'js/app/views/media.calendar.view.html',
-        controllerAs: 'vm'
-      })
-
-      .when('/statistics/apis', {
-        controller: 'StatisticsApisCtrl',
-        templateUrl: 'js/app/views/statistics.apis.view.html',
-        controllerAs: 'vm'
-      })
-
-      .when('/statistics/applications/:applicationId?', {
-        controller: 'StatisticsApplicationsCtrl',
-        templateUrl: 'js/app/views/statistics.applications.view.html',
-        controllerAs: 'vm'
-      })
-
-      .otherwise({
-        redirectTo: '/'
-      });
+    .otherwise({
+      redirectTo: '/'
+    });
 
   }
 
@@ -370,6 +334,11 @@
           vm.claims[i].claimValue = $filter('camelize')(vm.claims[i].description);
           vm.user[vm.claims[i].claimValue] = {};
           vm.user[vm.claims[i].claimValue].claimUri = vm.claims[i].claimUri;
+
+          // Must initiate this value as it's not mandatory
+          if (vm.claims[i].claimUri === 'http://wso2.org/claims/mailinglist') {
+            vm.user[vm.claims[i].claimValue].value = false;
+          }
         }
 
       }
