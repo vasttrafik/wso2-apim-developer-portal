@@ -215,8 +215,8 @@
 
       if (confirm('Är du helt säker på att du vill ta bort och radera allt innehåll för ditt konto?') === true) {
         if (confirm('En gång till. Är du helt säker på att du vill ta bort och radera allt innehåll för ditt konto? ' +
-        'Det går inte att återställa! Detta radera alla dina kontouppgifter och dina eventuella inlägg i community anonymiseras. ' +
-        'Detta innebär också att inga requests till våra API:er längre kommer att fungera ifrån dina applikationer!') === true) {
+            'Det går inte att återställa! Detta radera alla dina kontouppgifter och dina eventuella inlägg i community anonymiseras. ' +
+            'Detta innebär också att inga requests till våra API:er längre kommer att fungera ifrån dina applikationer!') === true) {
           APIService.userCall('usersUserIdDelete', [$rootScope.globals.currentUser.id])
             .then(usersUserIdDeleteResponse);
         } else {
@@ -229,6 +229,18 @@
       function usersUserIdDeleteResponse(response) {
         if (response.status === 200) {
 
+          APIService.call('statisticsDelete')
+            .then(statisticsDeleteResponse);
+
+        } else {
+          AlertService.error(response.data.message);
+          vm.dataLoadingProfile = false;
+        }
+
+      }
+
+      function statisticsDeleteResponse(response) {
+        if (response.status === 200) {
           if ($rootScope.globals.currentUser.memberId !== null) {
             APIService.communityCall('membersIdDelete', [$rootScope.globals.currentUser.memberId])
               .then(function() {
@@ -239,9 +251,6 @@
             AuthenticationService.logout();
             AlertService.success('Ditt konto är nu borttaget!');
           }
-        } else {
-          AlertService.error(response.data.message);
-          vm.dataLoadingProfile = false;
         }
       }
     }

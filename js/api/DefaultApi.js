@@ -548,6 +548,7 @@ var API;
       /**
        *
        * Retrieves combined statistics for chosen source
+       * @param source if retrieved statistics should be for all apis ('apis') or for applications ('applications') (if logged in).
        * @param type List of statistic types.
        * @param grouping Date grouping for statistics. Defaults to / day.
        * @param period Period of statistics data to include. Defaults to 'week'.
@@ -590,6 +591,27 @@ var API;
           }
           return this.$http(httpRequestParams);
       };
+      /**
+       *
+       * Deletes statistics (anonymizes) for the logged in user.
+       */
+      DefaultApi.prototype.statisticsDelete = function (extraHttpRequestParams) {
+          var path = this.basePath + '/statistics';
+          var queryParameters = {};
+          var headerParams = {};
+          var httpRequestParams = {
+              method: 'DELETE',
+              url: path,
+              json: true,
+              params: queryParameters,
+              headers: headerParams
+          };
+          if (extraHttpRequestParams) {
+              httpRequestParams = this.extendObj(httpRequestParams, extraHttpRequestParams);
+          }
+          return this.$http(httpRequestParams);
+      };
+
       /**
        *
        * Retrieves statistics available for specified applicationId
