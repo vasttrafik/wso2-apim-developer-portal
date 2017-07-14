@@ -23,6 +23,9 @@
           <a href="#_password" target="_self" role="tab" data-toggle="tab">Lösenord</a>
         </li>
         <li role="presentation">
+          <a href="#_totp" target="_self" role="tab" data-toggle="tab">TOTP</a>
+        </li>
+        <li role="presentation">
           <a href="#_security" target="_self" role="tab" data-toggle="tab">Säkerhet</a>
         </li>
       </ul>
@@ -151,7 +154,34 @@
             </div>
 
           </form>
+
         </div>
+
+          <div role="tabpanel" class="tab-pane" id="_totp">
+            <h3>Addera extra säkerhet till ditt konto genom TOTP (Time-Based One-Time-Password)</h3>
+            <p>När du aktiverar detta steg kommer du förutom användarnamn/lösenord även frågas efter en engångskod när du försöker logga in i portalen.
+              Använd t.ex <a href="https://support.google.com/accounts/answer/1066447" target="_blank">Google Authenticator</a> till mobilen för att beräkna koden utefter den säkerhetskod du får när du aktiverar TOTP här i portalen.</p>
+            <p><u>Det är viktigt att du fyller i säkerhetskoden i en autentiseringsapp som kan hantera TOTP, annars kommer du inte längre kunna logga in.</u></p>
+            <br/>
+            <form name="totpForm" ng-submit="vm.toggleTotp()" role="form">
+
+              <div class="form-group checkbox alert alert-warning"role="warning">
+                <label>
+                  <input class="small" type="checkbox" name="enabledtotp" id="enabledTotp" class="form-control" ng-model="vm.form.security.enabledTotp" ng-checked="globals.currentUser.secretKey" />
+                    TOTP Aktiverat.
+                  </label>
+                </div>
+
+                <div class="form-actions noclick">
+                  <button type="submit" ng-disabled="totpForm.$invalid || vm.dataLoadingTotp" class="btn btn-primary">Uppdatera</button>
+                  <span ng-click="vm.resetTotpForm();" class="btn btn-link">Ångra</span>
+                </div>
+            </form>
+            <div ng-if="globals.currentUser.secretKey" class="text-center">
+              <p>Din säkerhetskod: <strong>{{globals.currentUser.secretKey}}</strong></p>
+              <p><qr text="vm.secretKey"></qr></p>
+          </div>
+          </div>
 
         <div role="tabpanel" class="tab-pane" id="_security">
           <h3>Lägg till ny/uppdatera säkerhetsfråga</h3>

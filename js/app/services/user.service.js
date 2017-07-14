@@ -81,6 +81,9 @@
             })[0].claimValue,
             mailingList: user.claims.filter(function(el) {
               return el.claimUri === 'http://wso2.org/claims/mailinglist';
+            })[0].claimValue,
+            secretKey: user.claims.filter(function(el) {
+              return el.claimUri === 'http://wso2.org/claims/secretKey';
             })[0].claimValue
           }
         };

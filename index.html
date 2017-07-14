@@ -140,7 +140,7 @@
                 </div>
 
                 <form name="form" ng-submit="user.create ? vm.create() : vm.login()" role="form">
-                  <div id="formLogin" ng-if="!user.create">
+                  <div id="formLogin" ng-if="!user.create && !user.totp">
                     <div class="form-group" ng-class="{ 'has-error': login-form.username.$dirty && login-form.username.$error.required }">
                       <label for="username">Användarnamn</label>
                       <span ng-click="vm.toggleUsernameRecovery()" style="float:right;cursor:pointer;">Glömt ditt användarnamn?</span>
@@ -160,6 +160,21 @@
                       <span ng-click="vm.toggleCreate()" class="btn btn-link" style="float: right">Skapa konto</span>
                     </div>
                   </div>
+
+                    <div id="formLogin" ng-if="!user.create && user.totp">
+                      <p class="alert alert-warning">Fyll i din TOTP-kod för att logga in.</p>
+                      <div class="form-group" ng-class="{ 'has-error': login-form.totp.$dirty && login-form.totp.$error.required }">
+                        <label for="totp">TOTP</label>
+                        <input type="text" name="totp" id="totp" class="form-control" ng-model="vm.totp" required />
+                        <span ng-show="form.totp.$dirty && form.totp.$error.required" class="help-block">TOTP är obligatoriskt</span>
+                      </div>
+                      <div class="form-actions noclick">
+                        <button id="login-button" type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Logga in</button>
+                        <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+                        />
+                        <span ng-click="vm.toggleTotp()" class="btn btn-link" style="float: right">Ångra</span>
+                      </div>
+                    </div>
 
                   <div id="formCreate" ng-if="user.create">
                     <div ng-if="entries.required === 'true'" class="form-group" ng-class="{ 'has-error': form.{{entries.claimValue}}.$dirty && form.{{entries.claimValue}}.$invalid, 'has-success' : form.{{entries.claimValue}}.$valid}" ng-repeat="entries in vm.claims">
@@ -253,7 +268,7 @@
         </div>
         <div class="col-sm-2 col-md-2 col-centered">
           <ul class="list-unstyled truncate">
-            <li><a href="#/news">Nyheter</a></li>
+            <li><a href="#/community/forum/1">Nyheter</a></li>
             <li><a href="#/community">Community</a></li>
             <li><a href="#/blog">Blogg</a></li>
             <li class="color-gray">Kalender</li>
@@ -338,6 +353,8 @@
   <script src="js/vendor/ui-iconpicker.js"></script>
   <script src="js/vendor/dirPagination.js"></script>
   <script src="js/vendor/FileSaver.min.js"></script>
+  <script src="js/vendor/qrcode.js"></script>
+  <script src="js/vendor/angular-qr.min.js"></script>
 
   <script src="js/main.js"></script>
 

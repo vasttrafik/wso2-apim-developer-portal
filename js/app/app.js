@@ -6,7 +6,7 @@
   'use strict';
 
   angular
-    .module('vtPortal', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ngPasswordStrength', 'ui.validate', 'angular-clipboard', 'ngLocationUpdate', 'swaggerUi', 'duScroll', 'angular-loading-bar', 'ngJSONPath', 'highcharts-ng', 'btford.markdown', 'ui.bootstrap', 'ui-iconpicker', 'angularUtils.directives.dirPagination'])
+    .module('vtPortal', ['ngRoute', 'ngSanitize', 'ngAnimate', 'ngPasswordStrength', 'ui.validate', 'angular-clipboard', 'ngLocationUpdate', 'swaggerUi', 'duScroll', 'angular-loading-bar', 'ngJSONPath', 'highcharts-ng', 'btford.markdown', 'ui.bootstrap', 'ui-iconpicker', 'angularUtils.directives.dirPagination','ja.qr'])
     .config(config)
     .factory('timeoutHttpIntercept', function($rootScope, $q) {
       return {
@@ -261,6 +261,7 @@
 
     $rootScope.user = {};
     $rootScope.user.create = false;
+    $rootScope.user.totp = false;
 
     // keep user logged in after page refresh
     UserService.getUser()
@@ -303,6 +304,7 @@
     vm.logout = logout;
     vm.create = create;
     vm.toggleCreate = toggleCreate;
+    vm.toggleTotp = toggleTotp;
     vm.togglePasswordRecovery = togglePasswordRecovery;
     vm.toggleUsernameRecovery = toggleUsernameRecovery;
     vm.clearAlertMessage = AlertService.clearAlertMessageAndDigest;
@@ -339,6 +341,14 @@
           if (vm.claims[i].claimUri === 'http://wso2.org/claims/mailinglist') {
             vm.user[vm.claims[i].claimValue].value = false;
           }
+          // Must initiate this value as it's not mandatory
+          if (vm.claims[i].claimUri === 'http://wso2.org/claims/secretKey') {
+            vm.user[vm.claims[i].claimValue].value = '';
+          }
+          // Must initiate this value as it's not mandatory
+          if (vm.claims[i].claimUri === 'http://wso2.org/claims/enableTOTP') {
+            vm.user[vm.claims[i].claimValue].value = false;
+          }
         }
 
       }
@@ -346,37 +356,64 @@
 
     function login() {
       vm.dataLoading = true;
-      AuthenticationService.login(vm.username, vm.password).then(
-        function(response) {
+
+      function loginResponse(response) {
+        if (response != null && response.status === 100) {
+          vm.dataLoading = false;
+          $rootScope.user.totp = true;
+        } else {
           $rootScope.user.loggedIn = true;
+          $rootScope.user.totp = false;
           vm.dataLoading = false;
           AlertService.clearMenuAlertMessage();
           $location.path('/overview');
           vm.username = '';
           vm.password = '';
+          vm.totp = '';
           $scope.form.$setPristine();
-
-        }).catch(function(response) {
-        if (response.status === 401) {
-
-          if (response.message === 'RemoteUserStoreManagerServiceUserStoreExceptionException') {
-            AlertService.menuError('Kontakta api@vasttrafik.se om kontot är låst', "Felaktigt användarnamn eller låst konto");
-          } else {
-            AlertService.menuError('Användarnamn och lösenord stämmer inte.', 'Problem att logga in');
-          }
-          vm.password = '';
-          $scope.form.$setPristine();
-        } else {
-          AlertService.menuError(response.message, 'Problem att logga in');
         }
-        vm.dataLoading = false;
-      });
+      }
 
+      if (!vm.totp) {
+        AuthenticationService.login(vm.username, vm.password).then(loginResponse).catch(function(response) {
+          if (response.status === 401) {
+
+            if (response.message === 'RemoteUserStoreManagerServiceUserStoreExceptionException') {
+              AlertService.menuError('Kontakta api@vasttrafik.se om kontot är låst', 'Felaktigt användarnamn eller låst konto');
+            } else {
+              AlertService.menuError('Användarnamn och lösenord stämmer inte.', 'Problem att logga in');
+            }
+            vm.password = '';
+            $scope.form.$setPristine();
+          } else {
+            AlertService.menuError(response.message, 'Problem att logga in');
+          }
+          vm.dataLoading = false;
+        });
+      } else {
+        AuthenticationService.login(vm.username, vm.password, vm.totp).then(loginResponse).catch(function(response) {
+
+          if (response.status === 401) {
+
+            if (response.message === 'RemoteUserStoreManagerServiceUserStoreExceptionException') {
+              AlertService.menuError('Kontakta api@vasttrafik.se om kontot är låst', 'Felaktigt användarnamn eller låst konto');
+            } else {
+              AlertService.menuError('Felaktig TOTP-kod.', 'Problem att logga in');
+            }
+            vm.totp = '';
+            $scope.form.$setPristine();
+          } else {
+            AlertService.menuError(response.message, 'Problem att logga in');
+          }
+          vm.dataLoading = false;
+        });
+      }
     }
 
     function logout() {
       $rootScope.user.loggedIn = false;
       $rootScope.user.create = false;
+      $rootScope.user.totp = false;
       AuthenticationService.logout();
       $location.path('/');
     }
@@ -403,6 +440,15 @@
       } else {
         $rootScope.user.create = !$rootScope.user.create;
       }
+      $rootScope.user.totp = false;
+      delete $rootScope.alert;
+      delete $rootScope.menuAlert;
+    }
+
+    function toggleTotp() {
+      vm.dataLoading = false;
+      $rootScope.user.totp = false;
+      vm.totp = '';
       delete $rootScope.alert;
       delete $rootScope.menuAlert;
     }

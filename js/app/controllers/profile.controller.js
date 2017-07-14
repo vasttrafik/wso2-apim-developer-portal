@@ -17,19 +17,24 @@
     vm.resetProfileForm = resetProfileForm;
     vm.resetCommunityForm = resetCommunityForm;
     vm.resetPasswordForm = resetPasswordForm;
+    vm.resetTotpForm = resetTotpForm;
     vm.resetChallengeQuestionForm = resetChallengeQuestionForm;
     vm.addUpdateChallengeQuestion = addUpdateChallengeQuestion;
+    vm.toggleTotp = toggleTotp;
 
     vm.communityService = CommunityService;
 
     (function init() {
       vm.form = {};
+      vm.form.security = {};
+      vm.secretKey = 'otpauth://totp/developer.vasttrafik.se?secret=' + $rootScope.globals.currentUser.secretKey;
 
       APIService.communityCall('membersIdGet', [$rootScope.globals.currentUser.id], false)
         .then(membersIdGetResponse);
 
       resetProfileForm();
       resetChallengeQuestionForm();
+      resetTotpForm();
 
     })();
 
@@ -288,8 +293,59 @@
         });
     }
 
+    function toggleTotp() {
+
+      vm.dataLoadingTotp = true;
+      var userObject = {};
+      var enableTotp = vm.form.security.enabledTotp;
+
+      UserService.getUser()
+        .then(function(response) {
+
+          var request = {};
+          request.userName = response.userName;
+          request.id = response.id;
+          request.profileName = 'default';
+
+          if (enableTotp) {
+            APIService.userCall('usersUserIdPut', [response.id, 'enableTotp', '*/*', 'application/json', request])
+              .then(usersUserIdPutResponse);
+          } else {
+            APIService.userCall('usersUserIdPut', [response.id, 'disableTotp', '*/*', 'application/json', request])
+              .then(usersUserIdPutResponse);
+          }
+
+        });
+
+      function usersUserIdPutResponse(response) {
+        if (response.status === 200) {
+
+          UserService.setOrUpdateClaim('http://wso2.org/claims/enableTOTP', enableTotp)
+            .then(function() {
+              UserService.setOrUpdateClaim('http://wso2.org/claims/secretKey', response.data.key).then(function() {
+                $rootScope.globals.currentUser.secretKey = response.data.key;
+                vm.secretKey = 'otpauth://totp/developer.vasttrafik.se?secret=' + response.data.key;
+                if (enableTotp) {
+                  AlertService.success('Time-Based One-Time Password aktiverat');
+                } else {
+                  AlertService.success('Time-Based One-Time Password borttaget');
+                }
+
+              });
+            });
+        } else {
+          AlertService.error(response.data.message);
+        }
+        vm.dataLoadingTotp = false;
+      }
+    }
+
     function resetProfileForm() {
       vm.form.profile = angular.copy($rootScope.globals.currentUser);
+    }
+
+    function resetTotpForm() {
+      vm.form.security.enabledTotp = ($rootScope.globals.currentUser.secretKey) ? true : false;
     }
 
     function resetCommunityForm() {

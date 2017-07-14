@@ -25,22 +25,17 @@
 
     return service;
 
-    function login(username, password, refreshToken) {
+    function login(username, password, totp) {
       var deferred = $q.defer();
 
       var action = 'login';
-
-      /*
-      if (refreshToken != null) { // jshint ignore:line
-        action = 'refreshToken';
-      }
-      */
 
       var userObject = {};
 
       apiClient.authenticatePost({
           userName: username,
-          credential: password
+          credential: password,
+          totp: totp
         }, 'application/json')
         .then(authenticationPostResponse)
         .then(usersUserIdGet)
@@ -50,8 +45,14 @@
 
       function authenticationPostResponse(authenticatedUserObject) {
         if (authenticatedUserObject.status === 200 || authenticatedUserObject.status === 201) {
-          userObject = authenticatedUserObject.data;
-          $http.defaults.headers.common['X-JWT-Assertion'] = userObject.accessToken.token;
+
+          if (authenticatedUserObject.data.enabledTotp === true) {
+            return $q.reject('totp');
+          } else {
+            userObject = authenticatedUserObject.data;
+            $http.defaults.headers.common['X-JWT-Assertion'] = userObject.accessToken.token;
+          }
+
         } else {
           apiErrorResponse(authenticatedUserObject, deferred);
         }
@@ -167,6 +168,17 @@
         status: apiResponse.status,
         message: 'Ett oväntat problem uppstod'
       };
+
+      if (apiResponse === 'totp') {
+
+        response = {
+          status: 100,
+          message: 'Fyll i TOTP kod'
+        };
+
+        deferred.resolve(response);
+
+      }
 
       if (apiResponse.data != null && apiResponse.data.message != null) {
         response = {
