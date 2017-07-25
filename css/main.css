@@ -494,6 +494,7 @@ div.row.col-md-4.well {
 .dropdown-menu.create {
   padding: 20px;
   min-width: 330px;
+  overflow-y: auto;
 }
 i.glyphicon.glyphicon-info-sign.text-info {
   vertical-align: top;
