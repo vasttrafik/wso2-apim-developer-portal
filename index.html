@@ -397,6 +397,8 @@
   <script>
     $(document).ready(function() {
 
+      $('.dropdown-menu').css('max-height', $(window).height() - 100);
+
     Date.setLocale('sv');
 
       $(function() {
@@ -448,6 +450,9 @@
         }, 300, 'linear');
       });
     });
+    $(window).resize(function(){
+      $('.dropdown-menu').css('max-height', $(window).height() - 100);
+});
   </script>
 </body>
 
