@@ -2,21 +2,16 @@
 <div class="container-fluid" style="margin-top: 40px">
   <div class="container">
     <div class="row hero">
-      <div class="col-sm-7">
-        <h1 class="hidden-xs" ng-show="!user.loggedIn">Utveckla tillsammans</h1>
-        <h2 class="hidden-sm hidden-md hidden-lg" ng-show="!user.loggedIn">Utveckla tillsammans</h2>
-
-        <h1 class="hidden-xs" ng-show="user.loggedIn">Utveckling tillsammans</h1>
-        <h2 class="hidden-sm hidden-md hidden-lg" ng-show="user.loggedIn">Utveckling tillsammans</h2>
-
+      <div class="col-sm-5">
+        <h1 class="hidden-xs">Utveckla med Västtrafiks API:er</h1>
         <p ng-show="!user.loggedIn">Genom att skapa ett konto får du tillgång till våra publika API:er och kan dessutom diskutera utveckling med likasinnade och ta del av andra förmåner.</p>
         <p ng-show="user.loggedIn">Tack för att du skapat ett konto! Här får du tillgång till våra publika API:er och kan dessutom diskutera utveckling med likasinnade och ta del av andra förmåner.</p>
         <button id="create-button" class="text-uppercase btn btn-primary" ng-show="!user.loggedIn">
           Skapa konto
         </button>
       </div>
-      <div class="hidden-xs col-sm-5">
-        <img class="img-responsive" src="img/png/hero.png" alt="Be a hero..." />
+      <div class="hidden-xs col-sm-7">
+        <img class="img-responsive" src="img/new-line-api.png" />
       </div>
     </div>
   </div>
