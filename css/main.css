@@ -99,6 +99,35 @@ div.navbar-header > a.logo {
   margin: 20px 0;
 }
 
+/* Showcase */
+
+.showcase {
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 40px;
+  padding-right: 40px
+}
+.showcase h1 {
+  font-size: 63px;
+}
+.showcase hr {
+  border-top-color: #d5d5d5;
+}
+
+.showcase .row {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
+.showcase .row img {
+  float: left;
+  margin-right: 25px;
+}
+
 /* Jumbotron */
 
 .jumbotron {
@@ -177,7 +206,7 @@ i.fa.fa-user.fa-stack-1x, i.fa.fa-question.fa-stack-1x {
 
 /* Showcase area */
 
-.showcase.panel {
+.frontshowcase.panel {
   -moz-backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -188,7 +217,7 @@ i.fa.fa-user.fa-stack-1x, i.fa.fa-question.fa-stack-1x {
   -webkit-transition: opacity 300ms linear 0s, transform 300ms ease-in-out 0s;
   transition: opacity 300ms linear 0s, transform 300ms ease-in-out 0s;
 }
-.showcase.panel:hover {
+.frontshowcase.panel:hover {
   -moz-backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -209,7 +238,7 @@ i.fa.fa-user.fa-stack-1x, i.fa.fa-question.fa-stack-1x {
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
   margin-bottom: 25px;
 }
-.showcase.panel a .panel-body {
+.frontshowcase.panel a .panel-body {
   height: 100%;
 }
 a .panel-body {
@@ -221,7 +250,7 @@ a .panel-body {
 .panel-body {
   padding: 15px;
 }
-div.showcase.panel.panel-default {
+div.frontshowcase.panel.panel-default {
   max-width:165px;
 }
 /* End Showcase area */
