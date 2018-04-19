@@ -123,6 +123,15 @@
       if (response.status === 200) {
         vm.api = response.data;
         vm.imageUrl = vm.defaultBaseUrl + '/' + response.data.imageUrl;
+
+        var config = {
+          responseType: 'blob'
+        };
+        $http.get(vm.imageUrl, config)
+          .then(function(response) {
+            vm.imageSrc = URL.createObjectURL(response.data);
+          });
+
         vm.apiId = vm.api.name + '/' + vm.api.version + '/' + vm.api.provider;
         vm.swaggerUrl = vm.defaultBaseUrl + '/' + response.data.swagger;
         vm.useAccessToken = response.data.status !== 'DEPRECATED';

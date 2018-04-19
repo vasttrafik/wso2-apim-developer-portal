@@ -25,8 +25,18 @@
       if (response.status === 200) {
         vm.apis = response.data.list.filter(function(el) {
           el.imageUrl = vm.defaultBaseUrl + '/' + el.imageUrl;
+
+          var config = {
+            responseType: 'blob'
+          };
+          $http.get(el.imageUrl, config)
+            .then(function(response) {
+              el.imageSrc = URL.createObjectURL(response.data);
+            });
+
           return el.status.toUpperCase() !== 'BLOCKED';
         });
+
       } else {
         AlertService.error('Problem att hämta lista med applikationer');
       }
