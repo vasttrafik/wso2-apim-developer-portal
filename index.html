@@ -192,10 +192,11 @@
 
                     <div class="form-group" ng-class="{ 'has-error': form.createUsername.$dirty && form.createUsername.$invalid, 'has-success' : form.createUsername.$valid}">
                       <label for="createUsername">Användarnamn</label>
-                      <input type="text" name="createUsername" id="createUsername" class="form-control" ng-model="vm.user.username" ng-minlength="5" ng-maxlength="60" required />
+                      <input type="text" name="createUsername" id="createUsername" class="form-control" ng-model="vm.user.username" ng-minlength="5" ng-maxlength="60" ng-pattern="/[a-zA-Z0-9@._\-|//]$/" required />
                       <span ng-show="form.createUsername.$dirty && form.createUsername.$error.required" class="help-block">Användarnamn är obligatoriskt</span>
                       <span ng-show="form.createUsername.$error.minlength" class="help-block">Användarnamn måste vara minst 5 tecken långt</span>
 					  <span ng-show="form.createUsername.$error.maxlength" class="help-block">Användarnamn får vara max 60 tecken långt</span>
+					  <span ng-show="form.createUsername.$error.pattern" class="help-block">Användarnamnet innehåller otillåtet tecken</span>
                     </div>
                     <div class="form-group" ng-class="{ 'has-error': form.createPassword.$dirty && form.createPassword.$invalid, 'has-success' : form.createPassword.$valid}">
                       <label for="createPassword">Lösenord</label>
