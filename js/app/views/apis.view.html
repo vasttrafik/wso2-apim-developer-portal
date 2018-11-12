@@ -21,10 +21,8 @@
               <th>Namn</th>
               <th class="hidden-xs">Beskrivning</th>
               <th>Status</th>
-              <th class="hidden-xs">Context</th>
               <th class="hidden-xs">Version</th>
-              <th class="hidden-xs">Utgivare</th>
-              <th>Aktioner</th>
+              <th style="min-width: 130px">Aktioner</th>
             </tr>
           </thead>
           <tbody>
@@ -39,9 +37,7 @@
                   {{entries.status}}
                 </span>
               </td>
-              <td class="hidden-xs">{{entries.context}}</td>
               <td class="hidden-xs">{{entries.version}}</td>
-              <td class="hidden-xs">{{entries.provider}}</td>
               <td>
                 <span ng-click="vm.displayApi(entries.name, entries.version, entries.provider)" style="cursor: pointer" title="Visa detaljer">
                   <span class="glyphicon glyphicon-cog"></span>
