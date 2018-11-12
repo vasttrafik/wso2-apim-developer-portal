@@ -93,13 +93,20 @@
 
           UserService.getClaim('http://wso2.org/claims/challengeQuestion1')
             .then(function(response) {
+
               newUserObject.claims.push(response.object);
 
-              UserService.setUser(newUserObject)
-                .then(function() {
-                  resetProfileForm(); // At this stage the rootScope is updated
-                  vm.dataLoadingProfile = false;
-                  AlertService.success('Din profil är uppdaterad!');
+              UserService.getClaim('http://wso2.org/claims/secretKey')
+                .then(function(keyResponse) {
+                  newUserObject.claims.push(keyResponse.object);
+
+                  UserService.setUser(newUserObject)
+                    .then(function() {
+                      resetProfileForm(); // At this stage the rootScope is updated
+                      vm.dataLoadingProfile = false;
+                      AlertService.success('Din profil är uppdaterad!');
+                    });
+
                 });
             });
 
