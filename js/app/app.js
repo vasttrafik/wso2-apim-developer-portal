@@ -124,6 +124,12 @@
       controllerAs: 'vm'
     })
 
+    .when('/gtfs', {
+      controller: 'GtfsCtrl',
+      templateUrl: 'js/app/views/gtfs.view.html',
+      controllerAs: 'vm'
+    })
+
     .when('/guides/:guide', {
       controller: 'GuidesCtrl',
       templateUrl: 'js/app/views/guides.view.html',
@@ -281,7 +287,7 @@
     $rootScope.$on('$locationChangeStart', function(event, next, current) {
 
       // redirect to startpage if not logged in and trying to access a restricted page
-      var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api', 'guides', 'docs', 'news', 'activation', 'recover', 'contact', 'blog', 'calendar', 'community']) === -1;
+      var restrictedPage = $.inArray($location.path().split('/')[1], ['', 'apis', 'api', 'guides', 'gtfs', 'docs', 'news', 'activation', 'recover', 'contact', 'blog', 'calendar', 'community']) === -1;
 
       if ($location.path().split('/')[1] === 'statistics') {
         restrictedPage = $location.path().split('/')[2] !== 'apis';
