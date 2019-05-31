@@ -48,6 +48,14 @@
         angular.forEach(response.data.list, function(value, key) {
           value.api.imageUrl = vm.defaultBaseUrl + '/' + value.api.imageUrl;
           value.api.swaggerUrl = vm.defaultBaseUrl + '/' + value.api.swaggerUrl;
+
+          var config = {
+            responseType: 'blob'
+          };
+          $http.get(value.api.imageUrl, config)
+            .then(function(response) {
+              value.api.imageSrc = URL.createObjectURL(response.data);
+            });
         });
         vm.subscriptions = response.data.list;
       } else {
